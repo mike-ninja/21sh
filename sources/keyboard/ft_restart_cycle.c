@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 17:20:24 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/18 17:21:56 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/19 13:37:23 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_restart_cycle(t_term *t)
 {
-	ft_putchar('\n');
-	ft_printf("{yel}${gre}>{nor} ");
+	// ft_putchar('\n');
+	// ft_printf("{yel}${gre}>{nor} ");
 	// ft_memset(t->inp, '\0', BUFFSIZE);
 	ft_strclr(t->inp);
 	t->quote = 0;

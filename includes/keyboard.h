@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/18 17:38:36 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/19 11:57:43 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_term
 }			t_term;
 
 int		ft_keyboard(t_term *t);
-void	ft_init(t_term *t);
+void	ft_init_term(t_term *t);
 void	ft_input_cycle(t_term *t);
 int		ft_putc(int c);
 void	ft_restart_cycle(t_term *t);

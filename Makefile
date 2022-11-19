@@ -6,7 +6,7 @@
 #    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/11/18 17:38:23 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/11/19 12:14:17 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ NAME				=	21sh
 CC					=	gcc
 CFLAGS 				= 	-Wall -Wextra
 CFLAGS				+=	-Wunreachable-code -Wtype-limits
-CFLAGS				+=	-Wpedantic -Wconversion
+CFLAGS				+=	-Wpedantic 
+# CFLAGS				+=	-Wconversion
 CFLAGS				+=	-O3
 
 LEAK_CHECK			= -g
@@ -60,6 +61,7 @@ endif
 
 SOURCES 		= 	sources
 KEYBOARD		= 	keyboard/
+BANNER			= 	banner/
 MAIN			= 	main/
 LEXER			= 	lexer/
 OBJECTS 		= 	objects/
@@ -75,7 +77,7 @@ LIBRARIES 		= 	libft/
 SOURCE_COUNT = $(words $(FILES))
 
 H_FILES 	= 	ft_21sh \
-				keyboard
+				keyboard \
 
 FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(KEYBOARD)ft_add_nl_mid_row \
@@ -89,6 +91,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(KEYBOARD)ft_get_input \
 				$(KEYBOARD)ft_get_prompt_len \
 				$(KEYBOARD)ft_history_get \
+				$(KEYBOARD)ft_history_file_get \
 				$(KEYBOARD)ft_history_trigger \
 				$(KEYBOARD)ft_history_write_to_file \
 				$(KEYBOARD)ft_history \
@@ -116,6 +119,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(KEYBOARD)ft_word_mv \
 				$(KEYBOARD)ft_keyboard \
 				$(LEXER)ft_lexer \
+				$(BANNER)ft_banner \
 				$(MAIN)main \
 				# $(MAIN)free_mem \
 				# $(MAIN)init \
@@ -213,15 +217,16 @@ $(NAME): libft/libft.a $(OBJECTS) $(O_PATHS)
 
 $(OBJECTS):
 	@make -C $(LIBRARIES)
-	@mkdir -p $(OBJECTS)/$(BUILTIN)
-	@mkdir -p $(OBJECTS)/$(ERROR)
-	@mkdir -p $(OBJECTS)/$(EXEC)
-	@mkdir -p $(OBJECTS)/$(HASH_TABLE)
+	# @mkdir -p $(OBJECTS)/$(BUILTIN)
+	# @mkdir -p $(OBJECTS)/$(ERROR)
+	# @mkdir -p $(OBJECTS)/$(EXEC)
+	# @mkdir -p $(OBJECTS)/$(HASH_TABLE)
 	@mkdir -p $(OBJECTS)/$(KEYBOARD)
 	@mkdir -p $(OBJECTS)/$(LEXER)
+	@mkdir -p $(OBJECTS)/$(BANNER)
 	@mkdir -p $(OBJECTS)/$(MAIN)
-	@mkdir -p $(OBJECTS)/$(PARSER)
-	@mkdir -p $(OBJECTS)/$(UTILS)
+	# @mkdir -p $(OBJECTS)/$(PARSER)
+	# @mkdir -p $(OBJECTS)/$(UTILS)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"
 	@printf "$(NAME): $(GREEN)$(OBJECTS) directory was created.$(RESET)\n\n\n"
 
