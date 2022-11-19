@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/19 12:00:33 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/19 17:48:27 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,20 +65,25 @@ void	ft_insertion(t_term *t)
 	{
 		if (!t->nl_addr[t->c_row + 1])
 		{
-			if (t->inp[t->bytes - 1] == '\\' || t->q_qty % 2)
-			{
-				t->inp[t->bytes++] = (char)t->ch;
-				ft_create_prompt_line(t, t->bytes);
-				t->index = t->bytes;
-			}
+			if (t->slash || t->q_qty % 2)
+            {
+                t->inp[t->bytes++] = (char)t->ch;
+                ft_create_prompt_line(t, t->bytes);
+                t->index = t->bytes;
+            }
 		}
 	}
 	else
 	{
 		ft_putc(t->ch);
+		ft_slash_handling(t);
 		if (t->ch == D_QUO || t->ch == S_QUO)
-			if (!t->index || t->inp[t->index - 1] != '\\')
+		{
+			if (!t->index || t->slash)
 				ft_quote_handling(t, (char)t->ch);
+		}
+			// if (!t->index || t->inp[t->index - 1] != '\\')
+			// 	ft_quote_handling(t, (char)t->ch);
 		t->c_col++;
 		ft_shift_nl_addr(t, 1);
 		if (t->inp[t->index])

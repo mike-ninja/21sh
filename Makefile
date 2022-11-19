@@ -6,7 +6,7 @@
 #    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/11/19 12:14:17 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/11/19 17:43:03 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -117,6 +117,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(KEYBOARD)ft_shift_nl_addr \
 				$(KEYBOARD)ft_window_size \
 				$(KEYBOARD)ft_word_mv \
+				$(KEYBOARD)ft_slash_handling \
 				$(KEYBOARD)ft_keyboard \
 				$(LEXER)ft_lexer \
 				$(BANNER)ft_banner \

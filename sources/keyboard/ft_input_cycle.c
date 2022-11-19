@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/19 14:20:04 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/19 17:51:01 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,14 @@ void	ft_input_cycle(t_term *t)
 			ft_insertion(t);
 		if (t->ch == ENTER)
 		{
-			if (t->inp[t->bytes - 2] != '\\' && !(t->q_qty % 2))
+			if (!t->slash && !(t->q_qty % 2))
 			{
 				ft_end_cycle(t);
 				break;
 				// ft_restart_cycle(t);
 				// continue;
 			}
+			t->slash = 0;
 		}
 		else if (t->ch == CTRL_D)
 		{
