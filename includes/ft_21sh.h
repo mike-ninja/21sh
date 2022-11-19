@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/19 12:11:00 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/19 14:34:29 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,8 @@ typedef struct	s_branch
 
 /*					HEADER					*/
 void	banner_print(void);
+
+/*					LEXER					*/
+char	*ft_lexer(char *str);
 
 #endif

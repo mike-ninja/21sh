@@ -6,34 +6,17 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/19 14:20:38 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/19 14:33:47 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-// Setup the attributes
-// run the keyboard function
-// t->inp contains the input that will go through lexer
-// run the lexer **
-// TOkenizing
-
-// banner_print();
-// ft_keyboard(&t);
-// ft_printf(t.inp);
-// uninit_keyboard(&t);
-// input array here
-// initialise keyboard
-// get the input and perhaps copy it to a new string?
-// lexer
-// parser
-// tree generation?
-
-// static void uninit_keyboard(t_term *t)
-// {
-// 	ft_memdel((void **)&t->nl_addr);
-// }
-
+/**
+ * It puts the terminal into raw mode
+ * 
+ * @return The original terminal settings.
+ */
 static struct termios	enable_raw_mode(void)
 {
 	struct termios	orig_termios;
@@ -60,7 +43,8 @@ static struct termios	enable_raw_mode(void)
 }
 
 /**
- * It disables raw mode by setting the terminal attributes to the original terminal attributes
+ * It disables raw mode by setting the terminal attributes to the original
+ * terminal attributes
  *
  * @param orig_termios The original terminal attributes.
  */
@@ -70,6 +54,12 @@ static void	disable_raw_mode(struct termios orig_termios)
 	ft_run_capability("te");
 }
 
+/**
+ * It gets the terminal type from the environment, and then uses the termcap
+ * library to get the terminal capabilities
+ * 
+ * @return The number of lines in the terminal.
+ */
 static int ft_getent(void)
 {
 	char	*termtype;
@@ -98,26 +88,29 @@ static int ft_getent(void)
 
 int	main(void)
 {
-	int				stat;
 	t_term			term;
+	char			*line;
+	int				status;
 	struct termios	orig_termios;
 
-	stat = 1;
+	status = 1;
+	line = NULL;
 	ft_getent();
 	orig_termios = enable_raw_mode();
 	banner_print();
-	while (stat)
+	while (status)
 	{
 		ft_keyboard(&term);
 		if (!ft_strcmp(term.inp, "exit"))
-			stat = 0;
+			status = 0;
 		else
 		{
-			ft_putstr(term.inp);
+			line = ft_lexer(term.inp);
+			ft_putstr(line);
+			ft_strdel(&line);
 			ft_putchar('\n');
 		}
 	}
 	disable_raw_mode(orig_termios);
 	return (0);
-	// initialise the raw mode
 }
