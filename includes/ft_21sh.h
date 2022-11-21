@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/19 14:34:29 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:36:39 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,21 @@ typedef struct	s_branch
 	struct	s_branch *command;
 }				t_branch;
 
+# define TOKEN_POINTER_N 1
+
+typedef struct s_token
+{
+	char	*token;
+	char	*value;
+}	t_token;
+
 /*					HEADER					*/
 void	banner_print(void);
 
 /*					LEXER					*/
 char	*ft_lexer(char *str);
+
+/*					TOKENIZER				*/
+t_token	*chop_line(char *line, t_token *args, size_t pointer_n);
 
 #endif

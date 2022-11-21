@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/19 14:33:47 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:31:32 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * It puts the terminal into raw mode
- * 
+ *
  * @return The original terminal settings.
  */
 static struct termios	enable_raw_mode(void)
@@ -57,7 +57,7 @@ static void	disable_raw_mode(struct termios orig_termios)
 /**
  * It gets the terminal type from the environment, and then uses the termcap
  * library to get the terminal capabilities
- * 
+ *
  * @return The number of lines in the terminal.
  */
 static int ft_getent(void)
@@ -92,7 +92,9 @@ int	main(void)
 	char			*line;
 	int				status;
 	struct termios	orig_termios;
+	t_token			*tokens;
 
+	tokens = (t_token *)ft_memalloc(sizeof(*tokens) * 2);
 	status = 1;
 	line = NULL;
 	ft_getent();
@@ -106,6 +108,7 @@ int	main(void)
 		else
 		{
 			line = ft_lexer(term.inp);
+			tokens = chop_line(line, tokens, 2);
 			ft_putstr(line);
 			ft_strdel(&line);
 			ft_putchar('\n');

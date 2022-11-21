@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
+#    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/11/21 12:25:33 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/11/21 13:19:42 by jniemine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ NAME				=	21sh
 CC					=	gcc
 CFLAGS 				= 	-Wall -Wextra
 CFLAGS				+=	-Wunreachable-code -Wtype-limits
-CFLAGS				+=	-Wpedantic 
+CFLAGS				+=	-Wpedantic
 # CFLAGS				+=	-Wconversion
 CFLAGS				+=	-O3
 
@@ -67,6 +67,7 @@ LEXER			= 	lexer/
 OBJECTS 		= 	objects/
 INCLUDES		= 	includes/
 LIBRARIES 		= 	libft/
+TOKENIZER		=	tokenizer/
 # BUILTIN		= 	builtin/
 # ERROR			= 	error/
 # EXEC			= 	exec/
@@ -114,9 +115,10 @@ FILES			= $(KEYBOARD)ft_add_row \
 				$(LEXER)ft_lexer \
 				$(BANNER)ft_banner \
 				$(MAIN)main \
+				$(TOKENIZER)tokenizer \
 				# $(MAIN)free_mem \
 				# $(MAIN)init \
-				# $(MAIN)tree_free \ 
+				# $(MAIN)tree_free \
 
 # FILES 		=	$(BUILTIN)env_getvalue \
 # 				$(BUILTIN)env_underscore \
@@ -218,6 +220,7 @@ $(OBJECTS):
 	@mkdir -p $(OBJECTS)/$(LEXER)
 	@mkdir -p $(OBJECTS)/$(BANNER)
 	@mkdir -p $(OBJECTS)/$(MAIN)
+	@mkdir -p $(OBJECTS)/$(TOKENIZER)
 	# @mkdir -p $(OBJECTS)/$(PARSER)
 	# @mkdir -p $(OBJECTS)/$(UTILS)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"
