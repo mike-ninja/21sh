@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:05:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/18 17:27:40 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/21 14:46:03 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,3 +36,4 @@ char	*ft_lexer(char *str)
 	}
 	return (line);
 }
+//akjsgdkajshdkjashkjd
