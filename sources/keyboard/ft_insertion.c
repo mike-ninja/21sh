@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/19 17:48:27 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/21 12:25:33 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ static void	ft_trigger_nl(t_term *t)
 	}
 	if (len == t->ws_col + 1)
 		if (t->nl_addr[row + 1])
-			ft_add_nl_mid_row(t, row + 1, (ssize_t)(&t->nl_addr[row + 1][-1] - t->nl_addr[0]));
+			ft_add_nl_mid_row(t, row + 1, (ssize_t)(&t->nl_addr[row + 1][-1]
+					- t->nl_addr[0]));
 	if (t->c_col == t->ws_col)
 	{
 		t->c_row++;
@@ -66,11 +67,11 @@ void	ft_insertion(t_term *t)
 		if (!t->nl_addr[t->c_row + 1])
 		{
 			if (t->slash || t->q_qty % 2)
-            {
-                t->inp[t->bytes++] = (char)t->ch;
-                ft_create_prompt_line(t, t->bytes);
-                t->index = t->bytes;
-            }
+			{
+				t->inp[t->bytes++] = (char)t->ch;
+				ft_print_prompt(t, t->bytes);
+				t->index = t->bytes;
+			}
 		}
 	}
 	else
@@ -78,12 +79,8 @@ void	ft_insertion(t_term *t)
 		ft_putc(t->ch);
 		ft_slash_handling(t);
 		if (t->ch == D_QUO || t->ch == S_QUO)
-		{
-			if (!t->index || t->slash)
+			if (!t->index || !t->slash)
 				ft_quote_handling(t, (char)t->ch);
-		}
-			// if (!t->index || t->inp[t->index - 1] != '\\')
-			// 	ft_quote_handling(t, (char)t->ch);
 		t->c_col++;
 		ft_shift_nl_addr(t, 1);
 		if (t->inp[t->index])

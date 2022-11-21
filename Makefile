@@ -6,7 +6,7 @@
 #    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/11/19 17:43:03 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/11/21 12:25:33 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,16 +79,12 @@ SOURCE_COUNT = $(words $(FILES))
 H_FILES 	= 	ft_21sh \
 				keyboard \
 
-FILES			= $(KEYBOARD)ft_add_nl_last_row \
-				$(KEYBOARD)ft_add_nl_mid_row \
+FILES			= $(KEYBOARD)ft_add_row \
 				$(KEYBOARD)ft_arrow_input \
 				$(KEYBOARD)ft_backspace \
-				$(KEYBOARD)ft_create_prompt_line \
 				$(KEYBOARD)ft_delete \
 				$(KEYBOARD)ft_deletion_shift \
-				$(KEYBOARD)ft_display_row \
 				$(KEYBOARD)ft_esc_parse \
-				$(KEYBOARD)ft_get_input \
 				$(KEYBOARD)ft_get_prompt_len \
 				$(KEYBOARD)ft_history_get \
 				$(KEYBOARD)ft_history_file_get \
@@ -104,21 +100,17 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(KEYBOARD)ft_line_mv \
 				$(KEYBOARD)ft_opt_mv \
 				$(KEYBOARD)ft_print_trail \
-				$(KEYBOARD)ft_getline_nbr \
-				$(KEYBOARD)ft_putc \
-				$(KEYBOARD)ft_quote_decrement \
-				$(KEYBOARD)ft_quote_handling \
 				$(KEYBOARD)ft_remove_nl_addr \
 				$(KEYBOARD)ft_reset_nl_addr \
 				$(KEYBOARD)ft_restart_cycle \
 				$(KEYBOARD)ft_row_lowest_line \
 				$(KEYBOARD)ft_run_capability \
-				$(KEYBOARD)ft_setcursor \
 				$(KEYBOARD)ft_shift_nl_addr \
 				$(KEYBOARD)ft_window_size \
 				$(KEYBOARD)ft_word_mv \
-				$(KEYBOARD)ft_slash_handling \
+				$(KEYBOARD)ft_prompt_handling \
 				$(KEYBOARD)ft_keyboard \
+				$(KEYBOARD)ft_keyboard_utils \
 				$(LEXER)ft_lexer \
 				$(BANNER)ft_banner \
 				$(MAIN)main \
@@ -153,7 +145,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 # 				$(KEYBOARD)ft_add_nl_mid_row \
 # 				$(KEYBOARD)ft_arrow_input \
 # 				$(KEYBOARD)ft_backspace \
-# 				$(KEYBOARD)ft_create_prompt_line \
+# 				$(KEYBOARD)ft_print_prompt \
 # 				$(KEYBOARD)ft_delete \
 # 				$(KEYBOARD)ft_deletion_shift \
 # 				$(KEYBOARD)ft_display_row \

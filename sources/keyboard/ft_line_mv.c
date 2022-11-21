@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 15:41:49 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 10:28:45 mbarutel         ###   ########.fr       */
+/*   Created: 2022/11/21 11:16:40 by mbarutel          #+#    #+#             */
+/*   Updated: 2022/11/21 11:16:53 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ static void	ft_line_down(t_term *t)
 			t->c_col = prompt_len;
 			t->index = t->nl_addr[t->c_row + 1] - t->nl_addr[0];
 		}
-		t->index = &t->nl_addr[t->c_row + 1][t->c_col - prompt_len] - t->nl_addr[0];
+		t->index = &t->nl_addr[t->c_row + 1][t->c_col - prompt_len]
+			- t->nl_addr[0];
 	}
 	else
 	{

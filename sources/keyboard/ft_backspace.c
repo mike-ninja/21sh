@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:37:39 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/15 18:10:19 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/21 11:33:47 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	ft_scroll_up(t_term *t)
 {
 	ssize_t	row;
-	
+
 	row = ft_get_linenbr() + 1;
 	ft_run_capability("ho");
 	ft_run_capability("sr");

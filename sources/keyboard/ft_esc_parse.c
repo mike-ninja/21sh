@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_esc_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:31:54 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/21 11:25:38 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 static void	ft_cursor_beginning(t_term *t)
 {
-	ssize_t row;
-	
-	row = 0;
 	if (!t->c_row)
 	{
 		t->c_col = t->prompt_len;
@@ -30,16 +27,13 @@ static void	ft_cursor_beginning(t_term *t)
 			t->c_col = 0;
 		t->index = t->nl_addr[t->c_row] - t->nl_addr[0];
 	}
-	row = ft_display_row(t, row);
-	ft_setcursor(t->c_col, row);
+	ft_setcursor(t->c_col, ft_get_linenbr());
 }
 
 static void	ft_cursor_end(t_term *t)
 {
 	ssize_t	len;
-	ssize_t	row;
 
-	row = 0;
 	t->c_col = 0;
 	len = t->index;
 	if (!t->c_row || ft_is_prompt_line(t, t->c_row))
@@ -55,8 +49,7 @@ static void	ft_cursor_end(t_term *t)
 		t->index = t->bytes;
 	len = t->index - len;
 	t->c_col += &t->inp[t->index] - t->nl_addr[t->c_row];
-	row = ft_display_row(t, row);
-	ft_setcursor(t->c_col, row);
+	ft_setcursor(t->c_col, ft_get_linenbr());
 }
 
 static void	shift_arrow(t_term *t)
