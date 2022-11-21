@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/11/21 14:36:40 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/11/21 17:43:25 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ int	is_seperator(char c)
 
 static void	find_argument_until_seperator(char **line, int *i)
 {
-	char	quote;
+	// char	quote;
 
-	quote = 0;
+	// quote = 0;
 	while ((*line)[*i] && !is_seperator((*line)[*i]))
 	{
 	 	++(*i);
@@ -140,11 +140,11 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 			++line;
 	}
 		/*debugger */
-	i_args = 0;
-	while (args[i_args].token)
-	{
-		ft_printf("Token: %s and value: %s\n", args[i_args].token, args[i_args].value);
-		++i_args;
-	}
+	// i_args = 0;
+	// while (args[i_args].token)
+	// {
+	// 	ft_printf("Token: %s and value: %s\n", args[i_args].token, args[i_args].value);
+	// 	++i_args;
+	// }
 	return (args);
 }
