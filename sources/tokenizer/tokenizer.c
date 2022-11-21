@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/11/21 14:36:40 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/11/21 22:43:57 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,28 @@ int	is_nl(char c)
 int	is_varchr(char c)
 {
 	return (ft_isalnum(c) || c == '_');
+}
+
+/*	See if one of the characters from seperators array can be found before whitespace
+	from the haystack */
+char *is_infuture(char *haystack, char *seperators)
+{
+	int i_sep;
+	int	i_hay;
+
+	i_sep = 0;
+	i_hay = 0;
+	while (haystack[i_hay] && !is_ws(haystack[i_hay]))
+	{
+		while (seperators[i_sep])
+		{
+			if (haystack[i_hay] == seperators[i_sep++])
+				return (&haystack[i_hay]);
+		}
+		i_sep = 0;
+		++i_hay;
+	}
+	return (NULL);
 }
 
 void	track_used_space(t_token **args, size_t current_pointer_n
@@ -67,32 +89,66 @@ int	is_seperator(char c)
 
 }
 
-static void	find_argument_until_seperator(char **line, int *i)
+static char *find_argument_until_seperator(char **line, int *i)
 {
-	char	quote;
+	char	*infuture;
 
-	quote = 0;
-	while ((*line)[*i] && !is_seperator((*line)[*i]))
+	infuture = NULL;
+//	if ((*line)[*i] == '<' || (*line)[*i] == '>')
+//	{
+//		if ((*line)[(*i) + 1] == '&')
+//			++(*i);
+//		else
+//		{
+//			while ((*line)[(*i) + 1] && (*line)[*i] == (*line)[(*i) + 1])
+//				++(*i);
+//			if (*i > 0 && (*line)[*i] == (*line)[(*i) - 1])
+//				++(*i);
+//		}
+//	}
+	while ((*line)[*i])
 	{
-	 	++(*i);
+		infuture = is_infuture(&(*line)[*i], "><");
+		if (infuture || is_seperator((*line)[*i]))
+			break ;
+		++(*i);
 	}
+	if (*i == 0 && infuture)
+	{
+		while ((*line)[*i] && !is_ws((*line)[*i]))
+			++(*i);
+		return (infuture);
+	}
+//	else
+//		while ((*line)[*i] && !is_seperator((*line)[*i]))
+//		 	++(*i);
 	if (*i == 0 && is_seperator((*line)[*i]))
 		++(*i);
+	return (NULL);
 }
 
 /* exceptions are [NOTWS]["] and ["][NOTWS] and [\][WS] */
-char	*find_argument(char **line)
+char	*find_argument(char **line, char *seperator)
 {
 	int		i;
 	char	*ret;
 
 	i = 0;
-	find_argument_until_seperator(line, &i);
-//	if (i > 1 && (*line)[i] == '\n')
-//		--i;
-//	else if ((*line)[i] == '\n')
-//		i = 1;
-	ret = ft_strndup((*line), i);
+	ret = find_argument_until_seperator(line, &i);
+	if (ret && (*ret == '<' || *ret == '>'))
+	{
+		*seperator = *ret;
+		ret = *line;
+		(*line) += i;
+		while (*line <= ret && !(is_ws(*ret)))
+			--ret;
+		i = 0;
+		while (ret[i] && !is_ws(ret[i]))
+			++i;
+		return (ft_strndup(ret, i));
+	}
+	if (!ret)
+		ret = ft_strndup((*line), i);
 	if (!ret)
 		ft_exit_no_mem(1);
 	(*line) += i;
@@ -109,29 +165,26 @@ void	set_token_values(t_token *token, char *token_id, char *value)
 		token->value = ft_strdup(token_id);
 }
 
+/* TODO add support for && and || while ur at it */
 t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 {
 	size_t	i_args;
 	char	*argument;
+	char	seperator;
 
 	i_args = 0;
 	while (*line)
 	{
-			argument = find_argument(&line);
+			seperator = 0;
+			argument = find_argument(&line, &seperator);
 			if (ft_strequ(argument, "\n"))
 				set_token_values(&args[i_args], ft_strdup("NEWLINE"), argument);
 			else if (*argument == '|')
-			{
 				set_token_values(&args[i_args], ft_strdup("PIPE"), argument);
-				++line;
-			}
-			else if (*argument == '>' || *argument == '<')
-			{
-				// TODO handle >> and << increment until not whitespace
-				// JUMP over int find_argument
+			else if (seperator == '>' || seperator == '<')
 				set_token_values(&args[i_args], ft_strdup("REDIR"), argument);
-				++line;
-			}
+			else if (*argument == ';')
+				set_token_values(&args[i_args], ft_strdup("SEMICOLON"), argument);
 			else
 				set_token_values(&args[i_args], ft_strdup("WORD"), argument);
 		++i_args;
