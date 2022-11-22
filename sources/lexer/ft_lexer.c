@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:05:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/21 18:03:27 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/22 12:30:46 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,16 @@ char	*ft_lexer(char *str)
 	while (*str)
 	{
 		if (*str == '\\')
-			str++;
-		line[i++] = *str++;
-		if (line[i] == ' ')
-		{
-			str = ft_skip_ws(str);
-			if (*str)
-				line[i++] = ' ';
+			str += 2;
+		if (*str)
+		{	
+			line[i++] = *str++;
+			if (line[i] == ' ')
+			{
+				str = ft_skip_ws(str);
+				if (*str)
+					line[i++] = ' ';
+			}
 		}
 	}
 	return (line);

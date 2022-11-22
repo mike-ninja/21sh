@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/21 17:41:29 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/22 12:29:20 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,12 @@ int	main(void)
 			line = ft_lexer(term.inp);
 			tokens = chop_line(line, tokens, 2);
 			ft_putstr(line);
+			// int i_args = 0;
+			// while (tokens[i_args].token)
+			// {
+			// 	ft_printf("Token: %s and value: %s\n", tokens[i_args].token, tokens[i_args].value);
+			// 	++i_args;
+			// }
 			ft_strdel(&line);
 			ft_putchar('\n');
 		}
