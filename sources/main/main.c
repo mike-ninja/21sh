@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/21 13:31:32 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:12:47 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int	main(void)
 		{
 			line = ft_lexer(term.inp);
 			tokens = chop_line(line, tokens, 2);
+			build_tree(tokens);
 			ft_putstr(line);
 			ft_strdel(&line);
 			ft_putchar('\n');

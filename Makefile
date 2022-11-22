@@ -6,7 +6,7 @@
 #    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/11/21 13:19:42 by jniemine         ###   ########.fr        #
+#    Updated: 2022/11/22 16:46:28 by jniemine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ OBJECTS 		= 	objects/
 INCLUDES		= 	includes/
 LIBRARIES 		= 	libft/
 TOKENIZER		=	tokenizer/
+BUILDTREE		=	build_tree/
 # BUILTIN		= 	builtin/
 # ERROR			= 	error/
 # EXEC			= 	exec/
@@ -116,6 +117,7 @@ FILES			= $(KEYBOARD)ft_add_row \
 				$(BANNER)ft_banner \
 				$(MAIN)main \
 				$(TOKENIZER)tokenizer \
+				$(BUILDTREE)build_tree \
 				# $(MAIN)free_mem \
 				# $(MAIN)init \
 				# $(MAIN)tree_free \
@@ -221,6 +223,7 @@ $(OBJECTS):
 	@mkdir -p $(OBJECTS)/$(BANNER)
 	@mkdir -p $(OBJECTS)/$(MAIN)
 	@mkdir -p $(OBJECTS)/$(TOKENIZER)
+	@mkdir -p $(OBJECTS)/$(BUILDTREE)
 	# @mkdir -p $(OBJECTS)/$(PARSER)
 	# @mkdir -p $(OBJECTS)/$(UTILS)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"

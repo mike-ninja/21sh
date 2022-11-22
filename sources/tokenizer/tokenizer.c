@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/11/21 22:43:57 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/11/22 19:33:30 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,17 +155,17 @@ char	*find_argument(char **line, char *seperator)
 	return (ret);
 }
 
-void	set_token_values(t_token *token, char *token_id, char *value)
+void	set_token_values(t_token *token, int token_id, char *value)
 {
-	if (token_id)
-		token->token = token_id;
+	token->token = token_id;
 	if (value)
 		token->value = value;
-	else
-		token->value = ft_strdup(token_id);
 }
 
 /* TODO add support for && and || while ur at it */
+/*	TODO 2randomfile>something because source is not only numbers it is assumed to be filename*/
+/* Add ( and ) */
+/* Make unit tests */
 t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 {
 	size_t	i_args;
@@ -178,15 +178,15 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 			seperator = 0;
 			argument = find_argument(&line, &seperator);
 			if (ft_strequ(argument, "\n"))
-				set_token_values(&args[i_args], ft_strdup("NEWLINE"), argument);
+				set_token_values(&args[i_args], NEWLINE, argument);
 			else if (*argument == '|')
-				set_token_values(&args[i_args], ft_strdup("PIPE"), argument);
+				set_token_values(&args[i_args], PIPE, argument);
 			else if (seperator == '>' || seperator == '<')
-				set_token_values(&args[i_args], ft_strdup("REDIR"), argument);
+				set_token_values(&args[i_args], REDIR, argument);
 			else if (*argument == ';')
-				set_token_values(&args[i_args], ft_strdup("SEMICOLON"), argument);
+				set_token_values(&args[i_args], SEMICOLON, argument);
 			else
-				set_token_values(&args[i_args], ft_strdup("WORD"), argument);
+				set_token_values(&args[i_args], WORD, argument);
 		++i_args;
 		track_used_space(&args, i_args, &pointer_n);
 		while (is_ws(*line))
