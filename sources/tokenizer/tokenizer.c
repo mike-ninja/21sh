@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/11/22 19:33:30 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/11/23 18:59:28 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ int	is_nl(char c)
 int	is_varchr(char c)
 {
 	return (ft_isalnum(c) || c == '_');
+}
+
+/* cant be static */
+void free_token(t_token *token)
+{
+	ft_memdel((void **)&token->value);
 }
 
 /*	See if one of the characters from seperators array can be found before whitespace

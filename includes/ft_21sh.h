@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/22 19:50:49 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/11/23 20:49:49 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ typedef struct	s_branch
 # define WORD		4
 # define SEMICOLON	5
 # define NEWLINE	6
+
+/* Build tree, redir types */
+# define RE_IN_ONE	1
+# define RE_IN_TWO	2
+# define RE_IN_TRI	3
+# define RE_OUT_ONE	4
+# define RE_OUT_TWO	5
 
 /*					TOKEN STRUCT			*/
 typedef struct s_token
@@ -86,6 +93,7 @@ char	*ft_lexer(char *str);
 
 /*					TOKENIZER				*/
 t_token	*chop_line(char *line, t_token *args, size_t pointer_n);
+void	free_token(t_token *token);
 
 /*					BULDTREE				*/
 void	build_tree(t_token *tokens);
