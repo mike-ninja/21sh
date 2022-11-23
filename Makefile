@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
+#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/11/21 13:19:42 by jniemine         ###   ########.fr        #
+#    Updated: 2022/11/23 14:21:39 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ MAKEFLAGS			+= --no-print-directory
 
 NAME				=	21sh
 CC					=	gcc
-CFLAGS 				= 	-Wall -Wextra
+# CFLAGS 				= 	-Wall -Wextra -Werror
 CFLAGS				+=	-Wunreachable-code -Wtype-limits
 CFLAGS				+=	-Wpedantic
 # CFLAGS				+=	-Wconversion
@@ -53,7 +53,6 @@ LEAK_CHECK			= -g
 UNAME				= $(shell uname)
 ifeq ($(UNAME), Darwin)
 TERMCAP				=	-ltermcap
-CFLAGS				+= 	-Werror
 endif
 ifeq ($(UNAME), Linux)
 TERMCAP				=	-lncurses
@@ -68,6 +67,9 @@ OBJECTS 		= 	objects/
 INCLUDES		= 	includes/
 LIBRARIES 		= 	libft/
 TOKENIZER		=	tokenizer/
+INITIALIZE		=	initialize/
+EXPANSION		=	expansion/
+UTILITIES		=	utilities/
 # BUILTIN		= 	builtin/
 # ERROR			= 	error/
 # EXEC			= 	exec/
@@ -116,84 +118,12 @@ FILES			= $(KEYBOARD)ft_add_row \
 				$(BANNER)ft_banner \
 				$(MAIN)main \
 				$(TOKENIZER)tokenizer \
-				# $(MAIN)free_mem \
-				# $(MAIN)init \
-				# $(MAIN)tree_free \
-
-# FILES 		=	$(BUILTIN)env_getvalue \
-# 				$(BUILTIN)env_underscore \
-# 				$(BUILTIN)msh_cd \
-# 				$(BUILTIN)msh_echo \
-# 				$(BUILTIN)msh_env \
-# 				$(BUILTIN)msh_exit \
-# 				$(BUILTIN)msh_unsetenv \
-# 				$(BUILTIN)msh_setenv \
-# 				$(BUILTIN)pwd_update \
-# 				$(BUILTIN)env_key_extract \
-# 				$(BUILTIN)setenv_loop \
-# 				$(BUILTIN)setenv_var \
-# 				$(BUILTIN)unsetenv_var \
-# 				$(ERROR)error_print \
-# 				$(EXEC)dup2_check \
-# 				$(EXEC)exec_21sh \
-# 				$(EXEC)exec_pipe_node \
-# 				$(EXEC)exec_tree \
-# 				$(EXEC)fork_check \
-# 				$(EXEC)input_file_read \
-# 				$(EXEC)redirection_file \
-# 				$(HASH_TABLE)hash_function \
-# 				$(HASH_TABLE)hash_init \
-# 				$(KEYBOARD)ft_add_nl_last_row \
-# 				$(KEYBOARD)ft_add_nl_mid_row \
-# 				$(KEYBOARD)ft_arrow_input \
-# 				$(KEYBOARD)ft_backspace \
-# 				$(KEYBOARD)ft_print_prompt \
-# 				$(KEYBOARD)ft_delete \
-# 				$(KEYBOARD)ft_deletion_shift \
-# 				$(KEYBOARD)ft_display_row \
-# 				$(KEYBOARD)ft_esc_parse \
-# 				$(KEYBOARD)ft_get_input \
-# 				$(KEYBOARD)ft_get_prompt_len \
-# 				$(KEYBOARD)ft_history_get \
-# 				$(KEYBOARD)ft_history_trigger \
-# 				$(KEYBOARD)ft_history_write_to_file \
-# 				$(KEYBOARD)ft_history \
-# 				$(KEYBOARD)ft_init_signals \
-# 				$(KEYBOARD)ft_init_term \
-# 				$(KEYBOARD)ft_input_cycle \
-# 				$(KEYBOARD)ft_insertion \
-# 				$(KEYBOARD)ft_is_prompt_line \
-# 				$(KEYBOARD)ft_len_lowest_line \
-# 				$(KEYBOARD)ft_line_mv \
-# 				$(KEYBOARD)ft_opt_mv \
-# 				$(KEYBOARD)ft_print_trail \
-# 				$(KEYBOARD)ft_getline_nbr \
-# 				$(KEYBOARD)ft_putc \
-# 				$(KEYBOARD)ft_quote_decrement \
-# 				$(KEYBOARD)ft_quote_handling \
-# 				$(KEYBOARD)ft_remove_nl_addr \
-# 				$(KEYBOARD)ft_reset_nl_addr \
-# 				$(KEYBOARD)ft_restart_cycle \
-# 				$(KEYBOARD)ft_row_lowest_line \
-# 				$(KEYBOARD)ft_run_capability \
-# 				$(KEYBOARD)ft_setcursor \
-# 				$(KEYBOARD)ft_shift_nl_addr \
-# 				$(KEYBOARD)ft_window_size \
-# 				$(KEYBOARD)ft_word_mv \
-# 				$(LEXER)lexer \
-# 				$(MAIN)free_mem \
-# 				$(MAIN)init \
-# 				$(MAIN)main \
-# 				$(MAIN)tree_free \
-# 				$(PARSER)node_create \
-# 				$(PARSER)parse_exec \
-# 				$(PARSER)parse_line \
-# 				$(PARSER)parse_pipe \
-# 				$(PARSER)parse_redirection \
-# 				$(PARSER)peek \
-# 				$(PARSER)token_get \
-# 				$(UTILS)tree_print \
-# 				$(UTILS)hash_print \
+				$(EXPANSION)ft_expansion \
+				$(EXPANSION)ft_expansion_dollar \
+				$(EXPANSION)ft_expansion_tilde \
+				$(UTILITIES)ft_env_get \
+				$(INITIALIZE)ft_session_init \
+				$(INITIALIZE)ft_env_init \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 O_PATHS		=	$(addsuffix .o, $(addprefix $(OBJECTS)/,$(FILES)))
@@ -212,17 +142,14 @@ $(NAME): libft/libft.a $(OBJECTS) $(O_PATHS)
 
 $(OBJECTS):
 	@make -C $(LIBRARIES)
-	# @mkdir -p $(OBJECTS)/$(BUILTIN)
-	# @mkdir -p $(OBJECTS)/$(ERROR)
-	# @mkdir -p $(OBJECTS)/$(EXEC)
-	# @mkdir -p $(OBJECTS)/$(HASH_TABLE)
 	@mkdir -p $(OBJECTS)/$(KEYBOARD)
 	@mkdir -p $(OBJECTS)/$(LEXER)
 	@mkdir -p $(OBJECTS)/$(BANNER)
 	@mkdir -p $(OBJECTS)/$(MAIN)
 	@mkdir -p $(OBJECTS)/$(TOKENIZER)
-	# @mkdir -p $(OBJECTS)/$(PARSER)
-	# @mkdir -p $(OBJECTS)/$(UTILS)
+	@mkdir -p $(OBJECTS)/$(EXPANSION)
+	@mkdir -p $(OBJECTS)/$(INITIALIZE)
+	@mkdir -p $(OBJECTS)/$(UTILITIES)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"
 	@printf "$(NAME): $(GREEN)$(OBJECTS) directory was created.$(RESET)\n\n\n"
 

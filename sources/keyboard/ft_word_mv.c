@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:43:30 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/18 17:25:59 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/23 13:22:09 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 static void	ft_word_left(t_term *t)
 {
-	while (t->index && ft_iswhitespace((int)t->inp[t->index - 1]))
+	while (t->index && ft_isspace((int)t->inp[t->index - 1]))
 	{
 		if (&t->inp[t->index + 1] == t->nl_addr[t->c_row])
 			break ;
 		t->index--;
 	}
-	while (t->index && !ft_iswhitespace((int)t->inp[t->index - 1]))
+	while (t->index && !ft_isspace((int)t->inp[t->index - 1]))
 	{
 		if (&t->inp[t->index] == t->nl_addr[t->c_row])
 			break ;
@@ -39,13 +39,13 @@ static void	ft_word_right(t_term *t)
 	ssize_t	row;
 
 	row = t->c_row;
-	while (t->index < t->bytes && ft_iswhitespace((int)t->inp[t->index]))
+	while (t->index < t->bytes && ft_isspace((int)t->inp[t->index]))
 	{
 		if (t->nl_addr[row + 1] && &t->inp[t->index + 1] == t->nl_addr[row + 1])
 			break ;
 		t->index++;
 	}
-	while (t->index < t->bytes && !ft_iswhitespace((int)t->inp[t->index]))
+	while (t->index < t->bytes && !ft_isspace((int)t->inp[t->index]))
 	{
 		if (t->nl_addr[row + 1] \
 		&& &t->inp[t->index + 1] == t->nl_addr[row + 1])
