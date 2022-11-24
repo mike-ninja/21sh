@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/23 14:46:56 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/24 14:07:20 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,15 @@ typedef struct sesssion
 /*					HEADER					*/
 void	banner_print(void);
 
+/*				   MAIN LOOP				*/
+void	ft_endcycle(t_session *sesh);
+
 /*				  INITIALIZE				*/
 void	ft_session_init(t_session *sesh);
 char	**ft_env_init(void);
 
 /*					LEXER					*/
-char	*ft_lexer(char *str);
+void	ft_lexer(char *str, char **line);
 
 /*					TOKENIZER				*/
 t_token	*chop_line(char *line, t_token *args, size_t pointer_n);

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:57:25 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/23 15:15:00 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/24 14:04:55 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	ft_special_ch_split_len(char *str)
 	len = 0;
 	while (str[++i])
 	{
-		if (!i || str[i] == '$')
+		if (!i || (ft_isspecial(str[i]) && str[i] != '_'))
 			len++;
 	}
 	return (len);
@@ -54,9 +54,9 @@ static char	**ft_special_ch_split(char *str)
 	while (*str)
 	{
 		i = 0;
-		if (ft_isspecial(str[i]))
+		if (ft_isspecial(str[i]) && str[i] != '_')
 			i++;
-		while (str[i] && !ft_isspecial(str[i]))
+		while (str[i] && (!ft_isspecial(str[i]) || str[i] == '_'))
 			i++;
 		ret[j++] = ft_strsub(str, 0, i);
 		str += i;
@@ -89,7 +89,7 @@ char	*ft_expansion_dollar(t_session *sesh, char *str)
 	split_dollar = ft_special_ch_split(str);
 	while (split_dollar[++i])
 	{
-		if (*split_dollar[i] == '$')
+		if (*split_dollar[i] == '$' && ft_strlen(split_dollar[i]) > 1)
 		{
 			env = ft_env_get(sesh, split_dollar[i] + 1);
 			if (env)
