@@ -6,7 +6,7 @@
 #    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/11/23 14:21:39 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/11/24 14:01:45 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ KEYBOARD		= 	keyboard/
 BANNER			= 	banner/
 MAIN			= 	main/
 LEXER			= 	lexer/
-OBJECTS 		= 	objects/
+OBJECTS 		= 	objects
 INCLUDES		= 	includes/
 LIBRARIES 		= 	libft/
 TOKENIZER		=	tokenizer/
@@ -117,6 +117,7 @@ FILES			= $(KEYBOARD)ft_add_row \
 				$(LEXER)ft_lexer \
 				$(BANNER)ft_banner \
 				$(MAIN)main \
+				$(MAIN)ft_endcycle \
 				$(TOKENIZER)tokenizer \
 				$(EXPANSION)ft_expansion \
 				$(EXPANSION)ft_expansion_dollar \

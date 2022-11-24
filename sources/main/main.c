@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/23 12:12:09 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/24 14:14:58 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,10 @@ int	main(void)
 	{
 		ft_keyboard(&term);
 		if (!ft_strcmp(term.inp, "exit"))
+		{
+			ft_endcycle(sesh);
 			status = 0;
+		}
 		else if (!ft_strcmp(term.inp, "env"))
 		{
 			char **env;
@@ -113,21 +116,22 @@ int	main(void)
 		}
 		else
 		{
-			line = ft_lexer(term.inp);
-			// ft_putendl(line);
+			ft_lexer(term.inp, &line);
 			sesh->tokens = chop_line(line, sesh->tokens, 2);
 			ft_expansion(sesh);
 			/*		debugging		*/
-				int i_args = 0;
-				while (sesh->tokens[i_args].token)
+				int i_args = -1;
+				while (sesh->tokens[++i_args].token)
 				{
-					ft_printf("Token: %s and value: |%s|\n", sesh->tokens[i_args].token, sesh->tokens[i_args].value);
-					++i_args;
+					ft_putstr(sesh->tokens[i_args].value);
+					if (sesh->tokens[i_args + 1].token)
+						ft_putchar(' ');
 				}
-			/*		debugging		*/
-			
+				ft_putchar('\n');
+			/*		debugging		*/	
 			ft_strdel(&line);
 		}
+		ft_endcycle(sesh);
 	}
 	disable_raw_mode(orig_termios);
 	return (0);
