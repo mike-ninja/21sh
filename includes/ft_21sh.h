@@ -6,97 +6,110 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/25 19:52:24 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/27 19:58:06 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_21SH_H
-# define FT_21SH_H
+#define FT_21SH_H
 
-# include "libft.h"
-# include "keyboard.h"
-# include "ft_printf.h"
+#include "libft.h"
+#include "keyboard.h"
+#include "ft_printf.h"
+/* DUNNO IF NEEDED */
+#include <sys/stat.h>
+#include <sys/wait.h>
+/* DUNNO IF NEEDED */
 
-typedef struct	s_branch
+typedef struct s_branch
 {
-	int		type;
-	char	*arg[100];
-	struct	s_branch *left;
-	struct	s_branch *right;
-	struct	s_branch *command;
-}				t_branch;
+	int type;
+	char *arg[100];
+	struct s_branch *left;
+	struct s_branch *right;
+	struct s_branch *command;
+} t_branch;
 
 //# define TOKEN_POINTER_N 1
 /* Do not use zero */
-# define PIPE		1
-# define CMD		2
-# define REDIR		3
-# define WORD		4
-# define SEMICOLON	5
-# define NEWLINE	6
+#define PIPE 1
+#define CMD 2
+#define REDIR 3
+#define WORD 4
+#define SEMICOLON 5
+#define NEWLINE 6
 
 /* Build tree, redir types */
-# define RE_IN_ONE	1
-# define RE_IN_TWO	2
-# define RE_IN_TRI	3
-# define RE_OUT_ONE	4
-# define RE_OUT_TWO	5
+#define RE_IN_ONE 1
+#define RE_IN_TWO 2
+#define RE_IN_TRI 3
+#define RE_OUT_ONE 4
+#define RE_OUT_TWO 5
 
 /*					TOKEN STRUCT			*/
 typedef struct s_token
 {
-	int		token;
-	char	*value;
-}	t_token;
+	int token;
+	char *value;
+} t_token;
 
 /*					CMD STRUCT				*/
 typedef struct s_cmdnode
 {
-	int		type;
-	char	**cmd;
+	int type;
+	char **cmd;
 } t_cmdnode;
 
 typedef union u_treenode t_treenode;
 /*					REDIR STRUCT			*/
 typedef struct s_redir
 {
-	int			type;
-	t_treenode	*cmd;
-	int			close_fd;
-	char		*filepath;
-	int			open_flags;
-	int			rights;
+	int type;
+	t_treenode *cmd;
+	int close_fd;
+	char *filepath;
+	int open_flags;
+	int rights;
 } t_redir;
 
 /*					PIPE STRUCT				*/
 typedef struct s_pipenode
 {
-	int			type;
-	t_treenode	*left;
-	t_treenode	*right;
-}	t_pipenode;
+	int type;
+	t_treenode *left;
+	t_treenode *right;
+} t_pipenode;
 
 /*					TREE UNION				*/
 union u_treenode
 {
-	int	type;
-	t_pipenode	pipe;
-	t_cmdnode	cmd;
-	t_redir		redir;
+	int type;
+	t_pipenode pipe;
+	t_cmdnode cmd;
+	t_redir redir;
 };
 
 /*					HEADER					*/
-void	banner_print(void);
+void banner_print(void);
 
 /*					LEXER					*/
-char	*ft_lexer(char *str);
+char *ft_lexer(char *str);
 
 /*					TOKENIZER				*/
-t_token	*chop_line(char *line, t_token *args, size_t pointer_n);
-void	free_token(t_token *token);
-int		is_ws(char c);
+t_token *chop_line(char *line, t_token *args, size_t pointer_n);
+void free_token(t_token *token);
+int is_ws(char c);
 
 /*					BULDTREE				*/
-void	build_tree(t_token *tokens);
+void build_tree(t_token *tokens);
 
+/*					EXECUTE_TREE			*/
+void exec_tree(t_treenode *head, char ***environ_cp);
+void	execute_bin(char **args, char ***environ_cp);
+char	*search_bin(char *cmd, char **environ_cp);
+void exec_pipe(t_pipenode *pipenode, char ***environ_cp);
+void exec_redir(t_redir *node, char ***environ_cp);
+void	error_exit(char *msg);
+int	ft_freeda(void ***a, size_t row);
+size_t	calc_chptr(char **arr);
 #endif

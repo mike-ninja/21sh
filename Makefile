@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
+#    By: jakken <jakken@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/11/22 16:46:28 by jniemine         ###   ########.fr        #
+#    Updated: 2022/11/27 19:50:13 by jakken           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,13 @@ ifeq ($(UNAME), Darwin)
 TERMCAP				=	-ltermcap
 CFLAGS				+= 	-Werror
 endif
+ifeq ($(UNAME), Fedora)
+TERMCAP				=	-ltermcap
+CFLAGS				+= 	-Werror
+endif
 ifeq ($(UNAME), Linux)
+TERMCAP				=	-ltermcap
+CFLAGS				+= 	-Werror
 TERMCAP				=	-lncurses
 endif
 
@@ -69,6 +75,7 @@ INCLUDES		= 	includes/
 LIBRARIES 		= 	libft/
 TOKENIZER		=	tokenizer/
 BUILDTREE		=	build_tree/
+EXECTREE		=	exec_tree/
 # BUILTIN		= 	builtin/
 # ERROR			= 	error/
 # EXEC			= 	exec/
@@ -118,6 +125,11 @@ FILES			= $(KEYBOARD)ft_add_row \
 				$(MAIN)main \
 				$(TOKENIZER)tokenizer \
 				$(BUILDTREE)build_tree \
+				$(EXECTREE)exec_tree \
+				$(EXECTREE)exec_cmd \
+				$(EXECTREE)exec_pipe \
+				$(EXECTREE)exec_redir \
+				$(EXECTREE)search_bin \
 				# $(MAIN)free_mem \
 				# $(MAIN)init \
 				# $(MAIN)tree_free \
@@ -224,6 +236,7 @@ $(OBJECTS):
 	@mkdir -p $(OBJECTS)/$(MAIN)
 	@mkdir -p $(OBJECTS)/$(TOKENIZER)
 	@mkdir -p $(OBJECTS)/$(BUILDTREE)
+	@mkdir -p $(OBJECTS)/$(EXECTREE)
 	# @mkdir -p $(OBJECTS)/$(PARSER)
 	# @mkdir -p $(OBJECTS)/$(UTILS)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"
