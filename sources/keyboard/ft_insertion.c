@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/21 12:25:33 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/21 18:26:44 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,13 @@ void	ft_insertion(t_term *t)
 	{
 		ft_putc(t->ch);
 		ft_slash_handling(t);
-		if (t->ch == D_QUO || t->ch == S_QUO)
-			if (!t->index || !t->slash)
+		if ((t->ch == D_QUO || t->ch == S_QUO))
+		{
+			if (!t->slash)
 				ft_quote_handling(t, (char)t->ch);
+			else
+				t->slash = 0;
+		}
 		t->c_col++;
 		ft_shift_nl_addr(t, 1);
 		if (t->inp[t->index])

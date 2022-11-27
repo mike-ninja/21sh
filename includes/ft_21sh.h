@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/27 19:58:06 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/27 20:32:16 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,24 @@ union u_treenode
 };
 
 /*					HEADER					*/
-void banner_print(void);
+void	banner_print(void);
+
+/*				   MAIN LOOP				*/
+void	ft_endcycle(t_session *sesh);
+
+/*				  INITIALIZE				*/
+void	ft_session_init(t_session *sesh);
+char	**ft_env_init(void);
+
+/*				   MAIN LOOP				*/
+void	ft_endcycle(t_session *sesh);
+
+/*				  INITIALIZE				*/
+void	ft_session_init(t_session *sesh);
+char	**ft_env_init(void);
 
 /*					LEXER					*/
-char *ft_lexer(char *str);
+void	ft_lexer(char *str, char **line);
 
 /*					TOKENIZER				*/
 t_token *chop_line(char *line, t_token *args, size_t pointer_n);
@@ -102,6 +116,15 @@ int is_ws(char c);
 
 /*					BULDTREE				*/
 void build_tree(t_token *tokens);
+
+/*					EXPANSION				*/
+void	ft_expansion(t_session *sesh);
+char	*ft_expansion_dollar(t_session *sesh, char *str);
+char	*ft_expansion_tilde(t_session *sesh, char *str);
+
+/*					UTILITIES				*/
+int		ft_addr_check(char *file);
+char	**ft_env_get(t_session *sesh, char *key);
 
 /*					EXECUTE_TREE			*/
 void exec_tree(t_treenode *head, char ***environ_cp);

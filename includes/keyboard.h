@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/25 19:31:36 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/27 20:34:54 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,6 @@
 # define PROMPT		"$> "
 # define M_PROMPT	"> "
 
-# define BUFFSIZE   2048
-# define MAX_LINE   1024
-
 typedef struct s_term
 {
 	int		ch;
@@ -67,7 +64,7 @@ typedef struct s_term
 	char	**nl_addr;
 	char	*input_cpy;
 	char	*history_file;
-	char	inp[BUFFSIZE];
+	char	inp[MAX_BUFF_SIZE];
 }			t_term;
 
 int		ft_keyboard(t_term *t);

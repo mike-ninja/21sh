@@ -6,7 +6,7 @@
 #    By: jakken <jakken@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/11/27 19:50:13 by jakken           ###   ########.fr        #
+#    Updated: 2022/11/27 20:34:17 by jakken           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ MAKEFLAGS			+= --no-print-directory
 
 NAME				=	21sh
 CC					=	gcc
-CFLAGS 				= 	-Wall -Wextra
+# CFLAGS 				= 	-Wall -Wextra -Werror
 CFLAGS				+=	-Wunreachable-code -Wtype-limits
 CFLAGS				+=	-Wpedantic
 # CFLAGS				+=	-Wconversion
@@ -53,11 +53,6 @@ LEAK_CHECK			= -g
 UNAME				= $(shell uname)
 ifeq ($(UNAME), Darwin)
 TERMCAP				=	-ltermcap
-CFLAGS				+= 	-Werror
-endif
-ifeq ($(UNAME), Fedora)
-TERMCAP				=	-ltermcap
-CFLAGS				+= 	-Werror
 endif
 ifeq ($(UNAME), Linux)
 TERMCAP				=	-ltermcap
@@ -70,12 +65,15 @@ KEYBOARD		= 	keyboard/
 BANNER			= 	banner/
 MAIN			= 	main/
 LEXER			= 	lexer/
-OBJECTS 		= 	objects/
+OBJECTS 		= 	objects
 INCLUDES		= 	includes/
 LIBRARIES 		= 	libft/
 TOKENIZER		=	tokenizer/
 BUILDTREE		=	build_tree/
 EXECTREE		=	exec_tree/
+INITIALIZE		=	initialize/
+EXPANSION		=	expansion/
+UTILITIES		=	utilities/
 # BUILTIN		= 	builtin/
 # ERROR			= 	error/
 # EXEC			= 	exec/
@@ -123,6 +121,7 @@ FILES			= $(KEYBOARD)ft_add_row \
 				$(LEXER)ft_lexer \
 				$(BANNER)ft_banner \
 				$(MAIN)main \
+				$(MAIN)ft_endcycle \
 				$(TOKENIZER)tokenizer \
 				$(BUILDTREE)build_tree \
 				$(EXECTREE)exec_tree \
@@ -130,6 +129,12 @@ FILES			= $(KEYBOARD)ft_add_row \
 				$(EXECTREE)exec_pipe \
 				$(EXECTREE)exec_redir \
 				$(EXECTREE)search_bin \
+				$(EXPANSION)ft_expansion \
+				$(EXPANSION)ft_expansion_dollar \
+				$(EXPANSION)ft_expansion_tilde \
+				$(UTILITIES)ft_env_get \
+				$(INITIALIZE)ft_session_init \
+				$(INITIALIZE)ft_env_init \
 				# $(MAIN)free_mem \
 				# $(MAIN)init \
 				# $(MAIN)tree_free \
@@ -209,6 +214,7 @@ FILES			= $(KEYBOARD)ft_add_row \
 # 				$(UTILS)tree_print \
 # 				$(UTILS)hash_print \
 
+
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 O_PATHS		=	$(addsuffix .o, $(addprefix $(OBJECTS)/,$(FILES)))
 LIBS		= 	libft/libft.a
@@ -226,10 +232,6 @@ $(NAME): libft/libft.a $(OBJECTS) $(O_PATHS)
 
 $(OBJECTS):
 	@make -C $(LIBRARIES)
-	# @mkdir -p $(OBJECTS)/$(BUILTIN)
-	# @mkdir -p $(OBJECTS)/$(ERROR)
-	# @mkdir -p $(OBJECTS)/$(EXEC)
-	# @mkdir -p $(OBJECTS)/$(HASH_TABLE)
 	@mkdir -p $(OBJECTS)/$(KEYBOARD)
 	@mkdir -p $(OBJECTS)/$(LEXER)
 	@mkdir -p $(OBJECTS)/$(BANNER)
@@ -239,6 +241,9 @@ $(OBJECTS):
 	@mkdir -p $(OBJECTS)/$(EXECTREE)
 	# @mkdir -p $(OBJECTS)/$(PARSER)
 	# @mkdir -p $(OBJECTS)/$(UTILS)
+	@mkdir -p $(OBJECTS)/$(EXPANSION)
+	@mkdir -p $(OBJECTS)/$(INITIALIZE)
+	@mkdir -p $(OBJECTS)/$(UTILITIES)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"
 	@printf "$(NAME): $(GREEN)$(OBJECTS) directory was created.$(RESET)\n\n\n"
 

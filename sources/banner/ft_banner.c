@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 10:31:02 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/19 12:29:22 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/22 19:52:06 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,6 @@ static int	banner_padding(size_t str_len)
 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &arg);
 	return ((arg.ws_col - str_len) >> 1);
 }
-
-// static void	super_pinoy_boy(void)
-// {
-// 	int		padd;
-// 	char	*str;
-
-// 	str = "  ___                    ___ _               ___           ";
-// 	padd = banner_padding(ft_strlen(str));
-// 	ft_printf("\n%*s%s\n", padd, "", str);
-// 	ft_printf("%*s%s\n", padd, "",
-// 		" / __|_  _ _ __  ___ _ _| _ (_)_ _  ___ _  _| _ ) ___ _  _ ");
-// 	ft_printf("%*s%s\n", padd, "",
-// 		" \\__ \\ || | '_ \\/ -_) '_|  _/ | ' \\/ _ \\ || | _ \\/ _ \\ || |");
-// 	ft_printf("%*s%s\n", padd, "",
-// 		" |___/\\_,_| .__/\\___|_| |_| |_|_||_\\___/\\_, |___/\\___/\\_, |");
-// 	ft_printf("%*s%s\n", padd, "",
-// 		"          |_|                           |__/          |__/ ");
-// }
 
 static void	jakke_and_mikey(void)
 {
@@ -97,7 +79,6 @@ static void	minishell_banner(void)
 void	banner_print(void)
 {
 	ft_run_capability("cl");
-	// super_pinoy_boy();
 	jakke_and_mikey();
 	minishell_banner();
 }
