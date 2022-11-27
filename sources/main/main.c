@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/24 14:14:58 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/26 14:59:37 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,11 @@ int	main(void)
 		}
 		else if (!ft_strcmp(term.inp, "env"))
 		{
-			char **env;
+			int	i;
 
-			env = sesh->env;
-			while (*env)
-				ft_putendl(*env++);
+			i = 0;
+			while (*(sesh->env + i))
+				ft_putendl(*(sesh->env + i++));
 		}
 		else
 		{

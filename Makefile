@@ -6,7 +6,7 @@
 #    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/11/24 14:01:45 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/11/26 15:18:42 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,6 +70,7 @@ TOKENIZER		=	tokenizer/
 INITIALIZE		=	initialize/
 EXPANSION		=	expansion/
 UTILITIES		=	utilities/
+BUILTIN_UTILS	= 	builtin_utils/
 # BUILTIN		= 	builtin/
 # ERROR			= 	error/
 # EXEC			= 	exec/
@@ -123,6 +124,7 @@ FILES			= $(KEYBOARD)ft_add_row \
 				$(EXPANSION)ft_expansion_dollar \
 				$(EXPANSION)ft_expansion_tilde \
 				$(UTILITIES)ft_env_get \
+				$(BUILTIN_UTILS)ft_env_remove \
 				$(INITIALIZE)ft_session_init \
 				$(INITIALIZE)ft_env_init \
 
@@ -151,6 +153,7 @@ $(OBJECTS):
 	@mkdir -p $(OBJECTS)/$(EXPANSION)
 	@mkdir -p $(OBJECTS)/$(INITIALIZE)
 	@mkdir -p $(OBJECTS)/$(UTILITIES)
+	@mkdir -p $(OBJECTS)/$(BUILTIN_UTILS)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"
 	@printf "$(NAME): $(GREEN)$(OBJECTS) directory was created.$(RESET)\n\n\n"
 

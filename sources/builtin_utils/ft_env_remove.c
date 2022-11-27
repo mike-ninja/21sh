@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_session_init.c                                  :+:      :+:    :+:   */
+/*   ft_env_remove.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 16:44:03 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/26 15:29:09 by mbarutel         ###   ########.fr       */
+/*   Created: 2022/11/26 15:09:29 by mbarutel          #+#    #+#             */
+/*   Updated: 2022/11/26 15:28:25 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-/**
- * It initializes the session struct.
- * 
- * @param sesh The session struct.
- */
-void	ft_session_init(t_session *sesh)
+void	ft_env_remove(t_session *sesh, char *env_to_clean)
 {
-	sesh->ret = 0;
-	ft_env_init(sesh);
-	sesh->tmp_env_key = NULL;
-	sesh->tokens = (t_token *)ft_memalloc(sizeof(*sesh->tokens) * 2);
+	int		i;
+	char	**ptr;
+	char	**new_array;
+
+	i = 0;
+	ptr = sesh->env;
+	new_array = (char **)ft_memalloc(sizeof(char *) * ft_arrlen(sesh->env));
+	while (*ptr)
+	{
+		if (!ft_strnequ(*ptr, env_to_clean, ft_strlen(env_to_clean)))
+			*(new_array + (i++)) = ft_strdup(*ptr);
+		ptr++;
+	}
+	*(new_array + (i)) = NULL;
+	ft_arrclean(sesh->env);
+	sesh->env = new_array;
 }
