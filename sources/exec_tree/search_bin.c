@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 12:31:36 by jakken            #+#    #+#             */
-/*   Updated: 2022/11/27 20:01:26 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/27 21:28:41 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,33 @@ static int	ft_freeda_w(void ***a, size_t row)
 	return (1);
 }
 
+char	*search_variable(char **environ_cp, char *var_name)
+{
+	int		i;
+	char	*var_value;
+	int		len;
+
+	i = 0;
+	len = ft_strlen(var_name);
+	var_value = NULL;
+	while (environ_cp[i]
+		&& !(ft_strnequ(environ_cp[i], var_name, len)
+			&& environ_cp[i][len] == '='))
+		++i;
+	if (environ_cp[i] && environ_cp[i][len] == '=')
+	{
+		var_value = ft_strdup(ft_strchr(environ_cp[i], '=') + 1);
+		if (!var_value)
+			error_exit("Malloc fail\n");
+	}
+	return (var_value);
+}
+
 static int	try_cmd(char *cmd, char **environ_cp, char **temp_path)
 {
 	if (!access(cmd, F_OK) && !access(cmd, X_OK))
 		return (1);
-	// JUST TO COMPILE:
-	if (environ_cp && temp_path)
-		return (0);
-	//REPLACE OR MERGE
-	//*temp_path = search_variable(environ_cp, "PATH");
+	*temp_path = search_variable(environ_cp, "PATH");
 	return (0);
 }
 

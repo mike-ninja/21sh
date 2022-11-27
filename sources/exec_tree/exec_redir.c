@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:14:38 by jakken            #+#    #+#             */
-/*   Updated: 2022/11/27 19:55:35 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/27 22:19:41 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,17 @@
 
 void exec_redir(t_redir *node, char ***environ_cp)
 {
-	close (node->close_fd);
-	if (open(node->filepath, node->open_flags, node->rights) < 0)
-		error_exit("21sh: exec_redir: open failed\n");
-	if (!node->cmd)
+	if (fork_wrap() == 0)
 	{
-		ft_printf("21sh: command not found\n");
-		return ;
+		close (node->close_fd);
+		if (open(node->filepath, node->open_flags, node->rights) < 0)
+			error_exit("21sh: exec_redir: open failed\n");
+		if (!node->cmd)
+		{
+			ft_printf("21sh: command not found\n");
+			return ;
+		}
+		exec_tree(node->cmd, environ_cp);
 	}
-	exec_tree(node->cmd, environ_cp);
+	wait (0);
 }

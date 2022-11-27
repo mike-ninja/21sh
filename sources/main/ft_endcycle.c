@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_endcycle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:00:16 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/24 14:19:45 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/27 21:15:58 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ static void	ft_reset_tokens(t_session *sesh)
 
 	i = -1;
 	while (sesh->tokens[++i].token)
-	{
-		ft_strdel(&sesh->tokens[i].token);
 		ft_strdel(&sesh->tokens[i].value);
-	}
 	ft_memdel((void **)&sesh->tokens);
 	sesh->tokens = (t_token *)ft_memalloc(sizeof(*sesh->tokens) * 2);
 }

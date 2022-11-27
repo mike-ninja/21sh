@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/11/27 16:29:45 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/27 22:48:09 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,7 +313,7 @@ static t_treenode *parse_right_cmd(t_token *tokens, int i_tok)
 	redir = NULL;
 	cmd = -1;
 	start = i_tok;
-	while (tokens[i_tok].value && tokens[i_tok].token != PIPE)
+	while (cmd < 0 && tokens[i_tok].value && tokens[i_tok].token != PIPE)
 	{
 		if (tokens[i_tok].token == WORD)
 			cmd = i_tok;
@@ -443,7 +443,7 @@ void print_tree(t_treenode *head, int depth)
 }
 
 /* ls -l > file | head -n 5 > file < file2 | tail */
-void	build_tree(t_token *tokens)
+t_treenode	*build_tree(t_token *tokens)
 {
 //	const char *marks[] = {"PIPE", "REDIR", "SEMICOLON", "NEWLINE", NULL};
 //	int	i;
@@ -461,5 +461,5 @@ void	build_tree(t_token *tokens)
 		head = create_pipe_node(tokens, pipe);
 	else
 		head = parse_left_cmd(tokens, 0);
-	print_tree(head, 0);
+	return (head);
 }

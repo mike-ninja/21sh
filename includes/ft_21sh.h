@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/27 20:32:16 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/27 22:07:42 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,23 @@ typedef struct s_branch
 #define RE_OUT_ONE 4
 #define RE_OUT_TWO 5
 
+typedef union u_treenode t_treenode;
+
 /*					TOKEN STRUCT			*/
 typedef struct s_token
 {
 	int token;
 	char *value;
 } t_token;
+
+typedef struct sesssion
+{
+	int			ret;
+	char		**env;
+	t_token		*tokens;
+	char		**tmp_env_key;
+	t_treenode	*head;
+}				t_session;
 
 /*					CMD STRUCT				*/
 typedef struct s_cmdnode
@@ -60,7 +71,6 @@ typedef struct s_cmdnode
 	char **cmd;
 } t_cmdnode;
 
-typedef union u_treenode t_treenode;
 /*					REDIR STRUCT			*/
 typedef struct s_redir
 {
@@ -115,7 +125,7 @@ void free_token(t_token *token);
 int is_ws(char c);
 
 /*					BULDTREE				*/
-void build_tree(t_token *tokens);
+t_treenode *build_tree(t_token *tokens);
 
 /*					EXPANSION				*/
 void	ft_expansion(t_session *sesh);
@@ -135,4 +145,5 @@ void exec_redir(t_redir *node, char ***environ_cp);
 void	error_exit(char *msg);
 int	ft_freeda(void ***a, size_t row);
 size_t	calc_chptr(char **arr);
+int	fork_wrap(void);
 #endif

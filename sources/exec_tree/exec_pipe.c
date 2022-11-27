@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:15:20 by jakken            #+#    #+#             */
-/*   Updated: 2022/11/27 19:54:50 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/27 23:05:01 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void exec_pipe(t_pipenode *pipenode, char ***environ_cp)
 	  close(pipefd[0]);
 	  close(pipefd[1]);
 	  exec_tree(pipenode->left,	environ_cp);
+	  exit (1);
 	}
 	if(fork_wrap() == 0){
 	  close(0);
@@ -85,6 +86,7 @@ void exec_pipe(t_pipenode *pipenode, char ***environ_cp)
 	  close(pipefd[0]);
 	  close(pipefd[1]);
 	  exec_tree(pipenode->right, environ_cp);
+	  exit (1);
 	}
 	close(pipefd[0]);
 	close(pipefd[1]);

@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/27 20:38:57 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/27 22:55:24 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,15 +119,21 @@ int	main(void)
 			ft_lexer(term.inp, &line);
 			sesh->tokens = chop_line(line, sesh->tokens, 2);
 			ft_expansion(sesh);
+			sesh->head = build_tree(sesh->tokens);
+			if (sesh->head && sesh->head->type == CMD && fork_wrap() == 0)
+				execute_bin(((t_cmdnode *)sesh->head)->cmd, &sesh->env);
+			else if (sesh->head && sesh->head->type != CMD)
+				exec_tree(sesh->head, &sesh->env);
+		//	wait (0);
 			/*		debugging		*/
-				int i_args = -1;
-				while (sesh->tokens[++i_args].token)
-				{
-					ft_putstr(sesh->tokens[i_args].value);
-					if (sesh->tokens[i_args + 1].token)
-						ft_putchar(' ');
-				}
-				ft_putchar('\n');
+//				int i_args = -1;
+//				while (sesh->tokens[++i_args].token)
+//				{
+//					ft_putstr(sesh->tokens[i_args].value);
+//					if (sesh->tokens[i_args + 1].token)
+//						ft_putchar(' ');
+//				}
+//				ft_putchar('\n');
 			/*		debugging		*/
 			ft_strdel(&line);
 		}
