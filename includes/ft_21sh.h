@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/23 20:49:49 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/11/25 19:52:24 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ char	*ft_lexer(char *str);
 /*					TOKENIZER				*/
 t_token	*chop_line(char *line, t_token *args, size_t pointer_n);
 void	free_token(t_token *token);
+int		is_ws(char c);
 
 /*					BULDTREE				*/
 void	build_tree(t_token *tokens);

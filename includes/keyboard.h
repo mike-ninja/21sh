@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/21 12:25:33 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/25 19:31:36 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 # define KEYBOARD_H
 
 # include <termcap.h>//control if all these are needed
-# include <ft_vec.h>
 # include <term.h>//same same
-# include <fcntl.h>
 # include <curses.h>//same same
+# include <ft_vec.h>
+# include <fcntl.h>
 # include <signal.h>
 # include <termios.h>
 # include <sys/ioctl.h>

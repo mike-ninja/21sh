@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   build_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/11/23 20:57:03 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/11/27 16:29:45 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
-
-static	int foreseer_of_tokens(t_token *tokens, const char **marks, int end);
 
 int	increment_whitespace(char **line)
 {
@@ -66,6 +64,7 @@ static char **make_arg_array(char *cmd)
 		args[i] = cmd;
 		increment_not_whitespace(&cmd);
 		*cmd = '\0';
+		++cmd;
 		++i;
 	}
 //	null_terminate_strings(args);
@@ -108,7 +107,7 @@ void free_cmd_node(t_cmdnode *node)
 	{
 		while (node->cmd)
 		{
-			ft_memdel(node->cmd);
+			ft_memdel((void **)&node->cmd);
 			++node->cmd;
 		}
 	}
@@ -151,7 +150,7 @@ static void error_tok(t_token *tokens, t_treenode *redir_head, char *msg, char *
 	}
 	while (redir_head)
 	{
-		free_redir_node(&redir_head);
+		free_redir_node(((t_redir **)&redir_head));
 		++redir_head;
 	}
 	if (!symbol)
@@ -166,8 +165,8 @@ static int redir_type(char *value)
 	char	*type;
 	char	*tmp;
 
-	type = ft_strchr(value, ">");
-	tmp = ft_strchr(value, "<");
+	type = ft_strchr(value, '>');
+	tmp = ft_strchr(value, '<');
 	if (type && tmp)
 		if (tmp < type)
 			type = tmp;
@@ -189,7 +188,7 @@ static int redir_type(char *value)
 /* TODO does << and <<< have any meaning at this point or <<< at all*/
 /* <<< does something >>> does not */
 /* Does OUT need O_RDWR ?? */
-static t_treenode *init_redir_wrap(char *filepath, char *cmd, int redir_type)
+static t_treenode *init_redir_wrap(char *filepath, t_treenode *cmd, int redir_type)
 {
 	int	close_fd;
 
@@ -199,13 +198,49 @@ static t_treenode *init_redir_wrap(char *filepath, char *cmd, int redir_type)
 		close_fd = STDOUT_FILENO;
 	if (redir_type == RE_IN_ONE)
 		return (init_redir(filepath, cmd, close_fd, O_RDONLY));
-	if (redir_type == RE_OUT_ONE)
+	else if (redir_type == RE_OUT_ONE)
 		return (init_redir(filepath, cmd, close_fd, O_CREAT | O_TRUNC | O_RDWR));
-	if (redir_type == RE_OUT_TWO)
+	else if (redir_type == RE_OUT_TWO)
 		return (init_redir(filepath, cmd, close_fd, O_CREAT | O_APPEND | O_RDWR));
+	return (NULL);
 }
+/*
+static char **make_arg_array(char *cmd)
+{
+	int	argc;
+	int	i;
+	char **args;
 
-static t_treenode *if_redir(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
+	increment_whitespace(&cmd);
+	argc = ft_calc_chr(cmd, ' ') + 1;
+	args = ft_memalloc(sizeof(*args) * (argc + 1));
+	i = 0;
+	while (*cmd && i < argc)
+	{
+		increment_whitespace(&cmd);
+		args[i] = cmd;
+		increment_not_whitespace(&cmd);
+		++i;
+	}
+//	null_terminate_strings(args);
+	return (args);
+}
+*/
+
+/*
+t_treenode	*init_cmd_node(char *cmd)
+{
+	t_treenode *new;
+
+	new = ft_memalloc(sizeof(*new));
+	new->type = CMD;
+	((t_cmdnode *)new)->type = CMD;
+	((t_cmdnode *)new)->cmd = make_arg_array(cmd);
+	return (new);
+}
+*/
+
+static void if_redir(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 {
 	int	redir_t;
 
@@ -219,10 +254,11 @@ static t_treenode *if_redir(t_token *tokens, t_treenode **redir, int i_tok, int 
 			if (cmd < 0)
 				*redir = init_redir_wrap(tokens[i_tok + 1].value, NULL, redir_t);
 			else // HERE WE NEED TO CREATE COMMAND NODE
-				*redir = init_redir_wrap(tokens[i_tok + 1].value, NULL, redir_t);
+				*redir = init_redir_wrap(tokens[i_tok + 1].value, init_cmd_node(tokens[cmd].value), redir_t);
 		}
 		else
 		{
+			((t_redir *)(*redir))->cmd = init_redir_wrap(tokens[i_tok + 1].value, (((t_redir *)(*redir))->cmd), redir_t);
 			// HERE WE NEED TO ADD NEW REDIR AS CHILD TO PREVIOUS
 		}
 
@@ -234,53 +270,67 @@ static t_treenode *if_redir(t_token *tokens, t_treenode **redir, int i_tok, int 
 //TODO first go backwards until prev pipe or i_tok == 0 or semicolon
 //THEN build cmd until REDIR
 //THEN build linked list of redirections
-t_treenode *parse_left_cmd(t_token *tokens, int i_tok)
+static t_treenode *parse_left_cmd(t_token *tokens, int i_tok)
 {
 	t_treenode	*redir;
-	int			close_fd;
+//	int			close_fd;
 	int			cmd;
-	char		*direction;
+//	char		*direction;
 
 	redir = NULL;
 	cmd = -1;
-	while (i_tok && tokens[i_tok].token != PIPE)
+	if (i_tok >= 0 && tokens[i_tok].token == WORD)
+		cmd = i_tok;
+	while (cmd < 0 && i_tok && tokens[i_tok].token != PIPE)
 	{
 		if (tokens[i_tok].token == WORD)
 			cmd = i_tok;
 		--i_tok;
 	}
+	/* Should there be error if no command but redirs exist */
+	if (cmd < 0)
+		error_tok(tokens, NULL, "No command", NULL);
 	if (tokens[i_tok].token == PIPE)
 		++i_tok;
 	while (tokens[i_tok].token && tokens[i_tok].token != PIPE)
 	{
-		if_redir() //Add params
-		}
+		if_redir(tokens, &redir, i_tok, cmd);
+		++i_tok;
 	}
-
+	if (redir)
+		return (redir);
+	return (init_cmd_node(tokens[cmd].value));
 }
 
-t_treenode *create_pipe_node(t_tokens *tokens, int i_tok)
+static t_treenode *parse_right_cmd(t_token *tokens, int i_tok)
 {
-	t_treenode	*left;
-	t_treenode	*right;
-	char	*temp;
+	t_treenode	*redir;
+	int			start;
+//	int			close_fd;
+	int			cmd;
+//	char		*direction;
 
-	if (tokens[i_tok] == PIPE)
+	redir = NULL;
+	cmd = -1;
+	start = i_tok;
+	while (tokens[i_tok].value && tokens[i_tok].token != PIPE)
 	{
-		// strsubs need	to be freed
-		temp = ft_strsub(line, 0, *pipes - line	- 1);
-		left = init_cmd_node(temp);
-		line = *pipes +	1;
-		if (*(pipes	+ 1))
-			right =	create_pipe_node(++pipes, line);
-		else
-		{
-			temp = ft_strsub(line, 0, ft_strlen(line));
-			right =	init_cmd_node(temp);
-		}
-		return (init_pipe(left,	right));
+		if (tokens[i_tok].token == WORD)
+			cmd = i_tok;
+		++i_tok;
 	}
-	return (NULL);
+	/* Should there be error if no command but redirs exist */
+	if (cmd < 0)
+		error_tok(tokens, NULL, "No command", NULL);
+	i_tok = start;
+	while (tokens[i_tok].token && tokens[i_tok].token != PIPE)
+	{
+		if_redir(tokens, &redir, i_tok, cmd);
+		++i_tok;
+	}
+	if (redir)
+		return (redir);
+	return (init_cmd_node(tokens[cmd].value));
 }
 
 static 	int calculate_tokens(t_token *tokens)
@@ -295,7 +345,8 @@ static 	int calculate_tokens(t_token *tokens)
 
 static	int foreseer_of_tokens(t_token *tokens, int mark, int start, int end)
 {
-	tokens = NULL;
+	if (!tokens)
+		return (-1);
 	while (tokens[start].token && start < end)
 	{
 		if (tokens[start].token == mark)
@@ -305,19 +356,110 @@ static	int foreseer_of_tokens(t_token *tokens, int mark, int start, int end)
 	return (-1);
 }
 
+t_treenode *create_pipe_node(t_token *tokens, int i_tok)
+{
+	t_treenode	*left;
+	t_treenode	*right;
+	int			next_pipe;
+	//char	*temp;
+
+	left = NULL;
+	right = NULL;
+	if (tokens[i_tok].token == PIPE)
+	{
+		left = parse_left_cmd(tokens, i_tok - 1);
+		next_pipe = foreseer_of_tokens(tokens, PIPE, i_tok + 1, calculate_tokens(tokens));
+		if (next_pipe >= 0)
+			right = create_pipe_node(tokens, next_pipe);
+		else
+			right = parse_right_cmd(tokens, i_tok + 1);
+		// strsubs need	to be freed
+	//	temp = ft_strsub(line, 0, *pipes - line	- 1);
+	//	left = init_cmd_node(temp);
+	//	line = *pipes +	1;
+	//	if (*(pipes	+ 1))
+	//		right =	create_pipe_node(++pipes, line);
+	//	else
+	//	{
+	//		temp = ft_strsub(line, 0, ft_strlen(line));
+	//		right =	init_cmd_node(temp);
+	//	}
+		return (init_pipe(left,	right));
+	}
+	return (NULL);
+}
+
+
+void print_array_as_line(char **arr)
+{
+	int i;
+
+	i = 0;
+	while (arr[i])
+	{
+		ft_printf("%s ", arr[i]);
+		++i;
+	}
+	ft_printf("\n");
+}
+
+void print_node(t_treenode *node)
+{
+	if (!node)
+	{
+		ft_printf("NULL\n");
+		return ;
+	}
+	else if (node->type == PIPE)
+		ft_printf("Type: PIPE\n");
+	else if (node->type == CMD)
+	{
+		ft_printf("Type: CMD Value: ");
+		print_array_as_line(((t_cmdnode *)node)->cmd);
+	}
+	else if (node->type == REDIR)
+		ft_printf("Type: REDIR\n");
+}
+
+void print_tree(t_treenode *head, int depth)
+{
+	int depth_temp;
+
+	depth_temp = depth;
+	if (!head)
+		return ;
+	if (head->type == PIPE)
+	{
+		print_tree(((t_pipenode *)head)->right, depth + 1);
+		ft_printf("\\");
+		print_tree(((t_pipenode *)head)->left, depth + 1);
+		ft_printf("/");
+	}
+	while (depth--)
+		ft_printf("\t");
+	print_node(head);
+	while (depth_temp--)
+		ft_printf("\t");
+}
+
 /* ls -l > file | head -n 5 > file < file2 | tail */
 void	build_tree(t_token *tokens)
 {
-	const char *marks[] = {"PIPE", "REDIR", "SEMICOLON", "NEWLINE", NULL};
-	int	i;
+//	const char *marks[] = {"PIPE", "REDIR", "SEMICOLON", "NEWLINE", NULL};
+//	int	i;
+	t_treenode *head;
 	int	pipe;
 
-	i = 0;
+	head = NULL;
+//	i = 0;
 	//First search for pipe
 	//Everythin on left side of pipe goes to left (commands and redir nodes)
 	//On right side goes the next pipe or if no pipe then command
 	// Refactor the init pipe to use tokens, it should build the command on the left and on the right?
 	pipe = foreseer_of_tokens(tokens, PIPE, 0, calculate_tokens(tokens));
 	if (pipe >= 0)
-		create_pipe_node(tokens, pipe);
+		head = create_pipe_node(tokens, pipe);
+	else
+		head = parse_left_cmd(tokens, 0);
+	print_tree(head, 0);
 }

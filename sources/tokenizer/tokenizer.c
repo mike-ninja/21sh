@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/11/23 18:59:28 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/11/27 15:29:15 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,13 +197,6 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 		track_used_space(&args, i_args, &pointer_n);
 		while (is_ws(*line))
 			++line;
-	}
-		/*debugger */
-	i_args = 0;
-	while (args[i_args].token)
-	{
-		ft_printf("Token: %s and value: %s\n", args[i_args].token, args[i_args].value);
-		++i_args;
 	}
 	return (args);
 }

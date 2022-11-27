@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 10:13:31 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/11 12:00:28 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/25 19:48:43 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ char	*skip_whitespace(char *str)
 	{
 		while (*str)
 		{
-			if (!ft_iswhitespace(*str))
+			if (!ft_isspace(*str))
 				return (str);
 			str++;
-		}	
+		}
 	}
 	return (NULL);
 }

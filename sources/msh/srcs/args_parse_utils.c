@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_parse_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:39:30 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/18 16:33:24 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/25 19:48:43 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	qoute_removal(char **arg)
 	j = 0;
 	ft_bzero(line, BUFF_SIZE);
 	while (arg[0][i])
-	{	
+	{
 		while (arg[0][i] && (arg[0][i] == '"' || arg[0][i] == '\''))
 			i++;
 		line[j++] = arg[0][i++];
@@ -61,7 +61,7 @@ static void	qoute_parse(char **line, char **arg, int *i, char *sep)
 	tofree = NULL;
 	line[0]++;
 	arg[i[0]++] = ft_strdup(ft_strsep(&line[0], sep));
-	if (line[0] && !ft_iswhitespace(line[0][0]))
+	if (line[0] && !ft_isspace(line[0][0]))
 	{
 		tofree = arg[i[0] - 1];
 		arg[i[0] - 1] = ft_strjoin(arg[i[0] - 1], ft_strsep(line, " "));
