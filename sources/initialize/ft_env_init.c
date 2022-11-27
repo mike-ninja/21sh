@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:42:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/22 19:53:58 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/26 15:44:38 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,37 +46,37 @@ static char	*increment_lvl(char *env)
  * 
  * @return a string that is the SHLVL environment variable.
  */
-static char	*ft_shlvl(char *my_env, char *env)
+static char	*ft_shlvl(char *shlvl)
 {
 	char	*lvl;
-
+	char	*env;
+	
 	lvl = increment_lvl(env);
-	my_env = ft_strjoin("SHLVL=", lvl);
-	free(lvl);
-	return (my_env);
+	env = ft_strjoin("SHLVL=", lvl);
+	ft_strdel(&lvl);
+	return (env);
 }
 
 /**
- * It initializes the environment array.
+ * It copies the environment variables from the global variable `environ` into the `env`
+ * variable of the `t_session` structure
  * 
- * @return A pointer to a pointer to a char.
+ * @param sesh The session struct.
  */
-char	**ft_env_init(void)
+void	ft_env_init(t_session *sesh)
 {
 	int		i;
-	char	**env;
 
-	env = (char **)malloc(sizeof(char *) * (ft_arrlen(environ) + 1));
-	if (!env)
-		ft_exit_no_mem(1);
 	i = -1;
-	while (environ[++i])
+	sesh->env = (char **)ft_memalloc(sizeof(char *) * (ft_arrlen(environ) + 1));
+	while (*(environ + (++i)))
 	{
-		if (ft_strstr(environ[i], "SHLVL="))
-			env[i] = ft_shlvl(env[i], environ[i]);
+		if (ft_strstr(*(environ + (i)), "SHLVL="))
+			*(sesh->env + (i)) = ft_shlvl(environ[i]);
 		else
-			env[i] = ft_strdup(environ[i]);
+			*(sesh->env + (i)) = ft_strdup(environ[i]);
 	}
-	env[i] = NULL;
-	return (env);
+	*(sesh->env + (i)) = NULL;
+	if (ft_env_get(sesh, "OLDPWD"))
+		ft_env_remove(sesh, "OLDPWD=");
 }

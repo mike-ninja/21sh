@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/24 14:07:20 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/26 15:34:37 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct sesssion
 	int			ret;
 	char		**env;
 	t_token		*tokens;
-	char		**tmp_env;
+	char		**tmp_env_key;
 }				t_session;
 
 /*					HEADER					*/
@@ -49,8 +49,8 @@ void	banner_print(void);
 void	ft_endcycle(t_session *sesh);
 
 /*				  INITIALIZE				*/
+void	ft_env_init(t_session *sesh);
 void	ft_session_init(t_session *sesh);
-char	**ft_env_init(void);
 
 /*					LEXER					*/
 void	ft_lexer(char *str, char **line);
@@ -67,4 +67,9 @@ char	*ft_expansion_tilde(t_session *sesh, char *str);
 int		ft_addr_check(char *file);
 char	**ft_env_get(t_session *sesh, char *key);
 
+/*			    BUILTIN UTILITIES			*/
+void	ft_env_remove(t_session *sesh, char *env_to_clean);
+
 #endif
+
+

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 05:56:33 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/18 16:27:29 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/26 20:11:55 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,6 @@ int		append_env(t_session *sesh, char **arg);
 int		env_removal(t_session *sesh, char *env);
 char	**env_get_var(t_session *sesh, char *key);
 char	**env_last_prog(char *path, t_session *sesh);
-bool	replace_value(t_session *sesh, char *arg, char **tmp);
+bool	ft_replace_env(t_session *sesh, char *arg, char **tmp);
 
 #endif
