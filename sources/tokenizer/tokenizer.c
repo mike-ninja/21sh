@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/11/28 16:41:24 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/28 23:29:39 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,13 @@ char *is_infuture(char *haystack, char *seperators)
 		i_sep = 0;
 		++i_hay;
 	}
+	while (haystack[i_hay] && is_ws(haystack[i_hay]))
+		++i_hay;
+	while (seperators[i_sep])
+	{
+		if (haystack[i_hay] == seperators[i_sep++])
+			return (&haystack[i_hay]);
+	}
 	return (NULL);
 }
 
@@ -95,25 +102,30 @@ int	is_seperator(char c)
 
 }
 
-static char *find_argument_until_seperator(char **line, int *i)
+static char *find_argument_until_seperator(char **line, char **digits, int *i)
 {
 	char	*infuture;
+	int		start;
 
 	infuture = NULL;
-//	if ((*line)[*i] == '<' || (*line)[*i] == '>')
-//	{
-//		if ((*line)[(*i) + 1] == '&')
-//			++(*i);
-//		else
-//		{
-//			while ((*line)[(*i) + 1] && (*line)[*i] == (*line)[(*i) + 1])
-//				++(*i);
-//			if (*i > 0 && (*line)[*i] == (*line)[(*i) - 1])
-//				++(*i);
-//		}
-//	}
 	while ((*line)[*i])
 	{
+		//if [ws][digit] or [idx = 0][digit]
+		if ((*i == 0 && ft_isdigit((*line)[*i]))
+			|| ((*line)[*i] == ' ' && ft_isdigit((*line)[*i + 1])))
+		{
+			if ((*line)[*i] == ' ')
+				++(*i);
+			start = *i;
+			while ((*line)[start] && ft_isdigit((*line)[start]))
+				++start;
+			if ((*line)[start] == ' ' || (*line)[start] == '\0')
+			{
+				ft_memdel((void **)&(*digits));
+				ft_strsub(*digits, *i, start);
+			}
+			*i += start - *i;
+		}
 		infuture = is_infuture(&(*line)[*i], "><");
 		if (infuture || is_seperator((*line)[*i]))
 			break ;
@@ -138,11 +150,16 @@ char	*find_argument(char **line, char *seperator)
 {
 	int		i;
 	char	*ret;
+	char	*digits;
 
 	i = 0;
-	ret = find_argument_until_seperator(line, &i);
-	ft_printf("RET: %s\n", ret);
+	digits = NULL;
+	ret = find_argument_until_seperator(line, &digits, &i);
 	// TODO if redir symbol is found, if no filename touching then the next whitespace delimited word is filename
+	// Everything until redirsymbol is cmd or [ws][digit][redir]
+	//if [ws][digit] -> collect all digit until [redir] or [ws][redir]
+	//after redir symbols if [ws][ascii] or [ascii] collect until [ws]
+	//if aggregation, only [ws][digit]*[digit] or *[digit] is allowed
 	if (ret && (*ret == '<' || *ret == '>'))
 	{
 		*seperator = *ret;
@@ -153,6 +170,7 @@ char	*find_argument(char **line, char *seperator)
 		i = 0;
 		while (ret[i] && !is_ws(ret[i]))
 			++i;
+		ft_printf("I: %d\n", i);
 		return (ft_strndup(ret, i));
 	}
 	if (!ret)
@@ -174,6 +192,9 @@ void	set_token_values(t_token *token, int token_id, char *value)
 /*	TODO 2randomfile>something because source is not only numbers it is assumed to be filename*/
 /* Add ( and ) */
 /* Make unit tests */
+//TODO chop line into ws seperated array, then go trough the array.
+//TODO make token node for fd aggregation
+//TODO >& must have digit target
 t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 {
 	size_t	i_args;
