@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/28 12:45:12 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/28 13:35:05 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct s_token
 	char *value;
 } t_token;
 
-typedef struct sesssion
+typedef struct session
 {
 	int			ret;
 	char		**env;
