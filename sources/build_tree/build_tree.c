@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/11/28 15:15:24 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/28 16:35:26 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,10 @@ t_treenode *init_pipe(t_treenode *left,	t_treenode *right)
 //TODO remember to fee pipe and tokens array also
 static void error_tok(t_token *tokens, t_treenode *redir_head, char *msg, char *symbol)
 {
+	if (!symbol)
+		ft_printf("21sh: %s\n", msg);
+	else
+		ft_printf("21sh: %s `%s'\n", msg, symbol);
 	while (tokens->token)
 	{
 		free_token(&(*tokens));
@@ -153,10 +157,6 @@ static void error_tok(t_token *tokens, t_treenode *redir_head, char *msg, char *
 		free_redir_node(((t_redir **)&redir_head));
 		++redir_head;
 	}
-	if (!symbol)
-		ft_printf("21sh: %s\n", msg);
-	else
-		ft_printf("21sh: %s `%s'\n", msg, symbol);
 }
 
 /* Should actually never return 0 */
@@ -240,14 +240,17 @@ t_treenode	*init_cmd_node(char *cmd)
 }
 */
 
-static void if_redir(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
+static int if_redir(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 {
 	int	redir_t;
 
 	if (tokens[i_tok].token == REDIR)
 	{
 		if (!tokens[i_tok + 1].token || tokens[i_tok + 1].token != WORD)
+		{
 			error_tok(tokens, *redir, "syntax error near unexpected token", tokens[i_tok].value);
+			return (1);
+		}
 		redir_t = redir_type(tokens[i_tok].value);
 		if (!*redir)
 		{
@@ -258,11 +261,11 @@ static void if_redir(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 		}
 		else
 		{
-			((t_redir *)(*redir))->cmd = init_redir_wrap(tokens[i_tok + 1].value, (((t_redir *)(*redir))->cmd), redir_t);
 			// HERE WE NEED TO ADD NEW REDIR AS CHILD TO PREVIOUS
+			((t_redir *)(*redir))->cmd = init_redir_wrap(tokens[i_tok + 1].value, (((t_redir *)(*redir))->cmd), redir_t);
 		}
-
 	}
+	return (0);
 }
 
 /*	Starting from the pipe, so we parse backwards and take the
@@ -288,14 +291,12 @@ static t_treenode *parse_left_cmd(t_token *tokens, int i_tok)
 			cmd = i_tok;
 		--i_tok;
 	}
-	/* Should there be error if no command but redirs exist */
-	if (cmd < 0)
-		error_tok(tokens, NULL, "No command", NULL);
 	if (tokens[i_tok].token == PIPE)
 		++i_tok;
 	while (tokens[i_tok].token && tokens[i_tok].token != PIPE)
 	{
-		if_redir(tokens, &redir, i_tok, cmd);
+		if(if_redir(tokens, &redir, i_tok, cmd))
+			return (NULL);
 		++i_tok;
 	}
 	if (redir)
@@ -316,17 +317,17 @@ static t_treenode *parse_right_cmd(t_token *tokens, int i_tok)
 	start = i_tok;
 	while (cmd < 0 && tokens[i_tok].value && tokens[i_tok].token != PIPE)
 	{
-		if (tokens[i_tok].token == WORD)
+		if ((i_tok == 0 && tokens[i_tok].token == WORD)
+			|| (i_tok > 0 && tokens[i_tok].token == WORD
+			&& tokens[i_tok - 1].token != REDIR))
 			cmd = i_tok;
 		++i_tok;
 	}
-	/* Should there be error if no command but redirs exist */
-	if (cmd < 0)
-		error_tok(tokens, NULL, "No command", NULL);
 	i_tok = start;
 	while (tokens[i_tok].token && tokens[i_tok].token != PIPE)
 	{
-		if_redir(tokens, &redir, i_tok, cmd);
+		if (if_redir(tokens, &redir, i_tok, cmd))
+			return (NULL);
 		++i_tok;
 	}
 	if (redir)
@@ -369,6 +370,8 @@ t_treenode *create_pipe_node(t_token *tokens, int i_tok)
 	if (tokens[i_tok].token == PIPE)
 	{
 		left = parse_left_cmd(tokens, i_tok - 1);
+		if (!left)
+			return (NULL);
 		next_pipe = foreseer_of_tokens(tokens, PIPE, i_tok + 1, calculate_tokens(tokens));
 		if (next_pipe >= 0)
 			right = create_pipe_node(tokens, next_pipe);

@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/11/28 15:54:01 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/28 16:41:24 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,8 @@ char	*find_argument(char **line, char *seperator)
 
 	i = 0;
 	ret = find_argument_until_seperator(line, &i);
+	ft_printf("RET: %s\n", ret);
+	// TODO if redir symbol is found, if no filename touching then the next whitespace delimited word is filename
 	if (ret && (*ret == '<' || *ret == '>'))
 	{
 		*seperator = *ret;
@@ -199,11 +201,11 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 			++line;
 	}
 	/*Debug*/
-//	i_args = 0;
-//	while (args[i_args].token)
-//	{
-//		ft_printf("TOK: %s tok: %d\n", args[i_args].value, args[i_args].token);
-//		++i_args;
-//	}
+	i_args = 0;
+	while (args[i_args].token)
+	{
+		ft_printf("TOK: %s tok: %d\n", args[i_args].value, args[i_args].token);
+		++i_args;
+	}
 	return (args);
 }
