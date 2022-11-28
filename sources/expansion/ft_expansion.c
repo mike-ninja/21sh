@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:55:11 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/28 15:28:24 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/28 15:53:44 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ void	ft_expansion(t_session *sesh)
 	i = -1;
 	while (sesh->tokens[++i].token)
 	{
-		ft_printf("DEBUG: %s\n", sesh->tokens[i].value);
 		ft_bzero(buff, BUFF_SIZE);
 		sesh->tokens[i].value = ft_strdup(ft_expansion_loop(sesh, buff, \
 			&sesh->tokens[i].value, ft_strsplit(sesh->tokens[i].value, ' ')));
