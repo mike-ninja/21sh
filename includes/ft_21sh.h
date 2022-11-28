@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/28 13:35:05 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/28 13:44:55 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,20 +108,6 @@ void	ft_endcycle(t_session *sesh);
 /*				  INITIALIZE				*/
 void	ft_env_init(t_session *sesh);
 void	ft_session_init(t_session *sesh);
-
-/*				   MAIN LOOP				*/
-void	ft_endcycle(t_session *sesh);
-
-/*				  INITIALIZE				*/
-void	ft_session_init(t_session *sesh);
-char	**ft_env_init(void);
-
-/*				   MAIN LOOP				*/
-void	ft_endcycle(t_session *sesh);
-
-/*				  INITIALIZE				*/
-void	ft_session_init(t_session *sesh);
-char	**ft_env_init(void);
 
 /*					LEXER					*/
 void	ft_lexer(char *str, char **line);

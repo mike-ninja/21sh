@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/11/27 22:30:41 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/28 15:27:47 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,11 +199,11 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 			++line;
 	}
 	/*Debug*/
-//	i_args = 0;
-//	while (args[i_args].token)
-//	{
-//		ft_printf("TOK: %s\n", args[i_args].value);
-//		++i_args;
-//	}
+	i_args = 0;
+	while (args[i_args].token)
+	{
+		ft_printf("TOK: %s tok: %d\n", args[i_args].value, args[i_args].token);
+		++i_args;
+	}
 	return (args);
 }

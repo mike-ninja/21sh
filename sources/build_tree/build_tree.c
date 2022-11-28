@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/11/27 22:48:09 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/28 15:15:24 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,6 +283,7 @@ static t_treenode *parse_left_cmd(t_token *tokens, int i_tok)
 		cmd = i_tok;
 	while (cmd < 0 && i_tok && tokens[i_tok].token != PIPE)
 	{
+		ft_printf("ITOK: %d\n", i_tok);
 		if (tokens[i_tok].token == WORD)
 			cmd = i_tok;
 		--i_tok;
@@ -460,6 +461,6 @@ t_treenode	*build_tree(t_token *tokens)
 	if (pipe >= 0)
 		head = create_pipe_node(tokens, pipe);
 	else
-		head = parse_left_cmd(tokens, 0);
+		head = parse_right_cmd(tokens, 0);
 	return (head);
 }

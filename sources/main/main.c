@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/28 12:46:10 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/28 15:35:16 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int	main(void)
 		else
 		{
 			ft_lexer(term.inp, &line);
-			sesh->tokens = chop_line(line, sesh->tokens, 2);
+			sesh->tokens = chop_line(line, sesh->tokens, 1);
 			ft_expansion(sesh);
 			sesh->head = build_tree(sesh->tokens);
 			if (sesh->head && sesh->head->type == CMD && fork_wrap() == 0)

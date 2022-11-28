@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:14:38 by jakken            #+#    #+#             */
-/*   Updated: 2022/11/27 22:19:41 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/28 15:19:14 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void exec_redir(t_redir *node, char ***environ_cp)
 			return ;
 		}
 		exec_tree(node->cmd, environ_cp);
+		exit (0);
 	}
 	wait (0);
 }

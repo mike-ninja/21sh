@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:44:03 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/28 12:45:55 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/28 15:33:41 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,6 @@ void	ft_session_init(t_session *sesh)
 	ft_env_init(sesh);
 	sesh->tmp_env_key = NULL;
 	sesh->tokens = (t_token *)ft_memalloc(sizeof(*sesh->tokens) * 2);
+	sesh->tokens[0].token = 0;
+	sesh->tokens[1].token = 0;
 }
