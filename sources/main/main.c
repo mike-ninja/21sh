@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/27 22:55:24 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/28 12:46:10 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,11 @@ int	main(void)
 		}
 		else if (!ft_strcmp(term.inp, "env"))
 		{
-			char **env;
+			int	i;
 
-			env = sesh->env;
-			while (*env)
-				ft_putendl(*env++);
+			i = 0;
+			while (*(sesh->env + i))
+				ft_putendl(*(sesh->env + i++));
 		}
 		else
 		{

@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/27 22:07:42 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/28 12:45:12 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,13 @@ void	banner_print(void);
 void	ft_endcycle(t_session *sesh);
 
 /*				  INITIALIZE				*/
+void	ft_env_init(t_session *sesh);
+void	ft_session_init(t_session *sesh);
+
+/*				   MAIN LOOP				*/
+void	ft_endcycle(t_session *sesh);
+
+/*				  INITIALIZE				*/
 void	ft_session_init(t_session *sesh);
 char	**ft_env_init(void);
 
@@ -146,4 +153,9 @@ void	error_exit(char *msg);
 int	ft_freeda(void ***a, size_t row);
 size_t	calc_chptr(char **arr);
 int	fork_wrap(void);
+/*			    BUILTIN UTILITIES			*/
+void	ft_env_remove(t_session *sesh, char *env_to_clean);
+
 #endif
+
+

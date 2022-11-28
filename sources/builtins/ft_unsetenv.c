@@ -1,42 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env_get.c                                       :+:      :+:    :+:   */
+/*   ft_unsetenv.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 16:51:34 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/26 15:39:47 by mbarutel         ###   ########.fr       */
+/*   Created: 2022/11/25 18:13:43 by mbarutel          #+#    #+#             */
+/*   Updated: 2022/11/26 19:57:09 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
 /**
- * It takes a session and a key, and returns a pointer to the environment
- * variable with that key.
+ * It removes the environment variables specified by the user
  * 
  * @param sesh The session struct.
- * @param key the key to search for
+ * @param cmd The command line arguments.
  * 
- * @return A pointer to the environment variable.
+ * @return The return value is the exit status of the last command executed.
  */
-char	**ft_env_get(t_session *sesh, char *key)
+int	ft_unsetenv(t_session *sesh, char **cmd)
 {
-	char	**env;
-	char	*key_full;
+	int		i;
+	char	*ptr;
 
-	env = sesh->env;
-	key_full = ft_strjoin(key, "=");
-	while (*env)
+	i = 0;
+	while (*(cmd + (++i)))
 	{
-		if (ft_strnequ(*env, key_full, ft_strlen(key_full)))
+		if (ft_env_get(sesh, *(cmd + i)))
 		{
-			ft_strdel(&key_full);
-			return (env);
+			ptr = ft_strjoin(*(cmd + i), "=");
+			ft_env_remove(sesh, ptr);
+			ft_strdel(&ptr);
 		}
-		env++;
 	}
-	ft_strdel(&key_full);
-	return (NULL);
+	return (0);
 }

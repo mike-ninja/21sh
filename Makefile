@@ -6,7 +6,11 @@
 #    By: jakken <jakken@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2022/11/27 20:34:17 by jakken           ###   ########.fr        #
+=======
+#    Updated: 2022/11/26 15:18:42 by mbarutel         ###   ########.fr        #
+>>>>>>> 4a31dc148328cda5411bdee901814458f319cb7c
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +78,7 @@ EXECTREE		=	exec_tree/
 INITIALIZE		=	initialize/
 EXPANSION		=	expansion/
 UTILITIES		=	utilities/
+BUILTIN_UTILS	= 	builtin_utils/
 # BUILTIN		= 	builtin/
 # ERROR			= 	error/
 # EXEC			= 	exec/
@@ -133,6 +138,7 @@ FILES			= $(KEYBOARD)ft_add_row \
 				$(EXPANSION)ft_expansion_dollar \
 				$(EXPANSION)ft_expansion_tilde \
 				$(UTILITIES)ft_env_get \
+				$(BUILTIN_UTILS)ft_env_remove \
 				$(INITIALIZE)ft_session_init \
 				$(INITIALIZE)ft_env_init \
 				# $(MAIN)free_mem \
@@ -244,6 +250,7 @@ $(OBJECTS):
 	@mkdir -p $(OBJECTS)/$(EXPANSION)
 	@mkdir -p $(OBJECTS)/$(INITIALIZE)
 	@mkdir -p $(OBJECTS)/$(UTILITIES)
+	@mkdir -p $(OBJECTS)/$(BUILTIN_UTILS)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"
 	@printf "$(NAME): $(GREEN)$(OBJECTS) directory was created.$(RESET)\n\n\n"
 
