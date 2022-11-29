@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:05:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/24 14:18:55 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:01:45 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	ft_bslash_skip(char **str)
  * @param line the address of a pointer to a character. The string placed in
  * this character's address will be placed in the array of strings.
  */
-void	ft_lexer(char *str, char **line)
+void	ft_lexer(char *str, char **line) // Needs to handle quote
 {
 	int		i;
 
