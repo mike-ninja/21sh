@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/30 10:34:49 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/30 12:02:17 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,8 @@ int 	is_ws(char c);
 t_treenode *build_tree(t_token *tokens);
 
 /*					EXPANSION				*/
-void	ft_expansion(t_session *sesh);
+// void	ft_expansion(t_session *sesh);
+void	ft_expansion(t_session *sesh, char **cmd);
 char	*ft_expansion_dollar(t_session *sesh, char *str);
 char	*ft_expansion_tilde(t_session *sesh, char *str);
 

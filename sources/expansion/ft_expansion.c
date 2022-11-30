@@ -6,19 +6,12 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:55:11 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/29 12:41:00 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/30 12:14:30 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-/**
- * It counts the number of characters in a string that are not quotes
- * 
- * @param str The string to be counted.
- * 
- * @return The length of the string.
- */
 static int	ft_alphalen(char *str)
 {
 	int	len;
@@ -36,13 +29,6 @@ static int	ft_alphalen(char *str)
 	return (len);
 }
 
-/**
- * It removes quotes from a string
- * 
- * @param str The string to be modified.
- * 
- * @return the value of the variable valid.
- */
 static int	ft_quote_remove(char **str)
 {
 	int		i;
@@ -72,26 +58,13 @@ static int	ft_quote_remove(char **str)
 	return (valid);
 }
 
-/**
- * It splits the token value on spaces, and then for each word, it checks if
- * it contains a dollar sign. If it does, it calls ft_expansion_dollar, which
- * will expand the word. If it doesn't, it calls ft_expansion_tilde, which will
- * expand the word.
- * 
- * @param sesh the session struct
- * @param buff the buffer that will be returned
- * @param tok_valthe value of the token, which is the string to be expanded
- * 
- * @return A string
- */
-static char	*ft_expansion_loop(t_session *sesh, char *buff, \
-char **tok_val, char **split)
+static char	*ft_expansion_loop(t_session *sesh, char *buff, char **tok_val, char **split)
 {
 	int		i;
 	char	*tofree;
 
 	i = -1;
-	ft_strdel(tok_val);
+	// ft_strdel(tok_val);
 	while (split[++i])
 	{
 		if (ft_strchr(split[i], '$') && ft_strlen(split[i]) > 1)
@@ -114,23 +87,30 @@ char **tok_val, char **split)
 	return (buff);
 }
 
-/**
- * This function expands the tokens.
- * 
- * @param sesh The session struct.
- * 
- * @return The expanded tokens.
- */
-void	ft_expansion(t_session *sesh)
+void	ft_expansion(t_session *sesh, char **cmd)
 {
 	int		i;
 	char	buff[BUFF_SIZE];
 
 	i = -1;
-	while (sesh->tokens[++i].token)
+	while (cmd[++i])
 	{
 		ft_bzero(buff, BUFF_SIZE);
-		sesh->tokens[i].value = ft_strdup(ft_expansion_loop(sesh, buff, \
-			&sesh->tokens[i].value, ft_strsplit(sesh->tokens[i].value, ' ')));
+		cmd[i] = ft_strdup(ft_expansion_loop(sesh, buff, cmd + i, ft_strsplit(cmd[i], ' ')));
+		// ft_putendl(cmd[i]);
 	}
 }
+
+// void	ft_expansion(t_session *sesh)
+// {
+// 	int		i;
+// 	char	buff[BUFF_SIZE];
+
+// 	i = -1;
+// 	while (sesh->tokens[++i].token)
+// 	{
+// 		ft_bzero(buff, BUFF_SIZE);
+// 		sesh->tokens[i].value = ft_strdup(ft_expansion_loop(sesh, buff, \
+// 			&sesh->tokens[i].value, ft_strsplit(sesh->tokens[i].value, ' ')));
+// 	}
+// }
