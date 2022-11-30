@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:13:13 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/26 20:12:34 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/30 10:08:23 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_setenv(t_session *sesh, char **cmd)
 		{
 			if (!key_check(*(*(cmd + i))))
 				key_check_fail_msg(cmd, i);
-			else if (!ft_env_replace(sesh, ft_strdup(*(cmd + i)), NULL))
+			else if (!ft_env_replace(sesh, *(cmd + i), NULL))
 				ft_env_append(sesh, cmd + i);
 		}
 	}
