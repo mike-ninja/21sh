@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 20:33:02 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/27 13:38:12 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/30 10:31:31 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ int	ft_echo(char **cmd)
 			nl_flag = true;
 		while (*cmd)
 		{
-			if (*(*(cmd++)))
+			if (*cmd)
 				ft_putstr(*cmd);
+			cmd++;
 			if (*cmd)
 				ft_putstr(" ");
 		}

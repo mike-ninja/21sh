@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/30 20:35:10 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/30 21:14:08 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,6 @@
 /* DUNNO IF NEEDED */
 #include <sys/stat.h>
 #include <sys/wait.h>
-/* DUNNO IF NEEDED */
-
-typedef struct s_branch
-{
-	int type;
-	char *arg[100];
-	struct s_branch *left;
-	struct s_branch *right;
-	struct s_branch *command;
-} t_branch;
 
 //# define TOKEN_POINTER_N 1
 /* Do not use zero */
@@ -75,13 +65,13 @@ typedef struct s_cmdnode
 /*					REDIR STRUCT			*/
 typedef struct s_redir
 {
-	int type;
-	t_treenode *cmd;
-	int close_fd;
-	char *filepath;
-	int open_flags;
-	int rights;
-} t_redir;
+	int			type;
+	t_treenode	*cmd;
+	int			close_fd;
+	char		*filepath;
+	int			open_flags;
+	int			rights;
+}				t_redir;
 
 /*					AGGREGATION	STRUCT		*/
 typedef struct s_aggregation
@@ -92,13 +82,14 @@ typedef struct s_aggregation
 	int			open_fd;
 } t_aggregate;
 
+
 /*					PIPE STRUCT				*/
 typedef struct s_pipenode
 {
-	int type;
-	t_treenode *left;
-	t_treenode *right;
-} t_pipenode;
+	int			type;
+	t_treenode	*left;
+	t_treenode	*right;
+}				t_pipenode;
 
 /*					TREE UNION				*/
 union u_treenode
@@ -125,8 +116,8 @@ void	ft_lexer(char *str, char **line);
 
 /*					TOKENIZER				*/
 t_token *chop_line(char *line, t_token *args, size_t pointer_n);
-void free_token(t_token *token);
-int is_ws(char c);
+void 	free_token(t_token *token);
+int 	is_ws(char c);
 
 /*					BULDTREE				*/
 t_treenode *build_tree(t_token *tokens);
@@ -142,18 +133,31 @@ char	**ft_env_get(t_session *sesh, char *key);
 int	increment_whitespace(char **line);
 
 /*					EXECUTE_TREE			*/
-void exec_tree(t_treenode *head, char ***environ_cp);
+void 	exec_tree(t_treenode *head, char ***environ_cp);
 void	execute_bin(char **args, char ***environ_cp);
 char	*search_bin(char *cmd, char **environ_cp);
 void exec_pipe(t_pipenode *pipenode, char ***environ_cp);
 void exec_redir(t_redir *node, char ***environ_cp);
 void exec_aggregate(t_aggregate *node, char ***environ_cp);
 void	error_exit(char *msg);
-int	ft_freeda(void ***a, size_t row);
+int		ft_freeda(void ***a, size_t row);
 size_t	calc_chptr(char **arr);
-int	fork_wrap(void);
+int		fork_wrap(void);
+
+/*			   		 BUILTIN	  			*/
+int		ft_builtins(t_session *sesh);
+int		ft_cd(t_session *sesh, char **cmd);
+int		ft_echo(char **cmd);
+int		ft_env(t_session *sesh, char ***cmd);
+int		ft_setenv(t_session *sesh, char **cmd);
+int		ft_unsetenv(t_session *sesh, char **cmd);
+
 /*			    BUILTIN UTILITIES			*/
+int		ft_env_temp(t_session *sesh, char **cmd, int i);
 void	ft_env_remove(t_session *sesh, char *env_to_clean);
+int		ft_env_append(t_session *sesh, char **arg);
+int		ft_env_replace(t_session *sesh, char *envn, char **tmp_env);
+void	ft_dir_change(t_session *sesh);
 
 #endif
 

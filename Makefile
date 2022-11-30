@@ -6,7 +6,7 @@
 #    By: jakken <jakken@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/11/30 20:36:14 by jakken           ###   ########.fr        #
+#    Updated: 2022/11/30 21:11:25 by jakken           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,7 @@ EXECTREE		=	exec_tree/
 INITIALIZE		=	initialize/
 EXPANSION		=	expansion/
 UTILITIES		=	utilities/
+BUILTIN			= 	builtins/
 BUILTIN_UTILS	= 	builtin_utils/
 # BUILTIN		= 	builtin/
 # ERROR			= 	error/
@@ -135,7 +136,18 @@ FILES			= $(KEYBOARD)ft_add_row \
 				$(EXPANSION)ft_expansion_dollar \
 				$(EXPANSION)ft_expansion_tilde \
 				$(UTILITIES)ft_env_get \
+				$(UTILITIES)ft_addr_check \
+				$(BUILTIN)ft_builtins \
+				$(BUILTIN)ft_cd \
+				$(BUILTIN)ft_echo \
+				$(BUILTIN)ft_env \
+				$(BUILTIN)ft_setenv \
+				$(BUILTIN)ft_unsetenv \
+				$(BUILTIN_UTILS)ft_dir_change \
+				$(BUILTIN_UTILS)ft_env_append \
 				$(BUILTIN_UTILS)ft_env_remove \
+				$(BUILTIN_UTILS)ft_env_replace \
+				$(BUILTIN_UTILS)ft_env_temp \
 				$(INITIALIZE)ft_session_init \
 				$(INITIALIZE)ft_env_init \
 				# $(MAIN)free_mem \
@@ -247,6 +259,7 @@ $(OBJECTS):
 	@mkdir -p $(OBJECTS)/$(EXPANSION)
 	@mkdir -p $(OBJECTS)/$(INITIALIZE)
 	@mkdir -p $(OBJECTS)/$(UTILITIES)
+	@mkdir -p $(OBJECTS)/$(BUILTIN)
 	@mkdir -p $(OBJECTS)/$(BUILTIN_UTILS)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"
 	@printf "$(NAME): $(GREEN)$(OBJECTS) directory was created.$(RESET)\n\n\n"

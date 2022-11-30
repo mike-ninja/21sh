@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 10:57:49 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/27 13:43:33 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/30 10:37:50 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	swap_pwd(t_session *sesh, char *cwd)
 	char	**pwd;
 	char	*new_pwd;
 
-	pwd = ft_get_env(sesh, "PWD");
+	pwd = ft_env_get(sesh, "PWD");
 	new_pwd = ft_strjoin("PWD=", cwd);
 	if (pwd)
 	{
@@ -26,7 +26,7 @@ static void	swap_pwd(t_session *sesh, char *cwd)
 	}
 	else
 	{
-		append_env(sesh, &new_pwd);
+		ft_env_append(sesh, &new_pwd);
 		ft_strdel(&new_pwd);
 	}
 }
@@ -48,11 +48,11 @@ static void	swap_oldpwd(t_session *sesh)
 void	ft_dir_change(t_session *sesh)
 {
 	char	*oldpwd;
-	char	cwd[MAXPATHLEN];
+	char	cwd[BUFF_SIZE];
 
 	oldpwd = "OLDPWD=";
-	if (!ft_get_env(sesh, "OLDPWD"))
-		append_env(sesh, &oldpwd);
+	if (!ft_env_get(sesh, "OLDPWD"))
+		ft_env_append(sesh, &oldpwd);
 	swap_oldpwd(sesh);
 	swap_pwd(sesh, getcwd(cwd, sizeof(cwd)));
 }
