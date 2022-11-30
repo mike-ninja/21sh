@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:10:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/27 13:44:00 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/30 11:00:02 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*ft_cd_expand(t_session *sesh, char **cmd)
 	}
 	else if (!ft_strcmp(((*cmd) + 1), "-"))
 	{
-		env = env_get_var(sesh, "OLDPWD");
+		env = ft_env_get(sesh, "OLDPWD");
 		if (env)
 		{
 			ft_putendl(ft_strchr(*env, '=') + 1);
@@ -70,7 +70,7 @@ int	ft_cd(t_session *sesh, char **cmd)
 		return (1);
 	if (!ft_cd_expand_parse(sesh, cmd))
 		return (1);
-	if (ft_addr_check(*(cmd + 1)))
+	if (!ft_addr_check(*(cmd + 1)))
 	{
 		if (chdir(*(cmd + 1)))
 		{

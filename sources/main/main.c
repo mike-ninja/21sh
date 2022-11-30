@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/28 15:35:16 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/30 11:49:53 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,24 +106,19 @@ int	main(void)
 			ft_endcycle(sesh);
 			status = 0;
 		}
-		else if (!ft_strcmp(term.inp, "env"))
-		{
-			int	i;
-
-			i = 0;
-			while (*(sesh->env + i))
-				ft_putendl(*(sesh->env + i++));
-		}
 		else
 		{
 			ft_lexer(term.inp, &line);
 			sesh->tokens = chop_line(line, sesh->tokens, 1);
 			ft_expansion(sesh);
 			sesh->head = build_tree(sesh->tokens);
-			if (sesh->head && sesh->head->type == CMD && fork_wrap() == 0)
-				execute_bin(((t_cmdnode *)sesh->head)->cmd, &sesh->env);
-			else if (sesh->head && sesh->head->type != CMD)
-				exec_tree(sesh->head, &sesh->env);
+			if (ft_builtins(sesh) == 1)
+			{
+				if (sesh->head && sesh->head->type == CMD && fork_wrap() == 0)
+					execute_bin(((t_cmdnode *)sesh->head)->cmd, &sesh->env);
+				else if (sesh->head && sesh->head->type != CMD)
+					exec_tree(sesh->head, &sesh->env);	
+			}
 		//	wait (0);
 			/*		debugging		*/
 //				int i_args = -1;

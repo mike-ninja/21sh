@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 18:27:40 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/22 18:29:51 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/30 11:20:25 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	ft_addr_check(char *file)
 {
 	if (access(file, F_OK) != 0)
-		return (INVALID);
+		return (-1);
 	if (access(file, X_OK) != 0)
-		return (NOACCESS);
-	return (RESET);
+		return (-2);
+	return (0);
 }
