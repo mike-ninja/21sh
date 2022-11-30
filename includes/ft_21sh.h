@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/29 16:38:45 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/30 10:34:49 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,10 @@ int		fork_wrap(void);
 
 /*			   		 BUILTIN	  			*/
 int		ft_builtins(t_session *sesh);
+int		ft_cd(t_session *sesh, char **cmd);
+int		ft_echo(char **cmd);
 int		ft_env(t_session *sesh, char ***cmd);
+int		ft_setenv(t_session *sesh, char **cmd);
 int		ft_unsetenv(t_session *sesh, char **cmd);
 
 /*			    BUILTIN UTILITIES			*/
@@ -140,6 +143,7 @@ int		ft_env_temp(t_session *sesh, char **cmd, int i);
 void	ft_env_remove(t_session *sesh, char *env_to_clean);
 int		ft_env_append(t_session *sesh, char **arg);
 int		ft_env_replace(t_session *sesh, char *envn, char **tmp_env);
+void	ft_dir_change(t_session *sesh);
 
 #endif
 

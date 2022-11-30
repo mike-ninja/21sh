@@ -6,7 +6,7 @@
 #    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/11/29 16:38:01 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/11/30 10:38:12 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -135,13 +135,18 @@ FILES			= $(KEYBOARD)ft_add_row \
 				$(EXPANSION)ft_expansion_dollar \
 				$(EXPANSION)ft_expansion_tilde \
 				$(UTILITIES)ft_env_get \
+				$(UTILITIES)ft_addr_check \
 				$(BUILTIN)ft_builtins \
+				$(BUILTIN)ft_cd \
+				$(BUILTIN)ft_echo \
 				$(BUILTIN)ft_env \
+				$(BUILTIN)ft_setenv \
 				$(BUILTIN)ft_unsetenv \
-				$(BUILTIN_UTILS)ft_env_remove \
-				$(BUILTIN_UTILS)ft_env_temp \
+				$(BUILTIN_UTILS)ft_dir_change \
 				$(BUILTIN_UTILS)ft_env_append \
+				$(BUILTIN_UTILS)ft_env_remove \
 				$(BUILTIN_UTILS)ft_env_replace \
+				$(BUILTIN_UTILS)ft_env_temp \
 				$(INITIALIZE)ft_session_init \
 				$(INITIALIZE)ft_env_init \
 				# $(MAIN)free_mem \
