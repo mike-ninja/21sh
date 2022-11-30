@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/11/27 21:37:20 by jakken           ###   ########.fr       */
+/*   Updated: 2022/11/29 15:50:07 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,4 +104,5 @@ void	execute_bin(char **args, char ***environ_cp)
 			exe_fail(&cmd, args, environ_cp);
 	}
 	ft_memdel((void **)&cmd);
+	exit (1);
 }

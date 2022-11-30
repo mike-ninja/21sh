@@ -6,7 +6,7 @@
 #    By: jakken <jakken@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/11/28 12:42:44 by jakken           ###   ########.fr        #
+#    Updated: 2022/11/30 20:36:14 by jakken           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -129,6 +129,7 @@ FILES			= $(KEYBOARD)ft_add_row \
 				$(EXECTREE)exec_cmd \
 				$(EXECTREE)exec_pipe \
 				$(EXECTREE)exec_redir \
+				$(EXECTREE)exec_aggregation \
 				$(EXECTREE)search_bin \
 				$(EXPANSION)ft_expansion \
 				$(EXPANSION)ft_expansion_dollar \
