@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/30 12:02:17 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/30 21:14:08 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 #define WORD 4
 #define SEMICOLON 5
 #define NEWLINE 6
+#define AGGREGATION 7
 
 /* Build tree, redir types */
 #define RE_IN_ONE 1
@@ -72,6 +73,16 @@ typedef struct s_redir
 	int			rights;
 }				t_redir;
 
+/*					AGGREGATION	STRUCT		*/
+typedef struct s_aggregation
+{
+	int			type;
+	t_treenode	*cmd;
+	int			close_fd;
+	int			open_fd;
+} t_aggregate;
+
+
 /*					PIPE STRUCT				*/
 typedef struct s_pipenode
 {
@@ -83,10 +94,11 @@ typedef struct s_pipenode
 /*					TREE UNION				*/
 union u_treenode
 {
-	int 		type;
-	t_pipenode	pipe;
-	t_cmdnode	cmd;
-	t_redir		redir;
+	int type;
+	t_pipenode pipe;
+	t_cmdnode cmd;
+	t_redir redir;
+	t_aggregate aggregate;
 };
 
 /*					HEADER					*/
@@ -119,13 +131,15 @@ char	*ft_expansion_tilde(t_session *sesh, char *str);
 /*					UTILITIES				*/
 int		ft_addr_check(char *file);
 char	**ft_env_get(t_session *sesh, char *key);
+int	increment_whitespace(char **line);
 
 /*					EXECUTE_TREE			*/
 void 	exec_tree(t_treenode *head, char ***environ_cp);
 void	execute_bin(char **args, char ***environ_cp);
 char	*search_bin(char *cmd, char **environ_cp);
-void 	exec_pipe(t_pipenode *pipenode, char ***environ_cp);
-void 	exec_redir(t_redir *node, char ***environ_cp);
+void exec_pipe(t_pipenode *pipenode, char ***environ_cp);
+void exec_redir(t_redir *node, char ***environ_cp);
+void exec_aggregate(t_aggregate *node, char ***environ_cp);
 void	error_exit(char *msg);
 int		ft_freeda(void ***a, size_t row);
 size_t	calc_chptr(char **arr);

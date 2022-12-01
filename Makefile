@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
+#    By: jakken <jakken@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/11/30 10:38:12 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/11/30 21:11:25 by jakken           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -130,6 +130,7 @@ FILES			= $(KEYBOARD)ft_add_row \
 				$(EXECTREE)exec_cmd \
 				$(EXECTREE)exec_pipe \
 				$(EXECTREE)exec_redir \
+				$(EXECTREE)exec_aggregation \
 				$(EXECTREE)search_bin \
 				$(EXPANSION)ft_expansion \
 				$(EXPANSION)ft_expansion_dollar \

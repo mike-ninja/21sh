@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_redir.c                                       :+:      :+:    :+:   */
+/*   exec_aggregation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/27 18:14:38 by jakken            #+#    #+#             */
-/*   Updated: 2022/11/28 16:21:00 by jakken           ###   ########.fr       */
+/*   Created: 2022/11/30 20:26:00 by jakken            #+#    #+#             */
+/*   Updated: 2022/11/30 21:03:53 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-void exec_redir(t_redir *node, char ***environ_cp)
+void exec_aggregate(t_aggregate *node, char ***environ_cp)
 {
 	if (fork_wrap() == 0)
 	{
-		close (node->close_fd);
-		if (open(node->filepath, node->open_flags, node->rights) < 0)
-			error_exit("21sh: exec_redir: open failed\n");
+		if (dup2(node->open_fd, node->close_fd) < 0)
+		{
+			ft_printf("21sh: dup: bad filedescriptor\n");
+			exit (0);
+		}
 		exec_tree(node->cmd, environ_cp);
 		exit (0);
 	}

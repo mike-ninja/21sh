@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/11/29 12:33:32 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/30 21:13:15 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,13 @@ char *is_infuture(char *haystack, char *seperators)
 		i_sep = 0;
 		++i_hay;
 	}
+	while (haystack[i_hay] && is_ws(haystack[i_hay]))
+		++i_hay;
+	while (seperators[i_sep])
+	{
+		if (haystack[i_hay] == seperators[i_sep++])
+			return (&haystack[i_hay]);
+	}
 	return (NULL);
 }
 
@@ -95,69 +102,115 @@ int	is_seperator(char c)
 
 }
 
-static char *find_argument_until_seperator(char **line, int *i)
+static char *find_argument_until_seperator(char *line, int *i, int *start, int *end)
 {
 	char	*infuture;
 
 	infuture = NULL;
-//	if ((*line)[*i] == '<' || (*line)[*i] == '>')
-//	{
-//		if ((*line)[(*i) + 1] == '&')
-//			++(*i);
-//		else
-//		{
-//			while ((*line)[(*i) + 1] && (*line)[*i] == (*line)[(*i) + 1])
-//				++(*i);
-//			if (*i > 0 && (*line)[*i] == (*line)[(*i) - 1])
-//				++(*i);
-//		}
-//	}
-	while ((*line)[*i])
+	while ((line)[*i])
 	{
-		infuture = is_infuture(&(*line)[*i], "><");
-		if (infuture || is_seperator((*line)[*i]))
+		infuture = is_infuture(&(line[(*i)]), "><");
+		if (infuture || is_seperator((line)[*i]))
+		{
+			*start = *i;
 			break ;
+		}
 		++(*i);
 	}
+	*end = *i;
 	if (*i == 0 && infuture)
 	{
-		while ((*line)[*i] && !is_ws((*line)[*i]))
+		while ((line)[*i] && !is_ws((line)[*i]))
 			++(*i);
 		return (infuture);
 	}
-//	else
-//		while ((*line)[*i] && !is_seperator((*line)[*i]))
-//		 	++(*i);
-	if (*i == 0 && is_seperator((*line)[*i]))
+	else
+		while ((line)[*end] && !is_ws((line)[*end]))
+		 	++(*end);
+	if (*i == 0 && is_seperator((line)[*i]))
 		++(*i);
 	return (NULL);
 }
 
-/* exceptions are [NOTWS]["] and ["][NOTWS] and [\][WS] */
-char	*find_argument(char **line, char *seperator)
+int operator_len(char *op)
 {
-	int		i;
-	char	*ret;
-
-	i = 0;
-	ret = find_argument_until_seperator(line, &i);
-	if (ret && (*ret == '<' || *ret == '>'))
+	if (is_seperator(*op))
 	{
-		*seperator = *ret;
-		ret = *line;
-		(*line) += i;
-		while (*line <= ret && !(is_ws(*ret)))
-			--ret;
-		i = 0;
-		while (ret[i] && !is_ws(ret[i]))
-			++i;
-		return (ft_strndup(ret, i));
+		if (op[0] == '>' && (op[1] == '>' || op[1] == '&')
+			|| (op[0] == '<' && (op[1] == '<' || op[1] == '&')))
+			return (2);
+		return (1);
 	}
-	if (!ret)
-		ret = ft_strndup((*line), i);
-	if (!ret)
-		ft_exit_no_mem(1);
-	(*line) += i;
+	return (0);
+}
+
+char	*if_redir(char *line, int *i, int *start, int *end)
+{
+	int digits;
+
+	digits = 0;
+	while (ft_isdigit(line[*i + digits]))
+		++digits;
+	if (line[*i + digits] == '>' || line[*i + digits] == '<')
+	{
+		*start = *i;
+		*i = *i + digits;
+		*end = *i + digits + 1;
+		if (line[*end] == '<' || line[*end] == '>' || line[*end] == '&')
+			++(*end);
+		if (line[*end] == '<' || line[*end] == '>' || line[*end] == '&')
+		{
+			ft_printf("21sh: syntax error near `%c'", line[*end]);
+			//Freeall
+			return (NULL);
+		}
+		while (line[*end] && is_ws(line[*end]))
+			++(*end);
+		while (line[*end] && !is_ws(line[*end]) && !is_seperator(line[*end]))
+			++(*end);
+		return(ft_strsub(line, *start, *end - *start));
+	}
+	return (NULL);
+}
+
+/* exceptions are [NOTWS]["] and ["][NOTWS] and [\][WS] */
+char	*find_argument(char *line, int *i, int *start, int *end)
+{
+	char	*ret;
+	int		digits;
+//	ret = find_argument_until_seperator(line, i, start, end);
+//	if (is_seperator(line[*start]) && line[*start] != '>' && line[*start] != '<')
+//		*end += operator_len(&line[*start]);
+//	else
+	digits = 1;
+	ret = if_redir(line, i, start, end);
+	if (ret)
+		return (ret);
+	if (!is_seperator(line[*end]))
+	{
+		while (line[*end] && !is_seperator(line[*end]))
+			++(*end);
+		if (line[*end] == '>' || line[*end] == '<'
+			&& (*end) > 0)
+		{
+			while (ft_isdigit(line[*end - digits]))
+				++digits;
+			if (*end - digits == 0 || is_ws(line[*end - digits]))
+			{
+				*end -= digits;
+//				*i = *end;
+			}
+		}
+		else if (is_seperator(*end > 0 && line[*end]))
+			--(*end);
+	}
+	else
+		*end += operator_len(&line[*end]);
+	ret = ft_strsub(line, *i, *end - *i);
+//	if (!ret)
+//		ret = ft_strndup(line + *start, *i);
+//	if (!ret)
+//		ft_exit_no_mem(1);
 	return (ret);
 }
 
@@ -168,35 +221,72 @@ void	set_token_values(t_token *token, int token_id, char *value)
 		token->value = value;
 }
 
+
+/*
+static void redir_or_aggregation(char *line, int prev, int cur)
+{
+	while (prev < cur && )
+}
+*/
+
 /* TODO add support for && and || while ur at it */
 /*	TODO 2randomfile>something because source is not only numbers it is assumed to be filename*/
 /* Add ( and ) */
 /* Make unit tests */
+//TODO make token node for fd aggregation
+//TODO >& must have digit target
+//TODO combine all word tokens before ; as one...
+// TODO Pick up only touching digits before
 t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 {
-	size_t	i_args;
-	char	*argument;
-	char	seperator;
+	int		i_args;
+	char	*c;
+	int		cur;
+	int		start;
+	int		end;
 
 	i_args = 0;
-	while (*line)
+	cur = 0;
+	start = 0;
+	end = 0;
+	while (line[cur])
 	{
-			seperator = 0;
-			argument = find_argument(&line, &seperator);
-			if (ft_strequ(argument, "\n"))
-				set_token_values(&args[i_args], NEWLINE, argument);
-			else if (*argument == '|')
-				set_token_values(&args[i_args], PIPE, argument);
-			else if (seperator == '>' || seperator == '<')
-				set_token_values(&args[i_args], REDIR, argument);
-			else if (*argument == ';')
-				set_token_values(&args[i_args], SEMICOLON, argument);
+		c = find_argument(line, &cur, &start, &end);
+//		if (is_ws(line[cur]))
+//		{
+//			while (is_ws(line[cur]))
+//				++cur;
+//			if (!is_seperator(line[cur]))
+//				prev = cur;
+//		}
+//		c = &line[cur];
+//		if (is_seperator(*c))
+//		{
+////			*c = *c;
+//			prev = cur + operator_len(c);
+//			while (line[prev] && is_ws(line[prev]))
+//				++prev;
+//		}
+		if (*c == '\n')
+			set_token_values(&args[i_args], NEWLINE, c);
+		else if (*c == '|')
+			set_token_values(&args[i_args], PIPE, c);
+		else if (line[cur] == '>' || line[cur] == '<')
+		{
+			if (line[cur + 1] == '&')
+				set_token_values(&args[i_args], AGGREGATION, c);
 			else
-				set_token_values(&args[i_args], WORD, argument);
+				set_token_values(&args[i_args], REDIR, c);
+		}
+		else if (*c == ';')
+			set_token_values(&args[i_args], SEMICOLON, c);
+		else
+			set_token_values(&args[i_args], WORD, c);
 		++i_args;
 		track_used_space(&args, i_args, &pointer_n);
-		while (is_ws(*line))
-			++line;
+		cur = end;
+		while (is_ws(line[cur]))
+			++cur;
 	}
 	/*Debug*/
 	// i_args = 0;

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
 /*   Updated: 2022/12/01 14:08:38 by mbarutel         ###   ########.fr       */
@@ -84,7 +84,7 @@ static void	disable_raw_mode(struct termios orig_termios)
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_term			term;
 	char			*line;
@@ -100,6 +100,7 @@ int	main(void)
 	ft_session_init(sesh);
 	while (status)
 	{
+		if (argc > 1 && ft_strequ(argv[1], "-c"))
 		ft_keyboard(&term);
 		if (!ft_strcmp(term.inp, "exit"))
 		{
