@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/30 11:54:08 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/01 14:08:38 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,7 @@ int	main(void)
 		}
 		else
 		{
-			ft_lexer(term.inp, &line);
-			sesh->tokens = chop_line(line, sesh->tokens, 1);
-			// ft_expansion(sesh);
+			sesh->tokens = chop_line(term.inp, sesh->tokens, 1);
 			sesh->head = build_tree(sesh->tokens);
 			if (ft_builtins(sesh) == 1)
 			{
