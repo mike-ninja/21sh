@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/30 21:14:08 by jakken           ###   ########.fr       */
+/*   Updated: 2022/12/01 18:22:14 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ void	banner_print(void);
 
 /*				   MAIN LOOP				*/
 void	ft_endcycle(t_session *sesh);
+char	*str_from_arr(char **arr);
+
 
 /*				  INITIALIZE				*/
 void	ft_env_init(t_session *sesh);

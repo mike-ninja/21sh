@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/30 21:24:05 by jakken           ###   ########.fr       */
+/*   Updated: 2022/12/01 18:51:06 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,17 +91,23 @@ int	main(int argc, char **argv)
 	int				status;
 	t_session		sesh[1];
 	struct termios	orig_termios;
+	int				test_flag;
 
+	test_flag = 0;
+	if (argc > 1 && ft_strequ(argv[1], "-c"))
+		test_flag = 1;
 	status = 1;
 	line = NULL;
 	ft_getent();
-	orig_termios = enable_raw_mode();
-	banner_print();
+	if (!test_flag)
+		orig_termios = enable_raw_mode();
+	if (!test_flag)
+		banner_print();
 	ft_session_init(sesh);
 	while (status)
 	{
-		if (argc > 1 && ft_strequ(argv[1], "-c"))
-		ft_keyboard(&term);
+		if (!test_flag)
+			ft_keyboard(&term);
 		if (!ft_strcmp(term.inp, "exit"))
 		{
 			ft_endcycle(sesh);
@@ -109,7 +115,10 @@ int	main(int argc, char **argv)
 		}
 		else
 		{
-			ft_lexer(term.inp, &line);
+			if (!test_flag)
+				ft_lexer(term.inp, &line);
+			else
+				line = str_from_arr(&argv[2]);
 			sesh->tokens = chop_line(line, sesh->tokens, 1);
 			ft_expansion(sesh);
 			sesh->head = build_tree(sesh->tokens);
@@ -134,7 +143,10 @@ int	main(int argc, char **argv)
 			ft_strdel(&line);
 		}
 		ft_endcycle(sesh);
+		if (test_flag)
+			status = 0;
 	}
-	disable_raw_mode(orig_termios);
+	if (test_flag);
+		disable_raw_mode(orig_termios);
 	return (0);
 }

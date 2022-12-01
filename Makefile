@@ -6,7 +6,7 @@
 #    By: jakken <jakken@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/11/30 21:11:25 by jakken           ###   ########.fr        #
+#    Updated: 2022/12/01 18:20:16 by jakken           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -124,6 +124,7 @@ FILES			= $(KEYBOARD)ft_add_row \
 				$(BANNER)ft_banner \
 				$(MAIN)main \
 				$(MAIN)ft_endcycle \
+				$(MAIN)str_from_arr \
 				$(TOKENIZER)tokenizer \
 				$(BUILDTREE)build_tree \
 				$(EXECTREE)exec_tree \
