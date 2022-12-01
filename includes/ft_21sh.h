@@ -123,7 +123,8 @@ int 	is_ws(char c);
 t_treenode *build_tree(t_token *tokens);
 
 /*					EXPANSION				*/
-void	ft_expansion(t_session *sesh);
+// void	ft_expansion(t_session *sesh);
+void	ft_expansion(t_session *sesh, char **cmd);
 char	*ft_expansion_dollar(t_session *sesh, char *str);
 char	*ft_expansion_tilde(t_session *sesh, char *str);
 
