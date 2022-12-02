@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:42:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/26 15:44:38 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/02 14:13:15 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ extern char	**environ;
 
 /**
  * It increments the level number in the environment variable.
- * 
+ *
  * @param env the environment variable that we want to change
- * 
+ *
  * @return The return value is the number of bytes that were written to the
  * file.
  */
@@ -28,7 +28,7 @@ static char	*increment_lvl(char *env)
 	int		lvl;
 
 	i = 0;
-	while (env[i] < '0' || env[i] > '9')
+	while (env[i] && (env[i] < '0' || env[i] > '9'))
 		i++;
 	lvl = ft_atoi(&env[i]);
 	if (lvl < 1000)
@@ -40,18 +40,18 @@ static char	*increment_lvl(char *env)
 
 /**
  * It takes the environment variable SHLVL, increments it by one.
- * 
+ *
  * @param my_env the environment variable that will be added to the environment
  * @param env the environment variable that we're looking for
- * 
+ *
  * @return a string that is the SHLVL environment variable.
  */
 static char	*ft_shlvl(char *shlvl)
 {
 	char	*lvl;
 	char	*env;
-	
-	lvl = increment_lvl(env);
+
+	lvl = increment_lvl(shlvl);
 	env = ft_strjoin("SHLVL=", lvl);
 	ft_strdel(&lvl);
 	return (env);
@@ -60,7 +60,7 @@ static char	*ft_shlvl(char *shlvl)
 /**
  * It copies the environment variables from the global variable `environ` into the `env`
  * variable of the `t_session` structure
- * 
+ *
  * @param sesh The session struct.
  */
 void	ft_env_init(t_session *sesh)

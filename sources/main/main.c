@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/01 14:08:38 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/02 14:13:47 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ int	main(int argc, char **argv)
 	ft_session_init(sesh);
 	while (status)
 	{
-		if (argc > 1 && ft_strequ(argv[1], "-c"))
 		ft_keyboard(&term);
 		if (!ft_strcmp(term.inp, "exit"))
 		{
@@ -116,7 +115,7 @@ int	main(int argc, char **argv)
 				if (sesh->head && sesh->head->type == CMD && fork_wrap() == 0)
 					execute_bin(((t_cmdnode *)sesh->head)->cmd, &sesh->env);
 				else if (sesh->head && sesh->head->type != CMD)
-					exec_tree(sesh->head, &sesh->env);	
+					exec_tree(sesh->head, &sesh->env);
 			}
 		//	wait (0);
 			/*		debugging		*/
