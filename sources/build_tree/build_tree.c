@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/11/30 21:12:47 by jakken           ###   ########.fr       */
+/*   Updated: 2022/12/02 21:59:55 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,28 +48,7 @@ int ft_calc_chr(char *line, char c)
 	return (res);
 }
 
-static char **make_arg_array(char *cmd)
-{
-	int argc;
-	int i;
-	char **args;
 
-	increment_whitespace(&cmd);
-	argc = ft_calc_chr(cmd, ' ') + 1;
-	args = ft_memalloc(sizeof(*args) * (argc + 1));
-	i = 0;
-	while (*cmd && i < argc)
-	{
-		increment_whitespace(&cmd);
-		args[i] = cmd;
-		increment_not_whitespace(&cmd);
-		*cmd = '\0';
-		++cmd;
-		++i;
-	}
-	//	null_terminate_strings(args);
-	return (args);
-}
 
 t_treenode *init_cmd_node(char *cmd)
 {
@@ -405,6 +384,7 @@ static t_treenode *parse_right_cmd(t_token *tokens, int i_tok)
 	start = i_tok;
 	while (cmd < 0 && tokens[i_tok].value && tokens[i_tok].token != PIPE)
 	{
+		// if (i_tok > 0 && tokens[i_tok].token == WORD && tokens[i_tok - 1].token != REDIR)
 		if ((i_tok == 0 && tokens[i_tok].token == WORD) || (i_tok > 0 && tokens[i_tok].token == WORD && tokens[i_tok - 1].token != REDIR))
 			cmd = i_tok;
 		++i_tok;

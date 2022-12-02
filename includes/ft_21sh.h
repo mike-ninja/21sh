@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/30 21:14:08 by jakken           ###   ########.fr       */
+/*   Updated: 2022/12/02 22:16:45 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ int 	is_ws(char c);
 
 /*					BULDTREE				*/
 t_treenode *build_tree(t_token *tokens);
+char **make_arg_array(char *cmd);
 
 /*					EXPANSION				*/
 // void	ft_expansion(t_session *sesh);

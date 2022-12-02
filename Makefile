@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jakken <jakken@student.42.fr>              +#+  +:+       +#+         #
+#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/11/30 21:11:25 by jakken           ###   ########.fr        #
+#    Updated: 2022/12/02 22:15:07 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -126,6 +126,7 @@ FILES			= $(KEYBOARD)ft_add_row \
 				$(MAIN)ft_endcycle \
 				$(TOKENIZER)tokenizer \
 				$(BUILDTREE)build_tree \
+				$(BUILDTREE)make_arg_array \
 				$(EXECTREE)exec_tree \
 				$(EXECTREE)exec_cmd \
 				$(EXECTREE)exec_pipe \
