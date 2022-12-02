@@ -1,3 +1,7 @@
 handle > without target
 < segfaults
-Error managment for redir, input redri` open fails if no existing fileHitting just enter segfaults
+Error managment for redir, input redri` open fails if no existing file
+Hitting just enter segfaults
+Root leak with redir
+if redir is before command, does not work
+do >&- and reset fd function
