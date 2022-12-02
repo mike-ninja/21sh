@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/02 21:33:04 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/02 21:43:04 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,6 +258,8 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 	int		start;
 	int		end;
 
+	if (!line)
+		return (NULL);
 	i_args = 0;
 	cur = 0;
 	start = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lexer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:05:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/30 11:38:51 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/02 21:41:02 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,15 @@ void	ft_lexer(char *str, char **line) // Needs to handle quote
 	i = 0;
 	quote = 0;
 	str = ft_skip_space(str);
-	*line = ft_strnew(ft_strlen(str));
-	while (*str)
+	if (str)
+		*line = ft_strnew(ft_strlen(str));
+	else
+		*line = NULL;
+	while (str && *str)
 	{
 		ft_bslash_qoute_skip(&str, &quote);
 		if (*str)
-		{	
+		{
 			(*line)[i++] = *str++;
 			if (*str == ' ' && !quote)
 			{

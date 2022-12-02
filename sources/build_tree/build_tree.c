@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/02 21:01:52 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/02 21:43:40 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -545,6 +545,8 @@ t_treenode *build_tree(t_token *tokens)
 	int pipe;
 
 	head = NULL;
+	if (!tokens)
+		return (head);
 	//	i = 0;
 	// First search for pipe
 	// Everythin on left side of pipe goes to left (commands and redir nodes)
