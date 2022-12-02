@@ -3,30 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_endcycle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:00:16 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/29 16:58:07 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/02 21:16:16 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-/**
- * It resets the tokens array
- * 
- * @param sesh The session struct.
- */
-static void	ft_reset_tokens(t_session *sesh)
-{
-	int	i;
+// /**
+//  * It resets the tokens array
+//  *
+//  * @param sesh The session struct.
+//  */
+// static void	ft_reset_tokens(t_session *sesh)
+// {
+// 	int	i;
 
-	i = -1;
-	while (sesh->tokens[++i].token)
-		ft_strdel(&sesh->tokens[i].value);
-	ft_memdel((void **)&sesh->tokens);
-	sesh->tokens = (t_token *)ft_memalloc(sizeof(*sesh->tokens) * 2);
-}
+// 	i = -1;
+// 	while (sesh->tokens[++i].token)
+// 		ft_strdel(&sesh->tokens[i].value);
+// 	ft_memdel((void **)&sesh->tokens);
+// 	sesh->tokens = (t_token *)ft_memalloc(sizeof(*sesh->tokens) * 2);
+// }
 
 static void	ft_reset_tmp_env(t_session *sesh)
 {
@@ -59,12 +59,16 @@ static void	ft_reset_tmp_env(t_session *sesh)
 
 /**
  * It resets the tokens and sets the return value to 0
- * 
+ *
  * @param sesh the session struct
  */
 void	ft_endcycle(t_session *sesh)
 {
 	sesh->ret = 0;
-	ft_reset_tokens(sesh);
+	free_node(sesh->head);
+	free_tokens(sesh->tokens);
+	free(sesh->tokens);
+	sesh->tokens = NULL;
+	// ft_reset_tokens(sesh);
 	ft_reset_tmp_env(sesh);
 }

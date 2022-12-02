@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/11/30 21:13:15 by jakken           ###   ########.fr       */
+/*   Updated: 2022/12/02 21:33:04 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,23 @@ int	is_varchr(char c)
 	return (ft_isalnum(c) || c == '_');
 }
 
-/* cant be static */
 void free_token(t_token *token)
 {
 	ft_memdel((void **)&token->value);
+}
+
+void free_tokens(t_token *tokens)
+{
+	int i;
+
+	i = 0;
+	while (tokens && tokens[i].token)
+	{
+		free(tokens[i].value);
+		tokens[i].value = NULL;
+		tokens[i].token = 0;
+		++i;
+	}
 }
 
 /*	See if one of the characters from seperators array can be found before whitespace
@@ -136,8 +149,8 @@ int operator_len(char *op)
 {
 	if (is_seperator(*op))
 	{
-		if (op[0] == '>' && (op[1] == '>' || op[1] == '&')
-			|| (op[0] == '<' && (op[1] == '<' || op[1] == '&')))
+		if (op[0] == '>' && ((op[1] == '>' || op[1] == '&')
+			|| (op[0] == '<' && (op[1] == '<' || op[1] == '&'))))
 			return (2);
 		return (1);
 	}
@@ -190,7 +203,7 @@ char	*find_argument(char *line, int *i, int *start, int *end)
 	{
 		while (line[*end] && !is_seperator(line[*end]))
 			++(*end);
-		if (line[*end] == '>' || line[*end] == '<'
+		if ((line[*end] == '>' || line[*end] == '<')
 			&& (*end) > 0)
 		{
 			while (ft_isdigit(line[*end - digits]))
@@ -249,24 +262,14 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 	cur = 0;
 	start = 0;
 	end = 0;
+	/*Init every time*/
+	pointer_n = 1;
+	args = ft_memalloc(sizeof(*args) * 2);
+	args[0].token = 0;
+	args[1].token = 0;
 	while (line[cur])
 	{
 		c = find_argument(line, &cur, &start, &end);
-//		if (is_ws(line[cur]))
-//		{
-//			while (is_ws(line[cur]))
-//				++cur;
-//			if (!is_seperator(line[cur]))
-//				prev = cur;
-//		}
-//		c = &line[cur];
-//		if (is_seperator(*c))
-//		{
-////			*c = *c;
-//			prev = cur + operator_len(c);
-//			while (line[prev] && is_ws(line[prev]))
-//				++prev;
-//		}
 		if (*c == '\n')
 			set_token_values(&args[i_args], NEWLINE, c);
 		else if (*c == '|')
@@ -289,11 +292,11 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 			++cur;
 	}
 	/*Debug*/
-	// i_args = 0;
-	// while (args[i_args].token)
-	// {
-	// 	ft_printf("TOK: %s tok: %d\n", args[i_args].value, args[i_args].token);
-	// 	++i_args;
-	// }
+//	 i_args = 0;
+//	 while (args[i_args].token)
+//	 {
+//	 	ft_printf("TOK: %s tok: %d\n", args[i_args].value, args[i_args].token);
+//	 	++i_args;
+//	 }
 	return (args);
 }

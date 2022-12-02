@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/11/30 21:12:47 by jakken           ###   ########.fr       */
+/*   Updated: 2022/12/02 21:01:52 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,11 @@ static char **make_arg_array(char *cmd)
 		increment_whitespace(&cmd);
 		args[i] = cmd;
 		increment_not_whitespace(&cmd);
-		*cmd = '\0';
-		++cmd;
+		if (*cmd)
+		{
+			*cmd = '\0';
+			++cmd;
+		}
 		++i;
 	}
 	//	null_terminate_strings(args);
@@ -242,18 +245,20 @@ static char *get_file(char *value)
 {
 	int start;
 	int end;
+	char *res;
 
 	start = 1;
 	if (value[start] == value[start - 1] || value[start] == '&')
 		++start;
-	while (is_ws(value[start]))
+	while (value[start] && is_ws(value[start]))
 		++start;
 	end = start;
-	while (!is_ws(value[end]))
+	while (value[end] && !is_ws(value[end]))
 		++end;
 	if (end <= start)
 		return (NULL);
-	return (ft_strsub(value, start, end - start));
+	res = ft_strsub(value, start, end - start);
+	return (res);
 }
 
 t_treenode *init_aggregation_node(int close_fd, int open_fd, t_treenode *cmd)
@@ -405,7 +410,7 @@ static t_treenode *parse_right_cmd(t_token *tokens, int i_tok)
 	start = i_tok;
 	while (cmd < 0 && tokens[i_tok].value && tokens[i_tok].token != PIPE)
 	{
-		if ((i_tok == 0 && tokens[i_tok].token == WORD) || (i_tok > 0 && tokens[i_tok].token == WORD && tokens[i_tok - 1].token != REDIR))
+		if ((i_tok == 0 && tokens[i_tok].token == WORD) /*|| (i_tok > 0 && tokens[i_tok].token == WORD && tokens[i_tok - 1].token != REDIR)*/)
 			cmd = i_tok;
 		++i_tok;
 	}
@@ -550,5 +555,6 @@ t_treenode *build_tree(t_token *tokens)
 		head = create_pipe_node(tokens, pipe);
 	else
 		head = parse_right_cmd(tokens, 0);
+//	free_tokens(tokens);
 	return (head);
 }

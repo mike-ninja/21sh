@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/01 18:51:06 by jakken           ###   ########.fr       */
+/*   Updated: 2022/12/02 20:36:42 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	main(int argc, char **argv)
 	int				test_flag;
 
 	test_flag = 0;
-	if (argc > 1 && ft_strequ(argv[1], "-c"))
+	if (argc && argc > 1 && ft_strequ(argv[1], "-c"))
 		test_flag = 1;
 	status = 1;
 	line = NULL;
@@ -120,14 +120,13 @@ int	main(int argc, char **argv)
 			else
 				line = str_from_arr(&argv[2]);
 			sesh->tokens = chop_line(line, sesh->tokens, 1);
-			ft_expansion(sesh);
 			sesh->head = build_tree(sesh->tokens);
 			if (ft_builtins(sesh) == 1)
 			{
 				if (sesh->head && sesh->head->type == CMD && fork_wrap() == 0)
 					execute_bin(((t_cmdnode *)sesh->head)->cmd, &sesh->env);
 				else if (sesh->head && sesh->head->type != CMD)
-					exec_tree(sesh->head, &sesh->env);	
+					exec_tree(sesh->head, &sesh->env);
 			}
 		//	wait (0);
 			/*		debugging		*/
@@ -146,7 +145,7 @@ int	main(int argc, char **argv)
 		if (test_flag)
 			status = 0;
 	}
-	if (test_flag);
+	if (!test_flag)
 		disable_raw_mode(orig_termios);
 	return (0);
 }

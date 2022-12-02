@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/01 18:22:14 by jakken           ###   ########.fr       */
+/*   Updated: 2022/12/02 19:02:09 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,15 @@ void	ft_lexer(char *str, char **line);
 /*					TOKENIZER				*/
 t_token *chop_line(char *line, t_token *args, size_t pointer_n);
 void 	free_token(t_token *token);
+void	free_tokens(t_token *tokens);
 int 	is_ws(char c);
 
 /*					BULDTREE				*/
 t_treenode *build_tree(t_token *tokens);
 
 /*					EXPANSION				*/
-void	ft_expansion(t_session *sesh);
+// void	ft_expansion(t_session *sesh);
+void	ft_expansion(t_session *sesh, char **cmd);
 char	*ft_expansion_dollar(t_session *sesh, char *str);
 char	*ft_expansion_tilde(t_session *sesh, char *str);
 
