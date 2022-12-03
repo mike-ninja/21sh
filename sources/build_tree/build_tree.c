@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/03 19:02:55 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/03 20:09:22 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,8 @@ static char *get_file(char *value)
 	char *res;
 
 	start = 1;
+	if (!value)
+		return (NULL);
 	if (value[start] == value[start - 1] || value[start] == '&')
 		++start;
 	while (value[start] && is_ws(value[start]))
