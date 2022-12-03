@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expansion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:55:11 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/30 12:14:30 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/02 21:43:18 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,12 @@ static int	ft_quote_remove(char **str)
 	return (valid);
 }
 
-static char	*ft_expansion_loop(t_session *sesh, char *buff, char **tok_val, char **split)
+static char	*ft_expansion_loop(t_session *sesh, char *buff, char **cmd, char **split)
 {
 	int		i;
 	char	*tofree;
 
 	i = -1;
-	// ft_strdel(tok_val);
 	while (split[++i])
 	{
 		if (ft_strchr(split[i], '$') && ft_strlen(split[i]) > 1)
@@ -96,8 +95,7 @@ void	ft_expansion(t_session *sesh, char **cmd)
 	while (cmd[++i])
 	{
 		ft_bzero(buff, BUFF_SIZE);
-		cmd[i] = ft_strdup(ft_expansion_loop(sesh, buff, cmd + i, ft_strsplit(cmd[i], ' ')));
-		// ft_putendl(cmd[i]);
+		cmd[i] = ft_strdup(ft_expansion_loop(sesh, buff, &cmd[i], ft_strsplit(cmd[i], ' ')));
 	}
 }
 

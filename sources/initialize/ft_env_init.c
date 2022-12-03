@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:42:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/03 18:48:16 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/03 20:54:30 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,9 @@ extern char	**environ;
  */
 static char	*increment_lvl(char *env)
 {
-	int		i;
 	int		lvl;
 
-	i = 0;
-	while (env[i] && (env[i] < '0' || env[i] > '9'))
-		i++;
-	lvl = ft_atoi(&env[i]);
+	lvl = ft_atoi(ft_strchr(env, '=') + 1);
 	if (lvl < 1000)
 		lvl++;
 	else
@@ -69,14 +65,14 @@ void	ft_env_init(t_session *sesh)
 
 	i = -1;
 	sesh->env = (char **)ft_memalloc(sizeof(char *) * (ft_arrlen(environ) + 1));
-	while (*(environ + (++i)))
+	while (environ[++i])
 	{
-		if (ft_strstr(*(environ + (i)), "SHLVL="))
-			*(sesh->env + (i)) = ft_shlvl(environ[i]);
+		if (ft_strstr(environ[i], "SHLVL="))
+			sesh->env[i] = ft_shlvl(environ[i]);
 		else
-			*(sesh->env + (i)) = ft_strdup(environ[i]);
+			sesh->env[i] = ft_strdup(environ[i]);
 	}
-	*(sesh->env + (i)) = NULL;
+	sesh->env[i]= NULL;
 	if (ft_env_get(sesh, "OLDPWD"))
 		ft_env_remove(sesh, "OLDPWD=");
 }

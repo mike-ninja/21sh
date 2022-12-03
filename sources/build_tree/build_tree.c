@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/03 20:09:22 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/03 20:53:55 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,31 +48,7 @@ int ft_calc_chr(char *line, char c)
 	return (res);
 }
 
-static char **make_arg_array(char *cmd)
-{
-	int argc;
-	int i;
-	char **args;
 
-	increment_whitespace(&cmd);
-	argc = ft_calc_chr(cmd, ' ') + 1;
-	args = ft_memalloc(sizeof(*args) * (argc + 1));
-	i = 0;
-	while (*cmd && i < argc)
-	{
-		increment_whitespace(&cmd);
-		args[i] = cmd;
-		increment_not_whitespace(&cmd);
-		if (*cmd)
-		{
-			*cmd = '\0';
-			++cmd;
-		}
-		++i;
-	}
-	//	null_terminate_strings(args);
-	return (args);
-}
 
 t_treenode *init_cmd_node(char *cmd)
 {

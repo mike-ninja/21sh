@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/03 20:37:18 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/03 20:52:38 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ int 	is_ws(char c);
 
 /*					BULDTREE				*/
 t_treenode *build_tree(t_token *tokens);
+char **make_arg_array(char *cmd);
 
 /*					EXPANSION				*/
 // void	ft_expansion(t_session *sesh);
