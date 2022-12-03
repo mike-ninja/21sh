@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/02 21:43:40 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/03 19:02:55 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int increment_whitespace(char **line)
 	int i;
 
 	i = 0;
-	while ((*line)[i] && is_ws((*line)[i]))
+	while (*line && (*line)[i] && is_ws((*line)[i]))
 		++i;
 	*line += i;
 	return (i);
@@ -39,7 +39,7 @@ int ft_calc_chr(char *line, char c)
 	int res;
 
 	res = 0;
-	while (*line)
+	while (line && *line)
 	{
 		if (*line == c)
 			++res;
@@ -410,7 +410,7 @@ static t_treenode *parse_right_cmd(t_token *tokens, int i_tok)
 	start = i_tok;
 	while (cmd < 0 && tokens[i_tok].value && tokens[i_tok].token != PIPE)
 	{
-		if ((i_tok == 0 && tokens[i_tok].token == WORD) /*|| (i_tok > 0 && tokens[i_tok].token == WORD && tokens[i_tok - 1].token != REDIR)*/)
+		if (tokens[i_tok].token == WORD /*|| (i_tok > 0 && tokens[i_tok].token == WORD && tokens[i_tok - 1].token != REDIR)*/)
 			cmd = i_tok;
 		++i_tok;
 	}
