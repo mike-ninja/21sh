@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/02 19:02:09 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/03 20:37:18 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct session
 	t_token		*tokens;
 	char		**tmp_env_key;
 	t_treenode	*head;
+	char		*terminal;
 }				t_session;
 
 /*					CMD STRUCT				*/

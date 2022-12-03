@@ -1,7 +1,5 @@
-handle > without target
-< segfaults
+Something has broken, after command sometimes waits for newline before printing prompt
 Error managment for redir, input redri` open fails if no existing file
 Root leak with redir
 Root leak with any command
-if redir is before command, does not work
 do >&- and reset fd functio

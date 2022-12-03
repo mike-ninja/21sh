@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_session_init.c                                  :+:      :+:    :+:   */
+/*   init_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 16:44:03 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/03 20:38:55 by jniemine         ###   ########.fr       */
+/*   Created: 2022/12/03 20:31:23 by jniemine          #+#    #+#             */
+/*   Updated: 2022/12/03 20:44:03 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_21sh.h"
+#include"ft_21sh.h"
 
-/**
- * It initializes the session struct.
- *
- * @param sesh The session struct.
- */
-void	ft_session_init(t_session *sesh)
+/* Untested prototype */
+void	reset_filedescriptors(t_session *sesh)
 {
-	sesh->ret = 0;
-	ft_env_init(sesh);
-	sesh->terminal = ttyname(STDOUT_FILENO);
-	sesh->head = NULL;
-	sesh->tmp_env_key = NULL;
-	sesh->tokens = NULL;
+	char	*terminal;
+	int		fd;
+
+	terminal = sesh->terminal;
+	while (fd >= 0)
+	{
+		fd = open(terminal, O_RDWR);
+		if (fd >= 3)
+		{
+			close(fd);
+			break ;
+		}
+	}
 }
