@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:00:16 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/02 21:16:16 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/03 18:42:12 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ static void	ft_reset_tmp_env(t_session *sesh)
 void	ft_endcycle(t_session *sesh)
 {
 	sesh->ret = 0;
-	free_node(sesh->head);
+	if (sesh->head);
+		free_node(sesh->head);
 	free_tokens(sesh->tokens);
 	free(sesh->tokens);
 	sesh->tokens = NULL;

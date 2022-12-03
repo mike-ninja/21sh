@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/03 17:53:11 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/03 18:39:10 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ int	main(int argc, char **argv)
 			else
 				line = str_from_arr(&argv[2]);
 			sesh->tokens = chop_line(line, sesh->tokens, 1);
+			ft_strdel(&line);
 			sesh->head = build_tree(sesh->tokens);
 			if (sesh->head && ft_builtins(sesh) == 1)
 			{
@@ -139,7 +140,6 @@ int	main(int argc, char **argv)
 //				}
 //				ft_putchar('\n');
 			/*		debugging		*/
-			ft_strdel(&line);
 		}
 		ft_endcycle(sesh);
 		if (test_flag)

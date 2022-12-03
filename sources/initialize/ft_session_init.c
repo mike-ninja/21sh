@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:44:03 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/02 20:14:04 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/03 18:44:10 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_session_init(t_session *sesh)
 {
 	sesh->ret = 0;
 	ft_env_init(sesh);
+	sesh->head = NULL;
 	sesh->tmp_env_key = NULL;
 	sesh->tokens = NULL;
 }
