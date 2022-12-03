@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/02 21:44:53 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/03 17:04:55 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	main(int argc, char **argv)
 				line = str_from_arr(&argv[2]);
 			sesh->tokens = chop_line(line, sesh->tokens, 1);
 			sesh->head = build_tree(sesh->tokens);
-			if (ft_builtins(sesh) == 1)
+			if (sesh->head && ft_builtins(sesh) == 1)
 			{
 				if (sesh->head && sesh->head->type == CMD && fork_wrap() == 0)
 					execute_bin(((t_cmdnode *)sesh->head)->cmd, &sesh->env);

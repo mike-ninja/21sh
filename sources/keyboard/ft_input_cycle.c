@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_input_cycle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/21 11:22:01 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/03 17:12:22 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	ft_input_cycle(t_term *t)
 		{
 			if (!t->slash && !(t->q_qty % 2))
 			{
+				if (*t->inp == '\0')	//Added this to prevent segfault when nl is the only input
+					ft_printf("\n");
 				ft_end_cycle(t);
 				break ;
 			}
