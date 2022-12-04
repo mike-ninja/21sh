@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/03 23:33:07 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/04 16:47:29 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,11 +170,20 @@ char	*if_redir(char *line, int *i, int *start, int *end)
 		*end = *i + digits + 1;
 		if (line[*end] == '<' || line[*end] == '>' || line[*end] == '&')
 			++(*end);
+		if (*end && line[(*end) - 1] == '&' && line[*end] == '-')
+			return(ft_strsub(line, *start, ++(*end) - *start));
 		if (line[*end] == '<' || line[*end] == '>' || line[*end] == '&')
 		{
 			ft_printf("21sh: syntax error near `%c'", line[*end]);
 			//Freeall
 			return (NULL);
+		}
+		//What should be done with arguments touching -?
+		if (line[*end] == '-')
+		{
+			while (line[*end] && !is_ws(line[*end]) && !is_seperator(line[*end]))
+				++(*end);
+			return(ft_strsub(line, *start, *end - *start));
 		}
 		while (line[*end] && is_ws(line[*end]))
 			++(*end);
@@ -277,7 +286,10 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 			set_token_values(&args[i_args], PIPE, c);
 		else if (line[cur] == '>' || line[cur] == '<')
 		{
-			if (line[cur + 1] == '&')
+			if (line[cur + 1] && line[cur + 2] && line[cur + 1] == '&'
+				&& line[cur + 2] == '-')
+				set_token_values(&args[i_args], CLOSEFD, c);
+			else if (line[cur + 1] == '&')
 				set_token_values(&args[i_args], AGGREGATION, c);
 			else
 				set_token_values(&args[i_args], REDIR, c);
@@ -293,11 +305,12 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 			++cur;
 	}
 	/*Debug*/
-//	 i_args = 0;
-//	 while (args[i_args].token)
-//	 {
-//	 	ft_printf("TOK: %s tok: %d\n", args[i_args].value, args[i_args].token);
-//	 	++i_args;
-//	 }
+	 i_args = 0;
+	 while (args[i_args].token)
+	 {
+	 	ft_printf("TOK: %s tok: %d\n", args[i_args].value, args[i_args].token);
+	 	++i_args;
+	 }
+	 exit(1);
 	return (args);
 }
