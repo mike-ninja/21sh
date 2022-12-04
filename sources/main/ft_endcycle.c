@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_endcycle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:00:16 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/03 20:37:57 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/03 23:38:51 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,17 @@
 //  *
 //  * @param sesh The session struct.
 //  */
-// static void	ft_reset_tokens(t_session *sesh)
-// {
-// 	int	i;
+static void	ft_reset_tokens(t_session *sesh)
+{
+	int	i;
 
-// 	i = -1;
-// 	while (sesh->tokens[++i].token)
-// 		ft_strdel(&sesh->tokens[i].value);
-// 	ft_memdel((void **)&sesh->tokens);
-// 	sesh->tokens = (t_token *)ft_memalloc(sizeof(*sesh->tokens) * 2);
-// }
+	i = -1;
+	while (sesh->tokens[++i].token)
+		ft_strdel(&sesh->tokens[i].value);
+	ft_printf("Resetting tokens array\n");
+	ft_memdel((void **)&sesh->tokens);
+	// sesh->tokens = (t_token *)ft_memalloc(sizeof(*sesh->tokens) * 2);
+}
 
 static void	ft_reset_tmp_env(t_session *sesh)
 {
@@ -63,15 +64,12 @@ static void	ft_reset_tmp_env(t_session *sesh)
  * @param sesh the session struct
  */
 void	ft_endcycle(t_session *sesh)
-{
+{	
 	sesh->ret = 0;
-	if (sesh->head);
+	if (sesh->head)
 		free_node(sesh->head);
 	sesh->head = NULL;
 	free_tokens(sesh->tokens);
-	free(sesh->tokens);
-	sesh->tokens = NULL;
-	ft_strdel(sesh->terminal);
-	// ft_reset_tokens(sesh);
+	ft_strdel(&sesh->terminal);
 	ft_reset_tmp_env(sesh);
 }

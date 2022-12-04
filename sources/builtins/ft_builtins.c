@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:50:01 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/03 20:54:26 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/04 08:24:33 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	ft_builtins(t_session *sesh)
 			return (ft_cd(sesh, cmd));
 		else if (!ft_strcmp(*cmd, "echo"))
 			return (ft_echo(cmd));
+		else if (!ft_strcmp(*cmd, "exit"))
+			ft_exit(sesh, 0);
 	}
 	return (1);
 }

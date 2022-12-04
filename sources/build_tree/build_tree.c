@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/03 20:53:55 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/04 08:20:48 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ t_treenode *init_cmd_node(char *cmd)
 	t_treenode *new;
 
 	new = ft_memalloc(sizeof(*new));
-	new->type = CMD;
 	((t_cmdnode *)new)->type = CMD;
 	((t_cmdnode *)new)->cmd = make_arg_array(cmd);
 	return (new);
@@ -386,6 +385,14 @@ static t_treenode *parse_right_cmd(t_token *tokens, int i_tok)
 	redir = NULL;
 	cmd = -1;
 	start = i_tok;
+	// /*DEBUG*/
+	// t_token *tmp = tokens;
+	// while (tmp->token)
+	// {
+	// 	ft_printf("Token: %d, Value: %s\n", tmp->token, tmp->value);
+	// 	tmp++;
+	// }
+	// /*DEBUG*/
 	while (cmd < 0 && tokens[i_tok].value && tokens[i_tok].token != PIPE)
 	{
 		if (tokens[i_tok].token == WORD /*|| (i_tok > 0 && tokens[i_tok].token == WORD && tokens[i_tok - 1].token != REDIR)*/)
@@ -530,11 +537,16 @@ t_treenode *build_tree(t_token *tokens)
 	// Everythin on left side of pipe goes to left (commands and redir nodes)
 	// On right side goes the next pipe or if no pipe then command
 	// Refactor the init pipe to use tokens, it should build the command on the left and on the right?
+	
 	pipe = foreseer_of_tokens(tokens, PIPE, 0, calculate_tokens(tokens));
 	if (pipe >= 0)
+	{
 		head = create_pipe_node(tokens, pipe);
+	}
 	else
+	{
 		head = parse_right_cmd(tokens, 0);
+	}
 //	free_tokens(tokens);
 	return (head);
 }

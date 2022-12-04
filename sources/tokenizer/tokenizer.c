@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/03 18:59:12 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/03 23:33:07 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,13 @@ void free_tokens(t_token *tokens)
 {
 	int i;
 
-	i = 0;
-	while (tokens && tokens[i].token)
+	i = -1;
+	while (tokens && tokens[++i].token)
 	{
-		free(tokens[i].value);
-		tokens[i].value = NULL;
+		ft_strdel(&tokens[i].value);
 		tokens[i].token = 0;
-		++i;
 	}
+	ft_memdel((void **)&tokens);
 }
 
 /*	See if one of the characters from seperators array can be found before whitespace

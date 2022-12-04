@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 21:59:23 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/02 22:25:42 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/04 08:52:34 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,32 +83,5 @@ char	**make_arg_array(char *cmd)
 	array = (char **)ft_memalloc(sizeof(char *) * (len + 1));
 	cmd = ft_skip_space(cmd);
 	collect_args_loop(array, cmd);
-	ft_strdel(&cmd);
 	return (array);
 }
-
-/*									MINISHELL							*/
-
-// static char **make_arg_array(char *cmd) // promlem here
-// {
-// 	int argc;
-// 	int i;
-// 	char **args;
-
-// 	increment_whitespace(&cmd);
-// 	argc = ft_calc_chr(cmd, ' ') + 1;
-// 	args = ft_memalloc(sizeof(*args) * (argc + 1));
-// 	i = 0;
-// 	while (*cmd && i < argc)
-// 	{
-// 		increment_whitespace(&cmd);
-// 		args[i] = cmd;
-// 		increment_not_whitespace(&cmd);
-// 		*cmd = '\0';
-// 		// ft_putendl(args[i]);
-// 		++cmd;
-// 		++i;
-// 	}
-// 	//	null_terminate_strings(args);
-// 	return (args);
-// }

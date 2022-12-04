@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/03 20:52:38 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/04 08:45:06 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,6 @@ typedef struct s_token
 	int token;
 	char *value;
 } t_token;
-
-typedef struct session
-{
-	int			ret;
-	char		**env;
-	t_token		*tokens;
-	char		**tmp_env_key;
-	t_treenode	*head;
-	char		*terminal;
-}				t_session;
 
 /*					CMD STRUCT				*/
 typedef struct s_cmdnode
@@ -102,12 +92,27 @@ union u_treenode
 	t_aggregate aggregate;
 };
 
+/*				SESSION STRUCT				*/
+typedef struct session
+{
+	int				ret;
+	t_treenode		*head;
+	char			**env;
+	t_token			*tokens;
+	char			*terminal;
+	char			**tmp_env_key;
+	struct termios	orig_termios;
+}				t_session;
+
 /*					HEADER					*/
 void	banner_print(void);
 
 /*				   MAIN LOOP				*/
 void	ft_endcycle(t_session *sesh);
 char	*str_from_arr(char **arr);
+struct termios	ft_raw_enable(void);
+int ft_getent(void);
+void	ft_raw_disable(struct termios orig_termios);
 
 
 /*				  INITIALIZE				*/
@@ -137,6 +142,7 @@ char	*ft_expansion_tilde(t_session *sesh, char *str);
 int		ft_addr_check(char *file);
 char	**ft_env_get(t_session *sesh, char *key);
 int	increment_whitespace(char **line);
+void	free_node(t_treenode *head);
 
 /*					EXECUTE_TREE			*/
 void 	exec_tree(t_treenode *head, char ***environ_cp);
@@ -155,6 +161,7 @@ int		ft_builtins(t_session *sesh);
 int		ft_cd(t_session *sesh, char **cmd);
 int		ft_echo(char **cmd);
 int		ft_env(t_session *sesh, char ***cmd);
+void	ft_exit(t_session *sesh, int status);
 int		ft_setenv(t_session *sesh, char **cmd);
 int		ft_unsetenv(t_session *sesh, char **cmd);
 

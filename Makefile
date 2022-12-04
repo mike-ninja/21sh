@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
+#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/12/03 20:52:30 by jniemine         ###   ########.fr        #
+#    Updated: 2022/12/04 08:47:18 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,7 @@ EXPANSION		=	expansion/
 UTILITIES		=	utilities/
 BUILTIN			= 	builtins/
 BUILTIN_UTILS	= 	builtin_utils/
+TERMIOS			= 	termios/
 # BUILTIN		= 	builtin/
 # ERROR			= 	error/
 # EXEC			= 	exec/
@@ -143,6 +144,7 @@ FILES			= $(KEYBOARD)ft_add_row \
 				$(BUILTIN)ft_cd \
 				$(BUILTIN)ft_echo \
 				$(BUILTIN)ft_env \
+				$(BUILTIN)ft_exit \
 				$(BUILTIN)ft_setenv \
 				$(BUILTIN)ft_unsetenv \
 				$(BUILTIN_UTILS)ft_dir_change \
@@ -150,6 +152,9 @@ FILES			= $(KEYBOARD)ft_add_row \
 				$(BUILTIN_UTILS)ft_env_remove \
 				$(BUILTIN_UTILS)ft_env_replace \
 				$(BUILTIN_UTILS)ft_env_temp \
+				$(TERMIOS)ft_getent \
+				$(TERMIOS)ft_raw_disable \
+				$(TERMIOS)ft_raw_enable \
 				$(INITIALIZE)ft_session_init \
 				$(INITIALIZE)ft_env_init \
 				# $(MAIN)free_mem \
@@ -263,6 +268,7 @@ $(OBJECTS):
 	@mkdir -p $(OBJECTS)/$(UTILITIES)
 	@mkdir -p $(OBJECTS)/$(BUILTIN)
 	@mkdir -p $(OBJECTS)/$(BUILTIN_UTILS)
+	@mkdir -p $(OBJECTS)/$(TERMIOS)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"
 	@printf "$(NAME): $(GREEN)$(OBJECTS) directory was created.$(RESET)\n\n\n"
 
