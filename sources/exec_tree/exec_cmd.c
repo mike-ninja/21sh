@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/02 16:15:50 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/04 21:11:26 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,12 @@ int	ft_freeda(void ***a, size_t row)
 {
 	unsigned int	i;
 
-	i = 0;
+	i = -1;
 	if (!a)
 		return (1);
-	while ((*a) && (*a)[i] && i < row)
-	{
-		free((*a)[i]);
-		(*a)[i] = NULL;
-		++i;
-	}
-	free(*a);
-	*a = NULL;
+	while ((*a)[++i] && i < row)
+		ft_strdel((char **)&(*a)[i]);
+	ft_memdel((void **)a);
 	return (1);
 }
 

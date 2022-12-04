@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/04 08:45:06 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/04 20:28:15 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct session
 void	banner_print(void);
 
 /*				   MAIN LOOP				*/
+void	reset_filedescriptors(t_session *sesh);
 void	ft_endcycle(t_session *sesh);
 char	*str_from_arr(char **arr);
 struct termios	ft_raw_enable(void);

@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_history_file_get.c                              :+:      :+:    :+:   */
+/*   ft_alt_mv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/21 14:56:28 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/29 16:41:36 by mrantil          ###   ########.fr       */
+/*   Created: 2022/10/12 09:05:53 by mbarutel          #+#    #+#             */
+/*   Updated: 2022/11/29 16:35:15 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
 /*
- * It returns the path to the history file
+ * It handles the movement of the cursor when the user presses the alt key
  *
- * @return The path to the history file.
+ * @param t the t_term struct
  */
-char	*ft_history_file_get(void)
+void	ft_alt_mv(t_term *t)
 {
-	char	cwd[1024];
-	char	*home;
-	char	*file;
-
-	home = getenv("HOME");
-	if (home)
-		return (ft_strjoin(home, "/.42sh_history"));
-	file = getcwd(cwd, sizeof(cwd));
-	return (ft_strjoin(file, "/.42sh_history"));
+	if (t->ch == ALT_LFT || t->ch == ALT_RGHT)
+		ft_word_mv(t);
+	else if (t->ch == LINE_MV)
+		ft_line_mv(t);
 }

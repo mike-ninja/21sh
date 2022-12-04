@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_history_file_get.c                              :+:      :+:    :+:   */
+/*   ft_setcursor.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/21 14:56:28 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/29 16:41:36 by mrantil          ###   ########.fr       */
+/*   Created: 2022/10/20 13:43:20 by mrantil           #+#    #+#             */
+/*   Updated: 2022/11/29 16:52:55 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
 /*
- * It returns the path to the history file
+ * It sets the cursor to the given column and row
  *
- * @return The path to the history file.
+ * @param col The column number to move the cursor to.
+ * @param row The row number of the cursor.
  */
-char	*ft_history_file_get(void)
+void	ft_setcursor(ssize_t col, ssize_t row)
 {
-	char	cwd[1024];
-	char	*home;
-	char	*file;
+	char	*cm;
 
-	home = getenv("HOME");
-	if (home)
-		return (ft_strjoin(home, "/.42sh_history"));
-	file = getcwd(cwd, sizeof(cwd));
-	return (ft_strjoin(file, "/.42sh_history"));
+	cm = tgetstr("cm", NULL);
+	tputs(tgoto(cm, (int)col, (int)row), 1, ft_putc);
 }

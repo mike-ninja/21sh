@@ -6,92 +6,94 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/21 18:26:44 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/04 19:19:44 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-static void	ft_shift_insert(t_term *t)
+/*
+ * It fetches the delimiter
+ * for a heredoc
+ *
+ * @param t the term structure
+ */
+static void	ft_delim_fetch(t_term *t)
 {
-	ssize_t	bytes_cpy;
+	char	*ptr;
+	char	*end_q;
 
-	bytes_cpy = t->bytes;
-	while (&t->inp[bytes_cpy] >= &t->inp[t->index])
+	if (t->heredoc && !t->delim)
 	{
-		t->inp[bytes_cpy] = t->inp[bytes_cpy] ^ t->inp[bytes_cpy + 1];
-		t->inp[bytes_cpy + 1] = t->inp[bytes_cpy] ^ t->inp[bytes_cpy + 1];
-		t->inp[bytes_cpy] = t->inp[bytes_cpy] ^ t->inp[bytes_cpy + 1];
-		bytes_cpy--;
+		ptr = ft_strchr(t->inp, '<') + 2;
+		while (*ptr && ft_isspace((int)*ptr))
+			ptr++;
+		if (*ptr)
+		{
+			end_q = ptr;
+			while (*end_q && !ft_isspace((int)*end_q))
+				end_q++;
+			t->delim = ft_strsub(ptr, 0, end_q - ptr);
+		}
 	}
 }
 
-static void	ft_scroll_down(void)
+/*
+ * It inserts a character into the input string
+ *
+ * @param t the term structure
+ */
+static void	ft_insertion_char(t_term *t)
 {
-	ft_run_capability("sc");
-	ft_run_capability("sf");
-	ft_run_capability("rc");
-	ft_run_capability("up");
+	ft_putc(t->ch);
+	ft_heredoc_handling(t);
+	if ((t->ch == D_QUO || t->ch == S_QUO) && !t->heredoc)
+	{
+		if (!t->bslash)
+			ft_quote_handling(t, (char)t->ch);
+		else
+			t->bslash = 0;
+	}
+	t->c_col++;
+	ft_shift_nl_addr(t, 1);
+	if (t->inp[t->index])
+		ft_shift_insert(t);
+	t->inp[t->index++] = (char)t->ch;
+	t->bytes++;
 }
 
-static void	ft_trigger_nl(t_term *t)
+/*
+ * If the user is not at the end of the line, the function will
+ * insert a new line.
+ *
+ * @param t the term structure
+ */
+static void	ft_insertion_enter(t_term *t)
 {
-	ssize_t	len;
-	ssize_t	row;
-
-	row = ft_row_lowest_line(t);
-	len = ft_len_lowest_line(t, row);
-	if (len == t->ws_col)
+	if (!t->nl_addr[t->c_row + 1])
 	{
-		t->total_row++;
-		if (t->start_row + t->total_row >= t->ws_row)
-			ft_scroll_down();
-		ft_add_nl_last_row(t, t->bytes);
+		if (t->bslash || t->q_qty % 2 || (t->heredoc \
+			&& ft_strcmp(t->nl_addr[t->c_row], t->delim)))
+		{
+			t->inp[t->bytes++] = (char)t->ch;
+			ft_create_prompt_line(t, t->bytes);
+			t->index = t->bytes;
+		}
 	}
-	if (len == t->ws_col + 1)
-		if (t->nl_addr[row + 1])
-			ft_add_nl_mid_row(t, row + 1, (ssize_t)(&t->nl_addr[row + 1][-1]
-					- t->nl_addr[0]));
-	if (t->c_col == t->ws_col)
-	{
-		t->c_row++;
-		t->c_col = 0;
-		ft_setcursor(t->c_col, ft_get_linenbr() + 1);
-	}
+	ft_delim_fetch(t);
 }
 
+/*
+ * It handles the insertion of characters into the input string
+ *
+ * @param t the t_term struct
+ */
 void	ft_insertion(t_term *t)
 {
 	if (t->ch == ENTER)
-	{
-		if (!t->nl_addr[t->c_row + 1])
-		{
-			if (t->slash || t->q_qty % 2)
-			{
-				t->inp[t->bytes++] = (char)t->ch;
-				ft_print_prompt(t, t->bytes);
-				t->index = t->bytes;
-			}
-		}
-	}
+		ft_insertion_enter(t);
 	else
-	{
-		ft_putc(t->ch);
-		ft_slash_handling(t);
-		if ((t->ch == D_QUO || t->ch == S_QUO))
-		{
-			if (!t->slash)
-				ft_quote_handling(t, (char)t->ch);
-			else
-				t->slash = 0;
-		}
-		t->c_col++;
-		ft_shift_nl_addr(t, 1);
-		if (t->inp[t->index])
-			ft_shift_insert(t);
-		t->inp[t->index++] = (char)t->ch;
-		t->bytes++;
-	}
+		ft_insertion_char(t);
 	ft_trigger_nl(t);
 	if (t->inp[t->index])
 		ft_print_trail(t);

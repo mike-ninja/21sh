@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/04 08:45:30 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/04 21:09:11 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,6 @@ int	main(int argc, char **argv)
 	{
 		if (!test_flag)
 			ft_keyboard(&term);
-		// if (!ft_strcmp(term.inp, "exit"))
-		// {
-		// 	ft_endcycle(sesh);
-		// 	status = 0;
-		// }
-		// else
-		// {
 		if (!test_flag)
 			ft_lexer(term.inp, &line);
 		else
@@ -50,6 +43,13 @@ int	main(int argc, char **argv)
 		sesh->tokens = chop_line(line, sesh->tokens, 1);
 		ft_strdel(&line);
 		sesh->head = build_tree(sesh->tokens);
+		// char **tmp = ((t_cmdnode *)sesh->head)->cmd;
+
+		// while (*tmp)
+		// {
+		// 	ft_printf("%p\n", *tmp);
+		// 	tmp++;
+		// }	
 		if (sesh->head && ft_builtins(sesh) == 1)
 		{
 			if (sesh->head && sesh->head->type == CMD && fork_wrap() == 0)
@@ -68,10 +68,11 @@ int	main(int argc, char **argv)
 //				}
 //				ft_putchar('\n');
 			/*		debugging		*/
-		// }
+		// }	
 		ft_endcycle(sesh);
 		if (test_flag)
 			status = 0;
+		// reset_filedescriptors(sesh);
 	}
 	if (!test_flag)
 		ft_raw_disable(sesh->orig_termios);

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 21:59:23 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/04 08:52:34 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/04 20:54:58 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,16 @@ static void	collect_args_loop(char **array, char *cmd)
 		if (*cmd == '\"')
 		{
 			++cmd;
-			array[i++] = ft_strdup(ft_strsep(&cmd, "\""));
+			array[i] = ft_strdup(ft_strsep(&cmd, "\""));
 		}
 		else if (*cmd == '\'')
 		{
 			++cmd;
-			array[i++] = ft_strdup(ft_strsep(&cmd, "\'"));
+			array[i] = ft_strdup(ft_strsep(&cmd, "\'"));
 		}
 		else
-			array[i++] = ft_strdup(ft_strsep(&cmd, " "));
+			array[i] = ft_strdup(ft_strsep(&cmd, " "));
+		i++;
 		cmd = ft_skip_space(cmd);
 	}
 	array[i] = NULL;

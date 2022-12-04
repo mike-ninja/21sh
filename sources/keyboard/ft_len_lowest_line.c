@@ -6,12 +6,20 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:17:14 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/15 16:17:24 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 16:47:02 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/*
+ * It returns the length of the line at the given row
+ *
+ * @param t the term structure
+ * @param row the row of the cursor
+ *
+ * @return The length of the lowest line.
+ */
 ssize_t	ft_len_lowest_line(t_term *t, ssize_t row)
 {
 	ssize_t	len;

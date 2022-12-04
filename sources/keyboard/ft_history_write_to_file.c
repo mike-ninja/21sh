@@ -6,12 +6,17 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:59:21 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/18 17:06:52 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/04 19:14:14 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/*
+ * It writes the history to the file
+ *
+ * @param t The terminal structure.
+ */
 void	ft_history_write_to_file(t_term *t)
 {
 	size_t	cpy;
