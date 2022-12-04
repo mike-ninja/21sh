@@ -6,13 +6,13 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 13:41:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/07 16:08:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 16:52:42 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-/**
+/*
  * It takes a capability name as a string, and runs the capability
  *
  * @param cap The capability name.

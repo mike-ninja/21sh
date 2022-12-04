@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_history_file_get.c                              :+:      :+:    :+:   */
+/*   ft_heredoc_handling.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/21 14:56:28 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/29 16:41:36 by mrantil          ###   ########.fr       */
+/*   Created: 2022/11/22 12:57:40 by mrantil           #+#    #+#             */
+/*   Updated: 2022/12/02 16:53:50 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
 /*
- * It returns the path to the history file
+ * It checks if the user is
+ * currently typing a heredoc, and if so, it sets the `t->heredoc` variable to 1
  *
- * @return The path to the history file.
+ * @param t the term structure
  */
-char	*ft_history_file_get(void)
+void	ft_heredoc_handling(t_term *t)
 {
-	char	cwd[1024];
-	char	*home;
-	char	*file;
-
-	home = getenv("HOME");
-	if (home)
-		return (ft_strjoin(home, "/.42sh_history"));
-	file = getcwd(cwd, sizeof(cwd));
-	return (ft_strjoin(file, "/.42sh_history"));
+	if (t->index >= 1 && t->ch == '<' && !(t->q_qty % 2))
+	{
+		if (t->inp[t->index - 1] == '<')
+		{
+			if (t->index > 2 && t->inp[t->index - 2] == '<')
+				t->heredoc = 0;
+			else
+				t->heredoc = 1;
+		}
+		else
+			t->heredoc = 0;
+	}
 }

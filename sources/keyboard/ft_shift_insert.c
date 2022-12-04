@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_prompt_len.c                                :+:      :+:    :+:   */
+/*   ft_shift_insert.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 14:59:55 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/29 16:41:00 by mrantil          ###   ########.fr       */
+/*   Created: 2022/11/25 13:11:43 by mbarutel          #+#    #+#             */
+/*   Updated: 2022/11/29 17:15:10 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
 /*
- * It returns the prompt length of the given row
+ * It shifts all the characters in the input buffer to the right of the
+ * cursor one position to the right
  *
  * @param t the term structure
- * @param row the row of the cursor
- *
- * @return The length of the prompt.
  */
-ssize_t	ft_get_prompt_len(t_term *t, ssize_t row)
+void	ft_shift_insert(t_term *t)
 {
-	ssize_t	prompt_len;
+	ssize_t	bytes_cpy;
 
-	prompt_len = 0;
-	if (!row)
-		prompt_len = t->prompt_len;
-	else if (ft_is_prompt_line(t, row))
-		prompt_len = t->m_prompt_len;
-	return (prompt_len);
+	bytes_cpy = t->bytes;
+	while (&t->inp[bytes_cpy] >= &t->inp[t->index])
+	{
+		t->inp[bytes_cpy] = t->inp[bytes_cpy] ^ t->inp[bytes_cpy + 1];
+		t->inp[bytes_cpy + 1] = t->inp[bytes_cpy] ^ t->inp[bytes_cpy + 1];
+		t->inp[bytes_cpy] = t->inp[bytes_cpy] ^ t->inp[bytes_cpy + 1];
+		bytes_cpy--;
+	}
 }

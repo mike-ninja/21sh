@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:23:35 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/03 21:27:04 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/04 20:39:39 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void	free_node(t_treenode *head)
 			((t_pipenode *)head)->right = NULL;
 		}
 		else if (head->type == CMD)
+		{
 			ft_freeda((void ***)&((t_cmdnode *)head)->cmd, calc_chptr(((t_cmdnode *)head)->cmd));
+		}
 		else if (head->type == REDIR)
 		{
 			free_node(((t_redir *)head)->cmd);

@@ -6,7 +6,7 @@
 #    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/12/04 08:47:18 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/12/04 20:29:04 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ CFLAGS				+=	-Wpedantic
 CFLAGS				+=	-O3
 
 LEAK_CHECK			= -g
-#LEAK_CHECK		+=	-fsanitize=address
+# LEAK_CHECK		+=	-fsanitize=address
 
 UNAME				= $(shell uname)
 ifeq ($(UNAME), Darwin)
@@ -89,9 +89,28 @@ SOURCE_COUNT = $(words $(FILES))
 H_FILES 	= 	ft_21sh \
 				keyboard \
 
-FILES			= $(KEYBOARD)ft_add_row \
-				$(KEYBOARD)ft_arrow_input \
-				$(KEYBOARD)ft_backspace \
+FILES			= $(KEYBOARD)ft_arrow_input \
+				$(KEYBOARD)ft_add_nl_last_row \
+				$(KEYBOARD)ft_add_nl_mid_row \
+				$(KEYBOARD)ft_alt_mv \
+				$(KEYBOARD)ft_bslash_handling \
+				$(KEYBOARD)ft_copy \
+				$(KEYBOARD)ft_create_prompt_line \
+				$(KEYBOARD)ft_cut \
+				$(KEYBOARD)ft_end_cycle \
+				$(KEYBOARD)ft_get_input \
+				$(KEYBOARD)ft_getline_nbr \
+				$(KEYBOARD)ft_heredoc_handling \
+				$(KEYBOARD)ft_init \
+				$(KEYBOARD)ft_line_down \
+				$(KEYBOARD)ft_line_up \
+				$(KEYBOARD)ft_paste \
+				$(KEYBOARD)ft_putc \
+				$(KEYBOARD)ft_quote_decrement \
+				$(KEYBOARD)ft_quote_handling \
+				$(KEYBOARD)ft_setcursor \
+				$(KEYBOARD)ft_shift_insert \
+				$(KEYBOARD)ft_trigger_nl \
 				$(KEYBOARD)ft_delete \
 				$(KEYBOARD)ft_deletion_shift \
 				$(KEYBOARD)ft_esc_parse \
@@ -102,13 +121,13 @@ FILES			= $(KEYBOARD)ft_add_row \
 				$(KEYBOARD)ft_history_write_to_file \
 				$(KEYBOARD)ft_history \
 				$(KEYBOARD)ft_init_signals \
-				$(KEYBOARD)ft_init_term \
 				$(KEYBOARD)ft_input_cycle \
 				$(KEYBOARD)ft_insertion \
+				$(KEYBOARD)ft_backspace \
+				$(KEYBOARD)ft_mv_prompt_len \
 				$(KEYBOARD)ft_is_prompt_line \
 				$(KEYBOARD)ft_len_lowest_line \
 				$(KEYBOARD)ft_line_mv \
-				$(KEYBOARD)ft_opt_mv \
 				$(KEYBOARD)ft_print_trail \
 				$(KEYBOARD)ft_remove_nl_addr \
 				$(KEYBOARD)ft_reset_nl_addr \
@@ -118,14 +137,13 @@ FILES			= $(KEYBOARD)ft_add_row \
 				$(KEYBOARD)ft_shift_nl_addr \
 				$(KEYBOARD)ft_window_size \
 				$(KEYBOARD)ft_word_mv \
-				$(KEYBOARD)ft_prompt_handling \
 				$(KEYBOARD)ft_keyboard \
-				$(KEYBOARD)ft_keyboard_utils \
 				$(LEXER)ft_lexer \
 				$(BANNER)ft_banner \
 				$(MAIN)main \
 				$(MAIN)ft_endcycle \
 				$(MAIN)str_from_arr \
+				$(MAIN)init_fd \
 				$(TOKENIZER)tokenizer \
 				$(BUILDTREE)build_tree \
 				$(BUILDTREE)make_arg_array \

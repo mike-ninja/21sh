@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:00:16 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/03 23:38:51 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/04 20:51:26 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,7 @@ static void	ft_reset_tmp_env(t_session *sesh)
 void	ft_endcycle(t_session *sesh)
 {	
 	sesh->ret = 0;
-	if (sesh->head)
-		free_node(sesh->head);
+	free_node(sesh->head);
 	sesh->head = NULL;
 	free_tokens(sesh->tokens);
 	ft_strdel(&sesh->terminal);

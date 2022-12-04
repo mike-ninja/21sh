@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_history.c                                       :+:      :+:    :+:   */
+/*   ft_copy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/17 09:38:04 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/04 19:15:33 by mbarutel         ###   ########.fr       */
+/*   Created: 2022/11/25 13:02:11 by mbarutel          #+#    #+#             */
+/*   Updated: 2022/12/04 19:41:55 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
 /*
- * It prints the history of the shell
+ * It copies the word before the cursor to the clipboard
  *
- * @param t the terminal structure
+ * @param t The term structure
  */
-void	ft_history(t_term *t)
+void	ft_copy(t_term *t)
 {
-	size_t	num_incr;
+	ssize_t	i;
+	ssize_t	j;
 
-	write(1, "\n", 1);
-	num_incr = 0;
-	while (++num_incr < t->v_history.len)
-		ft_printf("%4d  %s\n", num_incr, \
-		(char *)ft_vec_get(&t->v_history, num_incr - 1));
+	i = t->index - 1;
+	while (i && ft_isspace(t->inp[i]))
+		i--;
+	j = i;
+	while (j && !ft_isspace(t->inp[j]))
+		j--;
+	if (ft_isspace(t->inp[j]))
+		j++;
+	if (t->clipboard.buff)
+		ft_strdel(&t->clipboard.buff);
+	t->clipboard.buff = ft_strsub(&t->inp[j], 0, (size_t)((i - j) + 1));
+	t->clipboard.type = COPY;
 }
