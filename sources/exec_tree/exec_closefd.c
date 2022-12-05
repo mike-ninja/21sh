@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 15:14:26 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/05 16:30:00 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/05 19:28:25 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 void	exec_closefd(t_closefd *node, char ***environ_cp)
 {
 	close(node->close_fd);
-	if (fork_wrap == 0)
+	if (node->cmd && fork_wrap() == 0)
 		exec_tree(node->cmd, environ_cp);
 }

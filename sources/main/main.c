@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/05 16:21:10 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/05 19:26:45 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	main(int argc, char **argv)
 		if (test_flag)
 			status = 0;
 	}
+	ft_strdel(&sesh->terminal);
 	if (!test_flag)
 		ft_raw_disable(sesh->orig_termios);
 	return (0);
