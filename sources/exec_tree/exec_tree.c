@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:23:35 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/05 16:03:15 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:36:41 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void	free_node(t_treenode *head)
 			((t_pipenode *)head)->right = NULL;
 		}
 		else if (head->type == CMD)
+		{
 			ft_freeda((void ***)&((t_cmdnode *)head)->cmd, calc_chptr(((t_cmdnode *)head)->cmd));
+		}
 		else if (head->type == REDIR)
 		{
 			free_node(((t_redir *)head)->cmd);

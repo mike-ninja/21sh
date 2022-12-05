@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:55:11 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/02 21:43:18 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/05 09:44:51 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static char	*ft_expansion_loop(t_session *sesh, char *buff, char **cmd, char **s
 	char	*tofree;
 
 	i = -1;
+	ft_strdel(cmd);
 	while (split[++i])
 	{
 		if (ft_strchr(split[i], '$') && ft_strlen(split[i]) > 1)

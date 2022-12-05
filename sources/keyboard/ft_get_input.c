@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_opt_mv.c                                        :+:      :+:    :+:   */
+/*   ft_get_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/12 09:05:53 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/09 10:20:45 by mrantil          ###   ########.fr       */
+/*   Created: 2022/10/12 07:52:49 by mbarutel          #+#    #+#             */
+/*   Updated: 2022/11/29 16:40:50 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-void	ft_opt_mv(t_term *t)
+/*
+ * It reads one character from the standard input and returns it
+ *
+ * @return The character that was read from the standard input.
+ */
+int	ft_get_input(void)
 {
-	if (t->ch == 98 || t->ch == 102)
-		ft_word_mv(t);
-	else if (t->ch == 49)
-		ft_line_mv(t);
+	int	c;
+
+	c = 0;
+	read(STDIN_FILENO, &c, 1);
+	return (c);
 }

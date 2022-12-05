@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_window_size.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:25:07 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/30 09:55:11 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:54:16 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/*
+ * It sets the cursor position
+ * to the position of the character at the current index
+ *
+ * @param t the term structure
+ */
 static void	set_new_cur_pos(t_term *t)
 {
 	while (t->nl_addr[t->c_row] \
@@ -30,6 +36,11 @@ static void	set_new_cur_pos(t_term *t)
 	ft_setcursor(t->c_col, t->c_row + t->start_row);
 }
 
+/*
+ * It resets the cursor position and prints the trail of the input string
+ *
+ * @param t the term structure
+ */
 void	ft_window_size(t_term *t)
 {
 	struct winsize	size;

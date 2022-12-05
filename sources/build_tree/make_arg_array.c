@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 21:59:23 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/04 08:52:34 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/05 09:43:25 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,32 @@ static int	arg_qty_loop(char *cmd)
 	return (len);
 }
 
-static void	collect_args_loop(char **array, char *cmd)
+static int	find_closing_quote(char **cmd, char c)
 {
 	int i;
+
+	i = 1;
+	while ((*cmd)[i] && (*cmd)[i] != c)
+		i++;
+	if ((*cmd)[i] == c)
+		i++;
+	*cmd = *cmd + i;
+	return (i);
+}
+
+static void	collect_args_loop(char **array, char *cmd)
+{
+	int		i;
 
 	i = 0;
 	while (cmd)
 	{
 		if (*cmd == '\"')
-		{
-			++cmd;
-			array[i++] = ft_strdup(ft_strsep(&cmd, "\""));
-		}
+			array[i++] = ft_strsub(cmd, 0, find_closing_quote(&cmd, '\"'));
 		else if (*cmd == '\'')
-		{
-			++cmd;
-			array[i++] = ft_strdup(ft_strsep(&cmd, "\'"));
-		}
+			array[i++] = ft_strsub(cmd, 0, find_closing_quote(&cmd, '\''));	
 		else
-			array[i++] = ft_strdup(ft_strsep(&cmd, " "));
+			array[i++] = ft_strdup(ft_strsep(&cmd, " "));	
 		cmd = ft_skip_space(cmd);
 	}
 	array[i] = NULL;

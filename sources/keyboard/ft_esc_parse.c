@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_esc_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:31:54 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/21 11:25:38 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:40:29 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/*
+ * It moves the cursor to the beginning of the line
+ *
+ * @param t the term structure
+ */
 static void	ft_cursor_beginning(t_term *t)
 {
 	if (!t->c_row)
@@ -30,6 +35,11 @@ static void	ft_cursor_beginning(t_term *t)
 	ft_setcursor(t->c_col, ft_get_linenbr());
 }
 
+/*
+ * It moves the cursor to the end of the line
+ *
+ * @param t the term structure
+ */
 static void	ft_cursor_end(t_term *t)
 {
 	ssize_t	len;
@@ -52,35 +62,45 @@ static void	ft_cursor_end(t_term *t)
 	ft_setcursor(t->c_col, ft_get_linenbr());
 }
 
+/*
+ * It moves the cursor to the beginning or end of the line
+ *
+ * @param t the term structure
+ */
 static void	shift_arrow(t_term *t)
 {
-	if (t->ch == 'D' && t->bytes)
+	if (t->ch == ARROW_RGHT && t->bytes)
 		ft_cursor_beginning(t);
-	if (t->ch == 'C')
+	if (t->ch == ARROW_LFT)
 		ft_cursor_end(t);
 }
 
+/*
+ * It parses the escape sequence and calls the appropriate function
+ *
+ * @param t the term structure
+ */
 void	ft_esc_parse(t_term *t)
 {
 	t->ch = ft_get_input();
 	if (t->ch == '[')
 	{
 		t->ch = ft_get_input();
-		if (t->ch >= 'A' && t->ch <= 'D')
+		if (t->ch >= ARROW_UP && t->ch <= ARROW_RGHT)
 			ft_arrow_input(t);
-		if (t->ch == 49)
-			ft_opt_mv(t);//why two of these? line 92
-		if (t->ch == 'H' && t->bytes)
+		if (t->ch == LINE_MV)
+			ft_alt_mv(t);
+		if (t->ch == CURS_BIGIN && t->bytes)
 			ft_cursor_beginning(t);
-		if (t->ch == 'F')
+		if (t->ch == CURS_END)
 			ft_cursor_end(t);
-		if (t->ch == '2')
+		if (t->ch == KEY_SHIFT)
 		{
 			t->ch = ft_get_input();
 			shift_arrow(t);
 		}
 	}
-	if (t->ch == 98 || t->ch == 102)
-		ft_opt_mv(t);
+	if (t->ch == ALT_LFT || t->ch == ALT_RGHT)
+		ft_alt_mv(t);
 	t->ch = 0;
 }

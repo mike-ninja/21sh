@@ -6,12 +6,19 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 14:17:02 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 17:15:33 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/*
+ * It shifts the addresses of the newline characters in the buffer by a
+ * certain amount
+ *
+ * @param t the terminal structure
+ * @param num the number of characters to shift the addresses by
+ */
 void	ft_shift_nl_addr(t_term *t, int num)
 {
 	ssize_t	row;
