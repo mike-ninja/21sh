@@ -1,4 +1,3 @@
-REDIR SHOULD NOT FORK, cd - > file
 Test tokenizer with close fd cmd
 Something has broken, after command sometimes waits for newline before printing prompt
 Error managment for redir, input redri` open fails if no existing file

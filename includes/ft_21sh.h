@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/05 16:35:09 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:44:39 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,6 @@ typedef struct s_aggregation
 	int			open_fd;
 } t_aggregate;
 
-/*					CLOSE FD STRUCT			*/
-typedef struct s_closefd
-{
-	int			type;
-	int			close_fd;
-	t_treenode	*cmd;
-}	t_closefd;
 
 /*					PIPE STRUCT				*/
 typedef struct s_pipenode
@@ -94,11 +87,10 @@ typedef struct s_pipenode
 union u_treenode
 {
 	int type;
-	t_pipenode	pipe;
-	t_cmdnode	cmd;
-	t_redir		redir;
-	t_aggregate	aggregate;
-	t_closefd	closefd;
+	t_pipenode pipe;
+	t_cmdnode cmd;
+	t_redir redir;
+	t_aggregate aggregate;
 };
 
 /*				SESSION STRUCT				*/
@@ -122,8 +114,8 @@ void			ft_endcycle(t_session *sesh);
 void			reset_fd(char *terminal);
 char			*str_from_arr(char **arr);
 struct termios	ft_raw_enable(void);
-int				ft_getent(void);
-void			ft_raw_disable(struct termios orig_termios);
+int ft_getent(void);
+void	ft_raw_disable(struct termios orig_termios);
 
 
 /*				  INITIALIZE				*/
@@ -159,10 +151,9 @@ void	free_node(t_treenode *head);
 void 	exec_tree(t_treenode *head, char ***environ_cp);
 void	execute_bin(char **args, char ***environ_cp);
 char	*search_bin(char *cmd, char **environ_cp);
-void	exec_pipe(t_pipenode *pipenode, char ***environ_cp);
-void	exec_redir(t_redir *node, char ***environ_cp);
-void	exec_aggregate(t_aggregate *node, char ***environ_cp);
-void	exec_closefd(t_closefd *node, char ***environ_cp);
+void exec_pipe(t_pipenode *pipenode, char ***environ_cp);
+void exec_redir(t_redir *node, char ***environ_cp);
+void exec_aggregate(t_aggregate *node, char ***environ_cp);
 void	error_exit(char *msg);
 int		ft_freeda(void ***a, size_t row);
 size_t	calc_chptr(char **arr);

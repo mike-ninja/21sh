@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/05 16:00:56 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/04 08:20:48 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int ft_calc_chr(char *line, char c)
 	}
 	return (res);
 }
+
+
 
 t_treenode *init_cmd_node(char *cmd)
 {
@@ -214,7 +216,6 @@ t_treenode	*init_cmd_node(char *cmd)
 }
 */
 
-/* Get filename after redir symbol */
 static char *get_file(char *value)
 {
 	int start;
@@ -302,46 +303,12 @@ static int if_aggregation(t_token *tokens, t_treenode **redir, int i_tok, int cm
 	return (0);
 }
 
-t_treenode *init_closefd(int close_fd, t_treenode *cmd)
-{
-	t_treenode *closefd;
-
-	closefd = ft_memalloc(sizeof(*closefd));
-	closefd->type = CLOSEFD;
-	(((t_closefd *)closefd)->type) = CLOSEFD;
-	(((t_closefd *)closefd)->close_fd) = close_fd;
-	(((t_closefd *)closefd)->cmd) = cmd;
-	return (closefd);
-}
-
-static int if_closefd(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
-{
-	int close_fd;
-
-	close_fd = 0;
-	close_fd = get_close_fd(tokens[i_tok].value);
-	if (close_fd < 0)
-		close_fd = 1;
-	if (!*redir)
-	{
-		if (cmd < 0)
-			*redir = init_closefd(close_fd, NULL);
-		else
-			*redir = init_closefd(close_fd, init_cmd_node(tokens[cmd].value));
-	}
-	else
-		((t_redir *)(*redir))->cmd = init_closefd(close_fd, (((t_redir *)(*redir))->cmd));
-	return (0);
-}
-
 static int if_redir(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 {
 	int redir_t;
 	char *dest;
 	int close_fd;
 
-	if (tokens[i_tok].token == CLOSEFD)
-		return (if_closefd(tokens, redir, i_tok, cmd));
 	if (tokens[i_tok].token == AGGREGATION)
 		return (if_aggregation(tokens, redir, i_tok, cmd));
 	if (tokens[i_tok].token == REDIR)
@@ -570,7 +537,7 @@ t_treenode *build_tree(t_token *tokens)
 	// Everythin on left side of pipe goes to left (commands and redir nodes)
 	// On right side goes the next pipe or if no pipe then command
 	// Refactor the init pipe to use tokens, it should build the command on the left and on the right?
-
+	
 	pipe = foreseer_of_tokens(tokens, PIPE, 0, calculate_tokens(tokens));
 	if (pipe >= 0)
 	{

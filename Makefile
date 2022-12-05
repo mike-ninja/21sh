@@ -6,7 +6,7 @@
 #    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/12/05 16:35:16 by jniemine         ###   ########.fr        #
+#    Updated: 2022/12/05 16:43:52 by jniemine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -142,7 +142,6 @@ FILES			= $(KEYBOARD)ft_arrow_input \
 				$(BANNER)ft_banner \
 				$(MAIN)main \
 				$(MAIN)ft_endcycle \
-				$(MAIN)reset_fd \
 				$(MAIN)str_from_arr \
 				$(MAIN)init_fd \
 				$(TOKENIZER)tokenizer \
@@ -152,7 +151,6 @@ FILES			= $(KEYBOARD)ft_arrow_input \
 				$(EXECTREE)exec_cmd \
 				$(EXECTREE)exec_pipe \
 				$(EXECTREE)exec_redir \
-				$(EXECTREE)exec_closefd \
 				$(EXECTREE)exec_aggregation \
 				$(EXECTREE)search_bin \
 				$(EXPANSION)ft_expansion \
