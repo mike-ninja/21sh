@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:50:01 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/04 21:07:31 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/05 09:44:14 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_builtins(t_session *sesh)
 	if (sesh->head && sesh->head->type == CMD)
 	{
 		cmd = ((t_cmdnode *)sesh->head)->cmd;
-		// ft_expansion(sesh, cmd);
+		ft_expansion(sesh, cmd);
 		if (!ft_strcmp(*cmd, "env"))
 			return (ft_env(sesh, &cmd));
 		else if (!ft_strcmp(*cmd, "setenv"))

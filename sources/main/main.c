@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/04 21:09:11 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/05 09:06:59 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,13 @@ int	main(int argc, char **argv)
 		if (!test_flag)
 			ft_keyboard(&term);
 		if (!test_flag)
-			ft_lexer(term.inp, &line);
+			line = term.inp;
 		else
 			line = str_from_arr(&argv[2]);
 		sesh->tokens = chop_line(line, sesh->tokens, 1);
-		ft_strdel(&line);
 		sesh->head = build_tree(sesh->tokens);
+		// ft_strdel(&line);
+		// ft_lexer(term.inp, &line);
 		// char **tmp = ((t_cmdnode *)sesh->head)->cmd;
 
 		// while (*tmp)
