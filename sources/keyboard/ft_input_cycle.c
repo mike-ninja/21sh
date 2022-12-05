@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/04 20:33:42 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/05 12:16:46 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,9 @@ static int	ft_isprint_or_enter(t_term *t)
 	if (t->ch == ENTER)
 	{
 		if ((!t->bslash && !(t->q_qty % 2) && !t->delim) \
-			|| !ft_strcmp(t->nl_addr[t->c_row], t->delim))
+			|| (t->delim && !ft_strcmp(t->delim, t->nl_addr[t->c_row])))
 		{
 			ft_end_cycle(t);
-			// ft_restart_cycle(t);
 			return (1);
 		}
 		t->bslash = 0;
