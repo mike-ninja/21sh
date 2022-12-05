@@ -13,7 +13,7 @@ do
 	while read -r line
 	do
 	  echo "$line" > autotest_file.txt
- 	  $sh -c $(cat autotest_file.txt) > $outdir/sh.out 2> $outdir/sh_stderror.out
+ 	  leaks = leaks -atExit -- $sh -c $(cat autotest_file.txt) > $outdir/sh.out 2> $outdir/sh_stderror.out
 	  bash -c "$(cat autotest_file.txt)" > $outdir/bash.out 2> $outdir/bash_stderror.out
 	  wait $!
 	  diff -q $outdir/sh.out $outdir/bash.out > $diffdir/sh_bash_diff.out
