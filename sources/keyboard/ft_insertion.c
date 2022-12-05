@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/04 19:19:44 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/05 12:44:35 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ static void	ft_insertion_enter(t_term *t)
 {
 	if (!t->nl_addr[t->c_row + 1])
 	{
-		if (t->bslash || t->q_qty % 2 || (t->heredoc \
-			&& ft_strcmp(t->nl_addr[t->c_row], t->delim)))
+		ft_putendl(t->delim);
+		if (t->bslash || t->q_qty % 2 || (t->heredoc && ft_strcmp(t->nl_addr[t->c_row], t->delim))) // Something wrong here
 		{
 			t->inp[t->bytes++] = (char)t->ch;
 			ft_create_prompt_line(t, t->bytes);
@@ -93,7 +93,7 @@ void	ft_insertion(t_term *t)
 	if (t->ch == ENTER)
 		ft_insertion_enter(t);
 	else
-		ft_insertion_char(t);
+		ft_insertion_char(t);	
 	ft_trigger_nl(t);
 	if (t->inp[t->index])
 		ft_print_trail(t);

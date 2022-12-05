@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/03 23:33:07 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/05 11:15:54 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +257,7 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 	int		start;
 	int		end;
 
-	if (!line)
+	if (!line || !*line)
 		return (NULL);
 	i_args = 0;
 	cur = 0;
