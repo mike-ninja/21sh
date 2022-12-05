@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
+#    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/12/04 08:47:18 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/12/05 15:59:38 by jniemine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -125,6 +125,7 @@ FILES			= $(KEYBOARD)ft_add_row \
 				$(BANNER)ft_banner \
 				$(MAIN)main \
 				$(MAIN)ft_endcycle \
+				$(MAIN)reset_fd \
 				$(MAIN)str_from_arr \
 				$(TOKENIZER)tokenizer \
 				$(BUILDTREE)build_tree \
@@ -133,6 +134,7 @@ FILES			= $(KEYBOARD)ft_add_row \
 				$(EXECTREE)exec_cmd \
 				$(EXECTREE)exec_pipe \
 				$(EXECTREE)exec_redir \
+				$(EXECTREE)exec_closefd \
 				$(EXECTREE)exec_aggregation \
 				$(EXECTREE)search_bin \
 				$(EXPANSION)ft_expansion \

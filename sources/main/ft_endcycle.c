@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_endcycle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:00:16 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/03 23:38:51 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:13:32 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,13 @@ static void	ft_reset_tmp_env(t_session *sesh)
  * @param sesh the session struct
  */
 void	ft_endcycle(t_session *sesh)
-{	
+{
 	sesh->ret = 0;
 	if (sesh->head)
 		free_node(sesh->head);
 	sesh->head = NULL;
 	free_tokens(sesh->tokens);
+	reset_fd(sesh->terminal);
 	ft_strdel(&sesh->terminal);
 	ft_reset_tmp_env(sesh);
 }

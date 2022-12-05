@@ -10,3 +10,7 @@ echo stdin > stdin.txt
 0<&- cat < stdin.txt
 cat < stdin.txt 0<&-
 rm stdin.txt
+ls -l > lol >&-
+touch stdin.txt
+echo himom > stdin.txt
+cat stdin.txt 3< 1>&3

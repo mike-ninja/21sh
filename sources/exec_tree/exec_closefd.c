@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_fd.c                                          :+:      :+:    :+:   */
+/*   exec_closefd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/03 20:31:23 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/03 20:44:03 by jniemine         ###   ########.fr       */
+/*   Created: 2022/12/05 15:14:26 by jniemine          #+#    #+#             */
+/*   Updated: 2022/12/05 16:30:00 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"ft_21sh.h"
+#include "ft_21sh.h"
 
-/* Untested prototype */
-void	reset_filedescriptors(t_session *sesh)
+void	exec_closefd(t_closefd *node, char ***environ_cp)
 {
-	char	*terminal;
-	int		fd;
-
-	terminal = sesh->terminal;
-	while (fd >= 0)
-	{
-		fd = open(terminal, O_RDWR);
-		if (fd >= 3)
-		{
-			close(fd);
-			break ;
-		}
-	}
+	close(node->close_fd);
+	if (fork_wrap == 0)
+		exec_tree(node->cmd, environ_cp);
 }
