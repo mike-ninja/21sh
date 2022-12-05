@@ -1,6 +1,5 @@
-Test tokenizer with close fd cmd
+Redir should not fork. cd - > lol
 Something has broken, after command sometimes waits for newline before printing prompt
 Error managment for redir, input redri` open fails if no existing file
 Root leak with redir
 Root leak with any command
-do >&- and reset fd functio
