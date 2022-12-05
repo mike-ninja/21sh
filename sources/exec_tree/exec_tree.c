@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:23:35 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/05 18:54:12 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/05 20:14:23 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void exec_tree(t_treenode *head, char ***environ_cp)
 			exec_redir((t_redir *)head, environ_cp);
 		else if (head->type == AGGREGATION)
 			exec_aggregate((t_aggregate *)head, environ_cp);
+		else if (head->type == CLOSEFD)
+			exec_closefd((t_closefd *)head, environ_cp);
 	//	free_node(head);
 	//	head = NULL;
 }

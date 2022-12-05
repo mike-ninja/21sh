@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/05 19:57:20 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/05 20:17:20 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ char	*search_bin(char *cmd, char **environ_cp);
 void exec_pipe(t_pipenode *pipenode, char ***environ_cp);
 void exec_redir(t_redir *node, char ***environ_cp);
 void exec_aggregate(t_aggregate *node, char ***environ_cp);
+void	exec_closefd(t_closefd *node, char ***environ_cp);
 void	error_exit(char *msg);
 int		ft_freeda(void ***a, size_t row);
 size_t	calc_chptr(char **arr);
