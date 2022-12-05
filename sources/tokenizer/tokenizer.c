@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/04 16:47:29 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/05 19:41:00 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,7 +266,7 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 	int		start;
 	int		end;
 
-	if (!line)
+	if (!line || !*line)
 		return (NULL);
 	i_args = 0;
 	cur = 0;
@@ -305,12 +305,12 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 			++cur;
 	}
 	/*Debug*/
-	 i_args = 0;
-	 while (args[i_args].token)
-	 {
-	 	ft_printf("TOK: %s tok: %d\n", args[i_args].value, args[i_args].token);
-	 	++i_args;
-	 }
-	 exit(1);
+//	 i_args = 0;
+//	 while (args[i_args].token)
+//	 {
+//	 	ft_printf("TOK: %s tok: %d\n", args[i_args].value, args[i_args].token);
+//	 	++i_args;
+//	 }
+//	 exit(1);
 	return (args);
 }

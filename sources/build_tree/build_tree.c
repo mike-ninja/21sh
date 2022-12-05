@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/04 08:20:48 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/05 19:42:37 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ t_treenode *init_cmd_node(char *cmd)
 {
 	t_treenode *new;
 
+	if (!cmd)
+		return (NULL);
 	new = ft_memalloc(sizeof(*new));
 	((t_cmdnode *)new)->type = CMD;
 	((t_cmdnode *)new)->cmd = make_arg_array(cmd);
@@ -537,7 +539,7 @@ t_treenode *build_tree(t_token *tokens)
 	// Everythin on left side of pipe goes to left (commands and redir nodes)
 	// On right side goes the next pipe or if no pipe then command
 	// Refactor the init pipe to use tokens, it should build the command on the left and on the right?
-	
+
 	pipe = foreseer_of_tokens(tokens, PIPE, 0, calculate_tokens(tokens));
 	if (pipe >= 0)
 	{

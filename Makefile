@@ -6,7 +6,7 @@
 #    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/12/05 16:43:52 by jniemine         ###   ########.fr        #
+#    Updated: 2022/12/05 19:39:10 by jniemine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -143,7 +143,7 @@ FILES			= $(KEYBOARD)ft_arrow_input \
 				$(MAIN)main \
 				$(MAIN)ft_endcycle \
 				$(MAIN)str_from_arr \
-				$(MAIN)init_fd \
+				$(MAIN)reset_fd \
 				$(TOKENIZER)tokenizer \
 				$(BUILDTREE)build_tree \
 				$(BUILDTREE)make_arg_array \
