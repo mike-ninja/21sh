@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/05 20:49:50 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/06 17:14:24 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,9 +280,7 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 	while (line[cur])
 	{
 		c = find_argument(line, &cur, &start, &end);
-		if (*c == '\n')
-			set_token_values(&args[i_args], NEWLINE, c);
-		else if (*c == '|')
+		if (*c == '|')
 			set_token_values(&args[i_args], PIPE, c);
 		else if (line[cur] == '>' || line[cur] == '<')
 		{

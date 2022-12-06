@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/06 17:05:10 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/06 17:14:36 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 #define REDIR 3
 #define WORD 4
 #define SEMICOLON 5
-#define NEWLINE 6
 #define AGGREGATION 7
 #define CLOSEFD 8
 
