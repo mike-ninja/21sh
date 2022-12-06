@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:23:35 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/05 20:14:23 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/06 14:08:28 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	free_node(t_treenode *head)
 void exec_tree(t_treenode *head, char ***environ_cp)
 {
 		if (!head)
-			exit (1);
+			return ;
 		if (head->type == PIPE)
 			exec_pipe((t_pipenode *)head, environ_cp);
 		else if (head->type == CMD)
