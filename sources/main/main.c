@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/06 16:07:13 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/06 17:00:30 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main(int argc, char **argv)
 			if (sesh->head && sesh->head->type == CMD)
 				execute_bin(((t_cmdnode *)sesh->head)->cmd, &sesh->env);
 			else if (sesh->head && sesh->head->type != CMD)
-				exec_tree(sesh->head, &sesh->env);
+				exec_tree(sesh->head, &sesh->env, sesh->terminal);
 		}
 		//	wait (0);
 			/*		debugging		*/

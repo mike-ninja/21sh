@@ -1,4 +1,5 @@
 When comparing stderr just take everything after bash: and 21sh:
+REMOVE NL TOKENIZER
 semicolon
 Sometimes after command does not print prompt before nl is given again
 Redir should not fork. cd - > lol

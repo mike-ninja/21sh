@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/06 13:59:09 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/06 17:08:17 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,6 @@ void	execute_bin(char **args, char ***environ_cp)
 			exe_fail(&cmd, args, environ_cp);
 		exit (1);
 	}
+	wait (0);
 	ft_memdel((void **)&cmd);
 }

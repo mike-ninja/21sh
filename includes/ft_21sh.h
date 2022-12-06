@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/05 20:17:20 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/06 17:05:10 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,17 +151,17 @@ char	*ft_expansion_tilde(t_session *sesh, char *str);
 /*					UTILITIES				*/
 int		ft_addr_check(char *file);
 char	**ft_env_get(t_session *sesh, char *key);
-int	increment_whitespace(char **line);
+int		increment_whitespace(char **line);
 void	free_node(t_treenode *head);
 
 /*					EXECUTE_TREE			*/
-void 	exec_tree(t_treenode *head, char ***environ_cp);
+void	exec_tree(t_treenode *head, char ***environ_cp, char *terminal);
 void	execute_bin(char **args, char ***environ_cp);
+void	exec_pipe(t_pipenode *pipenode, char ***environ_cp, char *terminal);
+void	exec_redir(t_redir *node, char ***environ_cp, char *terminal);
+void	exec_aggregate(t_aggregate *node, char ***environ_cp, char *terminal);
+void	exec_closefd(t_closefd *node, char ***environ_cp, char *terminal);
 char	*search_bin(char *cmd, char **environ_cp);
-void exec_pipe(t_pipenode *pipenode, char ***environ_cp);
-void exec_redir(t_redir *node, char ***environ_cp);
-void exec_aggregate(t_aggregate *node, char ***environ_cp);
-void	exec_closefd(t_closefd *node, char ***environ_cp);
 void	error_exit(char *msg);
 int		ft_freeda(void ***a, size_t row);
 size_t	calc_chptr(char **arr);
