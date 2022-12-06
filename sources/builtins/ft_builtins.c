@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:50:01 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/05 09:44:14 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/06 20:47:20 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int	ft_builtins(t_session *sesh)
 {
 	char **cmd;
 
-	if (sesh->head && sesh->head->type == CMD)
+	if (sesh->head && ((t_semicolon *)sesh->head)->left->type == CMD)
 	{
-		cmd = ((t_cmdnode *)sesh->head)->cmd;
+		cmd = ((t_cmdnode *)((t_semicolon *)sesh->head)->left)->cmd;
 		ft_expansion(sesh, cmd);
 		if (!ft_strcmp(*cmd, "env"))
 			return (ft_env(sesh, &cmd));

@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/05 19:56:47 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/06 20:34:31 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -527,6 +527,8 @@ void print_node(t_treenode *node)
 	}
 	else if (node->type == PIPE)
 		ft_printf("Type: PIPE\n");
+	else if (node->type == SEMICOLON)
+		ft_printf("Type: SEMICOLON\n");
 	else if (node->type == CMD)
 	{
 		ft_printf("Type: CMD Value: ");
@@ -550,6 +552,13 @@ void print_tree(t_treenode *head, int depth)
 		print_tree(((t_pipenode *)head)->left, depth + 1);
 		ft_printf("/");
 	}
+	if (head->type == SEMICOLON)
+	{
+		print_tree(((t_semicolon *)head)->right, depth + 1);
+		ft_printf("\\");
+		print_tree(((t_semicolon *)head)->left, depth + 1);
+		ft_printf("/");
+	}
 	while (depth--)
 		ft_printf("\t");
 	print_node(head);
@@ -557,32 +566,76 @@ void print_tree(t_treenode *head, int depth)
 		ft_printf("\t");
 }
 
+t_treenode *create_command_tree(t_token *tokens, int i_tok, int semicol)
+{
+	int			pipe;
+	t_treenode	*head;
+
+	if (tokens[i_tok].token == SEMICOLON)
+		return (NULL);
+	pipe = foreseer_of_tokens(tokens, PIPE, i_tok, semicol);
+	if (pipe >= 0)
+		head = create_pipe_node(tokens, pipe);
+	else
+		head = parse_right_cmd(tokens, i_tok);
+	return (head);
+}
+
+t_treenode *init_semicolon(void)
+{
+	t_treenode *semicolon;
+
+	semicolon = ft_memalloc(sizeof(*semicolon));
+	semicolon->type = SEMICOLON;
+	(((t_semicolon *)semicolon)->type) = SEMICOLON;
+	(((t_semicolon *)semicolon)->left) = NULL;
+	(((t_semicolon *)semicolon)->right) = NULL;
+	return (semicolon);
+}
+
+t_treenode *create_semicolon_node(t_token *tokens, int i_tok, int end)
+{
+	t_treenode	*semicolon;
+	int			next_semicol;
+
+	if (!tokens[i_tok].token)
+		return (NULL);
+	semicolon = init_semicolon();
+	next_semicol = foreseer_of_tokens(tokens, SEMICOLON, i_tok, end);
+	if (next_semicol >= 0)
+		(((t_semicolon *)semicolon)->right) = create_semicolon_node(tokens, next_semicol + 1, end);
+	else
+		next_semicol = end;
+	(((t_semicolon *)semicolon)->left) = create_command_tree(tokens, i_tok, next_semicol);
+	return (semicolon);
+}
+
 /* ls -l > file | head -n 5 > file < file2 | tail */
 t_treenode *build_tree(t_token *tokens)
 {
 	//	const char *marks[] = {"PIPE", "REDIR", "SEMICOLON", "NEWLINE", NULL};
 	//	int	i;
-	t_treenode *head;
-	int pipe;
+	t_treenode	*head;
+	int			semicolon;
+	int			pipe;
 
 	head = NULL;
 	if (!tokens)
 		return (head);
-	//	i = 0;
-	// First search for pipe
-	// Everythin on left side of pipe goes to left (commands and redir nodes)
-	// On right side goes the next pipe or if no pipe then command
-	// Refactor the init pipe to use tokens, it should build the command on the left and on the right?
-
-	pipe = foreseer_of_tokens(tokens, PIPE, 0, calculate_tokens(tokens));
-	if (pipe >= 0)
-	{
-		head = create_pipe_node(tokens, pipe);
-	}
-	else
-	{
-		head = parse_right_cmd(tokens, 0);
-	}
-//	free_tokens(tokens);
+	//Find semicolon
+	//On left side but everything after semicolon. (assume that every cmd starts with semicoln)
+	//On right side recursively search next semicolon
+//	semicolon = foreseer_of_tokens(tokens, SEMICOLON, 0, calculate_tokens(tokens));
+//	if (semicolon < 0)
+//		semicolon = calculate_tokens(tokens);
+//	head = create_command_tree(tokens, )
+//	pipe = foreseer_of_tokens(tokens, PIPE, 0, semicolon);
+//	if (pipe >= 0)
+//		head = create_pipe_node(tokens, pipe);
+//	else
+//		head = parse_right_cmd(tokens, 0);
+	head = create_semicolon_node(tokens, 0, calculate_tokens(tokens));
+//	print_tree(head, 0);
+//	exit (1);
 	return (head);
 }

@@ -1,9 +1,6 @@
 When comparing stderr just take everything after bash: and 21sh:
-REMOVE NL TOKENIZER
 semicolon
-Sometimes after command does not print prompt before nl is given again
-Redir should not fork. cd - > lol
-Something has broken, after command sometimes waits for newline before printing prompt
+Sometimes after command does not print prompt before nl is given again(PROPAPLY FIXED, CAUSED BY NO WAIT AFTER FORK"
 Error managment for redir, input redri` open fails if no existing file
 Root leak with redir
 Root leak with any command

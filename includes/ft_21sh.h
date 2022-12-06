@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/06 17:14:36 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/06 17:25:50 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,20 @@ typedef struct s_token
 	char *value;
 } t_token;
 
+/*					SEMICOLON STRUCT		*/
+typedef struct s_semicolon
+{
+	int type;
+	t_treenode *left;
+	t_treenode *right;
+}	t_semicolon;
+
 /*					CMD STRUCT				*/
 typedef struct s_cmdnode
 {
 	int type;
 	char **cmd;
-} t_cmdnode;
+}	t_cmdnode;
 
 /*					CLOSEFD STRUCT			*/
 typedef struct s_closefd
