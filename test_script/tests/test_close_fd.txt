@@ -10,3 +10,4 @@ echo stdin > stdin.txt
 0<&- cat < stdin.txt
 cat < stdin.txt 0<&-
 rm stdin.txt
+2>&- doesnotexist

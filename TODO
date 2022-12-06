@@ -1,3 +1,6 @@
+When comparing stderr just take everything after bash: and 21sh:
+semicolon
+Sometimes after command does not print prompt before nl is given again
 Redir should not fork. cd - > lol
 Something has broken, after command sometimes waits for newline before printing prompt
 Error managment for redir, input redri` open fails if no existing file
