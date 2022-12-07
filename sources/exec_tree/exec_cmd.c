@@ -6,11 +6,21 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/06 17:08:17 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/07 20:28:08 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
+
+void exe_cmd_err(char *msg, char *cmd)
+{
+	ft_putstr_fd(SHELL_NAME, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd("\n", 2);
+}
 
 int	ft_freeda(void ***a, size_t row)
 {
@@ -51,7 +61,8 @@ int	ms_exit(char **args, char ***environ_cp)
 
 static void	exe_fail(char **cmd, char **args, char ***env_cp)
 {
-	ft_printf("minishell: %s: command not found...\n", args[0]);
+	exe_cmd_err("command not found", args[0]);
+//	ft_printf("minishell: %s: command not found...\n", args[0]);
 	ft_memdel((void **)cmd);
 	ms_exit(args, env_cp);
 }
@@ -73,13 +84,15 @@ static int	check_access(char *cmd, char **args)
 
 	if (!cmd || !ft_strchr(cmd, '/'))
 	{
-		ft_printf("minishell: %s: command not found...\n", args[0]);
+		exe_cmd_err("command not found", args[0]);
+//		ft_printf("minishell: %s: command not found...\n", args[0]);
 		return (0);
 	}
 	stat(cmd, &buf);
 	if (S_ISDIR(buf.st_mode))
 	{
-		ft_printf("minishell: %s: is a directory\n", cmd);
+		exe_cmd_err("is a directory", cmd);
+//		ft_printf("minishell: %s: is a directory\n", cmd);
 		return (0);
 	}
 	return (1);

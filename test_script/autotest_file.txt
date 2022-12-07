@@ -1,1 +1,1 @@
-doesnotexist
+2>&- doesnotexist

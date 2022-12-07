@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/07 17:32:26 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/07 18:56:58 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -536,6 +536,8 @@ void print_node(t_treenode *node)
 	}
 	else if (node->type == REDIR)
 		ft_printf("Type: REDIR\n");
+	else if (node->type == CLOSEFD)
+		ft_printf("Type: CLOSEFD\n");
 }
 
 void print_tree(t_treenode *head, int depth)
@@ -554,9 +556,9 @@ void print_tree(t_treenode *head, int depth)
 	}
 	if (head->type == SEMICOLON)
 	{
-		print_tree(((t_semicolon *)head)->right, depth + 1);
-		ft_printf("\\");
 		print_tree(((t_semicolon *)head)->left, depth + 1);
+		ft_printf("\\");
+		print_tree(((t_semicolon *)head)->right, depth + 1);
 		ft_printf("/");
 	}
 	while (depth--)

@@ -1,4 +1,6 @@
-Seems that the redirs and closefd are executed twice. Why does this work: 0>&- >&- > lol ls ; cat lol
+>&- ; echo stdout
+Something has broken, after command sometimes waits for newline before printing prompt
+Why does this work: 0>&- >&- > lol ls ; cat lol //Something weird in order of redirs?
 When comparing stderr just take everything after bash: and 21sh:
 semicolon
 Sometimes after command does not print prompt before nl is given again(PROBABLY FIXED, CAUSED BY NO WAIT AFTER FORK"

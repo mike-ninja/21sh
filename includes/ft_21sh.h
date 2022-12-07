@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/06 17:25:50 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/07 20:23:44 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@
 #define SEMICOLON 5
 #define AGGREGATION 7
 #define CLOSEFD 8
+
+/* For error messages */
+#define SHELL_NAME "21sh"
 
 /* Build tree, redir types */
 #define RE_IN_ONE 1
