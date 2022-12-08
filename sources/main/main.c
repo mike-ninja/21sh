@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/08 16:43:00 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/08 16:46:10 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ int	main(int argc, char **argv)
 		// 	ft_putchar('\n');
 		// 	tmp++;
 		// }
-		if (sesh->head && ft_builtins(sesh) == 1)
+		if (sesh->head /*&& ft_builtins(sesh) == 1*/)
 		{
 		//	if (sesh->head && sesh->head->type == CMD)
 		//		execute_bin(((t_cmdnode *)sesh->head)->cmd, &sesh->env);
 		//	else if (sesh->head && sesh->head->type != CMD)
-				exec_tree(sesh->head, &sesh->env, sesh->terminal);
+				exec_tree(sesh->head, &sesh->env, sesh->terminal, sesh);
 		}
 		//	wait (0);
 			/*		debugging		*/

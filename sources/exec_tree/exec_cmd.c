@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/08 16:40:36 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/08 17:01:09 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,14 @@ static int	check_access(char *cmd, char **args)
 	return (1);
 }
 
-void	execute_bin(char **args, char ***environ_cp)
+void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 {
 	char	*cmd;
 
 	if (!args[0])
-		return (1) ;
-	if (ft_builtins(args))
+		return ;
+	if (!ft_builtins(sesh, args))
+		return ;
 	if (!check_if_user_exe(args[0], &cmd))
 		cmd = search_bin(args[0], *environ_cp);
 	if (check_access(cmd, args) && fork_wrap() == 0)

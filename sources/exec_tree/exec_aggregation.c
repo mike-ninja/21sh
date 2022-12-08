@@ -6,13 +6,13 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 20:26:00 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/06 17:05:50 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/08 16:58:37 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-void exec_aggregate(t_aggregate *node, char ***environ_cp, char *terminal)
+void exec_aggregate(t_aggregate *node, char ***environ_cp, char *terminal, t_session *sesh)
 {
 //	if (fork_wrap() == 0)
 //	{
@@ -21,7 +21,7 @@ void exec_aggregate(t_aggregate *node, char ***environ_cp, char *terminal)
 			ft_printf("21sh: dup: bad filedescriptor\n");
 			exit (0);
 		}
-		exec_tree(node->cmd, environ_cp, terminal);
+		exec_tree(node->cmd, environ_cp, terminal, sesh);
 //		exit (0);
 //	}
 //	wait (0);

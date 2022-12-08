@@ -2,6 +2,7 @@ Problems of thursday:
 >&- ; echo stdout //FIXD
 cd /dev/fd;/bin/pwd
 echo "It works" //Does not remove quotes
+cd - //???
 Do heredoc
 
 If u have the interest: >lol echo hi >lmao mom

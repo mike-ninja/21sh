@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:23:35 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/08 16:34:49 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/08 17:02:48 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	free_node(t_treenode *head)
 		free(head);
 }
 
-void exec_tree(t_treenode *head, char ***environ_cp, char *terminal)
+void exec_tree(t_treenode *head, char ***environ_cp, char *terminal, t_session *sesh)
 {
 	//	ft_putstr_fd("TREE\n", 2);
 		if (!head)
@@ -52,22 +52,21 @@ void exec_tree(t_treenode *head, char ***environ_cp, char *terminal)
 //		ft_putstr_fd("TREE2\n", 2);
 		if (head->type == SEMICOLON)
 		{
-			ft_printf("CMD: %s\n", ((t_cmdnode *)((t_semicolon *)head)->left)->cmd);
 			//reset_fd(terminal);
-			exec_tree((((t_semicolon *)head)->left), environ_cp, terminal);
+			exec_tree((((t_semicolon *)head)->left), environ_cp, terminal, sesh);
 			//reset_fd(terminal);
-			exec_tree((((t_semicolon *)head)->right), environ_cp, terminal);
+			exec_tree((((t_semicolon *)head)->right), environ_cp, terminal, sesh);
 		}
 		else if (head->type == PIPE)
-			exec_pipe((t_pipenode *)head, environ_cp, terminal);
+			exec_pipe((t_pipenode *)head, environ_cp, terminal, sesh);
 		else if (head->type == CMD)
-			execute_bin(((t_cmdnode *)head)->cmd, environ_cp);
+			execute_bin(((t_cmdnode *)head)->cmd, environ_cp, sesh);
 		else if (head->type == REDIR)
-			exec_redir((t_redir *)head, environ_cp, terminal);
+			exec_redir((t_redir *)head, environ_cp, terminal, sesh);
 		else if (head->type == AGGREGATION)
-			exec_aggregate((t_aggregate *)head, environ_cp, terminal);
+			exec_aggregate((t_aggregate *)head, environ_cp, terminal, sesh);
 		else if (head->type == CLOSEFD)
-			exec_closefd((t_closefd *)head, environ_cp, terminal);
+			exec_closefd((t_closefd *)head, environ_cp, terminal, sesh);
 	//	free_node(head);
 	//	head = NULL;
 }

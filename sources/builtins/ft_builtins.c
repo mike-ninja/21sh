@@ -6,19 +6,19 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:50:01 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/08 16:42:22 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/08 16:53:18 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-int	ft_builtins(t_session *sesh)
+int	ft_builtins(t_session *sesh, char **cmd)
 {
-	char **cmd;
+//	char **cmd;
 
-	if (sesh->head && ((t_semicolon *)sesh->head)->left->type == CMD)
+	if (sesh && cmd/* && ((t_semicolon *)sesh->head)->left->type == CMD*/)
 	{
-		cmd = ((t_cmdnode *)((t_semicolon *)sesh->head)->left)->cmd;
+//		cmd = ((t_cmdnode *)((t_semicolon *)sesh->head)->left)->cmd;
 		ft_expansion(sesh, cmd);
 		if (!ft_strcmp(*cmd, "env"))
 			return (ft_env(sesh, &cmd));
