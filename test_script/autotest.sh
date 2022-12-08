@@ -1,7 +1,7 @@
 #!/bin/bash
 #Remember that last line of txt file needs to end with NEWLINE also
 #TODO path to testfolder variable, also create
-diff_width=160
+diff_width=200
 sh_dir=".."
 sh_exe="21sh"
 sh=$sh_dir"/"$sh_exe

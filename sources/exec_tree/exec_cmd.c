@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/07 20:28:08 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/08 16:40:36 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,8 @@ void	execute_bin(char **args, char ***environ_cp)
 	char	*cmd;
 
 	if (!args[0])
-		exit (1) ;
+		return (1) ;
+	if (ft_builtins(args))
 	if (!check_if_user_exe(args[0], &cmd))
 		cmd = search_bin(args[0], *environ_cp);
 	if (check_access(cmd, args) && fork_wrap() == 0)

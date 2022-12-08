@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:23:35 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/07 18:18:49 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/08 16:34:49 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ void	free_node(t_treenode *head)
 			((t_pipenode *)head)->right = NULL;
 		}
 		else if (head->type == CMD)
-		{
 			ft_freeda((void ***)&((t_cmdnode *)head)->cmd, calc_chptr(((t_cmdnode *)head)->cmd));
-		}
 		else if (head->type == REDIR)
 		{
 			free_node(((t_redir *)head)->cmd);
 			ft_memdel((void **)&(((t_redir *)head)->filepath));
 		}
+		else if (head->type == CLOSEFD)
+			free_node(((t_redir *)head)->cmd);
 		else if (head->type == AGGREGATION)
 			free_node(((t_aggregate *)head)->cmd);
 		free(head);
@@ -49,10 +49,13 @@ void exec_tree(t_treenode *head, char ***environ_cp, char *terminal)
 	//	ft_putstr_fd("TREE\n", 2);
 		if (!head)
 			return ;
-	//	ft_putstr_fd("TREE2\n", 2);
+//		ft_putstr_fd("TREE2\n", 2);
 		if (head->type == SEMICOLON)
 		{
+			ft_printf("CMD: %s\n", ((t_cmdnode *)((t_semicolon *)head)->left)->cmd);
+			//reset_fd(terminal);
 			exec_tree((((t_semicolon *)head)->left), environ_cp, terminal);
+			//reset_fd(terminal);
 			exec_tree((((t_semicolon *)head)->right), environ_cp, terminal);
 		}
 		else if (head->type == PIPE)

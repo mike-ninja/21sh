@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/07 18:56:58 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/08 16:32:51 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_treenode *init_cmd_node(char *cmd)
 {
 	t_treenode *new;
 
-	if (!cmd)
+	if (!cmd || !*cmd)
 		return (NULL);
 	new = ft_memalloc(sizeof(*new));
 	((t_cmdnode *)new)->type = CMD;
@@ -391,7 +391,8 @@ static t_treenode *parse_left_cmd(t_token *tokens, int i_tok)
 	cmd = -1;
 	if (i_tok >= 0 && tokens[i_tok].token == WORD)
 		cmd = i_tok;
-	while (cmd < 0 && i_tok && tokens[i_tok].token != PIPE)
+	while (cmd < 0 && i_tok && tokens[i_tok].token != PIPE
+			&& tokens[i_tok].token != SEMICOLON)
 	{
 		if (tokens[i_tok].token == WORD)
 			cmd = i_tok;
@@ -429,7 +430,8 @@ static t_treenode *parse_right_cmd(t_token *tokens, int i_tok)
 	// 	tmp++;
 	// }
 	// /*DEBUG*/
-	while (cmd < 0 && tokens[i_tok].value && tokens[i_tok].token != PIPE)
+	while (cmd < 0 && tokens[i_tok].value && tokens[i_tok].token != PIPE
+			&& tokens[i_tok].token != SEMICOLON)
 	{
 		if (tokens[i_tok].token == WORD /*|| (i_tok > 0 && tokens[i_tok].token == WORD && tokens[i_tok - 1].token != REDIR)*/)
 			cmd = i_tok;

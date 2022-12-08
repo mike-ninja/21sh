@@ -1,4 +1,10 @@
->&- ; echo stdout
+Problems of thursday:
+>&- ; echo stdout //FIXD
+cd /dev/fd;/bin/pwd
+echo "It works" //Does not remove quotes
+Do heredoc
+
+If u have the interest: >lol echo hi >lmao mom
 Something has broken, after command sometimes waits for newline before printing prompt
 Why does this work: 0>&- >&- > lol ls ; cat lol //Something weird in order of redirs?
 When comparing stderr just take everything after bash: and 21sh:
