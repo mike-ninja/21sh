@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/08 16:58:07 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/08 21:36:29 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_closefd
 	int			close_fd;
 	t_treenode	*cmd;
 }	t_closefd;
+
 /*					REDIR STRUCT			*/
 typedef struct s_redir
 {

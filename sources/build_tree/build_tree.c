@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/08 16:32:51 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/08 21:22:18 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,6 +321,7 @@ static int if_closefd(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 {
 	int close_fd;
 
+	ft_printf("CLOSEFFD\n");
 	close_fd = 0;
 	close_fd = get_close_fd(tokens[i_tok].value);
 	if (close_fd < 0)
@@ -333,7 +334,7 @@ static int if_closefd(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 			*redir = init_closefd(close_fd, init_cmd_node(tokens[cmd].value));
 	}
 	else
-		((t_redir *)(*redir))->cmd = init_closefd(close_fd, (((t_redir *)(*redir))->cmd));
+		((t_closefd *)(*redir))->cmd = init_closefd(close_fd, (((t_redir *)(*redir))->cmd));
 	return (0);
 }
 
@@ -343,12 +344,14 @@ static int if_redir(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 	char *dest;
 	int close_fd;
 
+	ft_printf("TVAL: %s and %d\n", tokens[i_tok].value, tokens[i_tok].token);
 	if (tokens[i_tok].token == CLOSEFD)
 		return (if_closefd(tokens, redir, i_tok, cmd));
 	if (tokens[i_tok].token == AGGREGATION)
 		return (if_aggregation(tokens, redir, i_tok, cmd));
 	if (tokens[i_tok].token == REDIR)
 	{
+		ft_printf("REDIR\n");
 		close_fd = get_close_fd(tokens[i_tok].value);
 		dest = get_file(ft_strchr(tokens[i_tok].value, '>'));
 		if (!dest)
@@ -438,7 +441,7 @@ static t_treenode *parse_right_cmd(t_token *tokens, int i_tok)
 		++i_tok;
 	}
 	i_tok = start;
-	while (tokens[i_tok].token && tokens[i_tok].token != PIPE)
+	while (tokens[i_tok].token && tokens[i_tok].token != PIPE && tokens[i_tok].token != SEMICOLON)
 	{
 		if (if_redir(tokens, &redir, i_tok, cmd))
 			return (NULL);
@@ -552,22 +555,28 @@ void print_tree(t_treenode *head, int depth)
 	if (head->type == PIPE)
 	{
 		print_tree(((t_pipenode *)head)->right, depth + 1);
-		ft_printf("\\");
+	//	ft_printf("\\");
 		print_tree(((t_pipenode *)head)->left, depth + 1);
-		ft_printf("/");
+	//	ft_printf("/");
 	}
 	if (head->type == SEMICOLON)
 	{
 		print_tree(((t_semicolon *)head)->left, depth + 1);
-		ft_printf("\\");
+	//	ft_printf("\\");
 		print_tree(((t_semicolon *)head)->right, depth + 1);
-		ft_printf("/");
+	//	ft_printf("/");
 	}
-	while (depth--)
-		ft_printf("\t");
+	if (head->type == REDIR)
+		print_tree(((t_redir *)head)->cmd, depth + 1);
+	if (head->type == CLOSEFD)
+		print_tree(((t_closefd *)head)->cmd, depth + 1);
+	if (head->type == AGGREGATION)
+		print_tree(((t_aggregate *)head)->cmd, depth + 1);
+///	while (depth--)
+//		ft_printf("\t");
 	print_node(head);
-	while (depth_temp--)
-		ft_printf("\t");
+//	while (depth_temp--)
+	//	ft_printf("\t");
 }
 
 t_treenode *create_command_tree(t_token *tokens, int i_tok, int semicol)
@@ -639,7 +648,7 @@ t_treenode *build_tree(t_token *tokens)
 //	else
 //		head = parse_right_cmd(tokens, 0);
 	head = create_semicolon_node(tokens, 0, calculate_tokens(tokens));
-//	print_tree(head, 0);
-//	exit (1);
+	print_tree(head, 0);
+	exit (1);
 	return (head);
 }

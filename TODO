@@ -1,3 +1,4 @@
+>&- >&- >lol
 Problems of thursday:
 >&- ; echo stdout //FIXD
 cd /dev/fd;/bin/pwd
