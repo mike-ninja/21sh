@@ -3,60 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expansion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:55:11 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/05 09:44:51 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/09 14:06:07 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-static int	ft_alphalen(char *str)
-{
-	int	len;
+// static int	ft_alphalen(char *str)
+// {
+// 	int	len;
 
-	len = 0;
-	if (str)
-	{
-		while (*str)
-		{
-			if (*str != '\"' && *str != '\'')
-				len++;
-			str++;
-		}
-	}
-	return (len);
-}
+// 	len = 0;
+// 	if (str)
+// 	{
+// 		while (*str)
+// 		{
+// 			if (*str != '\"' && *str != '\'')
+// 				len++;
+// 			str++;
+// 		}
+// 	}
+// 	return (len);
+// }
 
-static int	ft_quote_remove(char **str)
-{
-	int		i;
-	int		j;
-	int		valid;
-	char	*new_arr;
+// static int	ft_quote_remove(char **str)
+// {
+// 	int		i;
+// 	int		j;
+// 	int		valid;
+// 	char	*new_arr;
 
-	i = 0;
-	j = -1;
-	valid = 0;
-	new_arr = NULL;
-	if (*(*str) == '\"' || *(*str) == '\'')
-	{
-		if (*(*str) == '\'')
-			valid = 1;
-		new_arr = (char *)ft_memalloc(sizeof(char) * (ft_alphalen(*str) + 1));
-		while ((*str)[++j])
-		{
-			if ((*str)[j] == '\"' || (*str)[j] == '\'')
-				continue ;
-			new_arr[i++] = (*str)[j];
-		}
-		new_arr[i] = '\0';
-		ft_strdel(str);
-		*str = new_arr;
-	}
-	return (valid);
-}
+// 	i = 0;
+// 	j = -1;
+// 	valid = 0;
+// 	new_arr = NULL;
+// 	if (*(*str) == '\"' || *(*str) == '\'')
+// 	{
+// 		if (*(*str) == '\'')
+// 			valid = 1;
+// 		new_arr = (char *)ft_memalloc(sizeof(char) * (ft_alphalen(*str) + 1));
+// 		while ((*str)[++j])
+// 		{
+// 			if ((*str)[j] == '\"' || (*str)[j] == '\'')
+// 				continue ;
+// 			new_arr[i++] = (*str)[j];
+// 		}
+// 		new_arr[i] = '\0';
+// 		ft_strdel(str);
+// 		*str = new_arr;
+// 	}
+// 	return (valid);
+// }
 
 static char	*ft_expansion_loop(t_session *sesh, char *buff, char **cmd, char **split)
 {
@@ -69,12 +69,15 @@ static char	*ft_expansion_loop(t_session *sesh, char *buff, char **cmd, char **s
 	{
 		if (ft_strchr(split[i], '$') && ft_strlen(split[i]) > 1)
 		{
-			if (!ft_quote_remove(&split[i]))
+			// if (!ft_quote_remove(&split[i]))
+			// {
+			if (*split[i] != '\'')
 			{
 				tofree = split[i];
 				split[i] = ft_expansion_dollar(sesh, split[i]);
 				ft_strdel(&tofree);
 			}
+			// }
 			ft_strcat(buff, split[i]);
 		}
 		else
