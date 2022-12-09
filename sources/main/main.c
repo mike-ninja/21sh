@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/06 20:39:26 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/09 13:39:09 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,15 @@ int	main(int argc, char **argv)
 	if (!test_flag)
 		banner_print();
 	ft_session_init(sesh);
+	ft_history_get(&term);
 	t_token	*tmp;
 	while (status)
 	{
 		if (!test_flag)
-			ft_keyboard(&term);
+		{
+			if (ft_keyboard(&term) == 1)
+				status = 0;
+		}
 		if (!test_flag)
 			line = term.inp;
 		else

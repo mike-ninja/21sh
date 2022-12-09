@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_insertion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/05 12:44:35 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/09 13:43:56 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ static void	ft_delim_fetch(t_term *t)
 	if (t->heredoc && !t->delim)
 	{
 		ptr = ft_strchr(t->inp, '<') + 2;
-		while (*ptr && ft_isspace((int)*ptr))
+		while (*ptr && ft_isspace(*ptr))
 			ptr++;
 		if (*ptr)
 		{
 			end_q = ptr;
-			while (*end_q && !ft_isspace((int)*end_q))
+			while (*end_q && !ft_isspace(*end_q))
 				end_q++;
 			t->delim = ft_strsub(ptr, 0, end_q - ptr);
 		}
@@ -46,7 +46,7 @@ static void	ft_delim_fetch(t_term *t)
 static void	ft_insertion_char(t_term *t)
 {
 	ft_putc(t->ch);
-	ft_heredoc_handling(t);
+	ft_heredoc_handling(t, t->ch, t->index);
 	if ((t->ch == D_QUO || t->ch == S_QUO) && !t->heredoc)
 	{
 		if (!t->bslash)
@@ -72,9 +72,11 @@ static void	ft_insertion_enter(t_term *t)
 {
 	if (!t->nl_addr[t->c_row + 1])
 	{
-		ft_putendl(t->delim);
-		if (t->bslash || t->q_qty % 2 || (t->heredoc && ft_strcmp(t->nl_addr[t->c_row], t->delim))) // Something wrong here
+		if (t->bslash || t->q_qty % 2 || (t->heredoc \
+			&& ft_strcmp(t->nl_addr[t->c_row], t->delim)))
 		{
+			t->history_row = -1;
+			ft_memcpy(t->history_buff, t->inp, t->bytes);
 			t->inp[t->bytes++] = (char)t->ch;
 			ft_create_prompt_line(t, t->bytes);
 			t->index = t->bytes;
@@ -93,7 +95,7 @@ void	ft_insertion(t_term *t)
 	if (t->ch == ENTER)
 		ft_insertion_enter(t);
 	else
-		ft_insertion_char(t);	
+		ft_insertion_char(t);
 	ft_trigger_nl(t);
 	if (t->inp[t->index])
 		ft_print_trail(t);

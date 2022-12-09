@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_input_cycle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/05 12:16:46 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/09 14:00:01 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,10 @@ static int	ctrl_d(t_term *t)
 		ft_putnbr(t->c_row);
 		ft_putstr(" delimited by end-of-file (wanted `EOF')");
 		ft_end_cycle(t);
-		// ft_restart_cycle(t);
+		ft_restart_cycle(t);
 		return (1);
 	}
 	return (0);
-}
-
-/*
- * It handles the control keys
- *
- * @param t the term structure
- */
-static void	ft_ctrl(t_term *t)
-{
-	if (t->ch == CTRL_W)
-		ft_cut(t);
-	else if (t->ch == CTRL_U)
-		ft_copy(t);
-	else if (t->ch == CTRL_Y)
-		ft_paste(t);
-	else if (t->ch == CTRL_L)
-	{
-		ft_run_capability("cl");
-		ft_restart_cycle(t);
-	}
 }
 
 /*
@@ -87,7 +67,7 @@ static int	ft_isprint_or_enter(t_term *t)
 	if (t->ch == ENTER)
 	{
 		if ((!t->bslash && !(t->q_qty % 2) && !t->delim) \
-			|| (t->delim && !ft_strcmp(t->delim, t->nl_addr[t->c_row])))
+			|| (t->delim && !ft_strcmp(t->nl_addr[t->c_row], t->delim)))
 		{
 			ft_end_cycle(t);
 			return (1);
@@ -95,6 +75,13 @@ static int	ft_isprint_or_enter(t_term *t)
 		t->bslash = 0;
 	}
 	return (0);
+}
+
+static int	ctrl_d_exit(void)
+{
+	ft_putchar('\n');
+	ft_putendl("exit");
+	return (1);
 }
 
 /*
@@ -107,24 +94,30 @@ static int	ft_isprint_or_enter(t_term *t)
  *
  * @param t the t_term struct
  */
-void	ft_input_cycle(t_term *t)
+int	ft_input_cycle(t_term *t)
 {
-	int	ctrl_d_ret;
+	int		ctrl_d_ret;
 
-	ft_add_nl_last_row(t, 0);
-	write(1, PROMPT, (size_t)t->prompt_len);
+	ft_add_nl_last_row(t, t->inp, 0);
+	t->c_col = write(1, PROMPT, (size_t)t->prompt_len);
 	while (t->ch != -1)
 	{
 		t->ch = ft_get_input();
 		if (ft_isprint_or_enter(t))
-			break ;
+			return (0);
 		if (t->ch == CTRL_D)
-			if (ctrl_d(t))
-				break ;
+		{
+			ctrl_d_ret = ctrl_d(t);
+			if (ctrl_d_ret == 1)
+				continue ;
+			if (ctrl_d_ret == -1)
+				return (ctrl_d_exit());
+		}
 		ft_ctrl(t);
 		ft_backspace_or_escape(t);
 		ft_bslash_handling(t);
 		if (t->ch == -1)
 			ft_putstr_fd("error, ft_get_input()\n", STDERR_FILENO);
 	}
+	return (0);
 }

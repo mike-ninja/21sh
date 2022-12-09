@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/29 16:43:28 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/12/09 09:39:44 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	ft_init_to_zero(t_term *t)
 	t->c_row = 0;
 	t->total_row = 0;
 	t->ws_col = 0;
+	t->history_row = -1;
 	t->ws_row = 0;
 	t->index = 0;
 	t->heredoc = 0;
@@ -46,9 +47,9 @@ void	ft_init(t_term *t)
 {
 	ft_init_signals();
 	ft_memset(t->inp, '\0', BUFFSIZE);
+	ft_memset(t->history_buff, '\0', BUFFSIZE);
 	ft_init_to_zero(t);
 	t->start_row = ft_get_linenbr();
-	ft_history_get(t);
 	g_t = t;
 	t->nl_addr = NULL;
 	t->delim = NULL;

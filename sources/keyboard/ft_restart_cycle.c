@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_restart_cycle.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:56:42 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/01 14:25:27 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/12/07 11:49:54 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_restart_cycle(t_term *t)
 	t->total_row = 0;
 	t->his = 0;
 	t->c_row = t->total_row;
-	ft_add_nl_last_row(t, 0);
+	ft_add_nl_last_row(t, t->inp, 0);
 	ft_strdel(&t->delim);
 	write(1, PROMPT, (size_t)t->prompt_len);
 	ft_setcursor(t->c_col, t->c_row + t->start_row);

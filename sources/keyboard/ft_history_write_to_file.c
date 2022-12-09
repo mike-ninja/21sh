@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_history_write_to_file.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:59:21 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/04 19:14:14 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/09 13:25:27 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

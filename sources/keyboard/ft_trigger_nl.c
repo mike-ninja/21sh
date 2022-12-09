@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_trigger_nl.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:21:29 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/29 17:15:42 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/12/09 09:40:26 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	ft_scroll_down(void)
 	ft_run_capability("sc");
 	ft_run_capability("sf");
 	ft_run_capability("rc");
-	ft_run_capability("up");
+	ft_run_capability("do");
 }
 
 /*
@@ -39,15 +39,17 @@ void	ft_trigger_nl(t_term *t)
 	len = ft_len_lowest_line(t, row);
 	if (len == t->ws_col)
 	{
-		t->total_row++;
-		if (t->start_row + t->total_row >= t->ws_row)
+		if (ft_get_linenbr() == (t->ws_row - 1))
 			ft_scroll_down();
-		ft_add_nl_last_row(t, t->bytes);
+		t->total_row++;
+		if (t->nl_addr[t->c_row + 1])
+		{
+			ft_run_capability("cd");
+			ft_reset_nl_addr(t);
+		}
+		else
+			ft_add_nl_last_row(t, t->inp, t->bytes);
 	}
-	if (len == t->ws_col + 1)
-		if (t->nl_addr[row + 1])
-			ft_add_nl_mid_row(t, row + 1, \
-				(ssize_t)(&t->nl_addr[row + 1][-1] - t->nl_addr[0]));
 	if (t->c_col == t->ws_col)
 	{
 		t->c_row++;

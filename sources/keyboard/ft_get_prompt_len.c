@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_prompt_len.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 14:59:55 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/29 16:41:00 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/12/08 12:20:55 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,9 @@
  */
 ssize_t	ft_get_prompt_len(t_term *t, ssize_t row)
 {
-	ssize_t	prompt_len;
-
-	prompt_len = 0;
 	if (!row)
-		prompt_len = t->prompt_len;
-	else if (ft_is_prompt_line(t, row))
-		prompt_len = t->m_prompt_len;
-	return (prompt_len);
+		return (t->prompt_len);
+	if (t->nl_addr[row][-1] == '\n')
+		return (t->m_prompt_len);
+	return (0);
 }

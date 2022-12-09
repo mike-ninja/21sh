@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_line_up.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 12:24:39 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/29 16:48:04 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/12/08 12:20:33 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  */
 static void	ft_move_up_end_line(t_term *t, ssize_t len, ssize_t prompt_len)
 {
-	t->c_col = (len + prompt_len) - 1;
+	t->c_col = len + prompt_len;
 	t->index = (t->nl_addr[t->c_row] - t->nl_addr[0]) - 1;
 }
 
@@ -57,8 +57,8 @@ void	ft_line_up(t_term *t)
 	ssize_t	len;
 	ssize_t	prompt_len;
 
-	len = t->nl_addr[t->c_row] - t->nl_addr[t->c_row - 1];
-	prompt_len = ft_mv_prompt_len(t, -1);
+	len = t->nl_addr[t->c_row] - t->nl_addr[t->c_row - 1] - 1;
+	prompt_len = ft_get_prompt_len(t, t->c_row - 1);
 	if (t->c_col < (len + prompt_len))
 		ft_move_up(t, prompt_len);
 	else

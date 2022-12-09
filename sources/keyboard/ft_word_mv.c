@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_word_mv.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:43:30 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/04 19:22:12 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/09 13:29:57 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
  */
 static void	ft_word_left(t_term *t)
 {
+	t->c_col = ft_get_prompt_len(t, t->c_row);
 	while (t->index && ft_isspace(t->inp[t->index - 1]))
 	{
 		if (&t->inp[t->index + 1] == t->nl_addr[t->c_row])
@@ -31,11 +32,7 @@ static void	ft_word_left(t_term *t)
 			break ;
 		t->index--;
 	}
-	t->c_col = &t->inp[t->index] - t->nl_addr[t->c_row];
-	if (t->nl_addr[t->c_row] == &t->inp[0])
-		t->c_col += t->prompt_len;
-	else if (ft_is_prompt_line(t, t->c_row))
-		t->c_col += t->m_prompt_len;
+	t->c_col += &t->inp[t->index] - t->nl_addr[t->c_row];
 	ft_setcursor(t->c_col, ft_get_linenbr());
 }
 
@@ -50,6 +47,7 @@ static void	ft_word_right(t_term *t)
 	ssize_t	row;
 
 	row = t->c_row;
+	t->c_col = ft_get_prompt_len(t, t->c_row);
 	while (t->index < t->bytes && ft_isspace(t->inp[t->index]))
 	{
 		if (t->nl_addr[row + 1] && &t->inp[t->index + 1] == t->nl_addr[row + 1])
@@ -63,11 +61,7 @@ static void	ft_word_right(t_term *t)
 			break ;
 		t->index++;
 	}
-	t->c_col = &t->inp[t->index] - t->nl_addr[row];
-	if (t->nl_addr[row] == &t->inp[0])
-		t->c_col += t->prompt_len;
-	else if (ft_is_prompt_line(t, row))
-		t->c_col += t->m_prompt_len;
+	t->c_col += &t->inp[t->index] - t->nl_addr[row];
 	ft_setcursor(t->c_col, ft_get_linenbr());
 }
 
