@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:55:11 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/09 14:06:07 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/09 15:24:51 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,37 +58,68 @@
 // 	return (valid);
 // }
 
-static char	*ft_expansion_loop(t_session *sesh, char *buff, char **cmd, char **split)
+// static char	*ft_expansion_loop(t_session *sesh, char *buff, char **cmd, char **split)
+// {
+// 	int		i;
+// 	char	*tofree;
+
+// 	i = -1;
+// 	ft_strdel(cmd);
+// 	while (split[++i])
+// 	{
+// 		if (ft_strchr(split[i], '$') && ft_strlen(split[i]) > 1)
+// 		{
+// 			if (*split[i] != '\'')
+// 			{
+// 				tofree = split[i];
+// 				split[i] = ft_expansion_dollar(sesh, split[i]);
+// 				ft_strdel(&tofree);
+// 			}
+// 			ft_strcat(buff, split[i]);
+// 		}
+// 		else
+// 			ft_strcat(buff, ft_expansion_tilde(sesh, split[i]));
+// 		if (split[i + 1])
+// 			ft_strcat(buff, " ");
+// 		ft_strdel(&split[i]);
+// 	}
+// 	ft_memdel((void **)&split);
+// 	return (buff);
+// }
+static void ft_expansion_loop(t_session *sesh, char *buff, char **cmd)
 {
 	int		i;
-	char	*tofree;
+	char	*expanded;
 
 	i = -1;
-	ft_strdel(cmd);
-	while (split[++i])
+	expanded = NULL;
+	if (ft_strchr(*cmd, '$') && ft_strlen(*cmd) > 1)
 	{
-		if (ft_strchr(split[i], '$') && ft_strlen(split[i]) > 1)
-		{
-			// if (!ft_quote_remove(&split[i]))
-			// {
-			if (*split[i] != '\'')
-			{
-				tofree = split[i];
-				split[i] = ft_expansion_dollar(sesh, split[i]);
-				ft_strdel(&tofree);
-			}
-			// }
-			ft_strcat(buff, split[i]);
-		}
-		else
-			ft_strcat(buff, ft_expansion_tilde(sesh, split[i]));
-		if (split[i + 1])
-			ft_strcat(buff, " ");
-		ft_strdel(&split[i]);
+		if (**cmd != '\'')
+			expanded = ft_expansion_dollar(sesh, *cmd);
+		if (expanded)
+			ft_strcat(buff, expanded);
 	}
-	ft_memdel((void **)&split);
-	return (buff);
+	else
+		ft_strcat(buff, ft_expansion_tilde(sesh, *cmd));
+	ft_strdel(cmd);
 }
+
+// static char	*ft_quote_removal(char *buff)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	j = 0;
+// 	i = 0;
+// 	while (buff[i])
+// 	{
+// 		if ((buff[i] == '\'' || buff[i] == '\"') && (!i || buff[i - 1] != '\\'))
+// 			i++;
+// 		buff[j++] = buff[i++];
+// 	}
+// 	return (ft_strdup(buff));
+// }
 
 void	ft_expansion(t_session *sesh, char **cmd)
 {
@@ -96,10 +127,12 @@ void	ft_expansion(t_session *sesh, char **cmd)
 	char	buff[BUFF_SIZE];
 
 	i = -1;
+	ft_bzero(buff, BUFF_SIZE);
 	while (cmd[++i])
 	{
-		ft_bzero(buff, BUFF_SIZE);
-		cmd[i] = ft_strdup(ft_expansion_loop(sesh, buff, &cmd[i], ft_strsplit(cmd[i], ' ')));
+		ft_expansion_loop(sesh, buff, &cmd[i]);
+		cmd[i] = ft_strdup(buff);
+		ft_strclr(buff);
 	}
 }
 

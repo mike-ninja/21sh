@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expansion_dollar.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:57:25 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/24 14:04:55 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/09 15:57:54 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ static char	**ft_special_ch_split(char *str)
 	char	**ret;
 
 	j = 0;
-	ret = (char **)ft_memalloc(sizeof(char *) \
-		* (ft_special_ch_split_len(str) + 1));
+	ret = (char **)ft_memalloc(sizeof(char *) * (ft_special_ch_split_len(str) + 1));
 	while (*str)
 	{
 		i = 0;
@@ -74,6 +73,58 @@ static char	**ft_special_ch_split(char *str)
  * 
  * @return A string
  */
+// char	*ft_expansion_dollar(t_session *sesh, char *str)
+// {
+// 	int		i;
+// 	char	**env;
+// 	char	buff[BUFF_SIZE];
+// 	char	**split_dollar;
+// 	char	*tofree;
+
+// 	if (!ft_strcmp(str, "$$"))
+// 		return (ft_itoa(getpid()));
+// 	i = -1;
+// 	env = NULL;
+// 	ft_bzero(buff, BUFF_SIZE);
+// 	split_dollar = ft_special_ch_split(str);
+// 	while (split_dollar[++i])
+// 	{
+// 		tofree = split_dollar[i];
+// 		ft_printf("|%s|\n", split_dollar[i]);
+// 		if (*split_dollar[i] == '$' && ft_strlen(split_dollar[i]) > 1)
+// 		{
+// 			env = ft_env_get(sesh, split_dollar[i] + 1);
+// 			if (env)
+// 				ft_strcat(buff, ft_strchr(*env, '=') + 1);
+// 		}
+// 		else
+// 			ft_strcat(buff, split_dollar[i]);
+// 		ft_strdel(&split_dollar[i]);
+// 	}
+// 	ft_memdel((void **)&split_dollar);
+// 	return (ft_strdup(buff));
+// }
+
+static void end_whitespace(char **split_dollar)
+{
+	int	i;
+
+	i = 0;
+ft_printf("{%s}\n", split_dollar[i]);
+	while (*(split_dollar[i]))
+	{
+		ft_printf("[%c]\n", *(split_dollar[i]));
+		// if (ft_isspace(*(split_dollar[i])))
+		// {
+		// 	*(split_dollar[i]) = '\0';
+		// 	return ;
+		// }
+		i++;
+	}
+}
+
+
+
 char	*ft_expansion_dollar(t_session *sesh, char *str)
 {
 	int		i;
@@ -91,6 +142,8 @@ char	*ft_expansion_dollar(t_session *sesh, char *str)
 	{
 		if (*split_dollar[i] == '$' && ft_strlen(split_dollar[i]) > 1)
 		{
+			end_whitespace(&split_dollar[i]);
+			ft_printf("{%s}\n", split_dollar[i]);
 			env = ft_env_get(sesh, split_dollar[i] + 1);
 			if (env)
 				ft_strcat(buff, ft_strchr(*env, '=') + 1);
