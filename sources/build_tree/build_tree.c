@@ -6,11 +6,13 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/08 21:22:18 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/09 16:15:03 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
+
+void print_tree(t_treenode *head, int depth);
 
 int increment_whitespace(char **line)
 {
@@ -320,21 +322,31 @@ t_treenode *init_closefd(int close_fd, t_treenode *cmd)
 static int if_closefd(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 {
 	int close_fd;
+	t_treenode *head;
 
-	ft_printf("CLOSEFFD\n");
 	close_fd = 0;
 	close_fd = get_close_fd(tokens[i_tok].value);
+	head = *redir;
 	if (close_fd < 0)
 		close_fd = 1;
 	if (!*redir)
 	{
 		if (cmd < 0)
+		{
 			*redir = init_closefd(close_fd, NULL);
+		}
 		else
 			*redir = init_closefd(close_fd, init_cmd_node(tokens[cmd].value));
 	}
 	else
-		((t_closefd *)(*redir))->cmd = init_closefd(close_fd, (((t_redir *)(*redir))->cmd));
+	{
+		if ((*redir)->type == REDIR)
+			((t_redir *)(*redir))->cmd = init_closefd(close_fd, (((t_redir *)(*redir))->cmd));
+		if ((*redir)->type == CLOSEFD)
+		{
+			((t_closefd *)(*redir))->cmd = init_closefd(close_fd, (((t_closefd *)(*redir))->cmd));
+		}
+	}
 	return (0);
 }
 
@@ -344,14 +356,12 @@ static int if_redir(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 	char *dest;
 	int close_fd;
 
-	ft_printf("TVAL: %s and %d\n", tokens[i_tok].value, tokens[i_tok].token);
 	if (tokens[i_tok].token == CLOSEFD)
 		return (if_closefd(tokens, redir, i_tok, cmd));
 	if (tokens[i_tok].token == AGGREGATION)
 		return (if_aggregation(tokens, redir, i_tok, cmd));
 	if (tokens[i_tok].token == REDIR)
 	{
-		ft_printf("REDIR\n");
 		close_fd = get_close_fd(tokens[i_tok].value);
 		dest = get_file(ft_strchr(tokens[i_tok].value, '>'));
 		if (!dest)
@@ -372,7 +382,14 @@ static int if_redir(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 		else
 		{
 			// HERE WE NEED TO ADD NEW REDIR AS CHILD TO PREVIOUS
+		if ((*redir)->type == REDIR)
+		{
 			((t_redir *)(*redir))->cmd = init_redir_wrap(dest, (((t_redir *)(*redir))->cmd), redir_t, close_fd);
+		}
+		if ((*redir)->type == CLOSEFD)
+		{
+			((t_closefd *)(*redir))->cmd = init_redir_wrap(dest, (((t_closefd *)(*redir))->cmd), redir_t, close_fd);
+		}
 		}
 	}
 	return (0);
@@ -417,11 +434,13 @@ static t_treenode *parse_left_cmd(t_token *tokens, int i_tok)
 static t_treenode *parse_right_cmd(t_token *tokens, int i_tok)
 {
 	t_treenode *redir;
+	t_treenode *redir_start;
 	int start;
 	//	int			close_fd;
 	int cmd;
 	//	char		*direction;
 
+	redir_start = redir;
 	redir = NULL;
 	cmd = -1;
 	start = i_tok;
@@ -445,10 +464,17 @@ static t_treenode *parse_right_cmd(t_token *tokens, int i_tok)
 	{
 		if (if_redir(tokens, &redir, i_tok, cmd))
 			return (NULL);
+		else if (((t_redir *)redir)->cmd)
+		{
+			//print_tree(redir_start, 0);
+			redir = ((t_redir *)redir)->cmd;
+		}
+	//	print_tree(redir_start, 0);
+		//ft_printf("**\n");
 		++i_tok;
 	}
-	if (redir)
-		return (redir);
+	if (redir_start)
+		return (redir_start);
 	return (init_cmd_node(tokens[cmd].value));
 }
 
@@ -561,8 +587,10 @@ void print_tree(t_treenode *head, int depth)
 	}
 	if (head->type == SEMICOLON)
 	{
+		ft_printf("SEMI LEFT:\n");
 		print_tree(((t_semicolon *)head)->left, depth + 1);
 	//	ft_printf("\\");
+		ft_printf("SEMI RIGHT:\n");
 		print_tree(((t_semicolon *)head)->right, depth + 1);
 	//	ft_printf("/");
 	}

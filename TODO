@@ -1,3 +1,4 @@
+Problem with redirs is that the linked list is not advanced correctly before adding to the child of last
 >&- >&- >lol
 Problems of thursday:
 >&- ; echo stdout //FIXD
