@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/09 13:39:09 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/10 19:29:31 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	main(int argc, char **argv)
 		sesh->orig_termios = ft_raw_enable();
 	if (!test_flag)
 		banner_print();
+	if (!test_flag)
+		ft_raw_disable(sesh->orig_termios);
 	ft_session_init(sesh);
 	ft_history_get(&term);
 	t_token	*tmp;
@@ -37,16 +39,17 @@ int	main(int argc, char **argv)
 	{
 		if (!test_flag)
 		{
+			sesh->orig_termios = ft_raw_enable();
 			if (ft_keyboard(&term) == 1)
 				status = 0;
+		ft_raw_disable(sesh->orig_termios);
 		}
 		if (!test_flag)
 			line = term.inp;
 		else
 			line = str_from_arr(&argv[2]);
 		sesh->tokens = chop_line(line, sesh->tokens, 1);
-		sesh->head = build_tree(sesh->tokens);
-		/*debug*/
+		// /*debug*/
 		// t_token *tmp = sesh->tokens;
 
 		// while (tmp->token)
@@ -57,6 +60,7 @@ int	main(int argc, char **argv)
 		// 	ft_putchar('\n');
 		// 	tmp++;
 		// }
+		sesh->head = build_tree(sesh->tokens);
 		if (sesh->head && ft_builtins(sesh) == 1)
 		{
 		//	if (sesh->head && sesh->head->type == CMD)
@@ -82,7 +86,6 @@ int	main(int argc, char **argv)
 		// reset_filedescriptors(sesh);
 	}
 	ft_strdel(&sesh->terminal);
-	if (!test_flag)
-		ft_raw_disable(sesh->orig_termios);
+
 	return (0);
 }
