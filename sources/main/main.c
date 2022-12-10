@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/10 20:13:56 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/10 22:39:47 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	main(int argc, char **argv)
 		if (!test_flag)
 		{
 			line = ft_lexer(&term);
-			line = term.inp;
+			// line = term.inp;
 		}
 		else
 			line = str_from_arr(&argv[2]);

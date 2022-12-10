@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_insertion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/09 13:43:56 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/10 22:30:13 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	ft_insertion_enter(t_term *t)
 	if (!t->nl_addr[t->c_row + 1])
 	{
 		if (t->bslash || t->q_qty % 2 || (t->heredoc \
-			&& ft_strcmp(t->nl_addr[t->c_row], t->delim)))
+			&& (t->delim && ft_strcmp(t->nl_addr[t->c_row], t->delim))))
 		{
 			t->history_row = -1;
 			ft_memcpy(t->history_buff, t->inp, t->bytes);
