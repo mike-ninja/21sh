@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/08 20:42:50 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/11 18:14:17 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,9 @@ int operator_len(char *op)
 		if (op[0] == '>' && ((op[1] == '>' || op[1] == '&')
 			|| (op[0] == '<' && (op[1] == '<' || op[1] == '&'))))
 			return (2);
+		else if ((op[0] == '>' || op[0] == '<')
+			&& op[1] == '&' && op[2] == '-')
+			return (3);
 		return (1);
 	}
 	return (0);
@@ -171,7 +174,7 @@ char	*if_redir(char *line, int *i, int *start, int *end)
 		if (line[*end] == '<' || line[*end] == '>' || line[*end] == '&')
 			++(*end);
 		if (*end && line[(*end) - 1] == '&' && line[*end] == '-')
-			return(ft_strsub(line, *start, ++(*end) - *start));
+			return(ft_strsub(line, *start, (++(*end)) - *start));
 		if (line[*end] == '<' || line[*end] == '>' || line[*end] == '&')
 		{
 			ft_printf("21sh: syntax error near `%c'", line[*end]);
@@ -179,12 +182,12 @@ char	*if_redir(char *line, int *i, int *start, int *end)
 			return (NULL);
 		}
 		//What should be done with arguments touching -?
-		if (line[*end] == '-')
-		{
-			while (line[*end] && !is_ws(line[*end]) && !is_seperator(line[*end]))
-				++(*end);
-			return(ft_strsub(line, *start, *end - *start));
-		}
+	//	if (line[*end] == '-')
+	//	{
+	//		while (line[*end] && !is_ws(line[*end]) && !is_seperator(line[*end]))
+	//			++(*end);
+	//		return(ft_strsub(line, *start, *end - *start));
+	//	}
 		while (line[*end] && is_ws(line[*end]))
 			++(*end);
 		while (line[*end] && !is_ws(line[*end]) && !is_seperator(line[*end]))
@@ -298,6 +301,8 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 			set_token_values(&args[i_args], WORD, c);
 		++i_args;
 		track_used_space(&args, i_args, &pointer_n);
+		while (is_ws(line[end]))
+			++end;
 		cur = end;
 		while (is_ws(line[cur]))
 			++cur;

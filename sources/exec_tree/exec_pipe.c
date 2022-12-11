@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:15:20 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/08 16:56:42 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/11 18:58:30 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	fork_wrap(void)
 void exec_pipe(t_pipenode *pipenode, char ***environ_cp, char *terminal, t_session *sesh)
 {
 	int	pipefd[2];
-	int	waitstatus;
+//	int	waitstatus;
 
 //	if (pipenode->left->type == CMD)
 //	{
@@ -90,6 +90,6 @@ void exec_pipe(t_pipenode *pipenode, char ***environ_cp, char *terminal, t_sessi
 	}
 	close(pipefd[0]);
 	close(pipefd[1]);
-	wait(&waitstatus);
-	wait(&waitstatus);
+	wait(0);
+	wait(0);
 }
