@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/10 22:39:47 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/11 16:14:54 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	main(int argc, char **argv)
 //				ft_putchar('\n');
 			/*		debugging		*/
 		// }
-		ft_endcycle(sesh);
+		shell_end_cycle(sesh);
 		if (test_flag)
 			status = 0;
 		// reset_filedescriptors(sesh);

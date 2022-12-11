@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:57:25 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/10 18:31:39 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/11 16:22:49 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ char	*ft_expansion_dollar(t_session *sesh, char *str)
 	i = -1;
 	if (!ft_strcmp(str, "$$"))
 		return (ft_itoa(getpid()));
+	if (!ft_strcmp(str, "$?"))
+		return (ft_itoa(sesh->exit_stat));
 	ft_bzero(buff, BUFF_SIZE);
 	split_dollar = ft_special_ch_split(str);
 	while (split_dollar[++i])

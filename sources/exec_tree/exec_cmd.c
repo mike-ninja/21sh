@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/06 17:08:17 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/11 15:15:03 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ms_exit(char **args, char ***environ_cp)
 
 static void	exe_fail(char **cmd, char **args, char ***env_cp)
 {
-	ft_printf("minishell: %s: command not found...\n", args[0]);
+	ft_printf("{CYAN}21sh{RESET}: %s: {RED}command not found{RESET}\n", args[0]);
 	ft_memdel((void **)cmd);
 	ms_exit(args, env_cp);
 }
@@ -73,13 +73,13 @@ static int	check_access(char *cmd, char **args)
 
 	if (!cmd || !ft_strchr(cmd, '/'))
 	{
-		ft_printf("minishell: %s: command not found...\n", args[0]);
+		ft_printf("{CYAN}21sh{RESET}: %s: {RED}command not found{RESET}\n", args[0]);
 		return (0);
 	}
 	stat(cmd, &buf);
 	if (S_ISDIR(buf.st_mode))
 	{
-		ft_printf("minishell: %s: is a directory\n", cmd);
+		ft_printf("{CYAN}21sh{RESET}: %s: {RED}is a directory{RESET}\n", cmd);
 		return (0);
 	}
 	return (1);
