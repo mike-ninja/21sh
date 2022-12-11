@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/11 16:15:12 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/11 21:36:54 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "keyboard.h"
 #include "ft_printf.h"
 /* DUNNO IF NEEDED */
+#include <dirent.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
 

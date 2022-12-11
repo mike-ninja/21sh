@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 18:27:40 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/11 16:44:18 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/11 19:30:44 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,30 +37,30 @@ static int addr_error(char *file, int err)
 // 		return (-2);
 // 	return (0);
 // }
-int	ft_addr_check(char *file)
-{
-	struct stat	buff;
-	
-	if (access(file, F_OK))
-		return (addr_error(file, -1));
-	else if (!stat(file, &buff) && buff.st_mode != S_IRWXU && buff.st_mode != S_IFDIR)
-		return (addr_error(file, -2));
-	else if (access(file, X_OK))
-		return (addr_error(file, -3));
-	return (0);
-}
 // int	ft_addr_check(char *file)
 // {
 // 	struct stat	buff;
 	
-// 	if (stat(file, &buff))
-// 	{
-// 		if (access(file, X_OK))
-// 			return (addr_error(file, -3));
-// 		if (buff.st_mode != S_IFDIR)
-// 			return (addr_error(file, -2));
-// 	}
-// 	else
+// 	if (access(file, F_OK))
 // 		return (addr_error(file, -1));
+// 	else if (!stat(file, &buff) && buff.st_mode != S_IFDIR)
+// 		return (addr_error(file, -2));
+// 	else if (access(file, X_OK))
+// 		return (addr_error(file, -3));
 // 	return (0);
 // }
+int	ft_addr_check(char *file)
+{
+	struct stat	buff;
+	
+	if (stat(file, &buff))
+		addr_error(file, -1);
+	else
+	{
+		if (!S_ISDIR(buff.st_mode))
+			addr_error(file, -2);
+		else if (access(file, X_OK))
+			addr_error(file, -3);
+	}
+	return (0);
+}

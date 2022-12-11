@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:10:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/11 16:21:46 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/11 21:27:39 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static bool	ft_cd_expand_parse(t_session *sesh, char **cmd)
 
 int	ft_cd(t_session *sesh, char **cmd)
 {
+	sesh->exit_stat = 0;
 	if (ft_arrlen(cmd) > 2) // TODO: error for too many arguments
 		return (1);
 	if (!ft_cd_expand_parse(sesh, cmd))

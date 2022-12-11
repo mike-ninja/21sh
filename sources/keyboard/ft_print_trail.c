@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:40:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/09 09:31:35 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/11 20:03:51 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@
  */
 static void	print_prompt(ssize_t row)
 {
+	ft_printf("{GREEN}");
 	if (!row)
 		ft_putstr(PROMPT);
 	else
 		ft_putstr(MINI_PROMPT);
+	ft_printf("{RESET}");
 }
 
 /*

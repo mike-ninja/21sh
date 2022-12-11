@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:25:07 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/09 10:42:05 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/11 20:58:23 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,20 @@
  */
 static void	set_new_cur_pos(t_term *t)
 {
-	while (t->nl_addr[t->c_row] \
-	&& &t->inp[t->index] >= t->nl_addr[t->c_row])
+	char *end;
+
+	end = NULL;
+	t->c_row = 0;
+	while (t->nl_addr[t->c_row])
+	{
+		if (t->nl_addr[t->c_row + 1])
+			end = t->nl_addr[t->c_row + 1] - 1;
+		else
+			end = &t->inp[t->bytes];
+		if (&t->inp[t->index] >= t->nl_addr[t->c_row] && &t->inp[t->index] <= end)
+			break ;
 		t->c_row++;
-	t->c_row--;
+	}
 	t->c_col = ft_get_prompt_len(t, t->c_row);
 	t->c_col += &t->inp[t->index] - t->nl_addr[t->c_row];
 	ft_setcursor(t->c_col, t->c_row);
@@ -39,19 +49,14 @@ void	ft_window_size(t_term *t)
 	struct winsize	size;
 
 	ft_run_capability("vi");
-	if (ioctl(0, TIOCGWINSZ, (char *)&size) < 0)
-		perror("TIOCGWINSZ");
+	if (ioctl(0, TIOCGWINSZ, &size) < 0)
+		ft_exit_no_mem(1);
 	t->ws_col = size.ws_col;
 	t->ws_row = size.ws_row;
 	if (*t->inp)
 	{
-		ft_run_capability("cl");
-		t->quote = 0;
-		t->q_qty = 0;
-		t->bslash = 0;
-		t->heredoc = 0;
 		ft_reset_nl_addr(t);
-		ft_flag_reset(t);
+		ft_run_capability("cl");
 		ft_print_input(t, 0, 0);
 		set_new_cur_pos(t);
 	}
