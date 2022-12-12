@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/12 11:31:54 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/12 17:46:04 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	ms_exit(char **args, char ***environ_cp)
 static void	exe_fail(char **cmd, char **args, char ***env_cp)
 {
 	exe_cmd_err("command not found", args[0]);
-//	ft_printf("minishell: %s: command not found...\n", args[0]);
 	ft_memdel((void **)cmd);
 	ms_exit(args, env_cp);
 }
@@ -85,14 +84,12 @@ static int	check_access(char *cmd, char **args)
 	if (!cmd || !ft_strchr(cmd, '/'))
 	{
 		exe_cmd_err("command not found", args[0]);
-//		ft_printf("minishell: %s: command not found...\n", args[0]);
 		return (0);
 	}
 	stat(cmd, &buf);
 	if (S_ISDIR(buf.st_mode))
 	{
 		exe_cmd_err("is a directory", cmd);
-//		ft_printf("minishell: %s: is a directory\n", cmd);
 		return (0);
 	}
 	return (1);

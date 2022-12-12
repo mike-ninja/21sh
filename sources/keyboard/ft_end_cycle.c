@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_end_cycle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 12:04:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/09 13:25:27 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/12 13:29:03 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ void	ft_end_cycle(t_term *t)
 	ft_memdel((void **)&t->nl_addr);
 	if (t->input_cpy)
 		ft_strdel(&t->input_cpy);
-	if (t->input_cpy)
-		ft_strdel(&t->input_cpy);
+	if (t->delim)
+		ft_strdel(&t->delim);
 }

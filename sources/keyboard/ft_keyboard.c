@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_keyboard.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/09 13:44:12 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:34:45 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,8 +138,8 @@ int	ft_keyboard(t_term *t)
 
 	ft_init(t);
 	ret = ft_input_cycle(t);
-	if (t->nl_addr)
-		ft_memdel((void **)&t->nl_addr);
+	// ft_printf("%p\n", t->nl_addr);
+	// ft_memdel((void **)&t->nl_addr);
 	if (!*t->inp)
 		ft_putchar('\n');
 	return (ret);

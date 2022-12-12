@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/11 18:14:17 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:27:34 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -315,5 +315,6 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 //	 	++i_args;
 //	 }
 //	 exit(1);
+	ft_strdel(&line);
 	return (args);
 }

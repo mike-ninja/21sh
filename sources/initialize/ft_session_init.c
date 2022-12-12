@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:44:03 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/11 16:12:15 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/12 12:17:45 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 void	ft_session_init(t_session *sesh)
 {
 	sesh->exit_stat = 0;
+	sesh->line = NULL;
 	ft_env_init(sesh);
 	sesh->terminal = ttyname(STDOUT_FILENO);
 	sesh->head = NULL;

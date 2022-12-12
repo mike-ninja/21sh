@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/09 09:39:44 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/12 13:18:52 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ static void	ft_init_to_zero(t_term *t)
 	t->q_qty = 0;
 	t->bslash = 0;
 	t->bytes = 0;
+	t->c_col = 0;
 	t->c_row = 0;
 	t->total_row = 0;
-	t->ws_col = 0;
 	t->history_row = -1;
+	t->ws_col = 0;
 	t->ws_row = 0;
 	t->index = 0;
 	t->heredoc = 0;
@@ -56,7 +57,7 @@ void	ft_init(t_term *t)
 	ft_window_size(t);
 	t->prompt_len = (ssize_t)ft_strlen(PROMPT);
 	t->m_prompt_len = (ssize_t)ft_strlen(MINI_PROMPT);
-	t->c_col = t->prompt_len;
+	// t->c_col = t->prompt_len;
 	t->input_cpy = NULL;
 	t->clipboard.buff = NULL;
 }

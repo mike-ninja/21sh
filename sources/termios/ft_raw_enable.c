@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 08:41:48 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/10 19:03:59 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:10:29 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ struct termios	ft_raw_enable(void)
 		exit(1);
 	}
 	raw = orig_termios;
-	raw.c_lflag &= ~(ICANON | ECHO | IEXTEN | ISIG);
+	raw.c_lflag &= ~(ICANON | ECHO | IEXTEN);
 	raw.c_iflag &= ~(IXON | BRKINT);
 	raw.c_cc[VMIN] = 1;
 	raw.c_cc[VTIME] = 0;

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:05:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/10 22:51:00 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:20:32 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,12 @@ static char	*ft_heredoc(t_term *t, char *str)
 char *ft_lexer(t_term *t)
 {
 	int		i;
-	char	*new;
 	size_t	len;
+	char	*new;
 
+	i = 0;
 	new = ft_strtrim(t->inp);
 	new = ft_heredoc(t, new);
-	i = 0;
 	while (new && new[i])
 	{
 		if (new[i] == '\\')
