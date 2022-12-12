@@ -1,1 +1,1 @@
-echo "Testing redirections," > /tmp/test.txt;cat /tmp/test.txt;rm /tmp/test.txt 2>/dev/null
+echo "No dollar character" 1>&2 | cat -e
