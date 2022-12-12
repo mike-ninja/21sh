@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 20:26:00 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/12 19:27:12 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/12 20:10:31 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void exec_aggregate(t_aggregate *node, char ***environ_cp, char *terminal, t_ses
 	//	dupret = dup2(node->close_fd, node->open_fd);
 	//	ft_printf("DUPRET: %d\n", dupret);
 	open_fd_if_needed(node->close_fd, terminal);
-	close(node->close_fd);
+//	close(node->close_fd);
 	if (fstat(node->open_fd, &buf) < 0)
 	{
 		open_fd = ft_itoa(node->open_fd);
@@ -33,7 +33,7 @@ void exec_aggregate(t_aggregate *node, char ***environ_cp, char *terminal, t_ses
 		ft_strdel(&open_fd);
 		return ;
 	}
-	if (dup(node->open_fd) < 0)
+	if (dup2(node->open_fd, node->close_fd) < 0)
 	{
 		exe_cmd_err("failed", "dup2");
 		return ;
