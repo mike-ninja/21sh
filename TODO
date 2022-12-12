@@ -1,6 +1,18 @@
+Problem with redirs is that the linked list is not advanced correctly before adding to the child of last
+>&- >&- >lol
+Problems of thursday:
+>&- ; echo stdout //FIXD
+cd /dev/fd;/bin/pwd
+echo "It works" //Does not remove quotes
+cd - //???
+Do heredoc
+
+If u have the interest: >lol echo hi >lmao mom
+Something has broken, after command sometimes waits for newline before printing prompt
+Why does this work: 0>&- >&- > lol ls ; cat lol //Something weird in order of redirs?
 When comparing stderr just take everything after bash: and 21sh:
 semicolon
-Sometimes after command does not print prompt before nl is given again(PROPAPLY FIXED, CAUSED BY NO WAIT AFTER FORK"
+Sometimes after command does not print prompt before nl is given again(PROBABLY FIXED, CAUSED BY NO WAIT AFTER FORK"
 Error managment for redir, input redri` open fails if no existing file
 Root leak with redir
 Root leak with any command

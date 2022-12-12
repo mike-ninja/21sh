@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/11 16:14:54 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:30:03 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,12 @@ int	main(int argc, char **argv)
 		// 	ft_putchar('\n');
 		// 	tmp++;
 		// }
-		sesh->head = build_tree(sesh->tokens);
 		if (sesh->head && ft_builtins(sesh) == 1)
 		{
 		//	if (sesh->head && sesh->head->type == CMD)
 		//		execute_bin(((t_cmdnode *)sesh->head)->cmd, &sesh->env);
 		//	else if (sesh->head && sesh->head->type != CMD)
-				exec_tree(sesh->head, &sesh->env, sesh->terminal);
+				exec_tree(sesh->head, &sesh->env, sesh->terminal, sesh);
 		}
 		//	wait (0);
 			/*		debugging		*/

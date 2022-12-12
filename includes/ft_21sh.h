@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/11 21:36:54 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:30:41 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 #define SEMICOLON 5
 #define AGGREGATION 7
 #define CLOSEFD 8
+
+/* For error messages */
+#define SHELL_NAME "21sh"
 
 /* Build tree, redir types */
 #define RE_IN_ONE 1
@@ -69,6 +72,7 @@ typedef struct s_closefd
 	int			close_fd;
 	t_treenode	*cmd;
 }	t_closefd;
+
 /*					REDIR STRUCT			*/
 typedef struct s_redir
 {
@@ -125,12 +129,12 @@ void	banner_print(void);
 
 /*				   MAIN LOOP				*/
 void	reset_filedescriptors(t_session *sesh);
-void	shell_end_cycle(t_session *sesh);
+void			ft_endcycle(t_session *sesh);
 void			reset_fd(char *terminal);
 char			*str_from_arr(char **arr);
 struct termios	ft_raw_enable(void);
-int ft_getent(void);
-void	ft_raw_disable(struct termios orig_termios);
+int				ft_getent(void);
+void			ft_raw_disable(struct termios orig_termios);
 
 
 /*				  INITIALIZE				*/
@@ -162,12 +166,12 @@ int		increment_whitespace(char **line);
 void	free_node(t_treenode *head);
 
 /*					EXECUTE_TREE			*/
-void	exec_tree(t_treenode *head, char ***environ_cp, char *terminal);
-void	execute_bin(char **args, char ***environ_cp);
-void	exec_pipe(t_pipenode *pipenode, char ***environ_cp, char *terminal);
-void	exec_redir(t_redir *node, char ***environ_cp, char *terminal);
-void	exec_aggregate(t_aggregate *node, char ***environ_cp, char *terminal);
-void	exec_closefd(t_closefd *node, char ***environ_cp, char *terminal);
+void	exec_tree(t_treenode *head, char ***environ_cp, char *terminal, t_session *sesh);
+void	execute_bin(char **args, char ***environ_cp, t_session *sesh);
+void	exec_pipe(t_pipenode *pipenode, char ***environ_cp, char *terminal, t_session *sesh);
+void	exec_redir(t_redir *node, char ***environ_cp, char *terminal, t_session *sesh);
+void	exec_aggregate(t_aggregate *node, char ***environ_cp, char *terminal, t_session *sesh);
+void	exec_closefd(t_closefd *node, char ***environ_cp, char *terminal, t_session *sesh);
 char	*search_bin(char *cmd, char **environ_cp);
 void	error_exit(char *msg);
 int		ft_freeda(void ***a, size_t row);
@@ -175,7 +179,7 @@ size_t	calc_chptr(char **arr);
 int		fork_wrap(void);
 
 /*			   		 BUILTIN	  			*/
-int		ft_builtins(t_session *sesh);
+int		ft_builtins(t_session *sesh, char **cmd);
 int		ft_cd(t_session *sesh, char **cmd);
 int		ft_echo(char **cmd);
 int		ft_env(t_session *sesh, char ***cmd);

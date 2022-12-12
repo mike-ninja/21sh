@@ -6,11 +6,21 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/11 15:15:03 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:31:54 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
+
+void exe_cmd_err(char *msg, char *cmd)
+{
+	ft_putstr_fd(SHELL_NAME, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd("\n", 2);
+}
 
 int	ft_freeda(void ***a, size_t row)
 {
@@ -51,7 +61,8 @@ int	ms_exit(char **args, char ***environ_cp)
 
 static void	exe_fail(char **cmd, char **args, char ***env_cp)
 {
-	ft_printf("{CYAN}21sh{RESET}: %s: {RED}command not found{RESET}\n", args[0]);
+	exe_cmd_err("command not found", args[0]);
+//	ft_printf("minishell: %s: command not found...\n", args[0]);
 	ft_memdel((void **)cmd);
 	ms_exit(args, env_cp);
 }
@@ -73,24 +84,28 @@ static int	check_access(char *cmd, char **args)
 
 	if (!cmd || !ft_strchr(cmd, '/'))
 	{
-		ft_printf("{CYAN}21sh{RESET}: %s: {RED}command not found{RESET}\n", args[0]);
+		exe_cmd_err("command not found", args[0]);
+//		ft_printf("minishell: %s: command not found...\n", args[0]);
 		return (0);
 	}
 	stat(cmd, &buf);
 	if (S_ISDIR(buf.st_mode))
 	{
-		ft_printf("{CYAN}21sh{RESET}: %s: {RED}is a directory{RESET}\n", cmd);
+		exe_cmd_err("is a directory", cmd);
+//		ft_printf("minishell: %s: is a directory\n", cmd);
 		return (0);
 	}
 	return (1);
 }
 
-void	execute_bin(char **args, char ***environ_cp)
+void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 {
 	char	*cmd;
 
 	if (!args[0])
-		exit (1) ;
+		return ;
+	if (!ft_builtins(sesh, args))
+		return ;
 	if (!check_if_user_exe(args[0], &cmd))
 		cmd = search_bin(args[0], *environ_cp);
 	if (check_access(cmd, args) && fork_wrap() == 0)

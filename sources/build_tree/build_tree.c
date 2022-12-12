@@ -6,11 +6,14 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/06 20:34:31 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/11 18:50:50 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
+
+void print_tree(t_treenode *head, int depth);
+t_treenode *parse_redirections(t_token *tokens, int i_tok, int cmd);
 
 int increment_whitespace(char **line)
 {
@@ -54,7 +57,7 @@ t_treenode *init_cmd_node(char *cmd)
 {
 	t_treenode *new;
 
-	if (!cmd)
+	if (!cmd || !*cmd)
 		return (NULL);
 	new = ft_memalloc(sizeof(*new));
 	((t_cmdnode *)new)->type = CMD;
@@ -320,20 +323,31 @@ t_treenode *init_closefd(int close_fd, t_treenode *cmd)
 static int if_closefd(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 {
 	int close_fd;
+	t_treenode *head;
 
 	close_fd = 0;
 	close_fd = get_close_fd(tokens[i_tok].value);
+	head = *redir;
 	if (close_fd < 0)
 		close_fd = 1;
 	if (!*redir)
 	{
 		if (cmd < 0)
+		{
 			*redir = init_closefd(close_fd, NULL);
+		}
 		else
 			*redir = init_closefd(close_fd, init_cmd_node(tokens[cmd].value));
 	}
 	else
-		((t_redir *)(*redir))->cmd = init_closefd(close_fd, (((t_redir *)(*redir))->cmd));
+	{
+		if ((*redir)->type == REDIR)
+			((t_redir *)(*redir))->cmd = init_closefd(close_fd, (((t_redir *)(*redir))->cmd));
+		if ((*redir)->type == CLOSEFD)
+		{
+			((t_closefd *)(*redir))->cmd = init_closefd(close_fd, (((t_closefd *)(*redir))->cmd));
+		}
+	}
 	return (0);
 }
 
@@ -369,7 +383,14 @@ static int if_redir(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 		else
 		{
 			// HERE WE NEED TO ADD NEW REDIR AS CHILD TO PREVIOUS
+		if ((*redir)->type == REDIR)
+		{
 			((t_redir *)(*redir))->cmd = init_redir_wrap(dest, (((t_redir *)(*redir))->cmd), redir_t, close_fd);
+		}
+		if ((*redir)->type == CLOSEFD)
+		{
+			((t_closefd *)(*redir))->cmd = init_redir_wrap(dest, (((t_closefd *)(*redir))->cmd), redir_t, close_fd);
+		}
 		}
 	}
 	return (0);
@@ -377,9 +398,6 @@ static int if_redir(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 
 /*	Starting from the pipe, so we parse backwards and take the
 	first redir in and out */
-// TODO first go backwards until prev pipe or i_tok == 0 or semicolon
-// THEN build cmd until REDIR
-// THEN build linked list of redirections
 static t_treenode *parse_left_cmd(t_token *tokens, int i_tok)
 {
 	t_treenode *redir;
@@ -391,60 +409,99 @@ static t_treenode *parse_left_cmd(t_token *tokens, int i_tok)
 	cmd = -1;
 	if (i_tok >= 0 && tokens[i_tok].token == WORD)
 		cmd = i_tok;
-	while (cmd < 0 && i_tok && tokens[i_tok].token != PIPE)
+	while (cmd < 0 && i_tok && tokens[i_tok].token != PIPE
+			&& tokens[i_tok].token != SEMICOLON)
 	{
 		if (tokens[i_tok].token == WORD)
 			cmd = i_tok;
 		--i_tok;
 	}
-	if (tokens[i_tok].token == PIPE)
+	while (i_tok && tokens[i_tok].token != PIPE
+			&& tokens[i_tok].token != SEMICOLON)
+		--i_tok;
+	if (tokens[i_tok].token == PIPE || tokens[i_tok].token == SEMICOLON)
 		++i_tok;
-	while (tokens[i_tok].token && tokens[i_tok].token != PIPE)
+	return (parse_redirections(tokens, i_tok, cmd));
+//	while (tokens[i_tok].token && tokens[i_tok].token != PIPE)
+//	{
+//		if (if_redir(tokens, &redir, i_tok, cmd))
+//			return (NULL);
+//		++i_tok;
+//	}
+//	if (redir)
+//		return (redir);
+//	return (init_cmd_node(tokens[cmd].value));
+}
+
+static void traverse_node(t_treenode **head)
+{
+		if ((*head)->type == REDIR)
+			*head = (((t_redir *)(*head))->cmd);
+		else if ((*head)->type == AGGREGATION)
+			*head = (((t_aggregate *)(*head))->cmd);
+		else if ((*head)->type == CLOSEFD)
+			*head = (((t_closefd *)(*head))->cmd);
+}
+
+t_treenode *parse_redirections(t_token *tokens, int i_tok, int cmd)
+{
+	t_treenode *redir;
+	t_treenode *redir_start;
+
+	redir = NULL;
+	while (!redir && tokens[i_tok].token && tokens[i_tok].token != PIPE && tokens[i_tok].token != SEMICOLON)
+		if (if_redir(tokens, &redir, i_tok++, cmd))
+				return (NULL);
+	redir_start = redir;
+	while (tokens[i_tok].token && tokens[i_tok].token != PIPE && tokens[i_tok].token != SEMICOLON)
 	{
 		if (if_redir(tokens, &redir, i_tok, cmd))
 			return (NULL);
+		traverse_node(&redir);
 		++i_tok;
 	}
-	if (redir)
-		return (redir);
+	if (redir_start)
+		return (redir_start);
 	return (init_cmd_node(tokens[cmd].value));
 }
 
 static t_treenode *parse_right_cmd(t_token *tokens, int i_tok)
 {
 	t_treenode *redir;
+	t_treenode *redir_start;
 	int start;
 	//	int			close_fd;
 	int cmd;
 	//	char		*direction;
 
+	redir_start = redir;
 	redir = NULL;
 	cmd = -1;
 	start = i_tok;
-	// /*DEBUG*/
-	// t_token *tmp = tokens;
-	// while (tmp->token)
-	// {
-	// 	ft_printf("Token: %d, Value: %s\n", tmp->token, tmp->value);
-	// 	tmp++;
-	// }
-	// /*DEBUG*/
-	while (cmd < 0 && tokens[i_tok].value && tokens[i_tok].token != PIPE)
+	while (cmd < 0 && tokens[i_tok].value && tokens[i_tok].token != PIPE
+			&& tokens[i_tok].token != SEMICOLON)
 	{
 		if (tokens[i_tok].token == WORD /*|| (i_tok > 0 && tokens[i_tok].token == WORD && tokens[i_tok - 1].token != REDIR)*/)
 			cmd = i_tok;
 		++i_tok;
 	}
 	i_tok = start;
-	while (tokens[i_tok].token && tokens[i_tok].token != PIPE)
-	{
-		if (if_redir(tokens, &redir, i_tok, cmd))
-			return (NULL);
-		++i_tok;
-	}
-	if (redir)
-		return (redir);
-	return (init_cmd_node(tokens[cmd].value));
+	//TODO same thing on left
+	return (parse_redirections(tokens, i_tok, cmd));
+//	while (!redir && tokens[i_tok].token && tokens[i_tok].token != PIPE && tokens[i_tok].token != SEMICOLON)
+//		if (if_redir(tokens, &redir, i_tok++, cmd))
+//			return (NULL);
+//	redir_start = redir;
+//	while (tokens[i_tok].token && tokens[i_tok].token != PIPE && tokens[i_tok].token != SEMICOLON)
+//	{
+//		if (if_redir(tokens, &redir, i_tok, cmd))
+//			return (NULL);
+//		traverse_node(&redir);
+//		++i_tok;
+//	}
+//	if (redir_start)
+//		return (redir_start);
+//	return (init_cmd_node(tokens[cmd].value));
 }
 
 static int calculate_tokens(t_token *tokens)
@@ -536,6 +593,8 @@ void print_node(t_treenode *node)
 	}
 	else if (node->type == REDIR)
 		ft_printf("Type: REDIR\n");
+	else if (node->type == CLOSEFD)
+		ft_printf("Type: CLOSEFD\n");
 }
 
 void print_tree(t_treenode *head, int depth)
@@ -548,22 +607,30 @@ void print_tree(t_treenode *head, int depth)
 	if (head->type == PIPE)
 	{
 		print_tree(((t_pipenode *)head)->right, depth + 1);
-		ft_printf("\\");
+	//	ft_printf("\\");
 		print_tree(((t_pipenode *)head)->left, depth + 1);
-		ft_printf("/");
+	//	ft_printf("/");
 	}
 	if (head->type == SEMICOLON)
 	{
-		print_tree(((t_semicolon *)head)->right, depth + 1);
-		ft_printf("\\");
+		ft_printf("SEMI LEFT:\n");
 		print_tree(((t_semicolon *)head)->left, depth + 1);
-		ft_printf("/");
+	//	ft_printf("\\");
+		ft_printf("SEMI RIGHT:\n");
+		print_tree(((t_semicolon *)head)->right, depth + 1);
+	//	ft_printf("/");
 	}
-	while (depth--)
-		ft_printf("\t");
+	if (head->type == REDIR)
+		print_tree(((t_redir *)head)->cmd, depth + 1);
+	if (head->type == CLOSEFD)
+		print_tree(((t_closefd *)head)->cmd, depth + 1);
+	if (head->type == AGGREGATION)
+		print_tree(((t_aggregate *)head)->cmd, depth + 1);
+///	while (depth--)
+//		ft_printf("\t");
 	print_node(head);
-	while (depth_temp--)
-		ft_printf("\t");
+//	while (depth_temp--)
+	//	ft_printf("\t");
 }
 
 t_treenode *create_command_tree(t_token *tokens, int i_tok, int semicol)

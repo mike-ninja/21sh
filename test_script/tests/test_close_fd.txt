@@ -9,5 +9,5 @@
 echo stdin > stdin.txt
 0<&- cat < stdin.txt
 cat < stdin.txt 0<&-
-rm stdin.txt
+rm stdin.txt 2>/dev/null
 2>&- doesnotexist
