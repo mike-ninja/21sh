@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/12 11:30:41 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:34:37 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	banner_print(void);
 
 /*				   MAIN LOOP				*/
 void	reset_filedescriptors(t_session *sesh);
-void			ft_endcycle(t_session *sesh);
+void			shell_end_cycle(t_session *sesh);
 void			reset_fd(char *terminal);
 char			*str_from_arr(char **arr);
 struct termios	ft_raw_enable(void);
