@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_line_down.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 12:25:34 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/29 16:47:26 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/12/09 09:28:15 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,17 @@ static void	ft_move_down(t_term *t, ssize_t prompt_len)
 		- t->nl_addr[0];
 }
 
+static ssize_t	ft_col_diff(t_term *t, ssize_t len)
+{
+	int	len_cur_row;
+
+	len_cur_row = &t->inp[t->index] - t->nl_addr[t->c_row];
+	if (len_cur_row > len)
+		return (len_cur_row - len);
+	else
+		return (t->c_row);
+}
+
 /*
  * It moves the cursor down one line
  *
@@ -58,12 +69,18 @@ void	ft_line_down(t_term *t)
 {
 	ssize_t	len;
 	ssize_t	prompt_len;
+	ssize_t	col;
 
-	prompt_len = ft_mv_prompt_len(t, 1);
 	if (t->c_row < (t->total_row - 1))
 		len = (t->nl_addr[t->c_row + 2] - t->nl_addr[t->c_row + 1]);
 	else
 		len = &t->inp[t->bytes] - t->nl_addr[t->c_row + 1];
+	col = ft_col_diff(t, len);
+	if (col < t->c_col)
+		col = t->c_col - col;
+	else
+		col = col - t->c_col;
+	prompt_len = ft_get_prompt_len(t, t->c_row + 1);
 	if (t->c_col < (len + prompt_len))
 		ft_move_down(t, prompt_len);
 	else

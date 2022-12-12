@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_trail.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:40:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/29 16:49:07 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/12/09 09:31:35 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ void	ft_print_trail(t_term *t)
 {
 	ft_run_capability("vi");
 	ft_run_capability("sc");
-	ft_run_capability("vi");
 	ft_print_line_trail(t);
 	ft_run_capability("rc");
 	ft_run_capability("ve");

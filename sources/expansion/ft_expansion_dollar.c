@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:57:25 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/24 14:04:55 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/10 18:31:39 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ static char	**ft_special_ch_split(char *str)
 	char	**ret;
 
 	j = 0;
-	ret = (char **)ft_memalloc(sizeof(char *) \
-		* (ft_special_ch_split_len(str) + 1));
+	ret = (char **)ft_memalloc(sizeof(char *) * (ft_special_ch_split_len(str) + 1));
 	while (*str)
 	{
 		i = 0;
@@ -66,6 +65,32 @@ static char	**ft_special_ch_split(char *str)
 }
 
 /**
+ * It takes a string, finds the first instance of a dollar sign, and replaces 
+ * it with the value of the environment variable that follows the dollar sign
+ * 
+ * @param sesh the session struct
+ * @param buff the buffer to write to
+ * @param arg the string to be parsed
+ */
+static void	ft_find_env(t_session *sesh, char *buff, char *arg)
+{
+	char	*key;
+	char	**env;
+	int		key_len;
+
+	key_len = 0;
+	while (arg[key_len] && !ft_isspace(arg[key_len]))
+		key_len++;
+	key = ft_strsub(arg, 1, key_len - 1);	
+	env = ft_env_get(sesh, key);
+	if (env)
+		ft_strcat(buff, ft_strchr(*env, '=') + 1);
+	if (arg[key_len])
+		ft_strcat(buff, arg + key_len);
+	ft_strdel(&key);
+}
+
+/**
  * It takes a string, splits it on special characters, and then replaces any
  * dollar signs with the value of the environment variable that follows it.
  * 
@@ -77,24 +102,18 @@ static char	**ft_special_ch_split(char *str)
 char	*ft_expansion_dollar(t_session *sesh, char *str)
 {
 	int		i;
-	char	**env;
 	char	buff[BUFF_SIZE];
 	char	**split_dollar;
 
+	i = -1;
 	if (!ft_strcmp(str, "$$"))
 		return (ft_itoa(getpid()));
-	i = -1;
-	env = NULL;
 	ft_bzero(buff, BUFF_SIZE);
 	split_dollar = ft_special_ch_split(str);
 	while (split_dollar[++i])
 	{
 		if (*split_dollar[i] == '$' && ft_strlen(split_dollar[i]) > 1)
-		{
-			env = ft_env_get(sesh, split_dollar[i] + 1);
-			if (env)
-				ft_strcat(buff, ft_strchr(*env, '=') + 1);
-		}
+			ft_find_env(sesh, buff, split_dollar[i]);	
 		else
 			ft_strcat(buff, split_dollar[i]);
 		ft_strdel(&split_dollar[i]);

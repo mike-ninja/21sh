@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 08:41:48 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/04 08:43:04 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/10 19:03:59 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,5 @@ struct termios	ft_raw_enable(void)
 		write(2, "error tcsetattr\n", 16);
 		exit(1);
 	}
-	ft_run_capability("cl");
 	return (orig_termios);
 }

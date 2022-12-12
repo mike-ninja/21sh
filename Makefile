@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
+#    By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/12/05 20:16:17 by jniemine         ###   ########.fr        #
+#    Updated: 2022/12/09 13:27:38 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -137,6 +137,11 @@ FILES			= $(KEYBOARD)ft_arrow_input \
 				$(KEYBOARD)ft_shift_nl_addr \
 				$(KEYBOARD)ft_window_size \
 				$(KEYBOARD)ft_word_mv \
+				$(KEYBOARD)ft_ctrl \
+				$(KEYBOARD)ft_flag_reset \
+				$(KEYBOARD)ft_history_reset_nl \
+				$(KEYBOARD)ft_nl_removal \
+				$(KEYBOARD)ft_print_input \
 				$(KEYBOARD)ft_keyboard \
 				$(LEXER)ft_lexer \
 				$(BANNER)ft_banner \

@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/08 16:46:10 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:27:09 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,29 @@ int	main(int argc, char **argv)
 		sesh->orig_termios = ft_raw_enable();
 	if (!test_flag)
 		banner_print();
+	if (!test_flag)
+		ft_raw_disable(sesh->orig_termios);
 	ft_session_init(sesh);
+	ft_history_get(&term);
 	t_token	*tmp;
 	while (status)
 	{
 		if (!test_flag)
-			ft_keyboard(&term);
+		{
+			sesh->orig_termios = ft_raw_enable();
+			if (ft_keyboard(&term) == 1)
+				status = 0;
+		ft_raw_disable(sesh->orig_termios);
+		}
 		if (!test_flag)
-			line = term.inp;
+		{
+			line = ft_lexer(&term);
+			// line = term.inp;
+		}
 		else
 			line = str_from_arr(&argv[2]);
 		sesh->tokens = chop_line(line, sesh->tokens, 1);
-		sesh->head = build_tree(sesh->tokens);
-		/*debug*/
+		// /*debug*/
 		// t_token *tmp = sesh->tokens;
 
 		// while (tmp->token)
@@ -53,7 +63,7 @@ int	main(int argc, char **argv)
 		// 	ft_putchar('\n');
 		// 	tmp++;
 		// }
-		if (sesh->head /*&& ft_builtins(sesh) == 1*/)
+		if (sesh->head && ft_builtins(sesh) == 1)
 		{
 		//	if (sesh->head && sesh->head->type == CMD)
 		//		execute_bin(((t_cmdnode *)sesh->head)->cmd, &sesh->env);
@@ -78,7 +88,6 @@ int	main(int argc, char **argv)
 		// reset_filedescriptors(sesh);
 	}
 	ft_strdel(&sesh->terminal);
-	if (!test_flag)
-		ft_raw_disable(sesh->orig_termios);
+
 	return (0);
 }
