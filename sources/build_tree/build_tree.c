@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/12 12:25:36 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/12 13:25:26 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,20 +290,21 @@ static int if_aggregation(t_token *tokens, t_treenode **redir, int i_tok, int cm
 		error_tok(tokens, *redir, "syntax error near unexpected token", "newline");
 		return (1);
 	}
+	print_tree(*redir, 0);
 	close_fd = get_close_fd(tokens[i_tok].value);
 	if (close_fd < 0)
 		close_fd = 1;
 	if (!*redir)
 	{
 		if (cmd < 0)
-			*redir = init_aggregation_node(close_fd, atoi(dest), NULL);
+			*redir = init_aggregation_node(close_fd, ft_atoi(dest), NULL);
 		else // HERE WE NEED TO CREATE COMMAND NODE
-			*redir = init_aggregation_node(close_fd, atoi(dest), init_cmd_node(tokens[cmd].value));
+			*redir = init_aggregation_node(close_fd, ft_atoi(dest), init_cmd_node(tokens[cmd].value));
 	}
 	else
 	{
 		// HERE WE NEED TO ADD NEW REDIR AS CHILD TO PREVIOUS
-		((t_redir *)(*redir))->cmd = init_aggregation_node(close_fd, atoi(dest), (((t_redir *)(*redir))->cmd));
+		((t_redir *)(*redir))->cmd = init_aggregation_node(close_fd, ft_atoi(dest), (((t_redir *)(*redir))->cmd));
 	}
 	ft_strdel(&dest);
 	return (0);
@@ -410,7 +411,7 @@ static t_treenode *parse_left_cmd(t_token *tokens, int i_tok)
 	cmd = -1;
 	if (i_tok >= 0 && tokens[i_tok].token == WORD)
 		cmd = i_tok;
-	while (cmd < 0 && i_tok && tokens[i_tok].token != PIPE
+	while (cmd < 0 && i_tok >=0 && tokens[i_tok].token != PIPE
 			&& tokens[i_tok].token != SEMICOLON)
 	{
 		if (tokens[i_tok].token == WORD)
@@ -607,8 +608,10 @@ void print_tree(t_treenode *head, int depth)
 		return;
 	if (head->type == PIPE)
 	{
+		ft_printf("PIPE RIGHT:\n");
 		print_tree(((t_pipenode *)head)->right, depth + 1);
 	//	ft_printf("\\");
+		ft_printf("PIPE LEFT:\n");
 		print_tree(((t_pipenode *)head)->left, depth + 1);
 	//	ft_printf("/");
 	}

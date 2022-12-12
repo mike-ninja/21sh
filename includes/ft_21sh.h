@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/12 12:13:07 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/12 12:38:53 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ void	error_exit(char *msg);
 int		ft_freeda(void ***a, size_t row);
 size_t	calc_chptr(char **arr);
 int		fork_wrap(void);
+void	open_fd_if_needed(int fd, char *terminal);
 
 /*					ERROR					*/
 void exe_cmd_err(char *msg, char *cmd);

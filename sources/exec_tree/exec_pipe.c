@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:15:20 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/12 11:23:11 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/12 13:01:27 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,11 @@ void exec_pipe(t_pipenode *pipenode, char ***environ_cp, char *terminal, t_sessi
 {
 	int	pipefd[2];
 
-	if(pipe(pipefd)	< 0	&& ft_printf("21sh:	pipe failed\n"))
+	if(pipe(pipefd)	< 0)
+	{
+		exe_cmd_err("pipe failed", "exec_pipe");
 		return ;
+	}
 	if(fork_wrap() == 0){
 	  close(1);
 	  dup(pipefd[1]);
