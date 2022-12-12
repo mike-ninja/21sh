@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:23:35 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/12 10:22:05 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:32:22 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	free_node(t_treenode *head)
 			free_node(((t_redir *)head)->cmd);
 		else if (head->type == AGGREGATION)
 			free_node(((t_aggregate *)head)->cmd);
-		free(head);
+		ft_memdel((void **)&head);
+		// free(head);
 }
 
 void exec_tree(t_treenode *head, char ***environ_cp, char *terminal, t_session *sesh)

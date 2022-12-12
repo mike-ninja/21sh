@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:10:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/30 11:00:02 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/11 21:27:39 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static bool	ft_cd_expand_parse(t_session *sesh, char **cmd)
 
 int	ft_cd(t_session *sesh, char **cmd)
 {
+	sesh->exit_stat = 0;
 	if (ft_arrlen(cmd) > 2) // TODO: error for too many arguments
 		return (1);
 	if (!ft_cd_expand_parse(sesh, cmd))
@@ -73,14 +74,11 @@ int	ft_cd(t_session *sesh, char **cmd)
 	if (!ft_addr_check(*(cmd + 1)))
 	{
 		if (chdir(*(cmd + 1)))
-		{
-			ft_putstr("21sh: cd: ");
-			ft_putstr(*(cmd + 1));
-			ft_putendl(": No such file or directory");
-			return (1);
-		}
+			sesh->exit_stat = 1;
 		else
 			ft_dir_change(sesh);
 	}
+	else
+		sesh->exit_stat = 1;
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_session_init.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:44:03 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/05 16:44:48 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/12 12:17:45 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
  */
 void	ft_session_init(t_session *sesh)
 {
-	sesh->ret = 0;
+	sesh->exit_stat = 0;
+	sesh->line = NULL;
 	ft_env_init(sesh);
 	sesh->terminal = ttyname(STDOUT_FILENO);
 	sesh->head = NULL;

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 16:28:08 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/01 13:02:05 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/12 12:38:59 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,20 @@ void	ft_bslash_handling(t_term *t)
 {
 	ssize_t	i;
 
+	if (!t->bytes)
+		return ;
 	i = t->bytes - 1;
-	if (t->c_row == t->total_row)
+	if (t->inp[i] == '\\' && !t->heredoc)
 	{
-		if (t->inp[i] == '\\' && !t->heredoc)
-		{
+		i--;
+		while (i && t->inp[i] == '\\')
 			i--;
-			while (i && t->inp[i] == '\\')
-				i--;
-			if ((t->bytes - i) % 2)
-				t->bslash = 0;
-			else
-				t->bslash = 1;
-		}
+		if ((t->bytes - i) % 2)
+			t->bslash = 0;
 		else
-			if (t->inp[i] != D_QUO && t->inp[i] != S_QUO)
-				t->bslash = 0;
+			t->bslash = 1;
 	}
+	else
+		if (t->inp[i] != D_QUO && t->inp[i] != S_QUO)
+			t->bslash = 0;
 }

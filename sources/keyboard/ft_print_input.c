@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 22:49:46 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/09 10:44:52 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/11 19:58:59 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,12 @@ void	ft_print_input(t_term *t, ssize_t row, int mode)
 		len = line_len(t, row);
 		if (ft_is_prompt_line(t, row))
 		{
+			ft_printf("{GREEN}");
 			if (!row)
 				col = write(STDOUT_FILENO, PROMPT, t->prompt_len);
 			else
 				col = write(STDOUT_FILENO, MINI_PROMPT, t->m_prompt_len);
+			ft_printf("{RESET}");
 		}
 		else
 			col = 0;

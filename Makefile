@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+         #
+#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/12/09 13:27:38 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/12/12 15:23:47 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ CFLAGS				+=	-Wpedantic
 # CFLAGS				+=	-Wconversion
 CFLAGS				+=	-O3
 
-LEAK_CHECK			= -g
+# LEAK_CHECK			= -g
 # LEAK_CHECK		+=	-fsanitize=address
 
 UNAME				= $(shell uname)
@@ -146,7 +146,7 @@ FILES			= $(KEYBOARD)ft_arrow_input \
 				$(LEXER)ft_lexer \
 				$(BANNER)ft_banner \
 				$(MAIN)main \
-				$(MAIN)ft_endcycle \
+				$(MAIN)shell_end_cycle \
 				$(MAIN)str_from_arr \
 				$(MAIN)reset_fd \
 				$(TOKENIZER)tokenizer \

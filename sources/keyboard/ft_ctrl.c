@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 09:36:28 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/09 09:37:49 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:13:04 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ void	ft_ctrl(t_term *t)
 	else if (t->ch == CTRL_L)
 	{
 		ft_run_capability("cl");
-		ft_restart_cycle(t);
+		ft_print_input(t, 0, 0);
 	}
 }

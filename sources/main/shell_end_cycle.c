@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_endcycle.c                                      :+:      :+:    :+:   */
+/*   shell_end_cycle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -63,11 +63,10 @@ static void	ft_reset_tmp_env(t_session *sesh)
  *
  * @param sesh the session struct
  */
-void	ft_endcycle(t_session *sesh)
+void	shell_end_cycle(t_session *sesh)
 {
-	sesh->ret = 0;
 	free_node(sesh->head);
-	sesh->head = NULL;
+	// sesh->head = NULL;
 	free_tokens(sesh->tokens);
 	reset_fd(sesh->terminal);
 	ft_reset_tmp_env(sesh);

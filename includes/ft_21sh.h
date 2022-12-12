@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/12 11:26:06 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/12 12:17:11 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "keyboard.h"
 #include "ft_printf.h"
 /* DUNNO IF NEEDED */
+#include <dirent.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
 
@@ -114,10 +115,11 @@ union u_treenode
 /*				SESSION STRUCT				*/
 typedef struct session
 {
-	int				ret;
+	char			*line;
 	t_treenode		*head;
 	char			**env;
 	t_token			*tokens;
+	int				exit_stat;
 	char			*terminal;
 	char			**tmp_env_key;
 	struct termios	orig_termios;
@@ -127,8 +129,8 @@ typedef struct session
 void	banner_print(void);
 
 /*				   MAIN LOOP				*/
-void			reset_filedescriptors(t_session *sesh);
-void			ft_endcycle(t_session *sesh);
+void	reset_filedescriptors(t_session *sesh);
+void			shell_end_cycle(t_session *sesh);
 void			reset_fd(char *terminal);
 char			*str_from_arr(char **arr);
 struct termios	ft_raw_enable(void);
