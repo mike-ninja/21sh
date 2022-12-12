@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/12 12:38:53 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/12 18:42:15 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,12 @@ typedef struct s_pipenode
 union u_treenode
 {
 	int type;
+	t_semicolon semicolon;
 	t_pipenode pipe;
 	t_cmdnode cmd;
 	t_redir redir;
 	t_aggregate aggregate;
+	t_closefd	closefd;
 };
 
 /*				SESSION STRUCT				*/
@@ -152,6 +154,7 @@ int 	is_ws(char c);
 /*					BULDTREE				*/
 t_treenode *build_tree(t_token *tokens);
 char **make_arg_array(char *cmd);
+void print_tree(t_treenode *head, int depth);
 
 /*					EXPANSION				*/
 // void	ft_expansion(t_session *sesh);

@@ -1,3 +1,4 @@
+cat < file
 cat -e
 rm nosuchfile 2>&1 | cat -e
 Problem with redirs is that the linked list is not advanced correctly before adding to the child of last

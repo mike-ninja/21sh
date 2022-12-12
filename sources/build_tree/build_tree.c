@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/12 13:25:26 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/12 18:52:01 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ int ft_calc_chr(char *line, char c)
 	return (res);
 }
 
-
-
 t_treenode *init_cmd_node(char *cmd)
 {
 	t_treenode *new;
@@ -60,6 +58,7 @@ t_treenode *init_cmd_node(char *cmd)
 	if (!cmd || !*cmd)
 		return (NULL);
 	new = ft_memalloc(sizeof(*new));
+	new->type = CMD;
 	((t_cmdnode *)new)->type = CMD;
 	((t_cmdnode *)new)->cmd = make_arg_array(cmd);
 	return (new);
@@ -290,7 +289,6 @@ static int if_aggregation(t_token *tokens, t_treenode **redir, int i_tok, int cm
 		error_tok(tokens, *redir, "syntax error near unexpected token", "newline");
 		return (1);
 	}
-	print_tree(*redir, 0);
 	close_fd = get_close_fd(tokens[i_tok].value);
 	if (close_fd < 0)
 		close_fd = 1;
@@ -411,13 +409,15 @@ static t_treenode *parse_left_cmd(t_token *tokens, int i_tok)
 	cmd = -1;
 	if (i_tok >= 0 && tokens[i_tok].token == WORD)
 		cmd = i_tok;
-	while (cmd < 0 && i_tok >=0 && tokens[i_tok].token != PIPE
+	while (cmd < 0 && i_tok >= 0 && tokens[i_tok].token != PIPE
 			&& tokens[i_tok].token != SEMICOLON)
 	{
 		if (tokens[i_tok].token == WORD)
 			cmd = i_tok;
 		--i_tok;
 	}
+	if (i_tok < 0)
+		i_tok = 0;
 	while (i_tok && tokens[i_tok].token != PIPE
 			&& tokens[i_tok].token != SEMICOLON)
 		--i_tok;
@@ -452,8 +452,13 @@ t_treenode *parse_redirections(t_token *tokens, int i_tok, int cmd)
 
 	redir = NULL;
 	while (!redir && tokens[i_tok].token && tokens[i_tok].token != PIPE && tokens[i_tok].token != SEMICOLON)
+	{
 		if (if_redir(tokens, &redir, i_tok++, cmd))
 				return (NULL);
+//		if (redir)
+//			break ;
+//		++i_tok;
+	}
 	redir_start = redir;
 	while (tokens[i_tok].token && tokens[i_tok].token != PIPE && tokens[i_tok].token != SEMICOLON)
 	{
@@ -597,6 +602,8 @@ void print_node(t_treenode *node)
 		ft_printf("Type: REDIR\n");
 	else if (node->type == CLOSEFD)
 		ft_printf("Type: CLOSEFD\n");
+	else if (node->type == AGGREGATION)
+		ft_printf("Type: AGGREGATION\n");
 }
 
 void print_tree(t_treenode *head, int depth)
