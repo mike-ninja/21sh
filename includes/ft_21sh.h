@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/08 21:36:29 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/12 12:13:07 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,10 @@ int		ft_freeda(void ***a, size_t row);
 size_t	calc_chptr(char **arr);
 int		fork_wrap(void);
 
-/*			   		 BUILTIN	  			*/
+/*					ERROR					*/
+void exe_cmd_err(char *msg, char *cmd);
+
+/*					BUILTIN					*/
 int		ft_builtins(t_session *sesh, char **cmd);
 int		ft_cd(t_session *sesh, char **cmd);
 int		ft_echo(char **cmd);

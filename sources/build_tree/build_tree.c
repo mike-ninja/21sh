@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/11 18:50:50 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/12 12:25:36 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,6 +305,7 @@ static int if_aggregation(t_token *tokens, t_treenode **redir, int i_tok, int cm
 		// HERE WE NEED TO ADD NEW REDIR AS CHILD TO PREVIOUS
 		((t_redir *)(*redir))->cmd = init_aggregation_node(close_fd, atoi(dest), (((t_redir *)(*redir))->cmd));
 	}
+	ft_strdel(&dest);
 	return (0);
 }
 
