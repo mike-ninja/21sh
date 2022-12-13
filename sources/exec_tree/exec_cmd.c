@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/08 17:01:09 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/13 07:10:51 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	ms_exit(char **args, char ***environ_cp)
 static void	exe_fail(char **cmd, char **args, char ***env_cp)
 {
 	exe_cmd_err("command not found", args[0]);
-//	ft_printf("minishell: %s: command not found...\n", args[0]);
 	ft_memdel((void **)cmd);
 	ms_exit(args, env_cp);
 }
@@ -85,14 +84,12 @@ static int	check_access(char *cmd, char **args)
 	if (!cmd || !ft_strchr(cmd, '/'))
 	{
 		exe_cmd_err("command not found", args[0]);
-//		ft_printf("minishell: %s: command not found...\n", args[0]);
 		return (0);
 	}
 	stat(cmd, &buf);
 	if (S_ISDIR(buf.st_mode))
 	{
 		exe_cmd_err("is a directory", cmd);
-//		ft_printf("minishell: %s: is a directory\n", cmd);
 		return (0);
 	}
 	return (1);
@@ -104,7 +101,7 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 
 	if (!args[0])
 		return ;
-	if (!ft_builtins(sesh, args))
+	if (!ft_builtins(sesh, &args))
 		return ;
 	if (!check_if_user_exe(args[0], &cmd))
 		cmd = search_bin(args[0], *environ_cp);

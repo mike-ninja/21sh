@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_history_get.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:56:28 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/04 19:11:30 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/09 13:25:27 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
 /*
- * It reads the history file and stores it in a vector
+ * It reads the history file and stores it in a ft_vector
  *
  * @param t the terminal structure
  */

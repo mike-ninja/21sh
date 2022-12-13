@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_esc_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:31:54 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/29 16:40:29 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/12/07 15:15:58 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,11 @@
  */
 static void	ft_cursor_beginning(t_term *t)
 {
+	t->c_col = ft_get_prompt_len(t, t->c_row);
 	if (!t->c_row)
-	{
-		t->c_col = t->prompt_len;
 		t->index = 0;
-	}
 	else
-	{
-		if (ft_is_prompt_line(t, t->c_row))
-			t->c_col = t->m_prompt_len;
-		else
-			t->c_col = 0;
 		t->index = t->nl_addr[t->c_row] - t->nl_addr[0];
-	}
 	ft_setcursor(t->c_col, ft_get_linenbr());
 }
 
@@ -44,15 +36,8 @@ static void	ft_cursor_end(t_term *t)
 {
 	ssize_t	len;
 
-	t->c_col = 0;
 	len = t->index;
-	if (!t->c_row || ft_is_prompt_line(t, t->c_row))
-	{
-		if (!t->c_row)
-			t->c_col = t->prompt_len;
-		else
-			t->c_col = t->m_prompt_len;
-	}
+	t->c_col = ft_get_prompt_len(t, t->c_row);
 	if (t->nl_addr[t->c_row + 1])
 		t->index = (t->nl_addr[t->c_row + 1] - t->nl_addr[0]) - 1;
 	else

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
+#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/12/05 20:16:17 by jniemine         ###   ########.fr        #
+#    Updated: 2022/12/12 20:06:39 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ CFLAGS				+=	-Wpedantic
 # CFLAGS				+=	-Wconversion
 CFLAGS				+=	-O3
 
-LEAK_CHECK			= -g
+# LEAK_CHECK			= -g
 # LEAK_CHECK		+=	-fsanitize=address
 
 UNAME				= $(shell uname)
@@ -137,11 +137,16 @@ FILES			= $(KEYBOARD)ft_arrow_input \
 				$(KEYBOARD)ft_shift_nl_addr \
 				$(KEYBOARD)ft_window_size \
 				$(KEYBOARD)ft_word_mv \
+				$(KEYBOARD)ft_ctrl \
+				$(KEYBOARD)ft_flag_reset \
+				$(KEYBOARD)ft_history_reset_nl \
+				$(KEYBOARD)ft_nl_removal \
+				$(KEYBOARD)ft_print_input \
 				$(KEYBOARD)ft_keyboard \
 				$(LEXER)ft_lexer \
 				$(BANNER)ft_banner \
 				$(MAIN)main \
-				$(MAIN)ft_endcycle \
+				$(MAIN)shell_end_cycle \
 				$(MAIN)str_from_arr \
 				$(MAIN)reset_fd \
 				$(TOKENIZER)tokenizer \

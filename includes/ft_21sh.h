@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/12 18:42:15 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:02:04 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "keyboard.h"
 #include "ft_printf.h"
 /* DUNNO IF NEEDED */
+#include <dirent.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
 
@@ -116,21 +117,21 @@ union u_treenode
 /*				SESSION STRUCT				*/
 typedef struct session
 {
-	int				ret;
+	char			*line;
 	t_treenode		*head;
 	char			**env;
 	t_token			*tokens;
+	int				exit_stat;
 	char			*terminal;
 	char			**tmp_env_key;
 	struct termios	orig_termios;
 }				t_session;
 
 /*					HEADER					*/
-void	banner_print(void);
+void			banner_print(void);
 
 /*				   MAIN LOOP				*/
-void			reset_filedescriptors(t_session *sesh);
-void			ft_endcycle(t_session *sesh);
+void			shell_end_cycle(t_session *sesh);
 void			reset_fd(char *terminal);
 char			*str_from_arr(char **arr);
 struct termios	ft_raw_enable(void);
@@ -139,17 +140,17 @@ void			ft_raw_disable(struct termios orig_termios);
 
 
 /*				  INITIALIZE				*/
-void	ft_env_init(t_session *sesh);
-void	ft_session_init(t_session *sesh);
+void			ft_env_init(t_session *sesh);
+void			ft_session_init(t_session *sesh);
 
 /*					LEXER					*/
-void	ft_lexer(char *str, char **line);
+char			*ft_lexer(t_term *t);
 
 /*					TOKENIZER				*/
-t_token *chop_line(char *line, t_token *args, size_t pointer_n);
-void 	free_token(t_token *token);
-void	free_tokens(t_token *tokens);
-int 	is_ws(char c);
+t_token 		*chop_line(char *line, t_token *args, size_t pointer_n);
+void 			free_token(t_token *token);
+void			free_tokens(t_token *tokens);
+int 			is_ws(char c);
 
 /*					BULDTREE				*/
 t_treenode *build_tree(t_token *tokens);
@@ -157,16 +158,15 @@ char **make_arg_array(char *cmd);
 void print_tree(t_treenode *head, int depth);
 
 /*					EXPANSION				*/
-// void	ft_expansion(t_session *sesh);
-void	ft_expansion(t_session *sesh, char **cmd);
-char	*ft_expansion_dollar(t_session *sesh, char *str);
-char	*ft_expansion_tilde(t_session *sesh, char *str);
+void			ft_expansion(t_session *sesh, char **cmd);
+char			*ft_expansion_dollar(t_session *sesh, char *str);
+char			*ft_expansion_tilde(t_session *sesh, char *str);
 
 /*					UTILITIES				*/
-int		ft_addr_check(char *file);
-char	**ft_env_get(t_session *sesh, char *key);
-int		increment_whitespace(char **line);
-void	free_node(t_treenode *head);
+int				ft_addr_check(char *file);
+char			**ft_env_get(t_session *sesh, char *key);
+int				increment_whitespace(char **line);
+void			free_node(t_treenode *head);
 
 /*					EXECUTE_TREE			*/
 void	exec_tree(t_treenode *head, char ***environ_cp, char *terminal, t_session *sesh);
@@ -195,12 +195,10 @@ int		ft_setenv(t_session *sesh, char **cmd);
 int		ft_unsetenv(t_session *sesh, char **cmd);
 
 /*			    BUILTIN UTILITIES			*/
-int		ft_env_temp(t_session *sesh, char **cmd, int i);
-void	ft_env_remove(t_session *sesh, char *env_to_clean);
-int		ft_env_append(t_session *sesh, char **arg);
-int		ft_env_replace(t_session *sesh, char *envn, char **tmp_env);
-void	ft_dir_change(t_session *sesh);
+int				ft_env_temp(t_session *sesh, char **cmd, int i);
+void			ft_env_remove(t_session *sesh, char *env_to_clean);
+int				ft_env_append(t_session *sesh, char **arg);
+int				ft_env_replace(t_session *sesh, char *envn, char **tmp_env);
+void			ft_dir_change(t_session *sesh);
 
 #endif
-
-

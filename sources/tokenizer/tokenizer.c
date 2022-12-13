@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/12 15:43:13 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:02:36 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -315,5 +315,6 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 //	 	++i_args;
 //	 }
 //	 exit(1);
+	ft_strdel(&line);
 	return (args);
 }

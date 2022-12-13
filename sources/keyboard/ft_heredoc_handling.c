@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc_handling.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:57:40 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/02 16:53:50 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/12/09 09:26:59 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@
  *
  * @param t the term structure
  */
-void	ft_heredoc_handling(t_term *t)
+void	ft_heredoc_handling(t_term *t, char ch, int index)
 {
-	if (t->index >= 1 && t->ch == '<' && !(t->q_qty % 2))
+	if (index >= 1 && ch == '<' && !(t->q_qty % 2))
 	{
-		if (t->inp[t->index - 1] == '<')
+		if (t->inp[index - 1] == '<')
 		{
-			if (t->index > 2 && t->inp[t->index - 2] == '<')
+			if (index > 2 && t->inp[t->index - 2] == '<')
 				t->heredoc = 0;
 			else
 				t->heredoc = 1;

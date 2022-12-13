@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/04 19:26:26 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/11 19:45:49 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define KEYBOARD_H
 
 # include "libft.h"
+# include "ft_printf.h"
 # include "ft_vec.h"
 # include <termcap.h>//control if all these are needed
 # include <term.h>//same same
@@ -28,8 +29,6 @@
 # include <fcntl.h>
 # include <sys/ioctl.h>
 
-# define DEL		0
-# define BCK		1
 # define ENTER      10
 # define CTRL_C		3
 # define CTRL_D		4
@@ -74,6 +73,7 @@ typedef struct clipboard
 typedef struct s_term
 {
 	char		inp[BUFFSIZE];
+	char		history_buff[BUFFSIZE];
 	t_vec		v_history;
 	char		**nl_addr;
 	char		*history_file;
@@ -90,6 +90,7 @@ typedef struct s_term
 	ssize_t		total_row_cpy;
 	ssize_t		prompt_len;
 	ssize_t		m_prompt_len;
+	ssize_t		history_row;
 	ssize_t		q_qty;
 	ssize_t		bslash;
 	ssize_t		heredoc;
@@ -99,8 +100,8 @@ typedef struct s_term
 	t_clipboard	clipboard;
 }			t_term;
 
-int		ft_keyboard(t_term *term);
-void	ft_add_nl_last_row(t_term *t, ssize_t pos);
+int		ft_keyboard(t_term *t);
+void	ft_add_nl_last_row(t_term *t, char *array, ssize_t pos);
 void	ft_add_nl_mid_row(t_term *t, ssize_t row, ssize_t pos);
 void	ft_alt_mv(t_term *t);
 void	ft_arrow_input(t_term *t);
@@ -108,23 +109,26 @@ void	ft_backspace(t_term *t);
 void	ft_bslash_handling(t_term *t);
 void	ft_copy(t_term *t);
 void	ft_create_prompt_line(t_term *t, ssize_t loc);
+void	ft_ctrl(t_term *t);
 void	ft_cut(t_term *t);
 void	ft_delete(t_term *t);
-void	ft_deletion_shift(t_term *t, int mode);
+void	ft_deletion_shift(t_term *t, int index);
 void	ft_end_cycle(t_term *t);
 void	ft_esc_parse(t_term *t);
+void	ft_flag_reset(t_term *t);
 int		ft_get_input(void);
 ssize_t	ft_get_prompt_len(t_term *t, ssize_t row);
 int		ft_get_linenbr(void);
-void	ft_heredoc_handling(t_term *t);
+void	ft_heredoc_handling(t_term *t, char ch, int index);
 void	ft_history(t_term *t);
 char	*ft_history_file_get(void);
 void	ft_history_get(t_term *t);
+void	ft_history_reset_nl(t_term *t, char *inp);
 void	ft_history_write_to_file(t_term *t);
 void	ft_history_trigger(t_term *t, ssize_t his);
 void	ft_init(t_term *t);
 void	ft_init_signals(void);
-void	ft_input_cycle(t_term *t);
+int		ft_input_cycle(t_term *t);
 void	ft_insertion(t_term *t);
 char	*ft_is_prompt_line(t_term *t, ssize_t row);
 ssize_t	ft_len_lowest_line(t_term *t, ssize_t row);
@@ -132,7 +136,9 @@ void	ft_line_down(t_term *t);
 void	ft_line_mv(t_term *t);
 void	ft_line_up(t_term *t);
 ssize_t	ft_mv_prompt_len(t_term *t, int num);
+void	ft_nl_removal(t_term *t);
 void	ft_paste(t_term *t);
+void	ft_print_input(t_term *t, ssize_t row, int mode);
 void	ft_print_trail(t_term *t);
 int		ft_putc(int c);
 void	ft_quote_decrement(t_term *t, int num);
