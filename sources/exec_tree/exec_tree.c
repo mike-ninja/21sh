@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:23:35 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/13 13:51:25 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:57:07 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void exec_tree(t_treenode *head, char ***environ_cp, char *terminal, t_session *
 		{
 			exec_tree((((t_semicolon *)head)->left), environ_cp, terminal, sesh);
 //			ft_printf("SEMI RET\n");
-			//reset_fd(terminal);
+			reset_fd(terminal);
 			exec_tree((((t_semicolon *)head)->right), environ_cp, terminal, sesh);
 			reset_fd(terminal);
 		}
