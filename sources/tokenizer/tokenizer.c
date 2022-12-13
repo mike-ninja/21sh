@@ -3,40 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/13 15:41:58 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/13 20:49:14 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
-
-int	is_ws(char c)
-{
-	return (c == ' ' || c == '\t' || c == '\v'
-		|| c == '\f' || c == '\r');
-}
-
-int	is_quote(char c)
-{
-	return (c == '\'' || c == '"');
-}
-
-int	is_nl(char c)
-{
-	return (c == '\n');
-}
-
-int	is_varchr(char c)
-{
-	return (ft_isalnum(c) || c == '_');
-}
-
-void free_token(t_token *token)
-{
-	ft_memdel((void **)&token->value);
-}
 
 void free_tokens(t_token *tokens)
 {
@@ -51,34 +25,6 @@ void free_tokens(t_token *tokens)
 	ft_memdel((void **)&tokens);
 }
 
-/*	See if one of the characters from seperators array can be found before whitespace
-	from the haystack */
-char *is_infuture(char *haystack, char *seperators)
-{
-	int i_sep;
-	int	i_hay;
-
-	i_sep = 0;
-	i_hay = 0;
-	while (haystack[i_hay] && !is_ws(haystack[i_hay]))
-	{
-		while (seperators[i_sep])
-		{
-			if (haystack[i_hay] == seperators[i_sep++])
-				return (&haystack[i_hay]);
-		}
-		i_sep = 0;
-		++i_hay;
-	}
-	while (haystack[i_hay] && is_ws(haystack[i_hay]))
-		++i_hay;
-	while (seperators[i_sep])
-	{
-		if (haystack[i_hay] == seperators[i_sep++])
-			return (&haystack[i_hay]);
-	}
-	return (NULL);
-}
 
 void	track_used_space(t_token **args, size_t current_pointer_n
 	, size_t *max_pointer_n)
@@ -112,36 +58,6 @@ int	is_seperator(char c)
 	return (is_nl(c) || c == '|' || c == '>' || c == '<'
 			|| c == ';');
 
-}
-
-static char *find_argument_until_seperator(char *line, int *i, int *start, int *end)
-{
-	char	*infuture;
-
-	infuture = NULL;
-	while ((line)[*i])
-	{
-		infuture = is_infuture(&(line[(*i)]), "><");
-		if (infuture || is_seperator((line)[*i]))
-		{
-			*start = *i;
-			break ;
-		}
-		++(*i);
-	}
-	*end = *i;
-	if (*i == 0 && infuture)
-	{
-		while ((line)[*i] && !is_ws((line)[*i]))
-			++(*i);
-		return (infuture);
-	}
-	else
-		while ((line)[*end] && !is_ws((line)[*end]))
-		 	++(*end);
-	if (*i == 0 && is_seperator((line)[*i]))
-		++(*i);
-	return (NULL);
 }
 
 int operator_len(char *op)
