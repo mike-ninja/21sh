@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:23:35 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/13 12:00:00 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:51:25 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,11 @@ void exec_tree(t_treenode *head, char ***environ_cp, char *terminal, t_session *
 //		ft_printf("HEADTYPE: %d\n", head->type);
 		if (head->type == SEMICOLON)
 		{
-		//	reset_fd(terminal);
-//			ft_printf("SEMI\n");
 			exec_tree((((t_semicolon *)head)->left), environ_cp, terminal, sesh);
 //			ft_printf("SEMI RET\n");
 			//reset_fd(terminal);
 			exec_tree((((t_semicolon *)head)->right), environ_cp, terminal, sesh);
+			reset_fd(terminal);
 		}
 		else if (head->type == PIPE)
 		{
