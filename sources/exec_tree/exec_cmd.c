@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/13 07:28:02 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/13 11:14:09 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,14 @@ int	ms_exit(char **args, char ***environ_cp)
 	exit (status);
 }
 
-static void	exe_fail(char **cmd, char **args, char ***env_cp)
+void	exe_fail(char **cmd, char **args, char ***env_cp)
 {
 	exe_cmd_err("command not found", args[0]);
 	ft_memdel((void **)cmd);
 	ms_exit(args, env_cp);
 }
 
-static int	check_if_user_exe(char *cmd, char **dest)
+int	check_if_user_exe(char *cmd, char **dest)
 {
 	*dest = NULL;
 	if (ft_strchr(cmd, '/'))
@@ -101,7 +101,7 @@ static int	check_if_user_exe(char *cmd, char **dest)
 	return (0);
 }
 
-static int	check_access(char *cmd, char **args)
+int	check_access(char *cmd, char **args)
 {
 	struct stat	buf;
 

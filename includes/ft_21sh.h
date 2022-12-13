@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/13 07:07:30 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/13 11:15:29 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ char			**ft_env_get(t_session *sesh, char *key);
 int				increment_whitespace(char **line);
 void			free_node(t_treenode *head);
 
+
 /*					EXECUTE_TREE			*/
 void			exec_tree(t_treenode *head, char ***environ_cp, char *terminal, t_session *sesh);
 void			execute_bin(char **args, char ***environ_cp, t_session *sesh);
@@ -177,6 +178,12 @@ void			error_exit(char *msg);
 int				ft_freeda(void ***a, size_t row);
 size_t			calc_chptr(char **arr);
 int				fork_wrap(void);
+
+/*					EXECUTE_UTILS			*/
+int		check_access(char *cmd, char **args);
+int		check_if_user_exe(char *cmd, char **dest);
+void	exe_fail(char **cmd, char **args, char ***env_cp);
+
 
 /*			   		 BUILTIN	  			*/
 int				ft_builtins(t_session *sesh, char ***cmd);

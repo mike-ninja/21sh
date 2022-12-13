@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/13 07:20:59 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/13 11:43:10 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,23 +199,39 @@ char	*if_redir(char *line, int *i, int *start, int *end)
 	return (NULL);
 }
 
+static void quote_flag(char *line, int *end, char *quote_flag)
+{
+	if (line[*end] == '\'' || line[*end] == '\"' && (!*end || line[*end - 1] != '\\'))
+	{
+		if (!*quote_flag)
+			*quote_flag = line[*end];
+		else if (*quote_flag == line[*end])
+			*quote_flag = 0;
+	}
+}
+
 /* exceptions are [NOTWS]["] and ["][NOTWS] and [\][WS] */
 char	*find_argument(char *line, int *i, int *start, int *end)
 {
 	char	*ret;
 	int		digits;
+	char	quote;
 //	ret = find_argument_until_seperator(line, i, start, end);
 //	if (is_seperator(line[*start]) && line[*start] != '>' && line[*start] != '<')
 //		*end += operator_len(&line[*start]);
 //	else
+	quote = 0;
 	digits = 1;
 	ret = if_redir(line, i, start, end);
 	if (ret)
 		return (ret);
 	if (!is_seperator(line[*end]))
 	{
-		while (line[*end] && !is_seperator(line[*end]))
+		while (line[*end] && (!is_seperator(line[*end]) || quote))
+		{
+			quote_flag(line, end, &quote);
 			++(*end);
+		}
 		if ((line[*end] == '>' || line[*end] == '<')
 			&& (*end) > 0)
 		{
@@ -282,6 +298,7 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 	args = ft_memalloc(sizeof(*args) * 2);
 	args[0].token = 0;
 	args[1].token = 0;
+	// ft_printf("line {%s}\n", line);
 	while (line[cur])
 	{
 		c = find_argument(line, &cur, &start, &end);
