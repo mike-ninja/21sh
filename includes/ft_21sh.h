@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/13 20:54:01 by jakken           ###   ########.fr       */
+/*   Updated: 2022/12/13 21:18:12 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ char			*ft_lexer(t_term *t);
 t_token 		*chop_line(char *line, t_token *args, size_t pointer_n);
 void 			free_token(t_token *token);
 void			free_tokens(t_token *tokens);
+char			*find_argument(char *line, int *i, int *start, int *end);
 int 			is_ws(char c);
 
 /*					TOKENIZER UTILS			*/

@@ -6,7 +6,7 @@
 /*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/13 20:49:14 by jakken           ###   ########.fr       */
+/*   Updated: 2022/12/13 21:17:51 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,7 @@ int	is_seperator(char c)
 
 }
 
-int operator_len(char *op)
-{
-	if (is_seperator(*op))
-	{
-		if (op[0] == '>' && ((op[1] == '>' || op[1] == '&')
-			|| (op[0] == '<' && (op[1] == '<' || op[1] == '&'))))
-			return (2);
-		else if ((op[0] == '>' || op[0] == '<')
-			&& op[1] == '&' && op[2] == '-')
-			return (3);
-		return (1);
-	}
-	return (0);
-}
+
 
 char	*if_redir(char *line, int *i, int *start, int *end)
 {
@@ -113,46 +100,7 @@ char	*if_redir(char *line, int *i, int *start, int *end)
 	return (NULL);
 }
 
-/* exceptions are [NOTWS]["] and ["][NOTWS] and [\][WS] */
-char	*find_argument(char *line, int *i, int *start, int *end)
-{
-	char	*ret;
-	int		digits;
-//	ret = find_argument_until_seperator(line, i, start, end);
-//	if (is_seperator(line[*start]) && line[*start] != '>' && line[*start] != '<')
-//		*end += operator_len(&line[*start]);
-//	else
-	digits = 1;
-	ret = if_redir(line, i, start, end);
-	if (ret)
-		return (ret);
-	if (!is_seperator(line[*end]))
-	{
-		while (line[*end] && !is_seperator(line[*end]))
-			++(*end);
-		if ((line[*end] == '>' || line[*end] == '<')
-			&& (*end) > 0)
-		{
-			while (ft_isdigit(line[*end - digits]))
-				++digits;
-			if (*end - digits == 0 || is_ws(line[*end - digits]))
-			{
-				*end -= digits;
-//				*i = *end;
-			}
-		}
-		else if (is_seperator(*end > 0 && line[*end]))
-			--(*end);
-	}
-	else
-		*end += operator_len(&line[*end]);
-	ret = ft_strsub(line, *i, *end - *i);
-//	if (!ret)
-//		ret = ft_strndup(line + *start, *i);
-//	if (!ret)
-//		ft_exit_no_mem(1);
-	return (ret);
-}
+
 
 void	set_token_values(t_token *token, int token_id, char *value)
 {
