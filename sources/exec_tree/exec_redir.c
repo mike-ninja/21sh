@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:14:38 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/13 15:40:31 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/13 20:01:32 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ void open_fd_if_needed(int fd, char *terminal)
 	i = 0;
 	if (fstat(fd, &buf) < 0)
 	{
-		ft_putstr_fd("HELO\n", 2);
 		if (fstat(STDIN_FILENO, &buf) < 0)
 		{
-			ft_putstr_fd("CLOSED: 0\n", 2);
+	//		ft_putstr_fd("CLOSED: 0\n", 2);
 			closefd[0] = 1;
 		}
 		if (fstat(STDOUT_FILENO, &buf) < 0)
