@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
+#    By: jakken <jakken@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/12/12 20:06:39 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/12/13 20:36:43 by jakken           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -150,6 +150,7 @@ FILES			= $(KEYBOARD)ft_arrow_input \
 				$(MAIN)str_from_arr \
 				$(MAIN)reset_fd \
 				$(TOKENIZER)tokenizer \
+				$(TOKENIZER)token_utils \
 				$(BUILDTREE)build_tree \
 				$(BUILDTREE)make_arg_array \
 				$(EXECTREE)exec_tree \
