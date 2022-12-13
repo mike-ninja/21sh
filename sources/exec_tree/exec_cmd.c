@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/12 17:46:04 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/12 20:38:57 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 
 	if (!args[0])
 		return ;
-	if (!ft_builtins(sesh, args))
+	ft_printf("bin %d\n", sesh->head->type);
+	if (!ft_builtins(sesh, &args))
 		return ;
 	if (!check_if_user_exe(args[0], &cmd))
 		cmd = search_bin(args[0], *environ_cp);

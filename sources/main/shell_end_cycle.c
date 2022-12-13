@@ -66,7 +66,6 @@ static void	ft_reset_tmp_env(t_session *sesh)
 void	shell_end_cycle(t_session *sesh)
 {
 	free_node(sesh->head);
-	// sesh->head = NULL;
 	free_tokens(sesh->tokens);
 	reset_fd(sesh->terminal);
 	ft_reset_tmp_env(sesh);

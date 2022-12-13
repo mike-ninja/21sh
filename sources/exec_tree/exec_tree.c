@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:23:35 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/12 15:32:22 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/12 20:39:43 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,36 @@
 
 void	free_node(t_treenode *head)
 {
-		if (!head)
-			return ;
-		if (head->type == SEMICOLON)
-		{
-			free_node(((t_semicolon *)head)->left);
-			((t_semicolon *)head)->left = NULL;
-			free_node(((t_semicolon *)head)->right);
-			((t_semicolon *)head)->right = NULL;
-		}
-		if (head->type == PIPE)
-		{
-			free_node(((t_pipenode *)head)->left);
-			((t_pipenode *)head)->left = NULL;
-			free_node(((t_pipenode *)head)->right);
-			((t_pipenode *)head)->right = NULL;
-		}
-		else if (head->type == CMD)
-			ft_freeda((void ***)&((t_cmdnode *)head)->cmd, calc_chptr(((t_cmdnode *)head)->cmd));
-		else if (head->type == REDIR)
-		{
-			free_node(((t_redir *)head)->cmd);
-			ft_memdel((void **)&(((t_redir *)head)->filepath));
-		}
-		else if (head->type == CLOSEFD)
-			free_node(((t_redir *)head)->cmd);
-		else if (head->type == AGGREGATION)
-			free_node(((t_aggregate *)head)->cmd);
-		ft_memdel((void **)&head);
+	if (!head)
+		return ;
+	if (head->type == SEMICOLON)
+	{
+		free_node(((t_semicolon *)head)->left);
+		((t_semicolon *)head)->left = NULL;
+		free_node(((t_semicolon *)head)->right);
+		((t_semicolon *)head)->right = NULL;
+	}
+	if (head->type == PIPE)
+	{
+		free_node(((t_pipenode *)head)->left);
+		((t_pipenode *)head)->left = NULL;
+		free_node(((t_pipenode *)head)->right);
+		((t_pipenode *)head)->right = NULL;
+	}
+	else if (head->type == CMD)
+	{
+		ft_freeda((void ***)&((t_cmdnode *)head)->cmd, calc_chptr(((t_cmdnode *)head)->cmd));
+	}
+	else if (head->type == REDIR)
+	{
+		free_node(((t_redir *)head)->cmd);
+		ft_memdel((void **)&(((t_redir *)head)->filepath));
+	}
+	else if (head->type == CLOSEFD)
+		free_node(((t_redir *)head)->cmd);
+	else if (head->type == AGGREGATION)
+		free_node(((t_aggregate *)head)->cmd);
+	ft_memdel((void **)&head);
 		// free(head);
 }
 
