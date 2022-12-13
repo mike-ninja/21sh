@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:55:11 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/10 18:48:55 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/13 11:57:11 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	ft_expansion(t_session *sesh, char **cmd)
 		ft_quote_removal(buff);
 		ft_strdel(cmd + i);
 		cmd[i] = ft_strdup(buff);
+		// ft_printf("{RED}cmd after expansion: %s{RESET}\n", cmd[i]);
 		ft_strclr(buff);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/13 11:43:10 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/13 11:51:32 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,7 +298,6 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 	args = ft_memalloc(sizeof(*args) * 2);
 	args[0].token = 0;
 	args[1].token = 0;
-	// ft_printf("line {%s}\n", line);
 	while (line[cur])
 	{
 		c = find_argument(line, &cur, &start, &end);

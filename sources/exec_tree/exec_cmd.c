@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/13 11:14:09 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:21:52 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ int	ft_freeda(void ***a, size_t row)
 	if (!a)
 		return (1);
 	while ((*a)[++i] && i < row)
+	{
+		ft_printf("freeda d%p\n", (*a)[i]);
 		ft_strdel((char **)&(*a)[i]);
+	}
 	ft_memdel((void **)a);
 	return (1);
 }
