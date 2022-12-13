@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:57:35 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/13 22:24:42 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/13 22:47:15 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,15 @@ static char	*tilde_key(char *str, int *stilde)
 	return (NULL);
 }
 
+static char	*stilde_join(char *env, char *str)
+{
+	if (*(str + 1) == '/')
+		return (ft_strjoin(env, str + 1));
+	else if (ft_strlen(str) == 1)
+		return (ft_strdup(env));
+	return (ft_strdup(str));
+}
+
 /**
  * It takes a string and returns a string with the tilde expanded.
  * 
@@ -58,7 +67,7 @@ char	*ft_expansion_tilde(t_session *sesh, char *str)
 		if (env)
 		{
 			if (stilde)
-				return (ft_strjoin(ft_strchr(*env, '=') + 1, str + 1));
+				return (stilde_join(ft_strchr(*env, '=') + 1, str));
 			else
 				return (ft_strdup(ft_strchr(*env, '=') + 1));
 		}
