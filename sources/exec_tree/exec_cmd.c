@@ -6,17 +6,41 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/13 07:10:51 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/13 07:28:02 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
+static void print_cmd(char *cmd)
+{
+	int	i;
+
+	ft_putstr_fd("$'", 2);
+	while (*cmd)
+	{
+		i = 0;
+		while (cmd[i] && cmd[i] != '\n')
+			++i;
+		write(2, cmd, i);
+		if (cmd[i] == '\n')
+		{
+			write(2, "\\n", 2);
+			i++;
+		}
+		cmd += i;
+	}
+	ft_putstr_fd("'", 2);
+}
+
 void exe_cmd_err(char *msg, char *cmd)
 {
 	ft_putstr_fd(SHELL_NAME, 2);
 	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(cmd, 2);
+	if (ft_strchr(cmd, '\n'))
+		print_cmd(cmd);
+	else
+		ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(msg, 2);
 	ft_putstr_fd("\n", 2);

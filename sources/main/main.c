@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/12 17:34:34 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/13 07:21:05 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,19 @@ int	main(int argc, char **argv)
 			else
 				sesh->line = str_from_arr(&argv[2]);
 			sesh->tokens = chop_line(sesh->line, sesh->tokens, 1);
+			/*DEBUG*/			
+			// t_token *tmp = sesh->tokens;
+
+			// while (tmp->token)
+			// {
+			// 	ft_putstr("[");
+			// 	ft_putstr(tmp->value);
+			// 	ft_putstr("]");
+			// 	ft_putchar(' ');
+			// 	tmp++;
+			// }
+			// ft_putchar('\n');
+			/*DEBUG*/			
 			sesh->head = build_tree(sesh->tokens);
 			// if (sesh->head && ft_builtins(sesh) == 1)
 			if (sesh->head)

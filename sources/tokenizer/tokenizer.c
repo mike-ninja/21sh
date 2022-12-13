@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/12 15:27:34 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/13 07:20:59 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,9 @@ void	track_used_space(t_token **args, size_t current_pointer_n
 /* TODO add rest */
 int	is_seperator(char c)
 {
-	return (is_nl(c) || c == '|' || c == '>' || c == '<'
+	// return (is_nl(c) || c == '|' || c == '>' || c == '<'
+	// 		|| c == ';');
+	return (c == '|' || c == '>' || c == '<'
 			|| c == ';');
 
 }
@@ -308,12 +310,12 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 			++cur;
 	}
 	/*Debug*/
-//	 i_args = 0;
-//	 while (args[i_args].token)
-//	 {
-//	 	ft_printf("TOK: %s tok: %d\n", args[i_args].value, args[i_args].token);
-//	 	++i_args;
-//	 }
+	//  i_args = 0;
+	//  while (args[i_args].token)
+	//  {
+	//  	ft_printf("TOK: %s tok: %d\n", args[i_args].value, args[i_args].token);
+	//  	++i_args;
+	//  }
 //	 exit(1);
 	ft_strdel(&line);
 	return (args);
