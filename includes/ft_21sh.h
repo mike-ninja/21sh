@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/13 12:02:04 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:12:55 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ void	open_fd_if_needed(int fd, char *terminal);
 void exe_cmd_err(char *msg, char *cmd);
 
 /*					BUILTIN					*/
-int		ft_builtins(t_session *sesh, char **cmd);
+int		ft_builtins(t_session *sesh, char ***cmd);
 int		ft_cd(t_session *sesh, char **cmd);
 int		ft_echo(char **cmd);
 int		ft_env(t_session *sesh, char ***cmd);
