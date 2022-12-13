@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/12 17:34:34 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:25:31 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,38 +45,20 @@ int	main(int argc, char **argv)
 		{
 			if (!test_flag)
 			{
-				// sesh->line = ft_strdup(term.inp);
 				sesh->line = ft_lexer(&term);
 			}
 			else
 				sesh->line = str_from_arr(&argv[2]);
 			sesh->tokens = chop_line(sesh->line, sesh->tokens, 1);
 			sesh->head = build_tree(sesh->tokens);
-			// if (sesh->head && ft_builtins(sesh) == 1)
 			if (sesh->head)
 			{
-			//	if (sesh->head && sesh->head->type == CMD)
-			//		execute_bin(((t_cmdnode *)sesh->head)->cmd, &sesh->env);
-			//	else if (sesh->head && sesh->head->type != CMD)
 				exec_tree(sesh->head, &sesh->env, sesh->terminal, sesh);
 			}
-			//	wait (0);
-				/*		debugging		*/
-	//				int i_args = -1;
-	//				while (sesh->tokens[++i_args].token)
-	//				{
-	//					ft_putstr(sesh->tokens[i_args].value);
-	//					if (sesh->tokens[i_args + 1].token)
-	//						ft_putchar(' ');
-	//				}
-	//				ft_putchar('\n');
-				/*		debugging		*/
-			// }
 			shell_end_cycle(sesh);
 			if (test_flag)
 				status = 0;
 		}
-		// reset_filedescriptors(sesh);
 	}
 	ft_strdel(&sesh->terminal);
 

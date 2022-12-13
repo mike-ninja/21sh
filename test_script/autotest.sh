@@ -24,6 +24,11 @@ do
 				echo "$line" > $autotest_file
 				(cd $sh_dir && ./$sh_exe -c "$(cat $autotest_file)" > $outdir/sh.out 2> $outdir/sh_stderror.out.temp)
 				wait $!
+				sed "s/[[:<:]]setenv[[:>:]]/export/g" $autotest_file > autotest_file.tmp
+#				cat autotest_file.tmp
+				sed "s/[[:<:]]unsetenv[[:>:]]/unset/g" autotest_file.tmp > $autotest_file
+#				cat $autotest_file
+				wait $!
 				(cd $sh_dir && bash -c "$(cat $autotest_file)" > $outdir/bash.out 2> $outdir/bash_stderror.out.temp)
 				wait $!
 				diff -q $outdir/sh.out $outdir/bash.out > $diffdir/sh_bash_diff.out

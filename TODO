@@ -1,3 +1,4 @@
+echo "Testing redirections," > /tmp/test.txt;echo "with multiple lines" >> /tmp/test.txt;cat /tmp/test.txt;wc -c < tmp/test.txt;rm /tmp/test.txt 2>/dev/null
 Problem with redirs is that the linked list is not advanced correctly before adding to the child of last
 >&- >&- >lol
 Problems of thursday:
