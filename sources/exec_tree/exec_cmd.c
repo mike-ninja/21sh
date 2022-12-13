@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/13 12:44:32 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/13 21:25:51 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,6 @@ static void print_cmd(char *cmd)
 		cmd += i;
 	}
 	ft_putstr_fd("'", 2);
-}
-
-void exe_cmd_err(char *msg, char *cmd)
-{
-	ft_putstr_fd(SHELL_NAME, 2);
-	ft_putstr_fd(": ", 2);
-	if (ft_strchr(cmd, '\n'))
-		print_cmd(cmd);
-	else
-		ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(msg, 2);
-	ft_putstr_fd("\n", 2);
 }
 
 int	ft_freeda(void ***a, size_t row)
@@ -85,7 +72,8 @@ int	ms_exit(char **args, char ***environ_cp)
 
 void	exe_fail(char **cmd, char **args, char ***env_cp)
 {
-	exe_cmd_err("command not found", args[0]);
+	ft_error_print(NULL, args[0], "command not found");
+	// exe_cmd_err("command not found", args[0]);
 	ft_memdel((void **)cmd);
 	ms_exit(args, env_cp);
 }
@@ -107,13 +95,13 @@ int	check_access(char *cmd, char **args)
 
 	if (!cmd || !ft_strchr(cmd, '/'))
 	{
-		exe_cmd_err("command not found", args[0]);
+		ft_error_print(NULL, args[0], "command not found");
 		return (0);
 	}
 	stat(cmd, &buf);
 	if (S_ISDIR(buf.st_mode))
 	{
-		exe_cmd_err("is a directory", cmd);
+		ft_error_print(cmd, NULL, "is a directory");
 		return (0);
 	}
 	return (1);
