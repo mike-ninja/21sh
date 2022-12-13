@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:55:11 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/13 11:57:11 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:50:20 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	ft_expansion(t_session *sesh, char **cmd)
 {
 	int		i;
 	int		k;
+	char	*expanded;
 	char	buff[BUFF_SIZE];
 
 	i = -1;
@@ -47,7 +48,11 @@ void	ft_expansion(t_session *sesh, char **cmd)
 	while (cmd[++i])
 	{
 		if (*cmd[i] != '\'' && ft_strchr(cmd[i], '$') && ft_strlen(cmd[i]) > 1)
-			ft_strcat(buff, ft_expansion_dollar(sesh, cmd[i]));
+		{
+			expanded = ft_expansion_dollar(sesh, cmd[i]);
+			ft_strcat(buff, expanded);
+			ft_strdel(&expanded);
+		}
 		else
 			ft_strcat(buff, ft_expansion_tilde(sesh, cmd[i]));
 		ft_quote_removal(buff);
