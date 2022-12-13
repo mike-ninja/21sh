@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:14:38 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/12 20:06:25 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:40:31 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void open_fd_if_needed(int fd, char *terminal)
 		}
 		if (fstat(STDOUT_FILENO, &buf) < 0)
 		{
-			ft_putstr_fd("CLOSED: 1\n", 2);
+		//	ft_putstr_fd("CLOSED: 1\n", 2);
 			closefd[1] = 1;
 		}
 		if (fstat(STDERR_FILENO, &buf) < 0)
 		{
-			ft_putstr_fd("CLOSED: 2\n", 2);
+		//	ft_putstr_fd("CLOSED: 2\n", 2);
 			closefd[2] = 1;
 		}
 		while (i < 3 && i <= fd)

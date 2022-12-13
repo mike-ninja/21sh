@@ -1,3 +1,4 @@
+0<&- cat < stdin.txt
 echo "Testing redirections," > /tmp/test.txt;echo "with multiple lines" >> /tmp/test.txt;cat /tmp/test.txt;wc -c < tmp/test.txt;rm /tmp/test.txt 2>/dev/null
 cat < file
 cat -e

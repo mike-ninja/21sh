@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/12 18:52:01 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:47:15 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -462,11 +462,13 @@ t_treenode *parse_redirections(t_token *tokens, int i_tok, int cmd)
 	redir_start = redir;
 	while (tokens[i_tok].token && tokens[i_tok].token != PIPE && tokens[i_tok].token != SEMICOLON)
 	{
+		ft_printf("ITOKVAL: %s\n", tokens[i_tok].value);
 		if (if_redir(tokens, &redir, i_tok, cmd))
 			return (NULL);
 		traverse_node(&redir);
 		++i_tok;
 	}
+	exit(1);
 	if (redir_start)
 		return (redir_start);
 	return (init_cmd_node(tokens[cmd].value));
@@ -713,7 +715,7 @@ t_treenode *build_tree(t_token *tokens)
 //	else
 //		head = parse_right_cmd(tokens, 0);
 	head = create_semicolon_node(tokens, 0, calculate_tokens(tokens));
-//	print_tree(head, 0);
-//	exit (1);
+	print_tree(head, 0);
+	exit (1);
 	return (head);
 }

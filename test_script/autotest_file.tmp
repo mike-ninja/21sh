@@ -1,1 +1,1 @@
-echo "No dollar character" 1>&2 | cat -e
+2>&- 2>&1 ls asfd;
