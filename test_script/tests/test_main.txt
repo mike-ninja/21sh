@@ -1,5 +1,5 @@
 #You can use hash in main to exclude files, not in the children though
-#eval_form.txt
+eval_form.txt
 test1.txt
 fail.txt
 test2.txt

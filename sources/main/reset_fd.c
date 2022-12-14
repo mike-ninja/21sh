@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 20:31:23 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/05 19:26:21 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:23:53 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void	reset_fd(char *terminal)
 	open(terminal, O_RDWR);
 	close (STDERR_FILENO);
 	open(terminal, O_RDWR);
-//	while (fd >= 0)
-//	{
-//		fd = open(terminal, O_RDWR);
-//		if (fd >= 3)
-//		{
-//			close(fd);
-//			break ;
-//		}
-//	}
+	while (fd >= 0)
+	{
+		fd = open(terminal, O_RDWR);
+		if (fd >= 3)
+		{
+			close(fd);
+			break ;
+		}
+	}
 }
