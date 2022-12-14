@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:15:20 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/14 12:39:48 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:45:44 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void exec_pipe(t_pipenode *pipenode, char ***environ_cp, char *terminal, t_sessi
 	if(pipe(pipefd)	< 0)
 	{
 		// exe_cmd_err("pipe failed", "exec_pipe");
-		ft_err_stderr(NULL, "pipe failed", "exec_pipe");
+		ft_err_print(NULL, "pipe failed", "exec_pipe", 2);
 		return ;
 	}
 	if(fork_wrap() == 0){

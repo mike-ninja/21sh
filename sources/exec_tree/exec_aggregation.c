@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 20:26:00 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/14 12:41:06 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:46:53 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,13 @@ void exec_aggregate(t_aggregate *node, char ***environ_cp, char *terminal, t_ses
 	if (fstat(node->open_fd, &buf) < 0)
 	{
 		open_fd = ft_itoa(node->open_fd);
-		ft_err_stderr(open_fd, NULL, "Bad file descriptor");
-		// exe_cmd_err("Bad file descriptor", open_fd);
+		ft_err_print(open_fd, NULL, "Bad file descriptor", 2);
 		ft_strdel(&open_fd);
 		return ;
 	}
 	if (dup2(node->open_fd, node->close_fd) < 0)
 	{
-		ft_err_stderr(NULL, "dup2", "failed");
+		ft_err_print(NULL, "dup2", "failed", 2);
 		return ;
 	}
 	exec_tree(node->cmd, environ_cp, terminal, sesh);

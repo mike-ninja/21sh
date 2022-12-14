@@ -6,11 +6,23 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 20:33:02 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/04 21:06:37 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:45:44 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
+
+static int echo_fd_check(void)
+{
+	struct stat	buf;
+
+	if (fstat(1, &buf) == -1)
+	{
+		ft_err_print(NULL, "echo", "write error: Bad file descriptor", 2);
+		return (1);
+	}
+	return (0);
+}
 
 /**
  * It prints the arguments to the standard output, with a newline at the end,
@@ -24,6 +36,8 @@ int	ft_echo(char **cmd)
 {
 	bool	nl_flag;
 
+	if (echo_fd_check())
+		return (0);
 	nl_flag = false;
 	if (!(*cmd))
 		ft_putstr("\n");

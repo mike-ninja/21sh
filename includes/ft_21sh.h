@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/14 12:37:51 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:44:13 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,8 +167,7 @@ int				ft_cd_addr_check(char *file);
 char			**ft_env_get(t_session *sesh, char *key);
 int				increment_whitespace(char **line);
 void			free_node(t_treenode *head);
-int 			ft_err_stdout(char *file, char *cmd, char *msg);
-int 			ft_err_stderr(char *file, char *cmd, char *msg);
+int 			ft_err_print(char *file, char *cmd, char *msg, int fd);
 
 
 /*					EXECUTE_TREE			*/

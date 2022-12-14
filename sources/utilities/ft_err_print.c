@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_err_stdout.c                                   :+:      :+:    :+:   */
+/*   ft_err_print.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -23,32 +23,32 @@
  * 
  * @return 1
  */
-int ft_err_stdout(char *file, char *cmd, char *msg)
-{
-	ft_printf("{CYAN}%s{RESET}: ", SHELL_NAME);
-	if (cmd)
-		ft_printf("{BLUE}%s{RESET}: ", cmd);
-	if (file)
-		ft_printf("%s: ", file);
-	ft_printf("{RED}%s{RESET}\n", msg);
-	return (1);
-}
+// int ft_err_print(char *file, char *cmd, char *msg)
+// {
+// 	ft_printf("{CYAN}%s{RESET}: ", SHELL_NAME);
+// 	if (cmd)
+// 		ft_printf("{BLUE}%s{RESET}: ", cmd);
+// 	if (file)
+// 		ft_printf("%s: ", file);
+// 	ft_printf("{RED}%s{RESET}\n", msg);
+// 	return (1);
+// }
 
-int ft_err_stderr(char *file, char *cmd, char *msg)
+int ft_err_print(char *file, char *cmd, char *msg, int fd)
 {
-    ft_putstr_fd(SHELL_NAME, 2);
-    ft_putstr_fd(": ", 2);
+    ft_putstr_fd(SHELL_NAME, fd);
+    ft_putstr_fd(": ", fd);
 	if (cmd)
 	{
-    	ft_putstr_fd(cmd, 2);
-	    ft_putstr_fd(": ", 2);
+    	ft_putstr_fd(cmd, fd);
+	    ft_putstr_fd(": ", fd);
 	}
 	if (file)
 	{
-		ft_putstr_fd(file, 2);
-	    ft_putstr_fd(": ", 2);
+		ft_putstr_fd(file, fd);
+	    ft_putstr_fd(": ", fd);
 	}
-    ft_putstr_fd(msg, 2);
-    ft_putstr_fd("\n", 2);
+    ft_putstr_fd(msg, fd);
+    ft_putstr_fd("\n", fd);
 	return (1);
 }
