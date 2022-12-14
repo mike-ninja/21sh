@@ -6,16 +6,16 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:12:50 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/13 11:17:58 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 19:56:42 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-static void ft_env_execve(char **args, char ***environ_cp)
+static void	ft_env_execve(char **args, char ***environ_cp)
 {
-	char *cmd;
-	
+	char	*cmd;
+
 	if (!check_if_user_exe(args[0], &cmd))
 		cmd = search_bin(args[0], *environ_cp);
 	if (check_access(cmd, args) && fork_wrap() == 0)
@@ -40,7 +40,7 @@ int	ft_env(t_session *sesh, char ***cmd)
 		ft_env_execve((*cmd + i), &sesh->env);
 		return (0);
 	}
-	i = -1; 
+	i = -1;
 	while (*(sesh->env + ++i))
 		ft_putendl(*(sesh->env + i));
 	return (0);
