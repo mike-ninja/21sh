@@ -6,13 +6,18 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 20:33:02 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/14 13:45:44 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 19:44:18 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-static int echo_fd_check(void)
+/**
+ * It checks if the file descriptor 1 (stdout) is valid
+ * 
+ * @return The return value of the function.
+ */
+static int	echo_fd_check(void)
 {
 	struct stat	buf;
 

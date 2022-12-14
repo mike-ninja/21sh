@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:10:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/14 13:43:58 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 19:55:58 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,34 @@ static int	ft_cd_expand_error(char **cmd)
 	return (1);
 }
 
+static char	*env_path(t_session *sesh, char *key)
+{
+	char	**env;
+	char	*path;
 
-static int ft_cd_expand(t_session *sesh, char **cmd, char **path)
+	env = ft_env_get(sesh, key);
+	if (env)
+		path = ft_strdup(ft_strchr(*env, '=') + 1);
+	else
+		path = NULL;
+	return (path);
+}
+
+static int	ft_cd_expand(t_session *sesh, char **cmd, char **path)
 {
 	int		ret;
-	char	**env;
 
 	ret = 0;
 	if (ft_arrlen(cmd) == 1 || !ft_strcmp(*(cmd + 1), "--"))
 	{
-		env = ft_env_get(sesh, "HOME");
-		if (env)
-			*path = ft_strdup(ft_strchr(*env, '=') + 1);
+		*path = env_path(sesh, "HOME");
 		ret = 1;
 	}
 	else if (!ft_strcmp(*(cmd + 1), "-"))
 	{
-		env = ft_env_get(sesh, "OLDPWD");
-		if (env)
-		{
-			ft_putendl(ft_strchr(*env, '=') + 1);
-			*path = ft_strdup(ft_strchr(*env, '=') + 1);
-		}
+		*path = env_path(sesh, "OLDPWD");
+		if (*path)
+			ft_putendl(ft_strchr(*ft_env_get(sesh, "OLDPWD"), '=') + 1);
 		ret = 1;
 	}
 	if (*path)
@@ -60,22 +66,15 @@ static int ft_cd_expand(t_session *sesh, char **cmd, char **path)
 	return (0);
 }
 
-static bool	ft_cd_expand_parse(t_session *sesh, char **cmd)
+int	ft_cd(t_session *sesh, char **cmd)
 {
 	char	*path;
 
 	path = NULL;
-	if (ft_cd_expand(sesh, cmd, &path))
-		return (1);
-	return (0);
-}
-
-int	ft_cd(t_session *sesh, char **cmd)
-{
 	sesh->exit_stat = 0;
 	if (ft_arrlen(cmd) > 2)
 		ft_err_print(NULL, "cd", "too many arguments", 1);
-	else if (!ft_cd_expand_parse(sesh, cmd) && !ft_cd_addr_check(*(cmd + 1)))
+	else if (!ft_cd_expand(sesh, cmd, &path) && !ft_cd_addr_check(*(cmd + 1)))
 	{
 		if (chdir(*(cmd + 1)))
 			sesh->exit_stat = 1;
