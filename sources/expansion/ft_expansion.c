@@ -6,47 +6,31 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:55:11 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/13 22:32:57 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:24:07 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-// static void	ft_quote_blash_removal(char *buff)
-// {
-// 	int		i;
-// 	int		k;
-
-// 	k = 0;
-// 	i = -1;
-// 	while (buff[++i])
-// 	{
-// 		if (buff[i] != '\'' && buff[i] != '\"')
-// 			buff[k++] = buff[i];
-// 		else if (i && buff[i - 1] == '\\')
-// 			buff[k++] = buff[i];
-// 		else
-// 			buff[k] = '\0';
-// 	}
-// }
 static void	ft_quote_blash_removal(char *buff)
 {
-	int		i;
 	int		k;
+	int		i;
 
-	k = 0;
-	i = -1;
-	while (buff[++i])
+	k = -1;
+	while (buff[++k])
 	{
-		if (buff[i] == '\\')
+		if (buff[k] == '\\')
 		{
-			i++;
-			if (buff[i] == '\'' || buff[i] == '\"' || buff[i] == '\n')
+			i = k + 1;
+			if (buff[i] == '\n')
 				i++;
 		}
-		else if ((buff[i] == '\'' || buff[i] == '\"'))
-			i++;
-		buff[k++] = buff[i];
+		else if ((buff[k] == '\'' || buff[k] == '\"'))
+			i = k + 1;
+		else
+			i = k;
+		ft_memmove((void *)&buff[k], (void *)&buff[i], ft_strlen(&buff[i]) + 1);
 	}
 }
 
