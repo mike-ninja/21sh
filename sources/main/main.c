@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/14 10:16:14 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 20:49:34 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int argc, char **argv)
 			else
 				sesh->line = str_from_arr(&argv[2]);
 			sesh->tokens = chop_line(sesh->line, sesh->tokens, 1);
-			/*DEBUG*/			
+			/*DEBUG*/
 			// t_token *tmp = sesh->tokens;
 
 			// while (tmp->token)
@@ -63,9 +63,9 @@ int	main(int argc, char **argv)
 			// 	tmp++;
 			// }
 			// ft_putchar('\n');
-			/*DEBUG*/			
+			/*DEBUG*/
 			sesh->head = build_tree(sesh->tokens);
-			if (sesh->head)
+			if (sesh->head && ((t_semicolon *)sesh->head)->left)
 			{
 				exec_tree(sesh->head, &sesh->env, sesh->terminal, sesh);
 			}

@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/14 19:02:37 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/14 21:11:01 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,16 +149,15 @@ char			*ft_lexer(t_term *t);
 /*					TOKENIZER				*/
 t_token 		*chop_line(char *line, t_token *args, size_t pointer_n);
 void 			free_token(t_token *token);
-void			free_tokens(t_token *tokens);
 char			*find_argument(char *line, int *i, int *start, int *end);
 int 			is_ws(char c);
 void			init_token(char *c, t_token *token, char *line, int cur);
 void			track_used_space(t_token **args, size_t current_pointer_n
 				, size_t *max_pointer_n);
-
+void			debug_tokens(t_token *args);
 
 /*					TOKENIZER UTILS			*/
-void			free_tokens(t_token *tokens);
+void			free_tokens(t_token **tokens);
 void			free_token(t_token *token);
 int				is_nl(char c);
 int				is_ws(char c);

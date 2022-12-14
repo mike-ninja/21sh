@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/14 19:05:47 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/14 21:11:45 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@ static void	init_variables(int *i_args, int *cur, int *start, int *end)
 	*end = 0;
 }
 
+static int	if_error(char *c, t_token *args, char *line)
+{
+	if (!c)
+	{
+		free_tokens(&args);
+		ft_strdel(&line);
+		return (1);
+	}
+	return (0);
+}
+
 t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 {
 	int		i_args;
@@ -45,6 +56,8 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 	while (line[cur])
 	{
 		c = find_argument(line, &cur, &start, &end);
+		if (if_error(c, args, line))
+			return (NULL);
 		init_token(c, &args[i_args], line, cur);
 		++i_args;
 		track_used_space(&args, i_args, &pointer_n);

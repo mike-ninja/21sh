@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:32:10 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/14 16:35:15 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/14 21:15:49 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,12 @@ static void free_redir_node(t_redir **redir)
 	*redir = NULL;
 }
 
-// TODO remember to fee pipe and tokens array also
 int error_tok(t_token *tokens, t_treenode *redir_head, char *msg, char *symbol)
 {
-	//THIS FUNCTION SHOULD BE REFACTORED????
 	if (!symbol)
-		ft_printf("21sh: %s\n", msg);
+		ft_err_print(NULL, NULL, msg, 2);
 	else
-		ft_printf("21sh: %s `%s'\n", msg, symbol);
+		ft_err_print(NULL, msg, symbol, 2);
 	while (tokens->token)
 	{
 		free_token(&(*tokens));

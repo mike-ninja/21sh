@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:13:39 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/14 14:52:03 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/14 19:42:23 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,23 @@ static char	*tok_if_redir(char *line, int *i, int *start, int *end)
 			return (ft_strsub(line, *start, (++(*end)) - *start));
 		if (line[*end] == '<' || line[*end] == '>' || line[*end] == '&')
 		{
-			exe_cmd_err(&line[*end], "syntax error near");
+			ft_err_print(NULL, "syntax error near unexpected token",
+				&line[*end], 2);
+			*end = -1;
 			return (NULL);
 		}
 		traverse_to_end(line, end);
 		return (ft_strsub(line, *start, *end - *start));
 	}
 	return (NULL);
+}
+
+static void	collect_digits(char *line, int *digits, int *end)
+{
+	while (ft_isdigit(line[*end - *digits]))
+		++(*digits);
+	if (*end - (*digits) == 0 || is_ws(line[*end - (*digits)]))
+		*end -= (*digits);
 }
 
 char	*find_argument(char *line, int *i, int *start, int *end)
@@ -69,6 +79,8 @@ char	*find_argument(char *line, int *i, int *start, int *end)
 
 	digits = 1;
 	ret = tok_if_redir(line, i, start, end);
+	if (*end == -1)
+		return (NULL);
 	if (ret)
 		return (ret);
 	if (!is_seperator(line[*end]))
@@ -76,12 +88,7 @@ char	*find_argument(char *line, int *i, int *start, int *end)
 		while (line[*end] && !is_seperator(line[*end]))
 			++(*end);
 		if ((line[*end] == '>' || line[*end] == '<') && (*end) > 0)
-		{
-			while (ft_isdigit(line[*end - digits]))
-				++digits;
-			if (*end - digits == 0 || is_ws(line[*end - digits]))
-				*end -= digits;
-		}
+			collect_digits(line, &digits, end);
 		else if (is_seperator(*end > 0 && line[*end]))
 			--(*end);
 	}

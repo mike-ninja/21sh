@@ -6,7 +6,7 @@
 #    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/12/14 19:01:07 by jniemine         ###   ########.fr        #
+#    Updated: 2022/12/14 21:07:07 by jniemine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -156,6 +156,7 @@ FILES			= $(KEYBOARD)ft_arrow_input \
 				$(TOKENIZER)init_token \
 				$(TOKENIZER)track_used_space \
 				$(TOKENIZER)free_tokens \
+				$(TOKENIZER)debug_tokens \
 				$(BUILDTREE)build_tree \
 				$(BUILDTREE)make_arg_array \
 				$(BUILDTREE)bt_utils \
