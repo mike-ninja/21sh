@@ -3,24 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2022/12/13 13:54:32 by jniemine         ###   ########.fr       */
+/*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
+/*   Updated: 2022/12/14 13:45:44 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "ft_21sh.h"
 
-void exe_cmd_err(char *msg, char *cmd)
+static void print_cmd(char *cmd)
 {
-	ft_putstr_fd(SHELL_NAME, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(msg, 2);
-	ft_putstr_fd("\n", 2);
+	int	i;
+
+	ft_putstr_fd("$'", 2);
+	while (*cmd)
+	{
+		i = 0;
+		while (cmd[i] && cmd[i] != '\n')
+			++i;
+		write(2, cmd, i);
+		if (cmd[i] == '\n')
+		{
+			write(2, "\\n", 2);
+			i++;
+		}
+		cmd += i;
+	}
+	ft_putstr_fd("'", 2);
 }
 
 int	ft_freeda(void ***a, size_t row)
@@ -60,14 +71,15 @@ int	ms_exit(char **args, char ***environ_cp)
 	exit (status);
 }
 
-static void	exe_fail(char **cmd, char **args, char ***env_cp)
+void	exe_fail(char **cmd, char **args, char ***env_cp)
 {
-	exe_cmd_err("command not found", args[0]);
+	ft_err_print(NULL, args[0], "command not found", 2);
+	// exe_cmd_err("command not found", args[0]);
 	ft_memdel((void **)cmd);
 	ms_exit(args, env_cp);
 }
 
-static int	check_if_user_exe(char *cmd, char **dest)
+int	check_if_user_exe(char *cmd, char **dest)
 {
 	*dest = NULL;
 	if (ft_strchr(cmd, '/'))
@@ -78,19 +90,19 @@ static int	check_if_user_exe(char *cmd, char **dest)
 	return (0);
 }
 
-static int	check_access(char *cmd, char **args)
+int	check_access(char *cmd, char **args)
 {
 	struct stat	buf;
 
 	if (!cmd || !ft_strchr(cmd, '/'))
 	{
-		exe_cmd_err("command not found", args[0]);
+		ft_err_print(NULL, args[0], "command not found", 2);
 		return (0);
 	}
 	stat(cmd, &buf);
 	if (S_ISDIR(buf.st_mode))
 	{
-		exe_cmd_err("is a directory", cmd);
+		ft_err_print(cmd, NULL, "is a directory", 2);
 		return (0);
 	}
 	return (1);

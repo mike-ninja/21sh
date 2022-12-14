@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/13 12:25:31 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/14 10:16:14 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,24 @@ int	main(int argc, char **argv)
 			if (!test_flag)
 			{
 				sesh->line = ft_lexer(&term);
+				// ft_printf("[%s]\n", sesh->line);
 			}
 			else
 				sesh->line = str_from_arr(&argv[2]);
 			sesh->tokens = chop_line(sesh->line, sesh->tokens, 1);
+			/*DEBUG*/			
+			// t_token *tmp = sesh->tokens;
+
+			// while (tmp->token)
+			// {
+			// 	ft_putstr("[");
+			// 	ft_putstr(tmp->value);
+			// 	ft_putstr("]");
+			// 	ft_putchar(' ');
+			// 	tmp++;
+			// }
+			// ft_putchar('\n');
+			/*DEBUG*/			
 			sesh->head = build_tree(sesh->tokens);
 			if (sesh->head)
 			{

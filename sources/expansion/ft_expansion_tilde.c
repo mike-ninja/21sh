@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:57:35 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/23 15:13:21 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/13 22:47:15 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,29 @@
  * 
  * @return The key for the environment variable.
  */
-static char	*tilde_key(char *str)
+static char	*tilde_key(char *str, int *stilde)
 {
 	if (!ft_strcmp(str, "~+"))
 		return ("PWD");
 	else if (!ft_strcmp(str, "~-"))
 		return ("OLDPWD");
-	else if (!ft_strcmp(str, "~"))
+	else if (*str == '~')
+	{
+		*stilde = 1;
 		return ("HOME");
+	}
+	// else if (!ft_strcmp(str, "~"))
+	// 	return ("HOME");
 	return (NULL);
+}
+
+static char	*stilde_join(char *env, char *str)
+{
+	if (*(str + 1) == '/')
+		return (ft_strjoin(env, str + 1));
+	else if (ft_strlen(str) == 1)
+		return (ft_strdup(env));
+	return (ft_strdup(str));
 }
 
 /**
@@ -40,16 +54,23 @@ static char	*tilde_key(char *str)
  */
 char	*ft_expansion_tilde(t_session *sesh, char *str)
 {
-	char	**env;
 	char	*key;
+	char	**env;
+	int		stilde;
 
 	env = NULL;
-	key = tilde_key(str);
+	stilde = 0;
+	key = tilde_key(str, &stilde);
 	if (key)
 	{
 		env = ft_env_get(sesh, key);
 		if (env)
-			return (ft_strchr(*env, '=') + 1);
+		{
+			if (stilde)
+				return (stilde_join(ft_strchr(*env, '=') + 1, str));
+			else
+				return (ft_strdup(ft_strchr(*env, '=') + 1));
+		}
 	}
-	return (str);
+	return (ft_strdup(str));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:15:20 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/12 19:51:29 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:45:44 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void exec_pipe(t_pipenode *pipenode, char ***environ_cp, char *terminal, t_sessi
 //	print_tree(pipenode->right, 0);
 	if(pipe(pipefd)	< 0)
 	{
-		exe_cmd_err("pipe failed", "exec_pipe");
+		// exe_cmd_err("pipe failed", "exec_pipe");
+		ft_err_print(NULL, "pipe failed", "exec_pipe", 2);
 		return ;
 	}
 	if(fork_wrap() == 0){

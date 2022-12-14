@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:14:38 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/14 12:53:26 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/14 19:03:11 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,16 @@ void open_fd_if_needed(int fd, char *terminal)
 		while (i < 3 && i <= fd)
 		{
 			if (closefd[i] == 1 && open(terminal, O_RDWR) < 0)
-				error_exit("21sh: open_fd_if_needed: open failed\n"); //NO EXIT
+				ft_err_print(NULL, "open_fd_if_needed", "open failed", 2);
+				// error_exit("21sh: open_fd_if_needed: open failed\n"); //NOEXIT
 			++i;
 		}
 		i = 0;
 		while (i < 3 && i < fd)
 		{
 			if (closefd[i] == 1 && close(i) < 0)
-				error_exit("21sh: open_fd_if_needed: close failed\n"); //NO EXIT
+				ft_err_print(NULL, "open_fd_if_needed", "close failed", 2);
+				// error_exit("21sh: open_fd_if_needed: close failed\n"); //NO EXIT
 			++i;
 		}
 	}
@@ -66,13 +68,15 @@ void exec_redir(t_redir *node, char ***environ_cp, char *terminal, t_session *se
 	fd = open(node->filepath, node->open_flags, node->rights);
 	if (fd < 0)
 	{
-		exe_cmd_err("exec_redir", "open failed");
+		// exe_cmd_err("exec_redir", "open failed");
+		ft_err_print(NULL, "exec_redir", "open failed", 2);
 		return ;
 	}
 //	close(node->close_fd);
 	if (dup2(fd, node->close_fd) < 0)
 	{
-		exe_cmd_err("exec_redir", "dup2 failed");
+		// exe_cmd_err("exec_redir", "dup2 failed");
+		ft_err_print(NULL, "exec_redir", "dup2 failed", 2);
 		return ;
 	}
 //	dup2(fd, node->close_fd);

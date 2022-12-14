@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:05:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/12 16:20:32 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/13 11:30:20 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,20 +103,23 @@ static char	*ft_heredoc(t_term *t, char *str)
 char *ft_lexer(t_term *t)
 {
 	int		i;
+	int		k;
 	size_t	len;
 	char	*new;
 
-	i = 0;
+	i = -1;
 	new = ft_strtrim(t->inp);
 	new = ft_heredoc(t, new);
-	while (new && new[i])
-	{
-		if (new[i] == '\\')
-		{
-			len = ft_strlen(&new[i]);
-			ft_memmove((void *)&new[i], (void *)&new[i + 1], len);
-		}
-		i++;
-	}
+	// while (new && new[++i])
+	// {
+	// 	if (new[i] == '\\')
+	// 	{
+	// 		k = i;
+	// 		if (new[k + 1] == '\n')
+	// 			k++;
+	// 		len = ft_strlen(&new[k]);
+	// 		ft_memmove((void *)&new[i], (void *)&new[k + 1], len);
+	// 	}
+	// }
 	return (new);
 }

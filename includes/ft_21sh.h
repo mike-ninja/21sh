@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/14 18:58:26 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/14 19:02:37 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,10 +191,12 @@ char			*ft_expansion_dollar(t_session *sesh, char *str);
 char			*ft_expansion_tilde(t_session *sesh, char *str);
 
 /*					UTILITIES				*/
-int				ft_addr_check(char *file);
+int				ft_cd_addr_check(char *file);
 char			**ft_env_get(t_session *sesh, char *key);
 int				increment_whitespace(char **line);
 void			free_node(t_treenode *head);
+int 			ft_err_print(char *file, char *cmd, char *msg, int fd);
+
 
 /*					EXECUTE_TREE			*/
 void			exec_tree(t_treenode *head, char ***environ_cp, char *terminal, t_session *sesh);
@@ -211,7 +213,12 @@ int				fork_wrap(void);
 void			open_fd_if_needed(int fd, char *terminal);
 
 /*					ERROR					*/
-void 			exe_cmd_err(char *msg, char *cmd);
+void exe_cmd_err(char *msg, char *cmd);
+
+/*					EXECUTE_UTILS			*/
+int		check_access(char *cmd, char **args);
+int		check_if_user_exe(char *cmd, char **dest);
+void	exe_fail(char **cmd, char **args, char ***env_cp);
 
 /*					BUILTIN					*/
 int		ft_builtins(t_session *sesh, char ***cmd);

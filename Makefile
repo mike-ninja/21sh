@@ -6,7 +6,7 @@
 #    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/12/14 16:45:50 by jniemine         ###   ########.fr        #
+#    Updated: 2022/12/14 19:01:07 by jniemine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -181,7 +181,7 @@ FILES			= $(KEYBOARD)ft_arrow_input \
 				$(EXPANSION)ft_expansion_dollar \
 				$(EXPANSION)ft_expansion_tilde \
 				$(UTILITIES)ft_env_get \
-				$(UTILITIES)ft_addr_check \
+				$(UTILITIES)ft_err_print \
 				$(BUILTIN)ft_builtins \
 				$(BUILTIN)ft_cd \
 				$(BUILTIN)ft_echo \
@@ -189,6 +189,7 @@ FILES			= $(KEYBOARD)ft_arrow_input \
 				$(BUILTIN)ft_exit \
 				$(BUILTIN)ft_setenv \
 				$(BUILTIN)ft_unsetenv \
+				$(BUILTIN_UTILS)ft_cd_addr_check \
 				$(BUILTIN_UTILS)ft_dir_change \
 				$(BUILTIN_UTILS)ft_env_append \
 				$(BUILTIN_UTILS)ft_env_remove \
