@@ -6,7 +6,7 @@
 #    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/12/14 14:49:57 by jniemine         ###   ########.fr        #
+#    Updated: 2022/12/14 16:02:05 by jniemine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -158,6 +158,13 @@ FILES			= $(KEYBOARD)ft_arrow_input \
 				$(TOKENIZER)free_tokens \
 				$(BUILDTREE)build_tree \
 				$(BUILDTREE)make_arg_array \
+				$(BUILDTREE)bt_utils \
+				$(BUILDTREE)bt_create_pipe_node \
+				$(BUILDTREE)bt_parse_redirections \
+				$(BUILDTREE)bt_choose_redir_type \
+				$(BUILDTREE)bt_if_closefd \
+				$(BUILDTREE)bt_print_tree \
+				$(BUILDTREE)bt_if_redir \
 				$(EXECTREE)exec_tree \
 				$(EXECTREE)exec_cmd \
 				$(EXECTREE)exec_pipe \

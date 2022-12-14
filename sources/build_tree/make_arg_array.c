@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 21:59:23 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/13 12:02:21 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/14 15:06:53 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*									MINISHELL							*/
 static int	arg_qty_loop(char *cmd)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	while (cmd)
@@ -40,7 +40,7 @@ static int	arg_qty_loop(char *cmd)
 
 static int	find_closing_quote(char **cmd, char c)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while ((*cmd)[i] && (*cmd)[i] != c)
@@ -90,6 +90,5 @@ char	**make_arg_array(char *cmd)
 	array = (char **)ft_memalloc(sizeof(char *) * (len + 1));
 	cmd = ft_skip_space(cmd);
 	collect_args_loop(array, cmd);
-	int i = 0;
 	return (array);
 }
