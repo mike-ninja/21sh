@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/14 10:15:39 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 12:44:31 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	ms_exit(char **args, char ***environ_cp)
 
 void	exe_fail(char **cmd, char **args, char ***env_cp)
 {
-	ft_error_print(NULL, args[0], "command not found");
+	ft_err_stderr(NULL, args[0], "command not found");
 	// exe_cmd_err("command not found", args[0]);
 	ft_memdel((void **)cmd);
 	ms_exit(args, env_cp);
@@ -96,13 +96,13 @@ int	check_access(char *cmd, char **args)
 
 	if (!cmd || !ft_strchr(cmd, '/'))
 	{
-		ft_error_print(NULL, args[0], "command not found");
+		ft_err_stderr(NULL, args[0], "command not found");
 		return (0);
 	}
 	stat(cmd, &buf);
 	if (S_ISDIR(buf.st_mode))
 	{
-		ft_error_print(cmd, NULL, "is a directory");
+		ft_err_stderr(cmd, NULL, "is a directory");
 		return (0);
 	}
 	return (1);

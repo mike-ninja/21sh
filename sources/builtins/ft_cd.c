@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:10:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/13 22:04:11 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 12:31:41 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ static int	ft_chdir_expanded(t_session *sesh, char **path)
 static int	ft_cd_expand_error(char **cmd)
 {
 	if (!*(cmd + 1) || !ft_strcmp(*(cmd + 1), "--"))
-		ft_error_print(NULL, "cd", "HOME not set");
+		ft_err_stdout(NULL, "cd", "HOME not set");
 	else if (!ft_strcmp(*(cmd + 1), "~-") || !ft_strcmp(*(cmd + 1), "-"))
-		ft_error_print(NULL, "cd", "OLDPWD not set");
+		ft_err_stdout(NULL, "cd", "OLDPWD not set");
 	return (1);
 }
 
@@ -74,7 +74,7 @@ int	ft_cd(t_session *sesh, char **cmd)
 {
 	sesh->exit_stat = 0;
 	if (ft_arrlen(cmd) > 2)
-		ft_error_print(NULL, "cd", "too many arguments");
+		ft_err_stdout(NULL, "cd", "too many arguments");
 	else if (!ft_cd_expand_parse(sesh, cmd) && !ft_cd_addr_check(*(cmd + 1)))
 	{
 		if (chdir(*(cmd + 1)))
