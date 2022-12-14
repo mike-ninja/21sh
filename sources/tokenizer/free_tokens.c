@@ -1,40 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_utils.c                                      :+:      :+:    :+:   */
+/*   free_tokens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/13 20:34:50 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/14 14:47:57 by jniemine         ###   ########.fr       */
+/*   Created: 2022/12/14 14:42:17 by jniemine          #+#    #+#             */
+/*   Updated: 2022/12/14 14:47:31 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-int	is_ws(char c)
+void	free_token(t_token *token)
 {
-	return (c == ' ' || c == '\t' || c == '\v'
-		|| c == '\f' || c == '\r');
+	ft_memdel((void **)&token->value);
 }
 
-int	is_quote(char c)
+void	free_tokens(t_token *tokens)
 {
-	return (c == '\'' || c == '"');
-}
+	int	i;
 
-int	is_nl(char c)
-{
-	return (c == '\n');
-}
-
-int	is_varchr(char c)
-{
-	return (ft_isalnum(c) || c == '_');
-}
-
-int	is_seperator(char c)
-{
-	return (is_nl(c) || c == '|' || c == '>' || c == '<'
-		|| c == ';');
+	i = -1;
+	while (tokens && tokens[++i].token)
+	{
+		ft_strdel(&tokens[i].value);
+		tokens[i].token = 0;
+	}
+	ft_memdel((void **)&tokens);
 }

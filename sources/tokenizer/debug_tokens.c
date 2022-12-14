@@ -1,40 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_utils.c                                      :+:      :+:    :+:   */
+/*   debug_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/13 20:34:50 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/14 14:47:57 by jniemine         ###   ########.fr       */
+/*   Created: 2022/12/14 14:44:55 by jniemine          #+#    #+#             */
+/*   Updated: 2022/12/14 14:45:14 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-int	is_ws(char c)
+void	debug_tokens(t_token *args)
 {
-	return (c == ' ' || c == '\t' || c == '\v'
-		|| c == '\f' || c == '\r');
-}
+	int	i_args;
 
-int	is_quote(char c)
-{
-	return (c == '\'' || c == '"');
-}
-
-int	is_nl(char c)
-{
-	return (c == '\n');
-}
-
-int	is_varchr(char c)
-{
-	return (ft_isalnum(c) || c == '_');
-}
-
-int	is_seperator(char c)
-{
-	return (is_nl(c) || c == '|' || c == '>' || c == '<'
-		|| c == ';');
+	i_args = 0;
+	while (args[i_args].token)
+	{
+		ft_printf("TOK: %s tok: %d\n", args[i_args].value, args[i_args].token);
+		++i_args;
+	}
+	exit(1);
 }

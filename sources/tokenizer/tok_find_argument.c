@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tok_find_argument.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:13:39 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/13 21:47:09 by jakken           ###   ########.fr       */
+/*   Updated: 2022/12/14 14:52:03 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,7 @@ static char	*tok_if_redir(char *line, int *i, int *start, int *end)
 			return (NULL);
 		}
 		traverse_to_end(line, end);
-//		while (line[*end] && is_ws(line[*end]))
-//			++(*end);
-//		while (line[*end] && !is_ws(line[*end]) && !is_seperator(line[*end]))
-//			++(*end);
-		return(ft_strsub(line, *start, *end - *start));
+		return (ft_strsub(line, *start, *end - *start));
 	}
 	return (NULL);
 }
