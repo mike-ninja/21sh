@@ -6,15 +6,15 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:39:22 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/14 15:40:10 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:59:10 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-static t_treenode *init_closefd(int close_fd, t_treenode *cmd)
+static t_treenode	*init_closefd(int close_fd, t_treenode *cmd)
 {
-	t_treenode *closefd;
+	t_treenode	*closefd;
 
 	closefd = ft_memalloc(sizeof(*closefd));
 	closefd->type = CLOSEFD;
@@ -24,10 +24,24 @@ static t_treenode *init_closefd(int close_fd, t_treenode *cmd)
 	return (closefd);
 }
 
-int if_closefd(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
+static void	make_child_for_prev(t_treenode **redir, int close_fd)
 {
-	int close_fd;
-	t_treenode *head;
+	if ((*redir)->type == REDIR)
+		((t_redir *)(*redir))->cmd = init_closefd(close_fd,
+				(((t_redir *)(*redir))->cmd));
+	if ((*redir)->type == CLOSEFD)
+		((t_closefd *)(*redir))->cmd = init_closefd(close_fd,
+				(((t_closefd *)(*redir))->cmd));
+	if ((*redir)->type == AGGREGATION)
+		((t_aggregate *)(*redir))->cmd = init_closefd(close_fd,
+				(((t_aggregate *)(*redir))->cmd));
+	traverse_node(redir);
+}
+
+int	if_closefd(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
+{
+	int			close_fd;
+	t_treenode	*head;
 
 	close_fd = 0;
 	close_fd = get_close_fd(tokens[i_tok].value);
@@ -42,14 +56,6 @@ int if_closefd(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 			*redir = init_closefd(close_fd, init_cmd_node(tokens[cmd].value));
 	}
 	else
-	{
-		if ((*redir)->type == REDIR)
-			((t_redir *)(*redir))->cmd = init_closefd(close_fd, (((t_redir *)(*redir))->cmd));
-		if ((*redir)->type == CLOSEFD)
-			((t_closefd *)(*redir))->cmd = init_closefd(close_fd, (((t_closefd *)(*redir))->cmd));
-		if ((*redir)->type == AGGREGATION)
-			((t_aggregate *)(*redir))->cmd = init_closefd(close_fd, (((t_aggregate *)(*redir))->cmd));
-		traverse_node(redir);
-	}
+		make_child_for_prev(redir, close_fd);
 	return (0);
 }

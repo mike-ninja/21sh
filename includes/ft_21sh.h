@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/14 16:03:57 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:45:29 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ char			**make_arg_array(char *cmd);
 void			print_tree(t_treenode *head, int depth);
 int				foreseer_of_tokens(t_token *tokens, int mark, int start, int end);
 t_treenode		*create_pipe_node(t_token *tokens, int i_tok);
+t_treenode		*create_semicolon_node(t_token *tokens, int i_tok, int end);
 t_treenode		*parse_left_cmd(t_token *tokens, int i_tok);
 t_treenode		*parse_right_cmd(t_token *tokens, int i_tok);
 t_treenode		*parse_redirections(t_token *tokens, int i_tok, int cmd);
@@ -182,7 +183,7 @@ int				if_redir(t_token *tokens, t_treenode **redir, int i_tok, int cmd);
 int				get_close_fd(char *value);
 void			traverse_node(t_treenode **head);
 char			*get_file(char *value);
-void			error_tok(t_token *tokens, t_treenode *redir_head, char *msg, char *symbol);
+int				error_tok(t_token *tokens, t_treenode *redir_head, char *msg, char *symbol); //Check this
 
 /*					EXPANSION				*/
 void			ft_expansion(t_session *sesh, char **cmd);

@@ -6,15 +6,15 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:00:54 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/14 15:10:13 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:01:15 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-static t_treenode *init_pipe(t_treenode *left, t_treenode *right)
+static t_treenode	*init_pipe(t_treenode *left, t_treenode *right)
 {
-	t_treenode *node;
+	t_treenode	*node;
 
 	node = ft_memalloc(sizeof(*node));
 	node->type = PIPE;

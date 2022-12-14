@@ -6,15 +6,15 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:48:35 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/14 15:50:05 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:54:54 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-void print_array_as_line(char **arr)
+static void	print_array_as_line(char **arr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (arr[i])
@@ -25,12 +25,12 @@ void print_array_as_line(char **arr)
 	ft_printf("\n");
 }
 
-void print_node(t_treenode *node)
+static void	print_node(t_treenode *node)
 {
 	if (!node)
 	{
 		ft_printf("NULL\n");
-		return;
+		return ;
 	}
 	else if (node->type == PIPE)
 		ft_printf("Type: PIPE\n");
@@ -49,13 +49,24 @@ void print_node(t_treenode *node)
 		ft_printf("Type: AGGREGATION\n");
 }
 
-void print_tree(t_treenode *head, int depth)
+static void	rest(t_treenode *head, int depth)
 {
-	int depth_temp;
+	if (head->type == REDIR)
+		print_tree(((t_redir *)head)->cmd, depth + 1);
+	if (head->type == CLOSEFD)
+		print_tree(((t_closefd *)head)->cmd, depth + 1);
+	if (head->type == AGGREGATION)
+		print_tree(((t_aggregate *)head)->cmd, depth + 1);
+	print_node(head);
+}
+
+void	print_tree(t_treenode *head, int depth)
+{
+	int	depth_temp;
 
 	depth_temp = depth;
 	if (!head)
-		return;
+		return ;
 	if (head->type == PIPE)
 	{
 		ft_printf("PIPE RIGHT:\n");
@@ -70,11 +81,5 @@ void print_tree(t_treenode *head, int depth)
 		ft_printf("SEMI RIGHT:\n");
 		print_tree(((t_semicolon *)head)->right, depth + 1);
 	}
-	if (head->type == REDIR)
-		print_tree(((t_redir *)head)->cmd, depth + 1);
-	if (head->type == CLOSEFD)
-		print_tree(((t_closefd *)head)->cmd, depth + 1);
-	if (head->type == AGGREGATION)
-		print_tree(((t_aggregate *)head)->cmd, depth + 1);
-	print_node(head);
+	rest(head, depth);
 }

@@ -6,15 +6,15 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:58:54 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/14 15:44:30 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:52:21 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-int calculate_tokens(t_token *tokens)
+int	calculate_tokens(t_token *tokens)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (tokens[i].token)
@@ -22,7 +22,7 @@ int calculate_tokens(t_token *tokens)
 	return (i);
 }
 
-int foreseer_of_tokens(t_token *tokens, int mark, int start, int end)
+int	foreseer_of_tokens(t_token *tokens, int mark, int start, int end)
 {
 	if (!tokens)
 		return (-1);
@@ -35,11 +35,11 @@ int foreseer_of_tokens(t_token *tokens, int mark, int start, int end)
 	return (-1);
 }
 
-int get_close_fd(char *value)
+int	get_close_fd(char *value)
 {
-	int digit;
-	char *digits;
-	int res;
+	int		digit;
+	char	*digits;
+	int		res;
 
 	digit = 0;
 	digits = NULL;
@@ -56,7 +56,7 @@ int get_close_fd(char *value)
 	return (-1);
 }
 
-void traverse_node(t_treenode **head)
+void	traverse_node(t_treenode **head)
 {
 	if ((*head)->type == REDIR)
 		*head = (((t_redir *)(*head))->cmd);
