@@ -1,7 +1,6 @@
-ls -l | head -n 5 | tail -n 2 >>>lol leak
-Maybe leaks with redir and aggregation without target
-Test leaks with: ls >>>lol
-echo "Testing redirections," > /tmp/test.txt;echo "with multiple lines" >> /tmp/test.txt;cat /tmp/test.txt;wc -c < tmp/test.txt;rm /tmp/test.txt 2>/dev/null
+Refactor open_fd_if_needed
+Refactor exec pipe to fit norm
+
 cat < file
 cat -e
 rm nosuchfile 2>&1 | cat -e

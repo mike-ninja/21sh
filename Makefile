@@ -6,7 +6,7 @@
 #    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/12/14 21:07:07 by jniemine         ###   ########.fr        #
+#    Updated: 2022/12/14 21:40:06 by jniemine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -171,6 +171,7 @@ FILES			= $(KEYBOARD)ft_arrow_input \
 				$(BUILDTREE)bt_if_aggregation \
 				$(BUILDTREE)bt_error_tok \
 				$(BUILDTREE)bt_get_file \
+				$(EXECTREE)exe_fail \
 				$(EXECTREE)exec_tree \
 				$(EXECTREE)exec_cmd \
 				$(EXECTREE)exec_pipe \

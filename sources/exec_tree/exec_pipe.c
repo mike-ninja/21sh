@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:15:20 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/14 13:45:44 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 21:50:09 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,22 @@ int	fork_wrap(void)
 	return (pid);
 }
 
-/* If wait before second fork, then this works(It should not): ls -l > lol | cat lol
-	If no wai then this does not work(It should): rm nosuchfile 2>&1 | cat -e */
+int	pipe_wrap(int pipefd[])
+{
+	if(pipe(pipefd)	< 0)
+	{
+		ft_err_print(NULL, "pipe failed", "exec_pipe", 2);
+		return (1);
+	}
+	return (0);
+}
+
 void exec_pipe(t_pipenode *pipenode, char ***environ_cp, char *terminal, t_session *sesh)
 {
 	int	pipefd[2];
 
-//	ft_printf("LEFT TYPE: %d\n", pipenode->left->type);
-//	print_tree(pipenode->left, 0);
-//	ft_printf("RIGHT TYPE: %d\n", pipenode->right->type);
-//	print_tree(pipenode->right, 0);
-	if(pipe(pipefd)	< 0)
-	{
-		// exe_cmd_err("pipe failed", "exec_pipe");
-		ft_err_print(NULL, "pipe failed", "exec_pipe", 2);
+	if (pipe_wrap(pipefd))
 		return ;
-	}
 	if(fork_wrap() == 0){
 	  close(1);
 	  dup(pipefd[1]);
