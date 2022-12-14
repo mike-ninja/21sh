@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/11 18:50:50 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/13 20:08:16 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void print_tree(t_treenode *head, int depth);
 t_treenode *parse_redirections(t_token *tokens, int i_tok, int cmd);
+static void traverse_node(t_treenode **head);
 
 int increment_whitespace(char **line)
 {
@@ -51,8 +52,6 @@ int ft_calc_chr(char *line, char c)
 	return (res);
 }
 
-
-
 t_treenode *init_cmd_node(char *cmd)
 {
 	t_treenode *new;
@@ -60,6 +59,7 @@ t_treenode *init_cmd_node(char *cmd)
 	if (!cmd || !*cmd)
 		return (NULL);
 	new = ft_memalloc(sizeof(*new));
+	new->type = CMD;
 	((t_cmdnode *)new)->type = CMD;
 	((t_cmdnode *)new)->cmd = make_arg_array(cmd);
 	return (new);
@@ -296,15 +296,21 @@ static int if_aggregation(t_token *tokens, t_treenode **redir, int i_tok, int cm
 	if (!*redir)
 	{
 		if (cmd < 0)
-			*redir = init_aggregation_node(close_fd, atoi(dest), NULL);
+			*redir = init_aggregation_node(close_fd, ft_atoi(dest), NULL);
 		else // HERE WE NEED TO CREATE COMMAND NODE
-			*redir = init_aggregation_node(close_fd, atoi(dest), init_cmd_node(tokens[cmd].value));
+			*redir = init_aggregation_node(close_fd, ft_atoi(dest), init_cmd_node(tokens[cmd].value));
 	}
 	else
 	{
-		// HERE WE NEED TO ADD NEW REDIR AS CHILD TO PREVIOUS
-		((t_redir *)(*redir))->cmd = init_aggregation_node(close_fd, atoi(dest), (((t_redir *)(*redir))->cmd));
+		if ((*redir)->type == REDIR)
+			((t_redir *)(*redir))->cmd = init_aggregation_node(close_fd, ft_atoi(dest), (((t_redir *)(*redir))->cmd));
+		if ((*redir)->type == CLOSEFD)
+			((t_closefd *)(*redir))->cmd = init_aggregation_node(close_fd, ft_atoi(dest), (((t_closefd *)(*redir))->cmd));
+		if ((*redir)->type == AGGREGATION)
+			((t_aggregate *)(*redir))->cmd = init_aggregation_node(close_fd, ft_atoi(dest), (((t_aggregate *)(*redir))->cmd));
+		traverse_node(redir);
 	}
+	ft_strdel(&dest);
 	return (0);
 }
 
@@ -333,9 +339,7 @@ static int if_closefd(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 	if (!*redir)
 	{
 		if (cmd < 0)
-		{
 			*redir = init_closefd(close_fd, NULL);
-		}
 		else
 			*redir = init_closefd(close_fd, init_cmd_node(tokens[cmd].value));
 	}
@@ -344,9 +348,10 @@ static int if_closefd(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 		if ((*redir)->type == REDIR)
 			((t_redir *)(*redir))->cmd = init_closefd(close_fd, (((t_redir *)(*redir))->cmd));
 		if ((*redir)->type == CLOSEFD)
-		{
 			((t_closefd *)(*redir))->cmd = init_closefd(close_fd, (((t_closefd *)(*redir))->cmd));
-		}
+		if ((*redir)->type == AGGREGATION)
+			((t_aggregate *)(*redir))->cmd = init_closefd(close_fd, (((t_aggregate *)(*redir))->cmd));
+		traverse_node(redir);
 	}
 	return (0);
 }
@@ -382,15 +387,13 @@ static int if_redir(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 		}
 		else
 		{
-			// HERE WE NEED TO ADD NEW REDIR AS CHILD TO PREVIOUS
-		if ((*redir)->type == REDIR)
-		{
-			((t_redir *)(*redir))->cmd = init_redir_wrap(dest, (((t_redir *)(*redir))->cmd), redir_t, close_fd);
-		}
-		if ((*redir)->type == CLOSEFD)
-		{
-			((t_closefd *)(*redir))->cmd = init_redir_wrap(dest, (((t_closefd *)(*redir))->cmd), redir_t, close_fd);
-		}
+			if ((*redir)->type == REDIR)
+				((t_redir *)(*redir))->cmd = init_redir_wrap(dest, (((t_redir *)(*redir))->cmd), redir_t, close_fd);
+			if ((*redir)->type == CLOSEFD)
+				((t_closefd *)(*redir))->cmd = init_redir_wrap(dest, (((t_closefd *)(*redir))->cmd), redir_t, close_fd);
+			if ((*redir)->type == AGGREGATION)
+				((t_aggregate *)(*redir))->cmd = init_redir_wrap(dest, (((t_aggregate *)(*redir))->cmd), redir_t, close_fd);
+			traverse_node(redir);
 		}
 	}
 	return (0);
@@ -409,13 +412,15 @@ static t_treenode *parse_left_cmd(t_token *tokens, int i_tok)
 	cmd = -1;
 	if (i_tok >= 0 && tokens[i_tok].token == WORD)
 		cmd = i_tok;
-	while (cmd < 0 && i_tok && tokens[i_tok].token != PIPE
+	while (cmd < 0 && i_tok >= 0 && tokens[i_tok].token != PIPE
 			&& tokens[i_tok].token != SEMICOLON)
 	{
 		if (tokens[i_tok].token == WORD)
 			cmd = i_tok;
 		--i_tok;
 	}
+	if (i_tok < 0)
+		i_tok = 0;
 	while (i_tok && tokens[i_tok].token != PIPE
 			&& tokens[i_tok].token != SEMICOLON)
 		--i_tok;
@@ -450,14 +455,19 @@ t_treenode *parse_redirections(t_token *tokens, int i_tok, int cmd)
 
 	redir = NULL;
 	while (!redir && tokens[i_tok].token && tokens[i_tok].token != PIPE && tokens[i_tok].token != SEMICOLON)
+	{
 		if (if_redir(tokens, &redir, i_tok++, cmd))
 				return (NULL);
+//		if (redir)
+//			break ;
+//		++i_tok;
+	}
 	redir_start = redir;
 	while (tokens[i_tok].token && tokens[i_tok].token != PIPE && tokens[i_tok].token != SEMICOLON)
 	{
 		if (if_redir(tokens, &redir, i_tok, cmd))
 			return (NULL);
-		traverse_node(&redir);
+//		traverse_node(&redir);
 		++i_tok;
 	}
 	if (redir_start)
@@ -595,6 +605,8 @@ void print_node(t_treenode *node)
 		ft_printf("Type: REDIR\n");
 	else if (node->type == CLOSEFD)
 		ft_printf("Type: CLOSEFD\n");
+	else if (node->type == AGGREGATION)
+		ft_printf("Type: AGGREGATION\n");
 }
 
 void print_tree(t_treenode *head, int depth)
@@ -606,8 +618,10 @@ void print_tree(t_treenode *head, int depth)
 		return;
 	if (head->type == PIPE)
 	{
+		ft_printf("PIPE RIGHT:\n");
 		print_tree(((t_pipenode *)head)->right, depth + 1);
 	//	ft_printf("\\");
+		ft_printf("PIPE LEFT:\n");
 		print_tree(((t_pipenode *)head)->left, depth + 1);
 	//	ft_printf("/");
 	}

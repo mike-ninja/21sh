@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_arg_array.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 21:59:23 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/12 15:28:58 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:02:21 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ static void	collect_args_loop(char **array, char *cmd)
 		if (*cmd == '\"')
 			array[i++] = ft_strsub(cmd, 0, find_closing_quote(&cmd, '\"'));
 		else if (*cmd == '\'')
-			array[i++] = ft_strsub(cmd, 0, find_closing_quote(&cmd, '\''));	
+			array[i++] = ft_strsub(cmd, 0, find_closing_quote(&cmd, '\''));
 		else
-			array[i++] = ft_strdup(ft_strsep(&cmd, " "));	
+			array[i++] = ft_strdup(ft_strsep(&cmd, " "));
 		cmd = ft_skip_space(cmd);
 	}
 	array[i] = NULL;
@@ -90,5 +90,6 @@ char	**make_arg_array(char *cmd)
 	array = (char **)ft_memalloc(sizeof(char *) * (len + 1));
 	cmd = ft_skip_space(cmd);
 	collect_args_loop(array, cmd);
+	int i = 0;
 	return (array);
 }

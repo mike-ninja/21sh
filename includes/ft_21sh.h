@@ -6,11 +6,10 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/13 21:07:03 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 10:15:18 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_21SH_H
 #define FT_21SH_H
 
 #include "libft.h"
@@ -106,10 +105,12 @@ typedef struct s_pipenode
 union u_treenode
 {
 	int type;
+	t_semicolon semicolon;
 	t_pipenode pipe;
 	t_cmdnode cmd;
 	t_redir redir;
 	t_aggregate aggregate;
+	t_closefd	closefd;
 };
 
 /*				SESSION STRUCT				*/
@@ -151,8 +152,9 @@ void			free_tokens(t_token *tokens);
 int 			is_ws(char c);
 
 /*					BULDTREE				*/
-t_treenode 		*build_tree(t_token *tokens);
-char 			**make_arg_array(char *cmd);
+t_treenode *build_tree(t_token *tokens);
+char **make_arg_array(char *cmd);
+void print_tree(t_treenode *head, int depth);
 
 /*					EXPANSION				*/
 void			ft_expansion(t_session *sesh, char **cmd);
@@ -168,17 +170,21 @@ int 			ft_error_print(char *file, char *cmd, char *msg);
 
 
 /*					EXECUTE_TREE			*/
-void			exec_tree(t_treenode *head, char ***environ_cp, char *terminal, t_session *sesh);
-void			execute_bin(char **args, char ***environ_cp, t_session *sesh);
-void			exec_pipe(t_pipenode *pipenode, char ***environ_cp, char *terminal, t_session *sesh);
-void			exec_redir(t_redir *node, char ***environ_cp, char *terminal, t_session *sesh);
-void			exec_aggregate(t_aggregate *node, char ***environ_cp, char *terminal, t_session *sesh);
-void			exec_closefd(t_closefd *node, char ***environ_cp, char *terminal, t_session *sesh);
-char			*search_bin(char *cmd, char **environ_cp);
-void			error_exit(char *msg);
-int				ft_freeda(void ***a, size_t row);
-size_t			calc_chptr(char **arr);
-int				fork_wrap(void);
+void	exec_tree(t_treenode *head, char ***environ_cp, char *terminal, t_session *sesh);
+void	execute_bin(char **args, char ***environ_cp, t_session *sesh);
+void	exec_pipe(t_pipenode *pipenode, char ***environ_cp, char *terminal, t_session *sesh);
+void	exec_redir(t_redir *node, char ***environ_cp, char *terminal, t_session *sesh);
+void	exec_aggregate(t_aggregate *node, char ***environ_cp, char *terminal, t_session *sesh);
+void	exec_closefd(t_closefd *node, char ***environ_cp, char *terminal, t_session *sesh);
+char	*search_bin(char *cmd, char **environ_cp);
+void	error_exit(char *msg);
+int		ft_freeda(void ***a, size_t row);
+size_t	calc_chptr(char **arr);
+int		fork_wrap(void);
+void	open_fd_if_needed(int fd, char *terminal);
+
+/*					ERROR					*/
+void exe_cmd_err(char *msg, char *cmd);
 
 /*					EXECUTE_UTILS			*/
 int		check_access(char *cmd, char **args);
@@ -186,14 +192,14 @@ int		check_if_user_exe(char *cmd, char **dest);
 void	exe_fail(char **cmd, char **args, char ***env_cp);
 
 
-/*			   		 BUILTIN	  			*/
-int				ft_builtins(t_session *sesh, char ***cmd);
-int				ft_cd(t_session *sesh, char **cmd);
-int				ft_echo(char **cmd);
-int				ft_env(t_session *sesh, char ***cmd);
-void			ft_exit(t_session *sesh, int status);
-int				ft_setenv(t_session *sesh, char **cmd);
-int				ft_unsetenv(t_session *sesh, char **cmd);
+/*					BUILTIN					*/
+int		ft_builtins(t_session *sesh, char ***cmd);
+int		ft_cd(t_session *sesh, char **cmd);
+int		ft_echo(char **cmd);
+int		ft_env(t_session *sesh, char ***cmd);
+void	ft_exit(t_session *sesh, int status);
+int		ft_setenv(t_session *sesh, char **cmd);
+int		ft_unsetenv(t_session *sesh, char **cmd);
 
 /*			    BUILTIN UTILITIES			*/
 int				ft_env_temp(t_session *sesh, char **cmd, int i);
