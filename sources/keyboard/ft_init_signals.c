@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 18:17:16 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/12 15:11:32 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:25:05 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ extern t_term	*g_t;
  *
  * @param num The signal number.
  */
-static void	sig_handler(int num)
+void	sig_handler(int num)
 {
+	struct termios raw;
+	
 	if (num == SIGWINCH)
 		ft_window_size(g_t);
 	if (num == SIGINT)

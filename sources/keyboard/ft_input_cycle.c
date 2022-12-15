@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/12 15:36:14 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/15 18:44:57 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ static void	ft_backspace_or_escape(t_term *t)
  */
 static int	ft_isprint_or_enter(t_term *t)
 {
-	if (ft_isprint(t->ch) || t->ch == ENTER)
+	if ((ft_isprint(t->ch) || t->ch == ENTER) && t->bytes < BUFFSIZE)
 		ft_insertion(t);
-	if (t->ch == ENTER)
+	if (t->ch == ENTER && t->c_row == t->total_row)
 	{
 		if ((!t->bslash && !(t->q_qty % 2) && !t->delim) \
 			|| (t->delim && !ft_strcmp(t->nl_addr[t->c_row], t->delim)))
@@ -79,8 +79,9 @@ static int	ft_isprint_or_enter(t_term *t)
 
 static int	ctrl_d_exit(t_term *t)
 {
-	ft_end_cycle(t);
-	ft_printf("\n{RED}exit{RESET}");
+	ft_putchar('\n');
+	ft_history_write_to_file(t);
+	ft_printf("{RED}exit{RESET");
 	return (1);
 }
 
@@ -117,7 +118,6 @@ int	ft_input_cycle(t_term *t)
 		}
 		ft_ctrl(t);
 		ft_backspace_or_escape(t);
-		ft_bslash_handling(t);
 		if (t->ch == -1)
 			ft_putstr_fd("error, ft_get_input()\n", STDERR_FILENO);
 	}

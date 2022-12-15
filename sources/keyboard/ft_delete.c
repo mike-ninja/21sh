@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:37:39 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/08 22:31:28 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:31:43 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,6 @@ void	ft_delete(t_term *t)
 	ssize_t	len;
 	ssize_t	row;
 
-	if (t->index && (t->inp[t->index] == D_QUO || \
-	t->inp[t->index] == S_QUO))
-		ft_quote_decrement(t, 0);
 	row = ft_row_lowest_line(t);
 	if (t->nl_addr[row + 1] && (&t->inp[t->index + 1] \
 		== t->nl_addr[t->c_row + 1] && ft_is_prompt_line(t, t->c_row + 1)))

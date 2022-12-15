@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_paste.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:04:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/29 16:48:27 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/12/14 17:28:48 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_paste(t_term *t)
 	if (t->clipboard.buff)
 	{
 		ft_run_capability("vi");
-		while (t->clipboard.buff[++i])
+		while (t->bytes < BUFFSIZE && t->clipboard.buff[++i])
 		{
 			t->c_col++;
 			ft_putc(t->clipboard.buff[i]);

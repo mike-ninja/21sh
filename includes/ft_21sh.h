@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/15 18:17:19 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/15 19:24:29 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ typedef struct session
 {
 	char			*line;
 	t_treenode		*head;
+	t_term			term[1];
 	char			**env;
 	t_token			*tokens;
 	int				exit_stat;

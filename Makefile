@@ -6,7 +6,7 @@
 #    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/12/15 16:46:38 by jniemine         ###   ########.fr        #
+#    Updated: 2022/12/15 19:24:14 by jniemine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,11 +89,12 @@ SOURCE_COUNT = $(words $(FILES))
 H_FILES 	= 	ft_21sh \
 				keyboard \
 
-FILES			= $(KEYBOARD)ft_arrow_input \
-				$(KEYBOARD)ft_add_nl_last_row \
+FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(KEYBOARD)ft_add_nl_mid_row \
 				$(KEYBOARD)ft_alt_mv \
-				$(KEYBOARD)ft_bslash_handling \
+				$(KEYBOARD)ft_arrow_input \
+				$(KEYBOARD)ft_backspace \
+				$(KEYBOARD)ft_bslash_escape_check \
 				$(KEYBOARD)ft_copy \
 				$(KEYBOARD)ft_create_prompt_line \
 				$(KEYBOARD)ft_cut \
@@ -108,6 +109,8 @@ FILES			= $(KEYBOARD)ft_arrow_input \
 				$(KEYBOARD)ft_putc \
 				$(KEYBOARD)ft_quote_decrement \
 				$(KEYBOARD)ft_quote_handling \
+				$(KEYBOARD)ft_quote_flag_check \
+				$(KEYBOARD)ft_quote_flag_reset \
 				$(KEYBOARD)ft_setcursor \
 				$(KEYBOARD)ft_shift_insert \
 				$(KEYBOARD)ft_trigger_nl \
@@ -123,7 +126,6 @@ FILES			= $(KEYBOARD)ft_arrow_input \
 				$(KEYBOARD)ft_init_signals \
 				$(KEYBOARD)ft_input_cycle \
 				$(KEYBOARD)ft_insertion \
-				$(KEYBOARD)ft_backspace \
 				$(KEYBOARD)ft_mv_prompt_len \
 				$(KEYBOARD)ft_is_prompt_line \
 				$(KEYBOARD)ft_len_lowest_line \
@@ -138,7 +140,6 @@ FILES			= $(KEYBOARD)ft_arrow_input \
 				$(KEYBOARD)ft_window_size \
 				$(KEYBOARD)ft_word_mv \
 				$(KEYBOARD)ft_ctrl \
-				$(KEYBOARD)ft_flag_reset \
 				$(KEYBOARD)ft_history_reset_nl \
 				$(KEYBOARD)ft_nl_removal \
 				$(KEYBOARD)ft_print_input \

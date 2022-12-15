@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/12 15:34:45 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/15 18:43:57 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,29 +37,28 @@
  * written to fildes is transmitted, and all input so far received but not
  * read shall be discarded before the change is made.
  */
-// static struct termios	ft_init_raw(void)
-// {
-// 	struct termios	orig_termios;
-// 	struct termios	raw;
+static struct termios	ft_init_raw(void)
+{
+	struct termios	orig_termios;
+	struct termios	raw;
 
-// 	if (tcgetattr(STDIN_FILENO, &orig_termios) == -1)
-// 	{
-// 		write(2, "error tcgetattr\n", 16);
-// 		exit(1);
-// 	}
-// 	raw = orig_termios;
-// 	raw.c_lflag &= ~(ECHO | ICANON | IEXTEN);
-// 	raw.c_iflag &= ~(IXON | BRKINT);
-// 	raw.c_cc[VMIN] = 1;
-// 	raw.c_cc[VTIME] = 0;
-// 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1)
-// 	{
-// 		write(2, "error tcsetattr\n", 16);
-// 		exit(1);
-// 	}
-// 	ft_run_capability("cl");
-// 	return (orig_termios);
-// }
+	if (tcgetattr(STDIN_FILENO, &orig_termios) == -1)
+	{
+		write(2, "error tcgetattr\n", 16);
+		exit(1);
+	}
+	raw = orig_termios;
+	raw.c_lflag &= ~(ECHO | ICANON | IEXTEN);
+	raw.c_iflag &= ~(IXON | BRKINT);
+	raw.c_cc[VMIN] = 1;
+	raw.c_cc[VTIME] = 0;
+	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1)
+	{
+		write(2, "error tcsetattr\n", 16);
+		exit(1);
+	}
+	return (orig_termios);
+}
 
 /*
  * It disables raw mode by setting the terminal attributes to the original
@@ -67,10 +66,10 @@
  *
  * @param orig_termios The original terminal attributes.
  */
-// static void	ft_disable_raw_mode(struct termios orig_termios)
-// {
-// 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
-// }
+static void	ft_disable_raw_mode(struct termios orig_termios)
+{
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
+}
 
 /*
  * It gets the terminal type from the environment, and then uses the termcap
@@ -79,31 +78,31 @@
  *
  * @return The number of lines in the terminal.
  */
-// static int	ft_getent(void)
-// {
-// 	char	*termtype;
-// 	char	term_buffer[2048];
-// 	int		status;
+static int	ft_getent(void)
+{
+	char	*termtype;
+	char	term_buffer[2048];
+	int		status;
 
-// 	termtype = getenv("TERM");
-// 	if (termtype == NULL)
-// 	{
-// 		printf("could not get the TERM env\n");
-// 		exit(1);
-// 	}
-// 	status = tgetent(term_buffer, termtype);
-// 	if (status < 0)
-// 	{
-// 		printf("could not access the termcap data base\n");
-// 		exit(1);
-// 	}
-// 	else if (status == 0)
-// 	{
-// 		printf("could not find the termtype\n");
-// 		exit(1);
-// 	}
-// 	return (status);
-// }
+	termtype = getenv("TERM");
+	if (termtype == NULL)
+	{
+		printf("could not get the TERM env\n");
+		exit(1);
+	}
+	status = tgetent(term_buffer, termtype);
+	if (status < 0)
+	{
+		printf("could not access the termcap data base\n");
+		exit(1);
+	}
+	else if (status == 0)
+	{
+		printf("could not find the termtype\n");
+		exit(1);
+	}
+	return (status);
+}
 
 /*
  * It initializes the terminal, reads input, and then cleans up
@@ -138,10 +137,7 @@ int	ft_keyboard(t_term *t)
 
 	ft_init(t);
 	ret = ft_input_cycle(t);
-	// ft_printf("%p\n", t->nl_addr);
-	// ft_memdel((void **)&t->nl_addr);
-	if (!*t->inp)
-		ft_putchar('\n');
+	ft_putchar('\n');
 	return (ret);
 }
 
@@ -153,15 +149,17 @@ int	ft_keyboard(t_term *t)
 
 // 	status = 1;
 // 	ft_getent();
-// 	orig_termios = ft_init_raw();
+// 	ft_run_capability("cle");
 // 	ft_history_get(&t);
 // 	while (status)
 // 	{
+// 		orig_termios = ft_init_raw();
 // 		if (ft_keyboard(&t) == 1 || ft_strcmp(t.inp, "exit") == 0)
 // 			status = 0;
 // 		else
 // 			ft_putendl(t.inp);
+// 		ft_disable_raw_mode(orig_termios);
 // 	}
-// 	ft_history_write_to_file(&t);
-// 	ft_disable_raw_mode(orig_termios);
+
+// 	return (0);
 // }

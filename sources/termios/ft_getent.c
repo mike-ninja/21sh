@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 08:42:47 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/04 08:44:58 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/15 14:38:57 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,18 @@ int ft_getent(void)
 	termtype = getenv("TERM");
 	if (termtype == NULL)
 	{
-		printf("could not get the TERM env\n");
+		ft_err_print(NULL, NULL, "could not get the TERM env", 2);
 		exit(1);
 	}
 	status = tgetent(term_buffer, termtype);
 	if (status < 0)
 	{
-		printf("could not access the termcap data base\n");
+		ft_err_print(NULL, NULL, "could not access the termcap data base", 2);
 		exit(1);
 	}
 	else if (status == 0)
 	{
-		printf("could not find the termtype\n");
+		ft_err_print(NULL, NULL, "could not find the termtype", 2);
 		exit(1);
 	}
 	return (status);
