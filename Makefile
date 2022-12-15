@@ -6,7 +6,7 @@
 #    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/12/14 21:40:06 by jniemine         ###   ########.fr        #
+#    Updated: 2022/12/15 16:46:38 by jniemine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -179,6 +179,7 @@ FILES			= $(KEYBOARD)ft_arrow_input \
 				$(EXECTREE)exec_closefd \
 				$(EXECTREE)exec_aggregation \
 				$(EXECTREE)search_bin \
+				$(EXECTREE)exe_open_fd_if_needed \
 				$(EXPANSION)ft_expansion \
 				$(EXPANSION)ft_expansion_dollar \
 				$(EXPANSION)ft_expansion_tilde \

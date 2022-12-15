@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:15:20 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/14 21:50:09 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:02:32 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,24 @@ void exec_pipe(t_pipenode *pipenode, char ***environ_cp, char *terminal, t_sessi
 
 	if (pipe_wrap(pipefd))
 		return ;
-	if(fork_wrap() == 0){
-	  close(1);
-	  dup(pipefd[1]);
-	  close(pipefd[0]);
-	  close(pipefd[1]);
-	  exec_tree(pipenode->left,	environ_cp, terminal, sesh);
-	  exit (1);
+	if(fork_wrap() == 0)
+	{
+//		close(1);
+		dup2(STDOUT_FILENO, pipefd[1]);
+//		dup(pipefd[1]);
+		close(pipefd[0]);
+		close(pipefd[1]);
+		exec_tree(pipenode->left, environ_cp, terminal, sesh);
+		exit (1);
 	}
-	if(fork_wrap() == 0){
-	  close(0);
-	  dup(pipefd[0]);
-	  close(pipefd[0]);
-	  close(pipefd[1]);
-	  exec_tree(pipenode->right, environ_cp, terminal, sesh);
-	  exit (1);
+	if(fork_wrap() == 0)
+	{
+		close(0);
+		dup(pipefd[0]);
+		close(pipefd[0]);
+		close(pipefd[1]);
+		exec_tree(pipenode->right, environ_cp, terminal, sesh);
+		exit (1);
 	}
 	close(pipefd[0]);
 	close(pipefd[1]);
