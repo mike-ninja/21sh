@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:15:20 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/15 17:02:32 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:12:48 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ void	error_exit(char *msg)
 
 int	fork_wrap(void)
 {
-	int pid;
+	int	pid;
 
 	pid = fork();
-	if(pid == -1)
+	if (pid == -1)
 		error_exit("fork failed\n");
 	return (pid);
 }
 
 int	pipe_wrap(int pipefd[])
 {
-	if(pipe(pipefd)	< 0)
+	if (pipe(pipefd) < 0)
 	{
 		ft_err_print(NULL, "pipe failed", "exec_pipe", 2);
 		return (1);
@@ -39,26 +39,24 @@ int	pipe_wrap(int pipefd[])
 	return (0);
 }
 
-void exec_pipe(t_pipenode *pipenode, char ***environ_cp, char *terminal, t_session *sesh)
+void	exec_pipe(t_pipenode *pipenode,
+		char ***environ_cp, char *terminal, t_session *sesh)
 {
 	int	pipefd[2];
 
 	if (pipe_wrap(pipefd))
 		return ;
-	if(fork_wrap() == 0)
+	if (fork_wrap() == 0)
 	{
-//		close(1);
-		dup2(STDOUT_FILENO, pipefd[1]);
-//		dup(pipefd[1]);
+		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[0]);
 		close(pipefd[1]);
 		exec_tree(pipenode->left, environ_cp, terminal, sesh);
 		exit (1);
 	}
-	if(fork_wrap() == 0)
+	if (fork_wrap() == 0)
 	{
-		close(0);
-		dup(pipefd[0]);
+		dup2(pipefd[0], STDIN_FILENO);
 		close(pipefd[0]);
 		close(pipefd[1]);
 		exec_tree(pipenode->right, environ_cp, terminal, sesh);
