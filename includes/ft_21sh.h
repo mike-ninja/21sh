@@ -6,66 +6,70 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/12/15 16:45:40 by jniemine         ###   ########.fr       */
+=======
+/*   Updated: 2022/12/15 10:56:00 by mbarutel         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_21SH_H
-#define FT_21SH_H
+# define FT_21SH_H
 
-#include "libft.h"
-#include "keyboard.h"
-#include "ft_printf.h"
+# include "libft.h"
+# include "keyboard.h"
+# include "ft_printf.h"
 /* DUNNO IF NEEDED */
-#include <dirent.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
+# include <dirent.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
 
 //# define TOKEN_POINTER_N 1
 /* Do not use zero */
-#define PIPE 1
-#define CMD 2
-#define REDIR 3
-#define WORD 4
-#define SEMICOLON 5
-#define AGGREGATION 7
-#define CLOSEFD 8
+# define PIPE 1
+# define CMD 2
+# define REDIR 3
+# define WORD 4
+# define SEMICOLON 5
+# define AGGREGATION 7
+# define CLOSEFD 8
 
 /* For error messages */
-#define SHELL_NAME "21sh"
+# define SHELL_NAME "21sh"
 
 /* limit for filedescriptors */
 #define SH_FD_MAX 255
 
 /* Build tree, redir types */
-#define RE_IN_ONE 1
-#define RE_IN_TWO 2
-#define RE_IN_TRI 3
-#define RE_OUT_ONE 4
-#define RE_OUT_TWO 5
+# define RE_IN_ONE 1
+# define RE_IN_TWO 2
+# define RE_IN_TRI 3
+# define RE_OUT_ONE 4
+# define RE_OUT_TWO 5
 
-typedef union u_treenode t_treenode;
+typedef union u_treenode	t_treenode;
 
 /*					TOKEN STRUCT			*/
 typedef struct s_token
 {
-	int token;
-	char *value;
-} t_token;
+	int		token;
+	char	*value;
+}	t_token;
 
 /*					SEMICOLON STRUCT		*/
 typedef struct s_semicolon
 {
-	int type;
-	t_treenode *left;
-	t_treenode *right;
+	int			type;
+	t_treenode	*left;
+	t_treenode	*right;
 }	t_semicolon;
 
 /*					CMD STRUCT				*/
 typedef struct s_cmdnode
 {
-	int type;
-	char **cmd;
+	int		type;
+	char	**cmd;
 }	t_cmdnode;
 
 /*					CLOSEFD STRUCT			*/
@@ -87,34 +91,33 @@ typedef struct s_redir
 	int			rights;
 }				t_redir;
 
-/*					AGGREGATION	STRUCT		*/
+/*		     AGGREGATION	STRUCT	       	*/
 typedef struct s_aggregation
 {
 	int			type;
 	t_treenode	*cmd;
 	int			close_fd;
 	int			open_fd;
-} t_aggregate;
+}	t_aggregate;
 
-
-/*					PIPE STRUCT				*/
+/*				PIPE STRUCT				    */
 typedef struct s_pipenode
 {
 	int			type;
 	t_treenode	*left;
 	t_treenode	*right;
-}				t_pipenode;
+}	t_pipenode;
 
 /*					TREE UNION				*/
 union u_treenode
 {
-	int type;
-	t_semicolon semicolon;
-	t_pipenode pipe;
-	t_cmdnode cmd;
-	t_redir redir;
-	t_aggregate aggregate;
+	int			type;
+	t_redir		redir;
 	t_closefd	closefd;
+	t_cmdnode	cmd;
+	t_pipenode	pipe;
+	t_semicolon	semicolon;
+	t_aggregate	aggregate;
 };
 
 /*				SESSION STRUCT				*/
@@ -141,15 +144,16 @@ struct termios	ft_raw_enable(void);
 int				ft_getent(void);
 void			ft_raw_disable(struct termios orig_termios);
 
-
 /*				  INITIALIZE				*/
 void			ft_env_init(t_session *sesh);
 void			ft_session_init(t_session *sesh);
 
 /*					LEXER					*/
 char			*ft_lexer(t_term *t);
+char			*ft_heredoc(t_term *t, char *str);
 
 /*					TOKENIZER				*/
+<<<<<<< HEAD
 t_token 		*chop_line(char *line, t_token *args, size_t pointer_n);
 void 			free_token(t_token *token);
 char			*find_argument(char *line, int *i, int *start, int *end);
@@ -186,6 +190,17 @@ int				get_close_fd(char *value);
 void			traverse_node(t_treenode **head);
 char			*get_file(char *value);
 int				error_tok(t_token *tokens, t_treenode *redir_head, char *msg, char *symbol); //Check this
+=======
+t_token			*chop_line(char *line, t_token *args, size_t pointer_n);
+void			free_token(t_token *token);
+void			free_tokens(t_token *tokens);
+int				is_ws(char c);
+
+/*					BULDTREE				*/
+t_treenode		*build_tree(t_token *tokens);
+char			**make_arg_array(char *cmd);
+void			print_tree(t_treenode *head, int depth);
+>>>>>>> main
 
 /*					EXPANSION				*/
 void			ft_expansion(t_session *sesh, char **cmd);
@@ -197,22 +212,36 @@ int				ft_cd_addr_check(char *file);
 char			**ft_env_get(t_session *sesh, char *key);
 int				increment_whitespace(char **line);
 void			free_node(t_treenode *head);
-int 			ft_err_print(char *file, char *cmd, char *msg, int fd);
-
+int				ft_err_print(char *file, char *cmd, char *msg, int fd);
 
 /*					EXECUTE_TREE			*/
+<<<<<<< HEAD
 void			exec_tree(t_treenode *head, char ***environ_cp, char *terminal, t_session *sesh);
 void			execute_bin(char **args, char ***environ_cp, t_session *sesh);
 void			exec_pipe(t_pipenode *pipenode, char ***environ_cp, char *terminal, t_session *sesh);
 void			exec_redir(t_redir *node, char ***environ_cp, char *terminal, t_session *sesh);
 void			exec_aggregate(t_aggregate *node, char ***environ_cp, char *terminal, t_session *sesh);
 void			exec_closefd(t_closefd *node, char ***environ_cp, char *terminal, t_session *sesh);
+=======
+void			exec_tree(t_treenode *head, char ***environ_cp, char *terminal, \
+				t_session *sesh);
+void			execute_bin(char **args, char ***environ_cp, t_session *sesh);
+void			exec_pipe(t_pipenode *pipenode, char ***environ_cp, \
+				char *terminal, t_session *sesh);
+void			exec_redir(t_redir *node, char ***environ_cp, char *terminal, \
+				t_session *sesh);
+void			exec_aggregate(t_aggregate *node, char ***environ_cp, \
+				char *terminal, t_session *sesh);
+void			exec_closefd(t_closefd *node, char ***environ_cp, \
+				char *terminal, t_session *sesh);
+>>>>>>> main
 char			*search_bin(char *cmd, char **environ_cp);
 void			error_exit(char *msg);
 int				ft_freeda(void ***a, size_t row);
 size_t			calc_chptr(char **arr);
 int				fork_wrap(void);
 void			open_fd_if_needed(int fd, char *terminal);
+<<<<<<< HEAD
 void			exe_fail(char **cmd, char **args, char ***env_cp);
 void			open_fd_if_needed(int fd, char *terminal);
 
@@ -223,15 +252,22 @@ void exe_cmd_err(char *msg, char *cmd);
 int		check_access(char *cmd, char **args);
 int		check_if_user_exe(char *cmd, char **dest);
 void	exe_fail(char **cmd, char **args, char ***env_cp);
+=======
+
+/*					EXECUTE_UTILS			*/
+int				check_access(char *cmd, char **args);
+int				check_if_user_exe(char *cmd, char **dest);
+void			exe_fail(char **cmd, char **args, char ***env_cp);
+>>>>>>> main
 
 /*					BUILTIN					*/
-int		ft_builtins(t_session *sesh, char ***cmd);
-int		ft_cd(t_session *sesh, char **cmd);
-int		ft_echo(char **cmd);
-int		ft_env(t_session *sesh, char ***cmd);
-void	ft_exit(t_session *sesh, int status);
-int		ft_setenv(t_session *sesh, char **cmd);
-int		ft_unsetenv(t_session *sesh, char **cmd);
+int				ft_builtins(t_session *sesh, char ***cmd);
+int				ft_cd(t_session *sesh, char **cmd);
+int				ft_echo(char **cmd);
+int				ft_env(t_session *sesh, char ***cmd);
+void			ft_exit(t_session *sesh, int status);
+int				ft_setenv(t_session *sesh, char **cmd);
+int				ft_unsetenv(t_session *sesh, char **cmd);
 
 /*			    BUILTIN UTILITIES			*/
 int				ft_env_temp(t_session *sesh, char **cmd, int i);

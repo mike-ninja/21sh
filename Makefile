@@ -144,6 +144,7 @@ FILES			= $(KEYBOARD)ft_arrow_input \
 				$(KEYBOARD)ft_print_input \
 				$(KEYBOARD)ft_keyboard \
 				$(LEXER)ft_lexer \
+				$(LEXER)ft_heredoc \
 				$(BANNER)ft_banner \
 				$(MAIN)main \
 				$(MAIN)shell_end_cycle \

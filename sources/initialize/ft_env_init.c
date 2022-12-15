@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:42:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/03 20:54:30 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/14 20:08:18 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ static char	*ft_shlvl(char *shlvl)
 }
 
 /**
- * It copies the environment variables from the global variable `environ` into the `env`
- * variable of the `t_session` structure
+ * It copies the environment variables from the global variable `environ` into
+ * the `env` variable of the `t_session` structure
  *
  * @param sesh The session struct.
  */
@@ -72,7 +72,7 @@ void	ft_env_init(t_session *sesh)
 		else
 			sesh->env[i] = ft_strdup(environ[i]);
 	}
-	sesh->env[i]= NULL;
+	sesh->env[i] = NULL;
 	if (ft_env_get(sesh, "OLDPWD"))
 		ft_env_remove(sesh, "OLDPWD=");
 }
