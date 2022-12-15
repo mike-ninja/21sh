@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/14 21:40:31 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/15 14:45:20 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@
 
 /* For error messages */
 #define SHELL_NAME "21sh"
+
+/* limit for filedescriptors */
+#define SH_FD_MAX 255
 
 /* Build tree, redir types */
 #define RE_IN_ONE 1

@@ -12,3 +12,4 @@ cat < stdin.txt 0<&-
 rm stdin.txt 2>/dev/null
 2>&- doesnotexist
 2>&- 2>&1 ls asfd;
+>&- >lol 2>&1 asfd
