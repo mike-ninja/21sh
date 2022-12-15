@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:37:39 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/09 08:54:12 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/13 16:20:54 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,6 @@ void	ft_backspace(t_term *t)
 		return ;
 	row = ft_row_lowest_line(t);
 	len = ft_len_lowest_line(t, row);
-	if (t->index && (t->inp[t->index - 1] == D_QUO || \
-		t->inp[t->index - 1] == S_QUO))
-		ft_quote_decrement(t, 1);
 	backpace_continue(t, row, len);
 	if (t->inp[t->index])
 		ft_print_trail(t);

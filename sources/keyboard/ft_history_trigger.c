@@ -3,37 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_history_trigger.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/09 13:25:27 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/15 13:15:57 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
-
-/**
- * It copies a string,
- * skipping over escaped characters
- * 
- * @param dst The destination string.
- * @param src The string to be copied.
- */
-static void	ft_history_cpy(char *dst, char *src)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (src[i])
-	{
-		if (src[i] == '\\' && (src[i + 1] && src[i + 1] != '\'' \
-			&& src[i + 1] != '"'))
-			i++;
-		dst[j++] = src[i++];
-	}
-}
 
 /**
  * It copies the current input into a buffer, pushes the current input into
@@ -72,14 +49,14 @@ static void	ft_history_inp_update(t_term *t, char *history)
 	{
 		ft_memset((void *)t->nl_addr[t->c_row], '\0', \
 		ft_strlen(t->nl_addr[t->c_row]));
-		ft_history_cpy(t->nl_addr[t->c_row], history);
+		ft_memcpy(t->nl_addr[t->c_row], history, ft_strlen(history));
 	}
 	else
 	{
 		ft_memset((void *)t->nl_addr[t->c_row], '\0', \
 		ft_strlen(t->nl_addr[t->c_row]));
 		if (t->input_cpy)
-			ft_history_cpy(t->nl_addr[t->c_row], t->input_cpy);
+			ft_memcpy(t->nl_addr[t->c_row], history, ft_strlen(history));
 	}
 }
 
@@ -129,7 +106,7 @@ void	ft_history_trigger(t_term *t, ssize_t his)
 	ft_history_inp_update(t, history);
 	ft_history_reset_nl(t, t->nl_addr[t->history_row]);
 	ft_history_clear_line(t, row);
-	ft_flag_reset(t);
+	ft_quote_flag_reset(t);
 	ft_print_input(t, t->c_row, 1);
 	if (!history)
 	{

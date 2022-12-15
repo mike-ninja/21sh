@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/14 13:45:44 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/15 18:28:48 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 		cmd = search_bin(args[0], *environ_cp);
 	if (check_access(cmd, args) && fork_wrap() == 0)
 	{
+		// signal(SIGINT, SIG_DFL);
 		if (!cmd || execve(cmd, args, *environ_cp) < 0)
 			exe_fail(&cmd, args, environ_cp);
 		exit (1);

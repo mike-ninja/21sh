@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_quote_flag_check.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/04 08:23:30 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/15 18:51:58 by mbarutel         ###   ########.fr       */
+/*   Created: 2022/12/14 17:36:03 by mbarutel          #+#    #+#             */
+/*   Updated: 2022/12/14 17:37:52 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_21sh.h"
+#include "keyboard.h"
 
-void	ft_exit(t_session *sesh, int status)
+void	ft_quote_flag_check(t_term *t, ssize_t index)
 {
-	ft_printf("{RED}exit{RESET}\n");
-	ft_history_write_to_file(sesh->term);
-	ft_raw_disable(sesh->orig_termios);
-	shell_end_cycle(sesh);
-	exit(status);
+	ssize_t	i;
+
+	i = index;
+	while (t->inp[i] && t->inp[i] == '\\')
+		i++;
+	if (t->inp[i] == S_QUO || t->inp[i] == D_QUO)
+		ft_quote_flag_reset(t);
 }

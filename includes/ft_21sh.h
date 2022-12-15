@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/15 10:56:00 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/15 18:51:21 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ typedef struct session
 {
 	char			*line;
 	t_treenode		*head;
+	t_term			term[1];
 	char			**env;
 	t_token			*tokens;
 	int				exit_stat;

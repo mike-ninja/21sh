@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 20:04:51 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/15 10:47:49 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/15 14:08:36 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static char	*change_delim_to_file(t_term *t, char *str)
 		else
 			break ;
 	}
+	ft_strdel(&t->delim);
 	if (str && str[i])
 		return (get_command(str, i, len_ndle));
 	return (NULL);
@@ -102,6 +103,8 @@ char	*ft_heredoc(t_term *t, char *str)
 		fd = open("/tmp/heredoc", O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (fd)
 			return (write_to_tmp_file(t, str, fd));
+		else
+			ft_strdel(&t->delim);
 	}
 	return (str);
 }
