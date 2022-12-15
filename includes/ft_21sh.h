@@ -6,11 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/12/15 16:45:40 by jniemine         ###   ########.fr       */
-=======
-/*   Updated: 2022/12/15 10:56:00 by mbarutel         ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2022/12/15 18:11:01 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +149,6 @@ char			*ft_lexer(t_term *t);
 char			*ft_heredoc(t_term *t, char *str);
 
 /*					TOKENIZER				*/
-<<<<<<< HEAD
 t_token 		*chop_line(char *line, t_token *args, size_t pointer_n);
 void 			free_token(t_token *token);
 char			*find_argument(char *line, int *i, int *start, int *end);
@@ -190,17 +185,6 @@ int				get_close_fd(char *value);
 void			traverse_node(t_treenode **head);
 char			*get_file(char *value);
 int				error_tok(t_token *tokens, t_treenode *redir_head, char *msg, char *symbol); //Check this
-=======
-t_token			*chop_line(char *line, t_token *args, size_t pointer_n);
-void			free_token(t_token *token);
-void			free_tokens(t_token *tokens);
-int				is_ws(char c);
-
-/*					BULDTREE				*/
-t_treenode		*build_tree(t_token *tokens);
-char			**make_arg_array(char *cmd);
-void			print_tree(t_treenode *head, int depth);
->>>>>>> main
 
 /*					EXPANSION				*/
 void			ft_expansion(t_session *sesh, char **cmd);
@@ -215,14 +199,6 @@ void			free_node(t_treenode *head);
 int				ft_err_print(char *file, char *cmd, char *msg, int fd);
 
 /*					EXECUTE_TREE			*/
-<<<<<<< HEAD
-void			exec_tree(t_treenode *head, char ***environ_cp, char *terminal, t_session *sesh);
-void			execute_bin(char **args, char ***environ_cp, t_session *sesh);
-void			exec_pipe(t_pipenode *pipenode, char ***environ_cp, char *terminal, t_session *sesh);
-void			exec_redir(t_redir *node, char ***environ_cp, char *terminal, t_session *sesh);
-void			exec_aggregate(t_aggregate *node, char ***environ_cp, char *terminal, t_session *sesh);
-void			exec_closefd(t_closefd *node, char ***environ_cp, char *terminal, t_session *sesh);
-=======
 void			exec_tree(t_treenode *head, char ***environ_cp, char *terminal, \
 				t_session *sesh);
 void			execute_bin(char **args, char ***environ_cp, t_session *sesh);
@@ -234,31 +210,22 @@ void			exec_aggregate(t_aggregate *node, char ***environ_cp, \
 				char *terminal, t_session *sesh);
 void			exec_closefd(t_closefd *node, char ***environ_cp, \
 				char *terminal, t_session *sesh);
->>>>>>> main
 char			*search_bin(char *cmd, char **environ_cp);
 void			error_exit(char *msg);
 int				ft_freeda(void ***a, size_t row);
 size_t			calc_chptr(char **arr);
 int				fork_wrap(void);
 void			open_fd_if_needed(int fd, char *terminal);
-<<<<<<< HEAD
 void			exe_fail(char **cmd, char **args, char ***env_cp);
 void			open_fd_if_needed(int fd, char *terminal);
 
 /*					ERROR					*/
-void exe_cmd_err(char *msg, char *cmd);
-
-/*					EXECUTE_UTILS			*/
-int		check_access(char *cmd, char **args);
-int		check_if_user_exe(char *cmd, char **dest);
-void	exe_fail(char **cmd, char **args, char ***env_cp);
-=======
+void			exe_cmd_err(char *msg, char *cmd);
 
 /*					EXECUTE_UTILS			*/
 int				check_access(char *cmd, char **args);
 int				check_if_user_exe(char *cmd, char **dest);
 void			exe_fail(char **cmd, char **args, char ***env_cp);
->>>>>>> main
 
 /*					BUILTIN					*/
 int				ft_builtins(t_session *sesh, char ***cmd);
