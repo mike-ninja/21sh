@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/15 18:11:01 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/15 18:17:19 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define SHELL_NAME "21sh"
 
 /* limit for filedescriptors */
-#define SH_FD_MAX 255
+# define SH_FD_MAX 255
 
 /* Build tree, redir types */
 # define RE_IN_ONE 1
@@ -149,13 +149,13 @@ char			*ft_lexer(t_term *t);
 char			*ft_heredoc(t_term *t, char *str);
 
 /*					TOKENIZER				*/
-t_token 		*chop_line(char *line, t_token *args, size_t pointer_n);
-void 			free_token(t_token *token);
+t_token			*chop_line(char *line, t_token *args, size_t pointer_n);
+void			free_token(t_token *token);
 char			*find_argument(char *line, int *i, int *start, int *end);
-int 			is_ws(char c);
+int				is_ws(char c);
 void			init_token(char *c, t_token *token, char *line, int cur);
-void			track_used_space(t_token **args, size_t current_pointer_n
-				, size_t *max_pointer_n);
+void			track_used_space(t_token **args, size_t current_pointer_n,
+					size_t *max_pointer_n);
 void			debug_tokens(t_token *args);
 
 /*					TOKENIZER UTILS			*/
@@ -169,7 +169,8 @@ int				is_seperator(char c);
 t_treenode		*build_tree(t_token *tokens);
 char			**make_arg_array(char *cmd);
 void			print_tree(t_treenode *head, int depth);
-int				foreseer_of_tokens(t_token *tokens, int mark, int start, int end);
+int				foreseer_of_tokens(t_token *tokens,
+					int mark, int start, int end);
 t_treenode		*create_pipe_node(t_token *tokens, int i_tok);
 t_treenode		*create_semicolon_node(t_token *tokens, int i_tok, int end);
 t_treenode		*parse_left_cmd(t_token *tokens, int i_tok);
@@ -177,14 +178,19 @@ t_treenode		*parse_right_cmd(t_token *tokens, int i_tok);
 t_treenode		*parse_redirections(t_token *tokens, int i_tok, int cmd);
 t_treenode		*init_cmd_node(char *cmd);
 int				calculate_tokens(t_token *tokens);
-int				choose_redir_type(t_token *tokens, t_treenode **redir, int i_tok, int cmd);
-int				if_closefd(t_token *tokens, t_treenode **redir, int i_tok, int cmd);
-int				if_aggregation(t_token *tokens, t_treenode **redir, int i_tok, int cmd);
-int				if_redir(t_token *tokens, t_treenode **redir, int i_tok, int cmd);
+int				choose_redir_type(t_token *tokens,
+					t_treenode **redir, int i_tok, int cmd);
+int				if_closefd(t_token *tokens,
+					t_treenode **redir, int i_tok, int cmd);
+int				if_aggregation(t_token *tokens, t_treenode **redir,
+					int i_tok, int cmd);
+int				if_redir(t_token *tokens,
+					t_treenode **redir, int i_tok, int cmd);
 int				get_close_fd(char *value);
 void			traverse_node(t_treenode **head);
 char			*get_file(char *value);
-int				error_tok(t_token *tokens, t_treenode *redir_head, char *msg, char *symbol); //Check this
+int				error_tok(t_token *tokens, t_treenode *redir_head,
+					char *msg, char *symbol);
 
 /*					EXPANSION				*/
 void			ft_expansion(t_session *sesh, char **cmd);
