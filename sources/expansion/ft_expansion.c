@@ -6,18 +6,40 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:55:11 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/16 15:21:03 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/16 16:27:53 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
+static int	ft_qoute_removal(char *buff, int k, char *quote)
+{
+	int	i;
+
+	i = k;
+	if (!*quote)
+		*quote = buff[k];
+	else if (*quote == buff[k])
+	{
+		i++;
+		if (buff[i] == '\'' || buff[i] == '\"')
+			*quote = buff[i];
+		else
+			*quote = 0;
+	}
+	while (buff[i] && (buff[i] == *quote))
+		i++;
+	return (i);
+}
+
 static void	ft_quote_blash_removal(char *buff)
 {
 	int		k;
 	int		i;
+	char	quote;
 
 	k = -1;
+	quote = 0;
 	while (buff[++k])
 	{
 		if (buff[k] == '\\')
@@ -27,11 +49,7 @@ static void	ft_quote_blash_removal(char *buff)
 				i++;
 		}
 		else if ((buff[k] == '\'' || buff[k] == '\"'))
-		{
-			i = k + 1;
-			while (buff[i] && (buff[i] == '\'' || buff[i] == '\"'))
-				i++;
-		}
+			i = ft_qoute_removal(buff, k, &quote);
 		else
 			i = k;
 		ft_memmove((void *)&buff[k], (void *)&buff[i], ft_strlen(&buff[i]) + 1);
