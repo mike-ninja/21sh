@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/15 19:25:21 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/16 11:41:51 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,20 @@ int	main(int argc, char **argv)
 	if (!test_flag)
 		ft_raw_disable(sesh->orig_termios);
 	ft_session_init(sesh);
-	ft_history_get(&sesh->term);
+	ft_history_get(sesh->term);
 	while (status)
 	{
 		if (!test_flag)
 		{
 			sesh->orig_termios = ft_raw_enable();
-			if (ft_keyboard(&sesh->term) == 1)
+			if (ft_keyboard(sesh->term) == 1)
 				status = 0;
 			ft_raw_disable(sesh->orig_termios);
 		}
 		if (*(sesh->term->inp))
 		{
 			if (!test_flag)
-				sesh->line = ft_lexer(&sesh->term);
+				sesh->line = ft_lexer(sesh->term);
 			else
 				sesh->line = str_from_arr(&argv[2]);
 			sesh->tokens = chop_line(sesh->line, sesh->tokens, 1);
