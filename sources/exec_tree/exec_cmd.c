@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/15 19:24:41 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/16 12:28:16 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	check_access(char *cmd, char **args)
 void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 {
 	char	*cmd;
+	int		status;
 
 	if (!args[0])
 		return ;
@@ -53,11 +54,12 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 		cmd = search_bin(args[0], *environ_cp);
 	if (check_access(cmd, args) && fork_wrap() == 0)
 	{
-		// signal(SIGINT, SIG_DFL);
 		if (!cmd || execve(cmd, args, *environ_cp) < 0)
 			exe_fail(&cmd, args, environ_cp);
 		exit (1);
 	}
-	wait (0);
+	wait (&status);
+	if (WTERMSIG(status))
+		ft_putchar('\n');
 	ft_memdel((void **)&cmd);
 }
