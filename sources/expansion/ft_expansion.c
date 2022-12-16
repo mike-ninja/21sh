@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expansion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:55:11 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/16 14:01:45 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:21:03 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ static void	ft_quote_blash_removal(char *buff)
 				i++;
 		}
 		else if ((buff[k] == '\'' || buff[k] == '\"'))
+		{
 			i = k + 1;
+			while (buff[i] && (buff[i] == '\'' || buff[i] == '\"'))
+				i++;
+		}
 		else
 			i = k;
 		ft_memmove((void *)&buff[k], (void *)&buff[i], ft_strlen(&buff[i]) + 1);
