@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/16 16:07:40 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/16 21:10:17 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct s_aggregation
 	int			type;
 	t_treenode	*cmd;
 	int			close_fd;
-	int			open_fd;
+	char 		*dest;
 }	t_aggregate;
 
 /*				PIPE STRUCT				    */
@@ -179,6 +179,8 @@ t_treenode		*parse_left_cmd(t_token *tokens, int i_tok);
 t_treenode		*parse_right_cmd(t_token *tokens, int i_tok);
 t_treenode		*parse_redirections(t_token *tokens, int i_tok, int cmd);
 t_treenode		*init_cmd_node(char *cmd);
+t_treenode		*init_redir_wrap(char *filepath,
+					t_treenode *cmd, int redir_type, int close_fd);
 int				calculate_tokens(t_token *tokens);
 int				choose_redir_type(t_token *tokens,
 					t_treenode **redir, int i_tok, int cmd);

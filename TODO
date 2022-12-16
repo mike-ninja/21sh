@@ -1,5 +1,2 @@
-aggregation destination error checks $ / ~ allowed
-rm nosuchfile 2>&1 | cat -e
-
-If u have the interest: >lol echo hi >lmao mom
-check errors
+aggregation and redir should test the destination file/fd for existence then isfile then access
+Or maybe acces before isfile?

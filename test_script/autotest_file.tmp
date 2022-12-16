@@ -1,1 +1,1 @@
-ls -l >&- >lol; cat lol
+ls -l >lol -a >lmao; cat lmao

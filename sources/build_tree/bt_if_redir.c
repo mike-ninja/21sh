@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:52:25 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/14 16:21:31 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/16 21:39:43 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	redir_type(char *value)
 	return (0);
 }
 
-static t_treenode	*init_redir_wrap(char *filepath,
+t_treenode	*init_redir_wrap(char *filepath,
 	t_treenode *cmd, int redir_type, int close_fd)
 {
 	if (close_fd < 0 && (redir_type == RE_IN_ONE
@@ -93,7 +93,7 @@ static void	make_child_for_prev(t_treenode **redir,
 int	if_redir(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 {
 	int		redir_t;
-	char	*dest;
+	char	*dest; //test access and isfile
 	int		close_fd;
 
 	close_fd = get_close_fd(tokens[i_tok].value);
