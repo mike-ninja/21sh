@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/16 16:49:47 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/16 16:52:12 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ t_treenode	*parse_left_cmd(t_token *tokens, int i_tok)
 	cmd = -1;
 	if (i_tok >= 0 && tokens[i_tok].token == WORD)
 		cmd = i_tok;
-	//Probably should find the first cmd, not last
 	while (i_tok >= 0 && tokens[i_tok].token != PIPE
 		&& tokens[i_tok].token != SEMICOLON)
 	{
