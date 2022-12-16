@@ -1,1 +1,13 @@
-ls: asfd: No such file or directory
+total 224
+-rwxr-xr-x   1 jniemine  2020  87144 Dec 16 14:19 21sh
+-rw-r--r--   1 jniemine  2020  11092 Dec 15 19:25 Makefile
+-rw-r--r--   1 jniemine  2020    885 Dec 15 19:25 TODO
+-rw-r--r--   1 jniemine  2020     18 Nov 21 13:09 author
+-rw-r--r--   1 jniemine  2020      3 Dec 16 14:20 autotest_file.tmp
+drwxr-xr-x   4 jniemine  2020    136 Dec 16 12:34 includes
+drwxr-xr-x  11 jniemine  2020    374 Dec 16 11:24 libft
+-rw-r--r--   1 jniemine  2020      0 Dec 16 13:38 lmao
+-rw-r--r--   1 jniemine  2020      0 Dec 16 14:21 lol
+drwxr-xr-x  15 jniemine  2020    510 Dec 16 11:24 objects
+drwxr-xr-x  15 jniemine  2020    510 Dec 16 12:34 sources
+drwxr-xr-x  14 jniemine  2020    476 Dec 15 19:23 test_script

@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 16:13:07 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/15 16:58:31 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:19:00 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ static void	open_until_fd(int fd, char *terminal)
 	{
 		i = open(terminal, O_RDWR);
 		if (i < 0)
-			ft_err_print(NULL, "open_fd_if_needed", "open failed", 2);
-		if (i > fd)
 		{
-			close(i);
+			ft_err_print(NULL, "open_fd_if_needed", "open failed", 2);
 			break ;
 		}
+		if (i >= fd)
+			break ;
 	}
 }
 
@@ -38,7 +38,10 @@ static void	close_previously_closed(int fd, int *closefd)
 	while (i < fd)
 	{
 		if (closefd[i] == 1 && close(i) < 0)
+		{
 			ft_err_print(NULL, "open_fd_if_needed", "close failed", 2);
+			break ;
+		}
 		++i;
 	}
 }
@@ -50,6 +53,8 @@ void	open_fd_if_needed(int fd, char *terminal)
 	int			i;
 
 	closefd = ft_memalloc(sizeof(*closefd) * (fd + 1));
+	closefd[0] = 0;
+	closefd[1] = 0;
 	i = 0;
 	if (fstat(fd, &buf) < 0)
 	{

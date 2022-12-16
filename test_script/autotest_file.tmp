@@ -1,1 +1,1 @@
-2>&- 2>&1 ls asfd;
+ls -l >&- >lol; cat lol
