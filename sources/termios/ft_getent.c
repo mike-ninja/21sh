@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_getent.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 08:42:47 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/15 14:38:57 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:00:15 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  *
  * @return The number of lines in the terminal.
  */
-int ft_getent(void)
+int	ft_getent(void)
 {
 	char	*termtype;
 	char	term_buffer[2048];

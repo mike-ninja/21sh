@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expansion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:55:11 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/14 13:24:07 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:01:45 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ static void	ft_quote_blash_removal(char *buff)
 }
 
 /**
- * It loops through each word in the command, and if it finds a dollar sign, it expands the variable
+ * It loops through each word in the command, and if it finds a dollar sign, 
+ * it expands the variable.
  * 
  * @param sesh the session struct
  * @param cmd the command to be expanded

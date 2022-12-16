@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expansion_dollar.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:57:25 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/11 16:22:49 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:02:52 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ static char	**ft_special_ch_split(char *str)
 	char	**ret;
 
 	j = 0;
-	ret = (char **)ft_memalloc(sizeof(char *) * (ft_special_ch_split_len(str) + 1));
+	ret = (char **)ft_memalloc(sizeof(char *) * \
+	(ft_special_ch_split_len(str) + 1));
 	while (*str)
 	{
 		i = 0;
@@ -81,7 +82,7 @@ static void	ft_find_env(t_session *sesh, char *buff, char *arg)
 	key_len = 0;
 	while (arg[key_len] && !ft_isspace(arg[key_len]))
 		key_len++;
-	key = ft_strsub(arg, 1, key_len - 1);	
+	key = ft_strsub(arg, 1, key_len - 1);
 	env = ft_env_get(sesh, key);
 	if (env)
 		ft_strcat(buff, ft_strchr(*env, '=') + 1);
@@ -115,7 +116,7 @@ char	*ft_expansion_dollar(t_session *sesh, char *str)
 	while (split_dollar[++i])
 	{
 		if (*split_dollar[i] == '$' && ft_strlen(split_dollar[i]) > 1)
-			ft_find_env(sesh, buff, split_dollar[i]);	
+			ft_find_env(sesh, buff, split_dollar[i]);
 		else
 			ft_strcat(buff, split_dollar[i]);
 		ft_strdel(&split_dollar[i]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expansion_tilde.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:57:35 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/13 22:47:15 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:03:01 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ static char	*tilde_key(char *str, int *stilde)
 		*stilde = 1;
 		return ("HOME");
 	}
-	// else if (!ft_strcmp(str, "~"))
-	// 	return ("HOME");
 	return (NULL);
 }
 
