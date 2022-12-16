@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/16 12:28:16 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/16 12:36:33 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 	char	*cmd;
 	int		status;
 
+	status = 0;
 	if (!args[0])
 		return ;
 	if (!ft_builtins(sesh, &args))
