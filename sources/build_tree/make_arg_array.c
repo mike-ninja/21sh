@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 21:59:23 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/16 16:28:06 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/16 17:21:41 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char	*find_end_arg(char *cmd)
 			else if (qoute == *cmd)
 				qoute = 0;
 		}
-		else if (ft_isspace(*cmd) && !qoute)
+		else if (ft_isspace(*cmd) && !qoute && *cmd != '\n')
 			break ;
 		++cmd;
 	}
