@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_aggregation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 20:26:00 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/16 21:41:14 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/17 00:14:20 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,37 @@ static int	is_nb(char *str)
 		++str;
 	}
 	return (1);
+}
+
+//Test for input files also for <, make own function for that
+/* If no write permission: 21sh: <filename>: Permission denied */
+/* If dir: 21sh: <dirname>: Is a directory */
+/* If does not exist just return and create */
+int	test_file_access(char *file)
+{
+	struct stat buf;
+
+	if (access(file, F_OK)) //exists
+	{
+		if (!access(file, W_OK)) // can be written to
+			return (0);
+	}
+	else
+		return (1); //Does not exist
+	//Maybe protect stat? Can it fail if we know that file exists
+	stat(file, &buf);
+	if (buf.st_mode & S_IFDIR)
+	{
+		/* If dir: 21sh: <dirname>: Is a directory */
+		//isdir error
+	}
+	if (buf.st_mode & S_IFREG)
+	{
+		//Does this confirm its a file?
+	}
+	//What type is fd file??
+	//links to device on linux atleast
+
 }
 
 //Test access and isfile
