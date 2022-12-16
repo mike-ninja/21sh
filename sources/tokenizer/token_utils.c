@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 20:34:50 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/14 14:47:57 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:39:56 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ int	is_varchr(char c)
 
 int	is_seperator(char c)
 {
-	return (is_nl(c) || c == '|' || c == '>' || c == '<'
+	return (c == '|' || c == '>' || c == '<'
 		|| c == ';');
 }
