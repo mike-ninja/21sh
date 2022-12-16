@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_deletion_shift.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 15:21:37 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/14 17:28:32 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/16 13:48:14 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	ft_inhibitor_catch(t_term *t, ssize_t index, int *bs, int *hd)
 {
-	bs = 0;
-	hd = 0;
+	*bs = 0;
+	*hd = 0;
 	if (t->inp[index] == '<')
 		*hd = 1;
 	else if (t->inp[index] == '\\')
