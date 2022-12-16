@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/15 13:15:03 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/16 17:11:32 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static void	ft_delim_fetch(t_term *t)
 				end_q++;
 			t->delim = ft_strsub(ptr, 0, end_q - ptr);
 		}
+		else
+			t->heredoc = 0;
 	}
 }
 
