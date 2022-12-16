@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/15 19:24:29 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/16 16:07:40 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define SEMICOLON 5
 # define AGGREGATION 7
 # define CLOSEFD 8
+# define SKIP_TOK 9
 
 /* For error messages */
 # define SHELL_NAME "21sh"
@@ -192,6 +193,7 @@ void			traverse_node(t_treenode **head);
 char			*get_file(char *value);
 int				error_tok(t_token *tokens, t_treenode *redir_head,
 					char *msg, char *symbol);
+void			combine_words(t_token *tokens);
 
 /*					EXPANSION				*/
 void			ft_expansion(t_session *sesh, char **cmd);
