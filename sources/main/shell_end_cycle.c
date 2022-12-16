@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_end_cycle.c                                      :+:      :+:    :+:   */
+/*   shell_end_cycle.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/24 14:00:16 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/05 19:34:28 by jniemine         ###   ########.fr       */
+/*   Created: 2022/12/16 14:26:23 by jniemine          #+#    #+#             */
+/*   Updated: 2022/12/16 14:26:31 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static void	ft_reset_tokens(t_session *sesh)
 		ft_strdel(&sesh->tokens[i].value);
 	ft_printf("Resetting tokens array\n");
 	ft_memdel((void **)&sesh->tokens);
-	// sesh->tokens = (t_token *)ft_memalloc(sizeof(*sesh->tokens) * 2);
 }
 
 static void	ft_reset_tmp_env(t_session *sesh)

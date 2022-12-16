@@ -6,12 +6,14 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 20:26:00 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/15 16:06:06 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:03:09 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
+/* allowed char after >& are / for path, $ for expand and ~ for expand, handle this in tokenizer, use fstat here to see if fd
+	Path to /dev/fd/1 should work for example */
 void	exec_aggregate(t_aggregate *node, char ***environ_cp,
 		char *terminal, t_session *sesh)
 {
