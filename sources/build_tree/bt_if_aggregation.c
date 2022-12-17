@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:18:53 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/16 21:30:25 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/17 18:54:02 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ static void	make_child_for_prev(t_treenode **redir,
 	traverse_node(redir);
 }
 
-static int check_dest(char **dest, int close_fd, char *token_val,
+static int	check_dest(char **dest, int close_fd, char *token_val,
 		t_treenode **redir)
 {
-	char c;
+	char	c;
 
 	*dest = get_file(ft_strchr(token_val, '>'));
 	if (!*dest)
@@ -60,7 +60,8 @@ static int check_dest(char **dest, int close_fd, char *token_val,
 	return (1);
 }
 
-static int handle_error(int ret, t_token *tokens, t_treenode *redir, char **dest)
+static int	handle_error(int ret, t_token *tokens,
+		t_treenode *redir, char **dest)
 {
 	if (ret == -1)
 	{
@@ -88,7 +89,6 @@ int	if_aggregation(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 	ret = check_dest(&dest, close_fd, tokens[i_tok].value, redir);
 	if (handle_error(ret, tokens, *redir, &dest))
 		return (1);
-	//Dest needs to be string until we get to exec_aggregate
 	if (!*redir)
 	{
 		if (cmd < 0)
@@ -99,6 +99,5 @@ int	if_aggregation(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 	}
 	else
 		make_child_for_prev(redir, dest, close_fd);
-//	ft_strdel(&dest);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/17 18:00:41 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/17 18:52:49 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct s_aggregation
 	int			type;
 	t_treenode	*cmd;
 	int			close_fd;
-	char 		*dest;
+	char		*dest;
 }	t_aggregate;
 
 /*				PIPE STRUCT				    */
