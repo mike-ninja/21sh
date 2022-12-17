@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/16 21:10:17 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/17 13:39:26 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,7 @@ void			combine_words(t_token *tokens);
 void			ft_expansion(t_session *sesh, char **cmd);
 char			*ft_expansion_dollar(t_session *sesh, char *str);
 char			*ft_expansion_tilde(t_session *sesh, char *str);
+void			ft_quote_blash_removal(char *buff);
 
 /*					UTILITIES				*/
 int				ft_cd_addr_check(char *file);
