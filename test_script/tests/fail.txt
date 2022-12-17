@@ -2,3 +2,4 @@ doesnotexist
 ./Makefile
 libft
 ./libft
+ls -l >/dev/fd/3 | ls

@@ -1,2 +1,18 @@
 aggregation and redir should test the destination file/fd for existence then isfile then access
 Or maybe acces before isfile?
+
+Open errors which might matter:
+     [EACCES]           Search permission is denied for a component of the path prefix.
+     [EACCES]           The required permissions (for reading and/or writing) are denied for the given flags.
+     [EACCES]           O_CREAT is specified, the file does not exist, and the directory in which it is to be
+                        created does not permit writing.
+     [EACCES]           O_TRUNC is specified and write permission is denied.
+	 [EDQUOT]           O_CREAT is specified, the file does not exist, and the directory in which the entry for
+                        the new file is being placed cannot be extended because the user's quota of disk blocks
+                        on the file system containing the directory has been exhausted.
+	link to file
+	link to dir
+	link to file without access
+	link to dir without access
+	link to nowhere
+	symbolic and hard

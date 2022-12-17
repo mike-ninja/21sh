@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:52:25 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/16 21:39:43 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/17 18:32:06 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,11 @@ static void	make_child_for_prev(t_treenode **redir,
 	traverse_node(redir);
 }
 
+//test for input if can be read output if can be written
 int	if_redir(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 {
 	int		redir_t;
-	char	*dest; //test access and isfile
+	char	*dest;
 	int		close_fd;
 
 	close_fd = get_close_fd(tokens[i_tok].value);

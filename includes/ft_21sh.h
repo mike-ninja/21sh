@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/16 21:10:17 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/17 18:00:41 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ char			*get_file(char *value);
 int				error_tok(t_token *tokens, t_treenode *redir_head,
 					char *msg, char *symbol);
 void			combine_words(t_token *tokens);
+int				test_if_file(char *file);
 
 /*					EXPANSION				*/
 void			ft_expansion(t_session *sesh, char **cmd);
