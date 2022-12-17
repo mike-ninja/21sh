@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:32:10 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/15 17:15:12 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/16 20:08:29 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ static void	free_redir_node(t_redir **redir)
 
 int	error_tok(t_token *tokens, t_treenode *redir_head, char *msg, char *symbol)
 {
-	if (!symbol)
+	if (!symbol && msg)
 		ft_err_print(NULL, NULL, msg, 2);
-	else
+	else if (symbol && msg)
 		ft_err_print(NULL, msg, symbol, 2);
-	while (tokens->token)
+	while (tokens && tokens->token)
 	{
 		free_token(&(*tokens));
 		++tokens;

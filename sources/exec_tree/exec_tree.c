@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:23:35 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/15 19:24:57 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/16 20:51:26 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ static void	free_rest(t_treenode *head)
 	else if (head->type == CLOSEFD)
 		free_node(((t_redir *)head)->cmd);
 	else if (head->type == AGGREGATION)
+	{
+		ft_strdel(&((t_aggregate *)head)->dest);
 		free_node(((t_aggregate *)head)->cmd);
+	}
 	ft_memdel((void **)&head);
 }
 
