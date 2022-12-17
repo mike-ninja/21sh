@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/16 12:36:33 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/17 12:54:55 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,12 @@ int	check_access(char *cmd, char **args)
 	stat(cmd, &buf);
 	if (S_ISDIR(buf.st_mode))
 	{
-		ft_err_print(cmd, NULL, "is a directory", 2);
+		ft_err_print(cmd, NULL, "Is a directory", 2);
+		return (0);
+	}
+	if (access(cmd, X_OK) < 0)
+	{
+		ft_err_print(cmd, NULL, "Permission denied", 2);
 		return (0);
 	}
 	return (1);
