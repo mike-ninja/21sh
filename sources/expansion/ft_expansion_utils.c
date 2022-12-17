@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:38:31 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/17 17:31:25 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/17 19:47:23 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ static int	ft_bslash_null(char *buff, ssize_t pos)
 {
 	ssize_t	count;
 
-	if (!pos)
-		return (0);
 	count = pos - 1;
 	while (count && buff[count] == '\\')
 		count--;
@@ -26,6 +24,31 @@ static int	ft_bslash_null(char *buff, ssize_t pos)
 	if ((pos - count) % 2)
 		return (1);
 	return (0);
+}
+
+static void	ft_qoute_parse(char *buff, char *quote, int len)
+{
+	if (!len || buff[len - 1] != '\\' || !ft_bslash_null(buff, len - 1))
+	{	
+		if (!*quote)
+			*quote = buff[len];
+		else if (*quote == buff[len])
+			*quote = 0;
+		ft_memmove((void *)&buff[len], (void *)&buff[len + 1], \
+		ft_strlen(&buff[len + 1]) + 1);
+	}	
+}
+
+static void	ft_blash_parse(char *buff, char *quote, int len)
+{
+	if (!*quote && (!len || ft_bslash_null(buff, len)))
+	{
+		ft_memmove((void *)&buff[len], (void *)&buff[len + 1], \
+		ft_strlen(&buff[len + 1]) + 1);
+	}
+	else if (*quote == D_QUO && !ft_bslash_null(buff, len))
+		ft_memmove((void *)&buff[len], (void *)&buff[len + 1], \
+			ft_strlen(&buff[len + 1]) + 1);
 }
 
 void	ft_quote_blash_removal(char *buff)
@@ -38,25 +61,13 @@ void	ft_quote_blash_removal(char *buff)
 	while (len >= 0)
 	{
 		if ((buff[len] == S_QUO || buff[len] == D_QUO))
-		{
-			if (!len || buff[len - 1] != '\\' || !ft_bslash_null(buff, len)) // problem here echo \'mike
-			{	
-				if (!quote)
-					quote = buff[len];
-				else if (quote == buff[len])
-					quote = 0;
-				ft_memmove((void *)&buff[len], (void *)&buff[len + 1], ft_strlen(&buff[len + 1]) + 1);
-			}
-		}
+			ft_qoute_parse(buff, &quote, len);
 		else if (buff[len] == '\\')
-		{
-			if (!quote && ft_bslash_null(buff, len))
-				ft_memmove((void *)&buff[len], (void *)&buff[len + 1], ft_strlen(&buff[len + 1]) + 1);
-			else if (quote == D_QUO && !ft_bslash_null(buff, len))
-				ft_memmove((void *)&buff[len], (void *)&buff[len + 1], ft_strlen(&buff[len + 1]) + 1);
-		}
-		else if (buff[len] == '\n' && len && buff[len - 1] == '\\' && !ft_bslash_null(buff, len))
-			ft_memmove((void *)&buff[len], (void *)&buff[len + 1], ft_strlen(&buff[len + 1]) + 1);
+			ft_blash_parse(buff, &quote, len);
+		else if (buff[len] == '\n' && len && buff[len - 1] == '\\' \
+		&& !ft_bslash_null(buff, len))
+			ft_memmove((void *)&buff[len], (void *)&buff[len + 1], \
+			ft_strlen(&buff[len + 1]) + 1);
 		len--;
 	}
 }
