@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_aggregation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 20:26:00 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/17 00:14:20 by jakken           ###   ########.fr       */
+/*   Updated: 2022/12/17 13:03:18 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@ int	test_file_access(char *file)
 {
 	struct stat buf;
 
-	if (access(file, F_OK)) //exists
+	if (!access(file, F_OK)) //exists
 	{
-		if (!access(file, W_OK)) // can be written to
+		if (access(file, W_OK) < 0) // can be written to
+		{
+			ft_err_print(file, NULL, "Permission denied", 2);
 			return (0);
+		}
 	}
 	else
 		return (1); //Does not exist
@@ -42,16 +45,19 @@ int	test_file_access(char *file)
 	stat(file, &buf);
 	if (buf.st_mode & S_IFDIR)
 	{
+		ft_err_print(file, NULL, "Is a direcotry", 2);
+		return (0);
 		/* If dir: 21sh: <dirname>: Is a directory */
 		//isdir error
 	}
 	if (buf.st_mode & S_IFREG)
 	{
+		ft_printf("Is regular\n");
 		//Does this confirm its a file?
 	}
 	//What type is fd file??
 	//links to device on linux atleast
-
+	return (1);
 }
 
 //Test access and isfile
@@ -76,6 +82,7 @@ void	exec_aggregate(t_aggregate *node, char ***environ_cp,
 		open_fd = ft_atoi(node->dest);
 	else if (node->close_fd == 1)
 	{
+	//	test_file_access(node->dest);
 		redir_to_file(node, sesh);
 		return ;
 	}
