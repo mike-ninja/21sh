@@ -7,3 +7,4 @@ echo intresting > intresting
 cat < intresting <&-
 <&- cat < intresting
 wc < interesting <&0
+<&doesnotexist | ls

@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:00:54 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/14 17:01:15 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/18 17:37:11 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ t_treenode	*create_pipe_node(t_token *tokens, int i_tok)
 	if (tokens[i_tok].token == PIPE)
 	{
 		left = parse_left_cmd(tokens, i_tok - 1);
-		if (!left)
-			return (NULL);
 		next_pipe = foreseer_of_tokens(tokens, PIPE, i_tok + 1,
 				calculate_tokens(tokens));
 		if (next_pipe >= 0)
