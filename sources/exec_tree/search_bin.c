@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_bin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 12:31:36 by jakken            #+#    #+#             */
-/*   Updated: 2022/11/27 21:28:41 by jakken           ###   ########.fr       */
+/*   Updated: 2022/12/18 15:56:42 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,24 +63,24 @@ char	*search_bin(char *cmd, char **environ_cp)
 	char	*exepath;
 	int		i;
 
-	i = 0;
+	i = -1;
 	if (try_cmd(cmd, environ_cp, &temp_path))
 		return (ft_strdup(cmd));
-	bin_paths = NULL;
 	if (temp_path)
+	{	
 		bin_paths = ft_strsplit(temp_path, ':');
-	while (ft_memd_w((void **)&temp_path) && bin_paths && bin_paths[i])
-	{
-		temp_path = ft_strjoin(bin_paths[i], "/");
-		exepath = ft_strjoin(temp_path, cmd);
-		if (ft_memd_w((void **)&temp_path) && !access(exepath, F_OK)
-			&& !access(exepath, X_OK)
-			&& ft_freeda_w((void ***)&bin_paths, calc_chptr(bin_paths)))
-			return (exepath);
-		else
-			ft_memdel((void **)&exepath);
-		++i;
+		while (ft_memd_w((void **)&temp_path) && bin_paths && bin_paths[++i])
+		{
+			temp_path = ft_strjoin(bin_paths[i], "/");
+			exepath = ft_strjoin(temp_path, cmd);
+			if (ft_memd_w((void **)&temp_path) && !access(exepath, F_OK)
+				&& !access(exepath, X_OK)
+				&& ft_freeda_w((void ***)&bin_paths, calc_chptr(bin_paths)))
+				return (exepath);
+			else
+				ft_memdel((void **)&exepath);
+		}
+		ft_freeda((void ***)&bin_paths, calc_chptr(bin_paths));
 	}
-	ft_freeda((void ***)&bin_paths, calc_chptr(bin_paths));
 	return (NULL);
 }
