@@ -6,23 +6,11 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:38:31 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/17 21:49:43 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/18 10:27:18 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
-
-// static int	ft_bslash_null(char *buff, ssize_t pos)
-// {
-// 	ssize_t	count;
-
-// 	count = pos - 1;
-// 	while (count && buff[count] == '\\')
-// 		count--;
-// 	if ((pos - count) % 2)
-// 		return (1);
-// 	return (0);
-// }
 
 static size_t	ft_bslash_null(char *buff, ssize_t pos)
 {
@@ -39,38 +27,23 @@ static size_t	ft_bslash_null(char *buff, ssize_t pos)
 		count--;
 	}
 	if (len && (len % 2))
-	{
-		ft_printf("%d %d\n", pos, len);
 		return (1);
-	}
 	return (0);
 }
-// static int	ft_bslash_null(char *buff, ssize_t pos)
-// {
-// 	ssize_t	count;
-
-// 	count = pos - 1;
-// 	while (buff[count] == '\\')
-// 	{
-// 		count--;
-// 		if (!count)
-// 			break ;
-// 	}
-// 	if ((pos - count) % 2)
-// 		return (1);
-// 	return (0);
-// }
 
 static void	ft_qoute_parse(char *buff, char *quote, int len)
 {
-	if (!len || buff[len - 1] != '\\' || !ft_bslash_null(buff, len)) // something wrong this condition
+	if (!len || buff[len - 1] != '\\' || !ft_bslash_null(buff, len))
 	{	
 		if (!(*quote))
 			*quote = buff[len];
 		else if (*quote == buff[len])
 			*quote = 0;
-		ft_memmove((void *)&buff[len], (void *)&buff[len + 1], \
-		ft_strlen(&buff[len + 1]) + 1);
+		if (!(*quote) || *quote == buff[len])
+		{
+			ft_memmove((void *)&buff[len], (void *)&buff[len + 1], \
+			ft_strlen(&buff[len + 1]) + 1);
+		}
 	}	
 }
 
