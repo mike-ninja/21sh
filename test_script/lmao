@@ -1,0 +1,16 @@
+total 64
+-rw-r--r--   1 jniemine  2020    21 Dec  6 16:11 -lol
+drwxr-xr-x  15 jniemine  2020   510 Dec 18 18:58 .
+drwxr-xr-x  28 jniemine  2020   952 Dec 18 18:56 ..
+-rwxr-xr-x   1 jniemine  2020  2601 Dec 18 18:54 autotest.sh
+-rw-r--r--   1 jniemine  2020    19 Dec 13 13:50 autotest_file
+-rw-r--r--   1 jniemine  2020    30 Dec 18 18:55 autotest_file.tmp
+-rw-r--r--   1 jniemine  2020    30 Dec 18 18:55 autotest_file.txt
+drwxr-xr-x   4 jniemine  2020   136 Dec 18 18:55 diff
+-rw-r--r--   1 jniemine  2020    18 Dec 13 13:50 hello
+-rwxr-xr-x   1 jniemine  2020    47 Dec  6 16:11 leaks.sh
+-rw-r--r--   1 jniemine  2020     0 Dec 18 18:58 lmao
+-rw-r--r--   1 jniemine  2020     0 Dec 18 18:58 lol
+-rw-r--r--   1 jniemine  2020     6 Dec  6 16:11 lol.txt
+drwxr-xr-x   8 jniemine  2020   272 Dec 18 18:55 out
+drwxr-xr-x  11 jniemine  2020   374 Dec 18 17:45 tests
