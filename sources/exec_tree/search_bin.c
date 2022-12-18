@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_bin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 12:31:36 by jakken            #+#    #+#             */
-/*   Updated: 2022/11/27 21:28:41 by jakken           ###   ########.fr       */
+/*   Updated: 2022/12/18 13:51:57 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	ft_freeda_w(void ***a, size_t row)
 	return (1);
 }
 
-char	*search_variable(char **environ_cp, char *var_name)
+static char	*search_variable(char **environ_cp, char *var_name)
 {
 	int		i;
 	char	*var_value;
@@ -48,10 +48,15 @@ char	*search_variable(char **environ_cp, char *var_name)
 	return (var_value);
 }
 
-static int	try_cmd(char *cmd, char **environ_cp, char **temp_path)
+static int	try_cmd(char **cmd, char **environ_cp, char **temp_path)
 {
-	if (!access(cmd, F_OK) && !access(cmd, X_OK))
-		return (1);
+	char	*new_cmd;
+
+	if (!access(*cmd, F_OK) && !access(*cmd, X_OK))
+	{
+		if (ft_strchr(*cmd, '/'))
+			return (1);
+	}
 	*temp_path = search_variable(environ_cp, "PATH");
 	return (0);
 }
@@ -64,7 +69,7 @@ char	*search_bin(char *cmd, char **environ_cp)
 	int		i;
 
 	i = 0;
-	if (try_cmd(cmd, environ_cp, &temp_path))
+	if (try_cmd(&cmd, environ_cp, &temp_path))
 		return (ft_strdup(cmd));
 	bin_paths = NULL;
 	if (temp_path)
