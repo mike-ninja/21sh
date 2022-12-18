@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:39:22 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/14 16:59:10 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/18 14:50:19 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ int	if_closefd(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 	close_fd = 0;
 	close_fd = get_close_fd(tokens[i_tok].value);
 	head = *redir;
-	if (close_fd < 0)
+	if (close_fd < 0 && ft_strchr(tokens[i_tok].value, '>'))
 		close_fd = 1;
+	else if (close_fd < 0 && ft_strchr(tokens[i_tok].value, '<'))
+		close_fd = 0;
 	if (!*redir)
 	{
 		if (cmd < 0)
