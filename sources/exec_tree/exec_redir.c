@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:14:38 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/18 19:32:31 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/18 22:04:14 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	test_file_access_for_type(char *dest, int closefd, int *rights)
 		}
 		if (closefd == STDIN_FILENO && !access(dest, R_OK))
 			return (1);
-		else if (closefd == STDOUT_FILENO && !access(dest, W_OK))
+		else if (closefd >= STDOUT_FILENO && !access(dest, W_OK))
 		{
 			if (*rights & O_CREAT & O_TRUNC)
 				*rights = O_WRONLY;
