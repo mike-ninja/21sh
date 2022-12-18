@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/15 13:15:57 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/18 20:56:15 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ static void	ft_history_inp_update(t_term *t, char *history)
 		ft_memset((void *)t->nl_addr[t->c_row], '\0', \
 		ft_strlen(t->nl_addr[t->c_row]));
 		if (t->input_cpy)
-			ft_memcpy(t->nl_addr[t->c_row], history, ft_strlen(history));
+			ft_memcpy(t->nl_addr[t->c_row], t->input_cpy, \
+			ft_strlen(t->input_cpy));
 	}
 }
 
@@ -110,8 +111,8 @@ void	ft_history_trigger(t_term *t, ssize_t his)
 	ft_print_input(t, t->c_row, 1);
 	if (!history)
 	{
-		t->history_row = -1;
 		ft_strdel(&t->input_cpy);
+		t->history_row = -1;
 	}
 	ft_run_capability("ve");
 }
