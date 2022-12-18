@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/17 12:54:55 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/18 15:12:47 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,12 @@ int	check_access(char *cmd, char **args)
 {
 	struct stat	buf;
 
-	if (!cmd || !ft_strchr(cmd, '/'))
+	if ((cmd && ft_strchr(cmd, '/')) && access(cmd, F_OK) < 0)
+	{
+		ft_err_print(cmd, NULL, "No such file or directory", 2);
+		return (0);
+	}
+	else if (!cmd || !ft_strchr(cmd, '/'))
 	{
 		ft_err_print(NULL, args[0], "command not found", 2);
 		return (0);
@@ -38,7 +43,7 @@ int	check_access(char *cmd, char **args)
 		ft_err_print(cmd, NULL, "Is a directory", 2);
 		return (0);
 	}
-	if (access(cmd, X_OK) < 0)
+	else if (access(cmd, X_OK) < 0)
 	{
 		ft_err_print(cmd, NULL, "Permission denied", 2);
 		return (0);
