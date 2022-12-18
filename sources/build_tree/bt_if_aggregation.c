@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bt_if_aggregation.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:18:53 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/18 13:32:45 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/18 15:04:06 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,10 @@ int	if_aggregation(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 	int		ret;
 
 	close_fd = get_close_fd(tokens[i_tok].value);
-	if (close_fd < 0)
+	if (close_fd < 0 && ft_strchr(tokens[i_tok].value, '>'))
 		close_fd = 1;
+	else if (close_fd < 0 && ft_strchr(tokens[i_tok].value, '<'))
+		close_fd = 0;
 	ret = check_dest(&dest, close_fd, tokens[i_tok].value, redir);
 	if (handle_error(ret, tokens, *redir, &dest))
 		return (1);

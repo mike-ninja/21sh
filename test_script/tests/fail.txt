@@ -3,3 +3,7 @@ doesnotexist
 libft
 ./libft
 ls -l >/dev/fd/3 | ls
+echo intresting > intresting
+cat < intresting <&-
+<&- cat < intresting
+wc < interesting <&0
