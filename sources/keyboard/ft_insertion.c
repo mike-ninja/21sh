@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/16 17:11:32 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/18 12:45:56 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	ft_insertion_char(t_term *t)
 		&& !t->heredoc)
 	{
 		if (!ft_bslash_escape_check(t, t->index - 1))
-			ft_quote_handling(t, t->inp[t->index - 1]);
+			ft_quote_flag_reset(t);
 	}
 	if (t->inp[t->index - 1] == '<')
 	{

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_deletion_shift.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 15:21:37 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/16 13:48:14 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/18 12:49:41 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-static void	ft_inhibitor_catch(t_term *t, ssize_t index, int *bs, int *hd)
+static int	ft_inhibitor_catch(t_term *t, ssize_t index, int *bs, int *hd)
 {
 	*bs = 0;
 	*hd = 0;
@@ -22,7 +22,8 @@ static void	ft_inhibitor_catch(t_term *t, ssize_t index, int *bs, int *hd)
 		*bs = 1;
 	else if ((t->inp[index] == D_QUO || t->inp[index] == S_QUO) \
 	&& !ft_bslash_escape_check(t, index))
-		ft_quote_decrement(t, index);
+		return (1);
+	return (0);
 }
 
 /*
@@ -35,9 +36,10 @@ static void	ft_inhibitor_catch(t_term *t, ssize_t index, int *bs, int *hd)
 void	ft_deletion_shift(t_term *t, ssize_t index)
 {
 	int	blash;
+	int	quote;
 	int	heredoc;
 
-	ft_inhibitor_catch(t, index, &blash, &heredoc);
+	quote = ft_inhibitor_catch(t, index, &blash, &heredoc);
 	t->inp[index] = '\0';
 	while (&t->inp[index] < &t->inp[t->bytes])
 	{
@@ -55,4 +57,6 @@ void	ft_deletion_shift(t_term *t, ssize_t index)
 		if (!t->heredoc && t->delim)
 			ft_strdel(&t->delim);
 	}
+	else if (quote)
+		ft_quote_flag_reset(t);
 }
