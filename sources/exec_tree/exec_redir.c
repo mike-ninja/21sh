@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:14:38 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/17 18:49:58 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/18 19:32:31 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,21 @@ static int	test_file_access_for_type(char *dest, int closefd, int *rights)
 	if (test_if_file(dest))
 	{
 		if (access(dest, F_OK) < 0)
-			return (1);
+		{
+			if (closefd == STDOUT_FILENO)
+				return (1);
+			else
+			{
+				ft_err_print(dest, NULL, "No such file or directory", 2);
+				return (0);
+			}
+		}
 		if (closefd == STDIN_FILENO && !access(dest, R_OK))
 			return (1);
 		else if (closefd == STDOUT_FILENO && !access(dest, W_OK))
 		{
-			*rights = O_WRONLY;
+			if (*rights & O_CREAT & O_TRUNC)
+				*rights = O_WRONLY;
 			return (1);
 		}
 		ft_err_print(dest, NULL, "Permission denied", 2);

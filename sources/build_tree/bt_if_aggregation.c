@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:18:53 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/18 15:04:06 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/18 19:01:15 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	handle_error(int ret, t_token *tokens,
 		return (error_tok(tokens, redir,
 				"syntax error near unexpected token", "newline"));
 	}
-	if (ret == 1 && ft_err_print(NULL, *dest, "ambigious redirect", 2))
+	if (ret == 1 && ft_err_print(NULL, *dest, "ambiguous redirect", 2))
 	{
 		ft_strdel(dest);
 		return (error_tok(tokens, redir, NULL, NULL));

@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   search_bin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2022/12/18 16:40:33 by mbarutel         ###   ########.fr       */
+/*   Created: 2022/12/18 18:01:29 by jniemine          #+#    #+#             */
+/*   Updated: 2022/12/18 18:01:33 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "ft_21sh.h"
 
@@ -73,7 +72,7 @@ char	*search_bin(char *cmd, char **environ_cp)
 	if (try_cmd(&cmd, environ_cp, &temp_path))
 		return (ft_strdup(cmd));
 	if (temp_path)
-	{	
+	{
 		bin_paths = ft_strsplit(temp_path, ':');
 		while (ft_memd_w((void **)&temp_path) && bin_paths && bin_paths[++i])
 		{

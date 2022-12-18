@@ -1,5 +1,4 @@
->&0 <&hi ls
-< file exist check not working
-<& <&- source defaults to zero >& >&- source defaults to 1
+>> APPEND NOT WORKING WTFFF
+rm stdin.txt 2>/dev/null
+ls -l | head -n 5 > lol | cat lol //for some reason works, should not beacause > lol is open when cat gets called?
 ls <> lol. should execute ls.
-cat <<> should not open cat

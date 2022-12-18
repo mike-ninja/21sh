@@ -1,1 +1,1 @@
-ls -l >lol -a >lmao; cat lmao
+mkdir test ; cd test ; ls -a ; ls | cat | wc -c > fifi ; cat fifi;cd ..;rm -rf test
