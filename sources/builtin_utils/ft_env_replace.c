@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 12:12:18 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/30 10:10:25 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/18 15:41:10 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	ft_env_replace(t_session *sesh, char *envn, char **tmp_env)
 	{
 		if (tmp_env)
 			*tmp_env = *envp;
+		else
+			ft_strdel(envp);
 		*envp = ft_strdup(envn);
 		ret = 1;
 	}
