@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/18 15:12:47 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/18 16:36:42 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,31 +23,41 @@ int	check_if_user_exe(char *cmd, char **dest)
 	return (0);
 }
 
-int	check_access(char *cmd, char **args)
+static int	check_file_validity(struct stat *buff, char *cmd)
 {
-	struct stat	buf;
-
-	if ((cmd && ft_strchr(cmd, '/')) && access(cmd, F_OK) < 0)
+	if (S_ISDIR(buff->st_mode))
 	{
-		ft_err_print(cmd, NULL, "No such file or directory", 2);
-		return (0);
-	}
-	else if (!cmd || !ft_strchr(cmd, '/'))
-	{
-		ft_err_print(NULL, args[0], "command not found", 2);
-		return (0);
-	}
-	stat(cmd, &buf);
-	if (S_ISDIR(buf.st_mode))
-	{
-		ft_err_print(cmd, NULL, "Is a directory", 2);
+		ft_err_print(NULL, cmd, "Is a directory", 2);
 		return (0);
 	}
 	else if (access(cmd, X_OK) < 0)
 	{
-		ft_err_print(cmd, NULL, "Permission denied", 2);
+		ft_err_print(NULL, cmd, "Permission denied", 2);
 		return (0);
 	}
+	return (1);
+}
+
+int	check_access(char *cmd, char **args, t_session *sesh)
+{
+	struct stat	buf;
+
+	if (((cmd && ft_strchr(cmd, '/')) && access(cmd, F_OK) < 0))
+	{
+		ft_err_print(NULL, args[0], "No such file or directory", 2);
+		return (0);
+	}
+	else if (!cmd || !ft_strchr(cmd, '/'))
+	{
+		if (ft_env_get(sesh, "PATH"))
+			ft_err_print(NULL, args[0], "command not found", 2);
+		else
+			ft_err_print(NULL, args[0], "No such file or directory", 2);
+		return (0);
+	}
+	stat(cmd, &buf);
+	if (!check_file_validity(&buf, cmd))
+		return (0);
 	return (1);
 }
 
@@ -63,7 +73,7 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 		return ;
 	if (!check_if_user_exe(args[0], &cmd))
 		cmd = search_bin(args[0], *environ_cp);
-	if (check_access(cmd, args) && fork_wrap() == 0)
+	if (check_access(cmd, args, sesh) && fork_wrap() == 0)
 	{
 		if (!cmd || execve(cmd, args, *environ_cp) < 0)
 			exe_fail(&cmd, args, environ_cp);
