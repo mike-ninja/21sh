@@ -8,3 +8,4 @@ cat < intresting <&-
 <&- cat < intresting
 wc < interesting <&0
 <&doesnotexist | ls
+>lol ls|cat lol|

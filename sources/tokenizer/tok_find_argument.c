@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tok_find_argument.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:13:39 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/18 13:32:21 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/18 21:23:54 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ char	*find_argument(char *line, int *i, int *start, int *end)
 	}
 	else
 		*end += operator_len(&line[*end]);
+	if (*end == *start)
+		++(*end);
 	ret = ft_strsub(line, *i, *end - *i);
 	return (ret);
 }
