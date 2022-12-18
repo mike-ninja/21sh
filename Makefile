@@ -6,7 +6,7 @@
 #    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/12/18 13:38:03 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/12/18 20:29:40 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,6 +97,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(KEYBOARD)ft_bslash_escape_check \
 				$(KEYBOARD)ft_copy \
 				$(KEYBOARD)ft_create_prompt_line \
+				$(KEYBOARD)ft_ctrl_d \
 				$(KEYBOARD)ft_cut \
 				$(KEYBOARD)ft_end_cycle \
 				$(KEYBOARD)ft_get_input \

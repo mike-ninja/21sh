@@ -6,38 +6,11 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/15 18:44:57 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/18 20:29:09 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
-
-/*
- * It deletes the character
- * under the cursor if there is one, and if the cursor is at the end of a line
- * and the line is empty, it ends the current cycle and restarts it.
- *
- * @param t the term structure
- *
- * @return the value of the function ctrl_d.
- */
-static int	ctrl_d(t_term *t)
-{
-	if (!t->bytes)
-		return (-1);
-	if (t->index < t->bytes)
-		ft_delete(t);
-	if (t->heredoc && !*t->nl_addr[t->c_row])
-	{
-		ft_putstr("21sh: warning: here-document at line ");
-		ft_putnbr(t->c_row);
-		ft_putstr(" delimited by end-of-file (wanted `EOF')");
-		ft_end_cycle(t);
-		ft_restart_cycle(t);
-		return (1);
-	}
-	return (0);
-}
 
 /*
  * It handles backspaces and escape sequences
