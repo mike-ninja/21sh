@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2022/12/18 16:38:49 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/18 16:40:33 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*search_bin(char *cmd, char **environ_cp)
 	int		i;
 
 	i = -1;
-	if (try_cmd(cmd, environ_cp, &temp_path))
+	if (try_cmd(&cmd, environ_cp, &temp_path))
 		return (ft_strdup(cmd));
 	if (temp_path)
 	{	
