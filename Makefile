@@ -6,7 +6,7 @@
 #    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/12/17 19:49:56 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/12/18 13:38:03 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -116,6 +116,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(KEYBOARD)ft_trigger_nl \
 				$(KEYBOARD)ft_delete \
 				$(KEYBOARD)ft_deletion_shift \
+				$(KEYBOARD)ft_delim_fetch \
 				$(KEYBOARD)ft_esc_parse \
 				$(KEYBOARD)ft_get_prompt_len \
 				$(KEYBOARD)ft_history_get \

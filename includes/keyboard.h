@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/18 13:55:32 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/18 14:55:37 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void	ft_ctrl(t_term *t);
 void	ft_cut(t_term *t);
 void	ft_delete(t_term *t);
 void	ft_deletion_shift(t_term *t, ssize_t index);
+int		ft_delim_fetch(t_term *t);
 void	ft_end_cycle(t_term *t);
 void	ft_esc_parse(t_term *t);
 int		ft_get_input(void);

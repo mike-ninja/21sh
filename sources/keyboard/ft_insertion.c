@@ -6,39 +6,11 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/18 12:45:56 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/18 14:47:57 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
-
-/*
- * It fetches the delimiter
- * for a heredoc
- *
- * @param t the term structure
- */
-static void	ft_delim_fetch(t_term *t)
-{
-	char	*ptr;
-	char	*end_q;
-
-	if (t->heredoc && !t->delim)
-	{
-		ptr = ft_strchr(t->inp, '<') + 2;
-		while (*ptr && ft_isspace(*ptr))
-			ptr++;
-		if (*ptr)
-		{
-			end_q = ptr;
-			while (*end_q && !ft_isspace(*end_q))
-				end_q++;
-			t->delim = ft_strsub(ptr, 0, end_q - ptr);
-		}
-		else
-			t->heredoc = 0;
-	}
-}
 
 /*
  * It inserts a character into the input string
@@ -60,7 +32,7 @@ static void	ft_insertion_char(t_term *t)
 		if (!ft_bslash_escape_check(t, t->index - 1))
 			ft_quote_flag_reset(t);
 	}
-	if (t->inp[t->index - 1] == '<')
+	if (t->inp[t->index - 1] == '<' && !t->heredoc)
 	{
 		ft_heredoc_handling(t, t->index - 1);
 		if (!t->heredoc && t->delim)
@@ -80,7 +52,8 @@ static void	ft_insertion_enter(t_term *t)
 {
 	if (!t->nl_addr[t->c_row + 1])
 	{
-		ft_delim_fetch(t);
+		if (ft_delim_fetch(t))
+			return ;
 		t->bslash = ft_bslash_escape_check(t, t->bytes);
 		if (t->q_qty % 2 \
 			|| (t->heredoc \
