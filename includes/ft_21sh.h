@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/17 19:49:20 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/18 16:09:28 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,8 @@ void			open_fd_if_needed(int fd, char *terminal);
 void			exe_cmd_err(char *msg, char *cmd);
 
 /*					EXECUTE_UTILS			*/
-int				check_access(char *cmd, char **args);
+// int				check_access(char *cmd, char **args);
+int				check_access(char *cmd, char **args, t_session *sesh);
 int				check_if_user_exe(char *cmd, char **dest);
 void			exe_fail(char **cmd, char **args, char ***env_cp);
 
