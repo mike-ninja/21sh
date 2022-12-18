@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/16 16:43:51 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/18 13:55:32 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	ft_add_nl_mid_row(t_term *t, ssize_t row, ssize_t pos);
 void	ft_alt_mv(t_term *t);
 void	ft_arrow_input(t_term *t);
 void	ft_backspace(t_term *t);
-int 	ft_bslash_escape_check(t_term *t, ssize_t pos);
+int		ft_bslash_escape_check(t_term *t, ssize_t pos);
 void	ft_copy(t_term *t);
 void	ft_create_prompt_line(t_term *t, ssize_t loc);
 void	ft_ctrl(t_term *t);
