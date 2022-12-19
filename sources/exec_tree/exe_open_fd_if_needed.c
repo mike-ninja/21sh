@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 16:13:07 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/16 14:19:00 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/19 13:00:52 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,13 @@ void	open_fd_if_needed(int fd, char *terminal)
 	struct stat	buf;
 	int			*closefd;
 	int			i;
+	int			len;
 
-	closefd = ft_memalloc(sizeof(*closefd) * (fd + 1));
+	if (fd <= 0)
+		len = 2;
+	else
+		len = fd + 1;
+	closefd = ft_memalloc(sizeof(*closefd) * len);
 	closefd[0] = 0;
 	closefd[1] = 0;
 	i = 0;
