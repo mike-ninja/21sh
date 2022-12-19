@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:25:07 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/12 11:23:50 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/19 11:27:11 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
  */
 static void	set_new_cur_pos(t_term *t)
 {
+	t->c_row = 0;
 	while (t->nl_addr[t->c_row] \
 	&& &t->inp[t->index] >= t->nl_addr[t->c_row])
 		t->c_row++;
