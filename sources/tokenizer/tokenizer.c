@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/18 21:52:43 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/19 10:25:22 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,18 @@ static int	if_error(char *c, t_token *args, char *line)
 	return (0);
 }
 
+static int	validity_check(char *line)
+{
+	if (*line == ';' || *line == '|' || *line == '&')
+	{
+		ft_putstr_fd("21sh: syntax error near unexpected token `", 2);
+		write(2, line, 1);
+		ft_putstr_fd("'\n", 2);
+		return (1);
+	}
+	return (0);
+}
+
 t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 {
 	int		i_args;
@@ -50,7 +62,7 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 	int		start;
 	int		end;
 
-	if (init_params(line, &args, &pointer_n))
+	if (validity_check(line) || init_params(line, &args, &pointer_n))
 		return (NULL);
 	init_variables(&i_args, &cur, &start, &end);
 	while (line[cur])
