@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/19 10:25:22 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/19 12:44:22 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,19 @@ static int	if_error(char *c, t_token *args, char *line)
 
 static int	validity_check(char *line)
 {
+	char	*ptr;
+
+	ptr = NULL;
 	if (*line == ';' || *line == '|' || *line == '&')
+		ptr = line;
+	else if (line[ft_strlen(line) - 1] == '|')
+		ptr = &line[ft_strlen(line) - 1];
+	if (ptr)
 	{
 		ft_putstr_fd("21sh: syntax error near unexpected token `", 2);
-		write(2, line, 1);
+		write(2, ptr, 1);
 		ft_putstr_fd("'\n", 2);
+		ft_strdel(&line);
 		return (1);
 	}
 	return (0);
@@ -62,7 +70,7 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 	int		start;
 	int		end;
 
-	if (validity_check(line) || init_params(line, &args, &pointer_n))
+	if (!line || validity_check(line) || init_params(line, &args, &pointer_n))
 		return (NULL);
 	init_variables(&i_args, &cur, &start, &end);
 	while (line[cur])

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:25:07 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/19 11:27:11 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/19 12:36:23 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	ft_window_size(t_term *t)
 	struct winsize	size;
 
 	ft_run_capability("vi");
-	if (ioctl(0, TIOCGWINSZ, (char *)&size) < 0)
-		perror("TIOCGWINSZ");
+	if (ioctl(0, TIOCGWINSZ, &size) < 0)
+		ft_putstr_fd("ioctl error\n", 2);
 	t->ws_col = size.ws_col;
 	t->ws_row = size.ws_row;
 	if (*t->inp)
