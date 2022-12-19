@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:25:07 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/19 12:36:23 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/19 14:01:29 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	ft_window_size(t_term *t)
 	t->ws_row = size.ws_row;
 	if (*t->inp)
 	{
+		t->start_row = 0;
 		ft_run_capability("cl");
 		ft_reset_nl_addr(t);
 		ft_print_input(t, 0, 0);
