@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/19 13:11:24 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/19 13:44:01 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,17 +147,14 @@ char			*ft_heredoc(t_term *t, char *str);
 
 /*					TOKENIZER				*/
 t_token			*chop_line(char *line, t_token *args, size_t pointer_n);
-void			free_token(t_token *token);
 char			*find_argument(char *line, int *i, int *start, int *end);
 int				is_ws(char c);
 void			init_token(char *c, t_token *token, char *line, int cur);
 void			track_used_space(t_token **args, size_t current_pointer_n,
 					size_t *max_pointer_n);
-void			debug_tokens(t_token *args);
 
 /*					TOKENIZER UTILS			*/
 void			free_tokens(t_token **tokens);
-void			free_token(t_token *token);
 int				is_nl(char c);
 int				is_ws(char c);
 int				is_seperator(char c);
@@ -165,7 +162,6 @@ int				is_seperator(char c);
 /*					BUILDTREE				*/
 t_treenode		*build_tree(t_token *tokens);
 char			**make_arg_array(char *cmd);
-void			print_tree(t_treenode *head, int depth);
 int				foreseer_of_tokens(t_token *tokens,
 					int mark, int start, int end);
 t_treenode		*create_pipe_node(t_token *tokens, int i_tok);
@@ -227,11 +223,7 @@ void			open_fd_if_needed(int fd, char *terminal);
 void			exe_fail(char **cmd, char **args, char ***env_cp);
 void			open_fd_if_needed(int fd, char *terminal);
 
-/*					ERROR					*/
-// void			exe_cmd_err(char *msg, char *cmd);
-
 /*					EXECUTE_UTILS			*/
-// int				check_access(char *cmd, char **args);
 int				check_access(char *cmd, char **args, t_session *sesh);
 int				check_if_user_exe(char *cmd, char **dest);
 void			exe_fail(char **cmd, char **args, char ***env_cp);

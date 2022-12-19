@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/19 13:18:27 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/19 13:37:00 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,7 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include "ft_vec.h"
-// # include <termcap.h>//control if all these are needed
-# include <term.h>//same same
-// # include <curses.h>//same same
-// # include <termios.h>
-// # include <string.h>
-// # include <signal.h>
-// # include <unistd.h>
-// # include <limits.h>
-// # include <ctype.h>
-// # include <stdlib.h>
+# include <term.h>
 # include <fcntl.h>
 # include <sys/ioctl.h>
 
@@ -62,7 +53,6 @@
 # define MINI_PROMPT "> "
 
 # define BUFFSIZE   2048
-# define MAX_LINE   1024 //remove this later
 
 typedef struct clipboard
 {
