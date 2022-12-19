@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 20:26:30 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/19 15:56:24 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/19 16:02:08 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	ctrl_d(t_term *t)
 {
-	char	**tmp;
-
 	if (!t->bytes)
 		return (-1);
 	if (t->index < t->bytes)

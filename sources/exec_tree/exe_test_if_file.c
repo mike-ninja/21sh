@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 18:45:22 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/17 18:48:55 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/19 16:16:32 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	test_if_file(char *file)
 {
 	struct stat	buf;
-	int			ret;
 
 	if (stat(file, &buf) < 0)
 		return (1);

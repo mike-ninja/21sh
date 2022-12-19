@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 20:26:00 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/18 17:16:26 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/19 16:15:26 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ static void	redir_to_file(t_aggregate *node, t_session *sesh)
 void	exec_aggregate(t_aggregate *node, char ***environ_cp,
 		char *terminal, t_session *sesh)
 {
-	int			dupret;
 	struct stat	buf;
 	int			open_fd;
 
 	open_fd_if_needed(node->close_fd, terminal);
+	open_fd = -1;
 	if (is_nb(node->dest))
 		open_fd = ft_atoi(node->dest);
 	else if (node->close_fd == 1)

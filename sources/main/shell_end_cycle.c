@@ -6,27 +6,11 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 14:26:23 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/18 17:41:50 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/19 16:06:21 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
-
-// /**
-//  * It resets the tokens array
-//  *
-//  * @param sesh The session struct.
-//  */
-static void	ft_reset_tokens(t_session *sesh)
-{
-	int	i;
-
-	i = -1;
-	while (sesh->tokens[++i].token)
-		ft_strdel(&sesh->tokens[i].value);
-	ft_printf("Resetting tokens array\n");
-	ft_memdel((void **)&sesh->tokens);
-}
 
 static void	ft_reset_tmp_env(t_session *sesh)
 {

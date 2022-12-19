@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/19 13:44:01 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/19 16:10:30 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ int				if_redir(t_token *tokens,
 int				get_close_fd(char *value);
 void			traverse_node(t_treenode **head);
 char			*get_file(char *value);
-int				error_tok(t_token *tokens, t_treenode *redir_head,
+int				error_tok(t_treenode *redir_head,
 					char *msg, char *symbol);
 void			combine_words(t_token *tokens);
 int				test_if_file(char *file);

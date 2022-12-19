@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 18:01:29 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/18 18:01:33 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/19 16:16:00 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ static char	*search_variable(char **environ_cp, char *var_name)
 
 static int	try_cmd(char **cmd, char **environ_cp, char **temp_path)
 {
-	char	*new_cmd;
-
 	if (!access(*cmd, F_OK) && !access(*cmd, X_OK))
 	{
 		if (ft_strchr(*cmd, '/'))

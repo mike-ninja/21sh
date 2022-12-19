@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:18:53 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/18 19:01:15 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/19 16:13:41 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ static void	make_child_for_prev(t_treenode **redir,
 	traverse_node(redir);
 }
 
-static int	check_dest(char **dest, int close_fd, char *token_val,
-		t_treenode **redir)
+static int	check_dest(char **dest, int close_fd, char *token_val)
 {
 	char	c;
 
@@ -60,19 +59,19 @@ static int	check_dest(char **dest, int close_fd, char *token_val,
 	return (1);
 }
 
-static int	handle_error(int ret, t_token *tokens,
+static int	handle_error(int ret,
 		t_treenode *redir, char **dest)
 {
 	if (ret == -1)
 	{
 		ft_strdel(dest);
-		return (error_tok(tokens, redir,
+		return (error_tok(redir,
 				"syntax error near unexpected token", "newline"));
 	}
 	if (ret == 1 && ft_err_print(NULL, *dest, "ambiguous redirect", 2))
 	{
 		ft_strdel(dest);
-		return (error_tok(tokens, redir, NULL, NULL));
+		return (error_tok(redir, NULL, NULL));
 	}
 	return (0);
 }
@@ -88,8 +87,8 @@ int	if_aggregation(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 		close_fd = 1;
 	else if (close_fd < 0 && ft_strchr(tokens[i_tok].value, '<'))
 		close_fd = 0;
-	ret = check_dest(&dest, close_fd, tokens[i_tok].value, redir);
-	if (handle_error(ret, tokens, *redir, &dest))
+	ret = check_dest(&dest, close_fd, tokens[i_tok].value);
+	if (handle_error(ret, *redir, &dest))
 		return (1);
 	if (!*redir)
 	{

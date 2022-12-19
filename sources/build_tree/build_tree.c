@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/18 21:44:12 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/19 16:08:43 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ t_treenode	*parse_right_cmd(t_token *tokens, int i_tok)
 	if (!tokens[i_tok].value)
 		return (NULL);
 	combine_words(&tokens[i_tok]);
-	redir_start = redir;
 	redir = NULL;
+	redir_start = redir;
 	cmd = -1;
 	start = i_tok;
 	while (cmd < 0 && tokens[i_tok].value && tokens[i_tok].token != PIPE
@@ -82,8 +82,6 @@ t_treenode	*parse_right_cmd(t_token *tokens, int i_tok)
 t_treenode	*build_tree(t_token *tokens)
 {
 	t_treenode	*head;
-	int			semicolon;
-	int			pipe;
 
 	head = NULL;
 	if (!tokens)

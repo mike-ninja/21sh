@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:52:25 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/18 19:25:46 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/19 16:12:21 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	if_redir(t_token *tokens, t_treenode **redir, int i_tok, int cmd)
 	if (!dest)
 		dest = get_file(ft_strchr(tokens[i_tok].value, '<'));
 	if (!dest)
-		return (error_tok(tokens, *redir,
+		return (error_tok(*redir,
 				"syntax error near unexpected token", "newline"));
 	redir_t = redir_type(tokens[i_tok].value);
 	if (!*redir)
