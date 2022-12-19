@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_input_cycle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/18 20:29:09 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/19 15:58:06 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	ft_input_cycle(t_term *t)
 		{
 			ctrl_d_ret = ctrl_d(t);
 			if (ctrl_d_ret == 1)
-				continue ;
+				break ;
 			if (ctrl_d_ret == -1)
 				return (ctrl_d_exit(t));
 		}
