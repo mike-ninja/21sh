@@ -1,3 +1,0 @@
-rm stdin.txt 2>/dev/null
-ls -l | head -n 5 > lol | cat lol //for some reason works, should not beacause > lol is open when cat gets called?
-ls <> lol. should execute ls.
