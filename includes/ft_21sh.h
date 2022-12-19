@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/19 10:20:09 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/19 13:11:24 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,8 @@
 # include "libft.h"
 # include "keyboard.h"
 # include "ft_printf.h"
-/* DUNNO IF NEEDED */
-# include <dirent.h>
 # include <sys/stat.h>
-# include <sys/wait.h>
 
-//# define TOKEN_POINTER_N 1
 /* Do not use zero */
 # define PIPE 1
 # define CMD 2
@@ -137,7 +133,6 @@ void			banner_print(void);
 /*				   MAIN LOOP				*/
 void			shell_end_cycle(t_session *sesh);
 void			reset_fd(char *terminal);
-char			*str_from_arr(char **arr);
 struct termios	ft_raw_enable(void);
 int				ft_getent(void);
 void			ft_raw_disable(struct termios orig_termios);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
+#    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/12/19 10:20:22 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/12/19 13:32:25 by jniemine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -151,7 +151,6 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(BANNER)ft_banner \
 				$(MAIN)main \
 				$(MAIN)shell_end_cycle \
-				$(MAIN)str_from_arr \
 				$(MAIN)reset_fd \
 				$(TOKENIZER)tokenizer \
 				$(TOKENIZER)token_utils \

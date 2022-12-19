@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_keyboard.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/16 12:17:42 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/19 13:13:52 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,18 +87,18 @@ static int	ft_getent(void)
 	termtype = getenv("TERM");
 	if (termtype == NULL)
 	{
-		printf("could not get the TERM env\n");
+		ft_printf("could not get the TERM env\n");
 		exit(1);
 	}
 	status = tgetent(term_buffer, termtype);
 	if (status < 0)
 	{
-		printf("could not access the termcap data base\n");
+		ft_printf("could not access the termcap data base\n");
 		exit(1);
 	}
 	else if (status == 0)
 	{
-		printf("could not find the termtype\n");
+		ft_printf("could not find the termtype\n");
 		exit(1);
 	}
 	return (status);
