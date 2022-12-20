@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/18 20:56:15 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/20 13:40:19 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ static void	ft_history_inp_update(t_term *t, char *history)
  */
 static void	ft_history_clear_line(t_term *t, ssize_t row)
 {
+	ft_setcursor(0, (t->start_row + t->history_row));
 	if (row > t->history_row)
 	{
-		ft_setcursor(0, ft_get_linenbr() - (row - t->history_row));
 		while (row > t->history_row)
 		{
 			ft_remove_nl_addr(t, row);
@@ -79,8 +79,6 @@ static void	ft_history_clear_line(t_term *t, ssize_t row)
 			row--;
 		}
 	}
-	else
-		ft_setcursor(0, ft_get_linenbr());
 	ft_run_capability("cd");
 }
 
@@ -104,10 +102,12 @@ void	ft_history_trigger(t_term *t, ssize_t his)
 	ft_history_push(t);
 	ft_run_capability("vi");
 	history = (char *)ft_vec_get(&t->v_history, t->v_history.len - (size_t)his);
+	ft_history_clear_line(t, row);
 	ft_history_inp_update(t, history);
 	ft_history_reset_nl(t, t->nl_addr[t->history_row]);
-	ft_history_clear_line(t, row);
 	ft_quote_flag_reset(t);
+	if (t->start_row + t->total_row >= t->ws_row)
+		t->start_row = t->ws_row - (t->total_row + 1);
 	ft_print_input(t, t->c_row, 1);
 	if (!history)
 	{

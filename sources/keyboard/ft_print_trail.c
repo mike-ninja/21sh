@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:40:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/15 14:04:05 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/20 12:20:22 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	ft_print_line_trail(t_term *t)
 	ssize_t	dis_row;
 
 	row = t->c_row;
-	dis_row = ft_get_linenbr();
+	dis_row = t->start_row + t->c_row;
 	while (row <= t->total_row)
 	{
 		ft_run_capability("ce");
