@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bt_combine_words.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:45:48 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/16 16:37:01 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/20 10:48:58 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@ static char	*ft_trim_str_join_words(char **s1, char **s2)
 	char	*head;
 	char	*tail;
 	char	*res;
-	int		len;
 
 	if (!*s1 || !*s2)
 		return (NULL);
 	head = ft_strtrim(*s1);
-	len = ft_strlen(head);
 	ft_strdel(&head);
 	head = ft_strjoin(*s1, " ");
 	tail = ft_strtrim(*s2);
