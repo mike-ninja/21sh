@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 12:04:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/15 14:24:49 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/23 18:59:01 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ void	ft_end_cycle(t_term *t)
 		ft_nl_removal(t);
 		ft_vec_push(&t->v_history, t->history_buff);
 	}
-	if (!ft_strncmp(t->inp, "history", 7))
-		ft_history(t);
 	ft_memdel((void **)&t->nl_addr);
 	if (t->input_cpy)
 		ft_strdel(&t->input_cpy);

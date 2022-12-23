@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/20 13:48:51 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/23 19:01:18 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@
 # define PROMPT "$> "
 # define MINI_PROMPT "> "
 
-# define BUFFSIZE   2048
-
 typedef struct clipboard
 {
 	int		type;
@@ -63,8 +61,8 @@ typedef struct clipboard
 
 typedef struct s_term
 {
-	char		inp[BUFFSIZE];
-	char		history_buff[BUFFSIZE];
+	char		inp[BUFF_SIZE];
+	char		history_buff[BUFF_SIZE];
 	t_vec		v_history;
 	char		**nl_addr;
 	char		*history_file;
@@ -113,7 +111,7 @@ int		ft_get_input(void);
 ssize_t	ft_get_prompt_len(t_term *t, ssize_t row);
 int		ft_get_linenbr(void);
 void	ft_heredoc_handling(t_term *t, int index);
-void	ft_history(t_term *t);
+int		ft_history(t_term *t);
 char	*ft_history_file_get(void);
 void	ft_history_get(t_term *t);
 void	ft_history_reset_nl(t_term *t, char *inp);
