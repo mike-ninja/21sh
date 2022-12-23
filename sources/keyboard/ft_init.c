@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/17 12:40:49 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/20 15:20:56 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ static void	ft_init_to_zero(t_term *t)
 void	ft_init(t_term *t)
 {
 	ft_init_signals();
-	ft_memset(t->inp, '\0', BUFFSIZE);
-	ft_memset(t->history_buff, '\0', BUFFSIZE);
+	ft_memset(t->inp, '\0', BUFF_SIZE);
+	ft_memset(t->history_buff, '\0', BUFF_SIZE);
 	ft_init_to_zero(t);
 	t->start_row = ft_get_linenbr();
 	g_t = t;

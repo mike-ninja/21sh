@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:21:29 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/20 14:15:43 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/23 19:07:22 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	ft_scroll_down(t_term *t)
 		ft_run_capability("sc");
 		ft_setcursor(0, t->ws_row);
 		ft_run_capability("sf");
-		ft_run_capability("rc");	
+		ft_run_capability("rc");
 	}
 	ft_run_capability("do");
 	ft_run_capability("ve");
