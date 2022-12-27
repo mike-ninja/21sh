@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/20 10:04:48 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/27 13:52:35 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	main_loop(t_session *sesh)
 	int	status;
 
 	status = 1;
+	sesh->term->clipboard.buff = NULL;
 	while (status)
 	{
 		sesh->orig_termios = ft_raw_enable();

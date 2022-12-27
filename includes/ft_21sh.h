@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/19 16:10:30 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/27 13:46:45 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,5 +243,11 @@ void			ft_env_remove(t_session *sesh, char *env_to_clean);
 int				ft_env_append(t_session *sesh, char **arg);
 int				ft_env_replace(t_session *sesh, char *envn, char **tmp_env);
 void			ft_dir_change(t_session *sesh);
+
+/*			  		 HISTORY				*/
+int				ft_history(t_term *t);
+void			ft_history_get(t_term *t);
+char			*ft_history_file_get(void);
+void			ft_history_write_to_file(t_term *t);
 
 #endif

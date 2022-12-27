@@ -6,7 +6,7 @@
 #    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/12/23 18:57:26 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/12/25 19:29:46 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,7 @@ UTILITIES		=	utilities/
 BUILTIN			= 	builtins/
 BUILTIN_UTILS	= 	builtin_utils/
 TERMIOS			= 	termios/
+HISTORY			= 	history/
 
 SOURCE_COUNT = $(words $(FILES))
 
@@ -114,11 +115,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(KEYBOARD)ft_delim_fetch \
 				$(KEYBOARD)ft_esc_parse \
 				$(KEYBOARD)ft_get_prompt_len \
-				$(KEYBOARD)ft_history_get \
-				$(KEYBOARD)ft_history_file_get \
 				$(KEYBOARD)ft_history_trigger \
-				$(KEYBOARD)ft_history_write_to_file \
-				$(KEYBOARD)ft_history \
 				$(KEYBOARD)ft_init_signals \
 				$(KEYBOARD)ft_input_cycle \
 				$(KEYBOARD)ft_insertion \
@@ -200,6 +197,10 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(TERMIOS)ft_raw_enable \
 				$(INITIALIZE)ft_session_init \
 				$(INITIALIZE)ft_env_init \
+				$(HISTORY)ft_history \
+				$(HISTORY)ft_history_file_get \
+				$(HISTORY)ft_history_get \
+				$(HISTORY)ft_history_write_to_file \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 O_PATHS		=	$(addsuffix .o, $(addprefix $(OBJECTS)/,$(FILES)))
@@ -231,6 +232,7 @@ $(OBJECTS):
 	@mkdir -p $(OBJECTS)/$(BUILTIN)
 	@mkdir -p $(OBJECTS)/$(BUILTIN_UTILS)
 	@mkdir -p $(OBJECTS)/$(TERMIOS)
+	@mkdir -p $(OBJECTS)/$(HISTORY)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"
 	@printf "$(NAME): $(GREEN)$(OBJECTS) directory was created.$(RESET)\n\n\n"
 

@@ -1,39 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_history_get.c                                   :+:      :+:    :+:   */
+/*   ft_history.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/21 14:56:28 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/20 15:43:42 by mbarutel         ###   ########.fr       */
+/*   Created: 2022/10/17 09:38:04 by mrantil           #+#    #+#             */
+/*   Updated: 2022/12/25 19:18:34 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "keyboard.h"
+#include "ft_21sh.h"
 
 /*
- * It reads the history file and stores it in a ft_vector
+ * It prints the history of the shell
  *
  * @param t the terminal structure
  */
-void	ft_history_get(t_term *t)
+int	ft_history(t_term *t)
 {
-	char	*buf;
-	int		fd;
+	size_t	num_incr;
 
-	ft_vec_new(&t->v_history, 0, sizeof(char) * BUFF_SIZE);
-	t->history_file = ft_history_file_get();
-	fd = open(t->history_file, O_RDONLY | O_CREAT, 0644);
-	if (fd)
-	{
-		buf = NULL;
-		while (get_next_line(fd, &buf) > 0)
-		{
-			ft_vec_push(&t->v_history, buf);
-			ft_strdel(&buf);
-		}
-		ft_strdel(&buf);
-		close(fd);
-	}
+	num_incr = 0;
+	while (++num_incr < t->v_history.len)
+		ft_printf("%4d  %s\n", num_incr, \
+		(char *)ft_vec_get(&t->v_history, num_incr - 1));
+	return (0);
 }

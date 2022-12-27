@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/20 15:20:56 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/27 13:55:45 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,4 @@ void	ft_init(t_term *t)
 	t->m_prompt_len = (ssize_t)ft_strlen(MINI_PROMPT);
 	t->c_col = t->prompt_len;
 	t->input_cpy = NULL;
-	t->clipboard.buff = NULL;
 }
