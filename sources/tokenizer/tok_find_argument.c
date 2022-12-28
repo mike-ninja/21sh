@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tok_find_argument.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:13:39 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/18 21:23:54 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/28 19:47:27 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ static int	operator_len(char *op)
 
 static void	traverse_to_end(char *line, int *end)
 {
-	while (line[*end] && is_ws(line[*end]))
+	while (line[*end] && ft_isspace(line[*end]))
 		++(*end);
-	while (line[*end] && !is_ws(line[*end]) && !is_seperator(line[*end]))
+	while (line[*end] && !ft_isspace(line[*end]) && !is_seperator(line[*end]))
 		++(*end);
 }
 
@@ -68,7 +68,7 @@ static void	collect_digits(char *line, int *digits, int *end)
 {
 	while (ft_isdigit(line[*end - *digits]))
 		++(*digits);
-	if (*end - (*digits) == 0 || is_ws(line[*end - (*digits)]))
+	if (*end - (*digits) == 0 || ft_isspace(line[*end - (*digits)]))
 		*end -= (*digits);
 }
 

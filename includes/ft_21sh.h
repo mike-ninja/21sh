@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/27 13:46:45 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/28 19:47:47 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,6 @@ char			*ft_heredoc(t_term *t, char *str);
 /*					TOKENIZER				*/
 t_token			*chop_line(char *line, t_token *args, size_t pointer_n);
 char			*find_argument(char *line, int *i, int *start, int *end);
-int				is_ws(char c);
 void			init_token(char *c, t_token *token, char *line, int cur);
 void			track_used_space(t_token **args, size_t current_pointer_n,
 					size_t *max_pointer_n);
@@ -156,7 +155,6 @@ void			track_used_space(t_token **args, size_t current_pointer_n,
 /*					TOKENIZER UTILS			*/
 void			free_tokens(t_token **tokens);
 int				is_nl(char c);
-int				is_ws(char c);
 int				is_seperator(char c);
 
 /*					BUILDTREE				*/

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/19 12:44:22 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/28 19:47:27 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 		init_token(c, &args[i_args], line, cur);
 		++i_args;
 		track_used_space(&args, i_args, &pointer_n);
-		while (is_ws(line[end]))
+		while (ft_isspace(line[end]))
 			++end;
 		cur = end;
-		while (is_ws(line[cur]))
+		while (ft_isspace(line[cur]))
 			++cur;
 	}
 	ft_strdel(&line);

@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 20:34:50 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/16 15:39:56 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/28 19:48:14 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
-
-int	is_ws(char c)
-{
-	return (c == ' ' || c == '\t' || c == '\v'
-		|| c == '\f' || c == '\r');
-}
 
 int	is_quote(char c)
 {
