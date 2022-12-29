@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 09:23:06 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/16 17:13:19 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/29 13:48:53 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	ft_quote_flag_reset(t_term *t)
 			ft_heredoc_handling(t, i);
 			if (!t->heredoc && t->delim)
 				ft_strdel(&t->delim);
+			else
+				ft_delim_fetch(t);
 		}
 	}
 }
