@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:13:39 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/28 19:47:27 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/29 12:19:25 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,9 @@ char	*find_argument(char *line, int *i, int *start, int *end)
 {
 	char	*ret;
 	int		digits;
+	char	quote;
 
+	quote = 0;
 	digits = 1;
 	ret = tok_if_redir(line, i, start, end);
 	if (*end == -1)
@@ -85,8 +87,8 @@ char	*find_argument(char *line, int *i, int *start, int *end)
 		return (ret);
 	if (!is_seperator(line[*end]))
 	{
-		while (line[*end] && !is_seperator(line[*end]))
-			++(*end);
+		while ((line[*end] && !is_seperator(line[*end])) || quote)
+			tok_quote_flag(line, end, &quote);
 		if ((line[*end] == '>' || line[*end] == '<') && (*end) > 0)
 			collect_digits(line, &digits, end);
 		else if (is_seperator(*end > 0 && line[*end]))
@@ -96,6 +98,5 @@ char	*find_argument(char *line, int *i, int *start, int *end)
 		*end += operator_len(&line[*end]);
 	if (*end == *start)
 		++(*end);
-	ret = ft_strsub(line, *i, *end - *i);
-	return (ret);
+	return (ft_strsub(line, *i, *end - *i));
 }

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/28 19:47:47 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/29 12:15:29 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ void			track_used_space(t_token **args, size_t current_pointer_n,
 void			free_tokens(t_token **tokens);
 int				is_nl(char c);
 int				is_seperator(char c);
+void			tok_quote_flag(char *line, int *end, char *quote_flag);
 
 /*					BUILDTREE				*/
 t_treenode		*build_tree(t_token *tokens);
@@ -199,6 +200,7 @@ char			**ft_env_get(t_session *sesh, char *key);
 int				increment_whitespace(char **line);
 void			free_node(t_treenode *head);
 int				ft_err_print(char *file, char *cmd, char *msg, int fd);
+size_t			ft_bslash_check(char *buff, ssize_t pos);
 
 /*					EXECUTE_TREE			*/
 void			exec_tree(t_treenode *head, char ***environ_cp, char *terminal, \
