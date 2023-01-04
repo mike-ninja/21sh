@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_trigger_nl.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:21:29 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/23 19:07:22 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/04 13:50:58 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,6 @@ void	ft_trigger_nl(t_term *t)
 	if (t->c_col == t->ws_col)
 	{
 		t->c_col = 0;
-		t->c_row++;
+		ft_setcursor(t->c_col, t->start_row + ++t->c_row);
 	}
 }
