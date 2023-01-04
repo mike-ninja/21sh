@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 15:00:30 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/04 13:23:35 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:27:28 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,6 @@ void	ft_nl_removal(t_term *t)
 		ft_memmove((void *)&t->history_buff[k], (void *)&t->history_buff[i], \
 		ft_strlen(&t->history_buff[i]) + 1);
 	}
-	if (t->heredoc && t->delim)
+	if (t->delim)
 		ft_strclr(ft_strchr(t->history_buff, '\n'));
 }
