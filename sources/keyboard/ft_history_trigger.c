@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/05 12:53:29 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/05 15:44:05 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ static void	ft_history_push(t_term *t)
  */
 static void	ft_historycpy(t_term *t, char *dst, char *src)
 {
-	int	i;
-	size_t len;
+	int		i;
+	size_t	len;
 
 	i = -1;
-	len = ft_strlen(t->inp); 
+	len = ft_strlen(t->inp);
 	while (src[++i] && (len + i) < (BUFF_SIZE - 1))
 		dst[i] = src[i];
 }

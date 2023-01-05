@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_getline_nbr.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:39:35 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/20 10:03:41 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/05 15:42:18 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_get_linenbr(void)
 	len = 0;
 	while (read(0, buf + len, 1) == 1)
 	{
-		if (buf[len++] == 'R')
+		if (buf[len++] == 'R' || len > 6)
 			break ;
 	}
 	len = 0;
