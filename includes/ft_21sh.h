@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/29 12:15:29 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:33:50 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,7 +231,7 @@ void			exe_fail(char **cmd, char **args, char ***env_cp);
 /*					BUILTIN					*/
 int				ft_builtins(t_session *sesh, char ***cmd);
 int				ft_cd(t_session *sesh, char **cmd);
-int				ft_echo(char **cmd);
+int				ft_echo(t_session *sesh, char **cmd);
 int				ft_env(t_session *sesh, char ***cmd);
 void			ft_exit(t_session *sesh, int status);
 int				ft_setenv(t_session *sesh, char **cmd);
@@ -245,7 +245,7 @@ int				ft_env_replace(t_session *sesh, char *envn, char **tmp_env);
 void			ft_dir_change(t_session *sesh);
 
 /*			  		 HISTORY				*/
-int				ft_history(t_term *t);
+int				ft_history(t_session *sesh, t_term *t);
 void			ft_history_get(t_term *t);
 char			*ft_history_file_get(void);
 void			ft_history_write_to_file(t_term *t);

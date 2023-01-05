@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_setenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:13:13 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/18 15:38:52 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:19:51 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,16 @@ int	ft_setenv(t_session *sesh, char **cmd)
 	int	i;
 
 	i = 0;
+	sesh->exit_stat = 0;
 	while (*(cmd + ++i))
 	{
 		if (ft_strchr(*(cmd + i), '='))
 		{
 			if (!key_check(*(*(cmd + i))))
+			{
 				key_check_fail_msg(cmd, i);
+				sesh->exit_stat = 1;
+			}
 			else if (!ft_env_replace(sesh, *(cmd + i), NULL))
 				ft_env_append(sesh, cmd + i);
 		}

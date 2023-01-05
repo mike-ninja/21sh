@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 20:33:02 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/14 19:44:18 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:24:15 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,16 @@ static int	echo_fd_check(void)
  * 
  * @return The return value of the function.
  */
-int	ft_echo(char **cmd)
+int	ft_echo(t_session *sesh, char **cmd)
 {
 	bool	nl_flag;
 
+	sesh->exit_stat = 0;
 	if (echo_fd_check())
+	{
+		sesh->exit_stat = 1;
 		return (0);
+	}
 	nl_flag = false;
 	if (!(*cmd))
 		ft_putstr("\n");

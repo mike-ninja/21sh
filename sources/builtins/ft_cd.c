@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:10:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/14 19:55:58 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:21:19 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ int	ft_cd(t_session *sesh, char **cmd)
 	path = NULL;
 	sesh->exit_stat = 0;
 	if (ft_arrlen(cmd) > 2)
+	{
+		sesh->exit_stat = 1;
 		ft_err_print(NULL, "cd", "too many arguments", 1);
+	}
 	else if (!ft_cd_expand(sesh, cmd, &path) && !ft_cd_addr_check(*(cmd + 1)))
 	{
 		if (chdir(*(cmd + 1)))

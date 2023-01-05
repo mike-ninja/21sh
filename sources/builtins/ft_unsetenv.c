@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unsetenv.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:13:43 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/26 19:57:09 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:27:10 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	ft_unsetenv(t_session *sesh, char **cmd)
 	char	*ptr;
 
 	i = 0;
+	sesh->exit_stat = 0;
 	while (*(cmd + (++i)))
 	{
 		if (ft_env_get(sesh, *(cmd + i)))
