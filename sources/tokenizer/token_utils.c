@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 20:34:50 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/29 12:19:18 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/05 17:28:55 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	is_varchr(char c)
 int	is_seperator(char c)
 {
 	return (c == '|' || c == '>' || c == '<'
-		|| c == ';');
+		|| c == ';' || c == '&');
 }
 
 void	tok_quote_flag(char *line, int *end, char *quote_flag)

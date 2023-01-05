@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:38:01 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/19 09:33:46 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/05 17:22:46 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@ void	set_token_values(t_token *token, int token_id, char *value)
 
 void	init_token(char *c, t_token *token, char *line, int cur)
 {
-	if (*c == '|')
+	if (line[cur] == '|' && line[cur + 1] == '|')
+		set_token_values(token, LOGICAL_OR, c);
+	else if (line[cur] == '&' && line[cur + 1] == '&')
+		set_token_values(token, LOGICAL_AND, c);
+	else if (*c == '|')
 		set_token_values(token, PIPE, c);
 	else if (line[cur] == '>' || line[cur] == '<')
 	{

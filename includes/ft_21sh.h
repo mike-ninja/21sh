@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/29 12:15:29 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:51:31 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # define AGGREGATION 7
 # define CLOSEFD 8
 # define SKIP_TOK 9
+# define LOGICAL_AND 10
+# define LOGICAL_OR 11
 
 /* For error messages */
 # define SHELL_NAME "21sh"

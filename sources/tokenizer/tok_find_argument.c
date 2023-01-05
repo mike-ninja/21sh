@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tok_find_argument.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:13:39 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/29 12:19:25 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/05 17:26:18 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,18 @@ static char	*tok_if_redir(char *line, int *i, int *start, int *end)
 	return (NULL);
 }
 
+static char *tok_if_logical(char *line, int *i, int *start, int *end)
+{
+	if ((line[*i] == '|' && line[*i + 1] == '|')
+		|| (line[*i] == '&' && line[*i + 1] == '&'))
+	{
+		*start = *i;
+		*end = *start + 2;
+		return(ft_strsub(line, *start, 2));
+	}
+	return (NULL);
+}
+
 static void	collect_digits(char *line, int *digits, int *end)
 {
 	while (ft_isdigit(line[*end - *digits]))
@@ -81,6 +93,8 @@ char	*find_argument(char *line, int *i, int *start, int *end)
 	quote = 0;
 	digits = 1;
 	ret = tok_if_redir(line, i, start, end);
+	if (!ret)
+		ret = tok_if_logical(line, i, start, end);
 	if (*end == -1)
 		return (NULL);
 	if (ret)
