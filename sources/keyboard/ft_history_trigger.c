@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/04 17:11:16 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/05 12:53:29 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,24 @@ static void	ft_history_push(t_term *t)
 }
 
 /**
+ * It copies the contents of the history buffer into the input buffer
+ * 
+ * @param t the term structure
+ * @param dst the buffer that will be written to
+ * @param src the string to be copied
+ */
+static void	ft_historycpy(t_term *t, char *dst, char *src)
+{
+	int	i;
+	size_t len;
+
+	i = -1;
+	len = ft_strlen(t->inp); 
+	while (src[++i] && (len + i) < (BUFF_SIZE - 1))
+		dst[i] = src[i];
+}
+
+/**
  * It updates the current
  * input line with the history line
  * 
@@ -45,20 +63,11 @@ static void	ft_history_push(t_term *t)
  */
 static void	ft_history_inp_update(t_term *t, char *history)
 {
+	ft_strclr(t->nl_addr[t->c_row]);
 	if (history)
-	{
-		ft_memset((void *)t->nl_addr[t->c_row], '\0', \
-		ft_strlen(t->nl_addr[t->c_row]));
-		ft_memcpy(t->nl_addr[t->c_row], history, ft_strlen(history));
-	}
-	else
-	{
-		ft_memset((void *)t->nl_addr[t->c_row], '\0', \
-		ft_strlen(t->nl_addr[t->c_row]));
-		if (t->input_cpy)
-			ft_memcpy(t->nl_addr[t->c_row], t->input_cpy, \
-			ft_strlen(t->input_cpy));
-	}
+		ft_historycpy(t, t->nl_addr[t->c_row], history);
+	else if (t->input_cpy)
+		ft_historycpy(t, t->nl_addr[t->c_row], t->input_cpy);
 }
 
 /**
