@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/05 16:51:31 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/06 20:09:19 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define REDIR 3
 # define WORD 4
 # define SEMICOLON 5
+# define AMPERSAND 6
 # define AGGREGATION 7
 # define CLOSEFD 8
 # define SKIP_TOK 9
@@ -59,6 +60,14 @@ typedef struct s_semicolon
 	t_treenode	*left;
 	t_treenode	*right;
 }	t_semicolon;
+
+/*					LOGICAL NODE			*/
+typedef struct s_logicalop
+{
+	int			type;
+	t_treenode	*left;
+	t_treenode	*right;
+}	t_logicalop;
 
 /*					CMD STRUCT				*/
 typedef struct s_cmdnode
@@ -153,6 +162,10 @@ char			*find_argument(char *line, int *i, int *start, int *end);
 void			init_token(char *c, t_token *token, char *line, int cur);
 void			track_used_space(t_token **args, size_t current_pointer_n,
 					size_t *max_pointer_n);
+int				redir_error(char *str);
+int				control_op_error(char *str);
+char			*tok_if_logical(char *line, int *i, int *start, int *end);
+char			*tok_if_redir(char *line, int *i, int *start, int *end);
 
 /*					TOKENIZER UTILS			*/
 void			free_tokens(t_token **tokens);
@@ -189,6 +202,7 @@ int				error_tok(t_treenode *redir_head,
 					char *msg, char *symbol);
 void			combine_words(t_token *tokens);
 int				test_if_file(char *file);
+t_treenode		*create_command_tree(t_token *tokens, int i_tok, int semicol);
 
 /*					EXPANSION				*/
 void			ft_expansion(t_session *sesh, char **cmd);

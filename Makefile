@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+         #
+#    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/05 15:44:27 by mbarutel         ###   ########.fr        #
+#    Updated: 2023/01/06 17:26:29 by jniemine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ MAKEFLAGS			+= --no-print-directory
 
 NAME				=	21sh
 CC					=	gcc
-CFLAGS 				= 	-Wall -Wextra -Werror
+# CFLAGS 				= 	-Wall -Wextra -Werror
 CFLAGS				+=	-Wunreachable-code -Wtype-limits
 CFLAGS				+=	-Wpedantic
 # CFLAGS				+=	-Wconversion
@@ -149,6 +149,9 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(TOKENIZER)init_token \
 				$(TOKENIZER)track_used_space \
 				$(TOKENIZER)free_tokens \
+				$(TOKENIZER)tok_errors \
+				$(TOKENIZER)tok_if_logical \
+				$(TOKENIZER)tok_if_redir \
 				$(BUILDTREE)build_tree \
 				$(BUILDTREE)make_arg_array \
 				$(BUILDTREE)bt_utils \
