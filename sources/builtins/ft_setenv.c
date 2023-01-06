@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:13:13 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/05 16:19:51 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/06 13:00:31 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,15 @@ static int	key_check(int ch)
 		return (1);
 }
 
+/**
+ * It checks for a valid key, then either replaces an existing key or appends 
+ * a new key.
+ * 
+ * @param sesh the session struct
+ * @param cmd The command line arguments
+ * 
+ * @return The return value is the exit status of the command.
+ */
 int	ft_setenv(t_session *sesh, char **cmd)
 {
 	int	i;

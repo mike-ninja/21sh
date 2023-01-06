@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:12:50 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/05 16:33:12 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/06 13:00:03 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,14 @@ static void	ft_env_execve(t_session *sesh, char **args, char ***environ_cp)
 	wait (0);
 }
 
+/**
+ * It prints the environment, or executes a command with a temporary environment
+ * 
+ * @param sesh the session struct
+ * @param cmd the command line arguments
+ * 
+ * @return The return value of the last command executed.
+ */
 int	ft_env(t_session *sesh, char ***cmd)
 {
 	int	i;

@@ -3,15 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env_replace.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 12:12:18 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/18 15:41:10 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/06 12:58:46 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
+/**
+ * It takes a session, an environment variable name, and a pointer to a pointer
+ * to a string. It then searches the session's environment for the variable name,
+ * and if it finds it, it replaces the value of the variable with the value of 
+ * the string that the pointer to a pointer to a string points to.
+ * 
+ * @param sesh the session struct
+ * @param envn The environment variable to replace.
+ * @param tmp_env if this is not NULL, then the old environment variable will 
+ * be stored
+ */
 int	ft_env_replace(t_session *sesh, char *envn, char **tmp_env)
 {
 	int		ret;

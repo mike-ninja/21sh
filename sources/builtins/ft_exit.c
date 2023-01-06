@@ -6,12 +6,18 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 08:23:30 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/05 16:28:59 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/06 13:00:16 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
+/**
+ * It exits the shell
+ * 
+ * @param sesh The session struct.
+ * @param status The exit status of the shell.
+ */
 void	ft_exit(t_session *sesh, int status)
 {
 	sesh->exit_stat = status;
