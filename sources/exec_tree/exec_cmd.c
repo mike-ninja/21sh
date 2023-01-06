@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/05 16:52:37 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/06 13:24:19 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 		exit (1);
 	}
 	wait(&status);
+	if (status & 0177)
+		ft_putchar('\n');
 	if (access)
 		sesh->exit_stat = status >> 8;
 	ft_memdel((void **)&cmd);
