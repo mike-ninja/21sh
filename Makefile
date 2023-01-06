@@ -6,7 +6,7 @@
 #    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/06 17:26:29 by jniemine         ###   ########.fr        #
+#    Updated: 2023/01/06 21:53:42 by jniemine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -166,6 +166,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(BUILDTREE)bt_error_tok \
 				$(BUILDTREE)bt_get_file \
 				$(BUILDTREE)bt_combine_words \
+				$(BUILDTREE)bt_print_tree \
 				$(EXECTREE)exe_fail \
 				$(EXECTREE)exec_tree \
 				$(EXECTREE)exec_cmd \

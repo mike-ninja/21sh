@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/20 10:47:03 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/06 21:52:24 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ t_treenode	*build_tree(t_token *tokens)
 	if (!tokens)
 		return (head);
 	head = create_semicolon_node(tokens, 0, calculate_tokens(tokens));
+	print_tree(head);
 	return (head);
 }

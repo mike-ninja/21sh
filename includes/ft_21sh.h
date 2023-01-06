@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/06 20:09:19 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/06 21:52:54 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ int				error_tok(t_treenode *redir_head,
 void			combine_words(t_token *tokens);
 int				test_if_file(char *file);
 t_treenode		*create_command_tree(t_token *tokens, int i_tok, int semicol);
+void			print_tree(t_treenode *head);
 
 /*					EXPANSION				*/
 void			ft_expansion(t_session *sesh, char **cmd);
