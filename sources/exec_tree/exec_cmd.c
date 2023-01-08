@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/06 13:24:19 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/08 22:33:00 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,46 @@ int	check_access(char *cmd, char **args, t_session *sesh)
 	return (1);
 }
 
+static t_proc *create_process_node(int index, char **args, int pid)
+{
+	t_proc	*ret;
+
+	ret = (t_proc *)ft_memalloc(sizeof(t_proc));
+	ret->index = index;
+	ret->pid = pid;
+	ret->command = ft_strdup(*args);
+	ret->status = 0;
+	ret->next = NULL;
+	return (ret);
+}
+
+static void process_ls_append(char **args, t_session *sesh, int pid)
+{
+	int		index;
+	t_proc 	*ptr;
+
+	index = 0;
+	ptr = NULL;
+	if (!sesh->process_ls)
+		sesh->process_ls = create_process_node(index, args, pid);
+	else
+	{
+		ptr = sesh->process_ls;
+		while (ptr)
+		{
+			index++;
+			ptr = ptr->next;
+		}
+		ptr->next =	create_process_node(index, args, pid); 
+	}
+} 
+
 void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 {
 	char	*cmd;
 	int		access;
 	int		status;
+	int		pid;
 
 	status = 0;
 	if (!args[0])
@@ -80,13 +115,21 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 	if (!check_if_user_exe(args[0], &cmd))
 		cmd = search_bin(args[0], *environ_cp);
 	access = check_access(cmd, args, sesh);
-	if (access && fork_wrap() == 0)
+	pid = fork_wrap();
+	if (access && pid == 0)
 	{
 		if (!cmd || execve(cmd, args, *environ_cp) < 0)
 			exe_fail(&cmd, args, environ_cp);
 		exit (1);
 	}
-	wait(&status);
+	if (!sesh->bg)
+		waitpid(pid, &status, 0);
+	else if (pid)
+	{
+		// append process ID NODE HERE
+		process_ls_append(args, sesh, pid);
+		// ft_printf("[%d]", pid);
+	}
 	if (status & 0177)
 		ft_putchar('\n');
 	if (access)

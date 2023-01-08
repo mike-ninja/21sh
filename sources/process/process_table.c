@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_session_init.c                                  :+:      :+:    :+:   */
+/*   process_table.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 16:44:03 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/08 20:41:12 by mbarutel         ###   ########.fr       */
+/*   Created: 2023/01/08 20:05:53 by mbarutel          #+#    #+#             */
+/*   Updated: 2023/01/08 20:17:11 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_21sh.h"
 
-/**
- * It initializes the session struct.
- *
- * @param sesh The session struct.
- */
-void	ft_session_init(t_session *sesh)
-{
-	sesh->bg = 0;
-	sesh->exit_stat = 0;
-	sesh->line = NULL;
-	ft_env_init(sesh);
-	sesh->terminal = ttyname(STDOUT_FILENO);
-	sesh->head = NULL;
-	sesh->tmp_env_key = NULL;
-	sesh->tokens = NULL;
-	sesh->process_ls = NULL;
-}
+/*
+  Initialise process list
+  functions that inits || appends
+  function that deletes node from any position
+  dont wait on the child process if does not contain &
+  if & sign is present. Fetch the process ID of child process
+*/

@@ -3,14 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:50:01 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/05 16:34:23 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/08 22:35:12 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
+
+static int	ft_jobs(t_session *sesh)
+{
+	
+		
+	t_proc *proc;
+	
+	proc = sesh->process_ls;
+	while (proc)
+	{
+		ft_printf("[%d]  [%d]  %c %s %20s\n", proc->index + 1, proc->pid, (proc->status + 67), "RUNNING", proc->command);
+		// ft_printf("pid %d %s\n", proc->pid, proc->command);
+		proc = proc->next;
+	}
+	return (0);
+}
+
+static int	ft_foreground(char **cmd)
+{
+	int nm;
+	int status;
+
+	nm = ft_atoi(*(cmd + 1));
+	waitpid(nm, &status, 0);
+	return (0);
+}
 
 /**
  * It takes a session and a command, expands the command, and then checks if
@@ -41,6 +67,14 @@ int	ft_builtins(t_session *sesh, char ***cmd)
 			return (ft_history(sesh, sesh->term));
 		else if (!ft_strcmp(**cmd, "exit"))
 			ft_exit(sesh, 0);
+		/*TESTING*/
+		else if (!ft_strcmp(**cmd, "sleep"))
+			sesh->bg = 1;
+		else if (!ft_strcmp(**cmd, "jobs"))
+			return(ft_jobs(sesh));
+		else if (!ft_strcmp(**cmd, "fg"))
+			return(ft_foreground(*cmd));
+		/*TESTING*/
 	}
 	return (1);
 }

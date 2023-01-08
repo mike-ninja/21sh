@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/05 16:33:50 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/08 21:02:33 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,15 @@
 
 typedef union u_treenode	t_treenode;
 
+/*					PROCESS ID				*/
+typedef struct s_process
+{
+	pid_t 				pid;
+	int					index;
+	char 				*command;
+	int 				status;
+	struct s_process 	*next;
+}	t_proc;
 /*					TOKEN STRUCT			*/
 typedef struct s_token
 {
@@ -116,6 +125,7 @@ union u_treenode
 /*				SESSION STRUCT				*/
 typedef struct session
 {
+	int				bg;
 	char			*line;
 	t_treenode		*head;
 	t_term			term[1];
@@ -125,6 +135,7 @@ typedef struct session
 	char			*terminal;
 	char			**tmp_env_key;
 	struct termios	orig_termios;
+	t_proc			*process_ls;
 }				t_session;
 
 /*					HEADER					*/
