@@ -13,7 +13,7 @@ Supports quotes(') and double quotes(")\
 Supports history with up and down keys.\
 ADD CUT COPY PASTE COMMANDS.\
 
-#INSTALLATION\
+##INSTALLATION\
 clone git\
 make\
 ./21\
