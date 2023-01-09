@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bt_get_file.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:41:30 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/16 21:29:02 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/28 19:47:27 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ char	*get_file(char *value)
 		return (NULL);
 	if (value[start] == value[start - 1] || value[start] == '&')
 		++start;
-	while (value[start] && is_ws(value[start]))
+	while (value[start] && ft_isspace(value[start]))
 		++start;
 	end = start;
-	while (value[end] && !is_ws(value[end]))
+	while (value[end] && !ft_isspace(value[end]))
 		++end;
 	if (end <= start)
 		return (NULL);

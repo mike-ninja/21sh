@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bt_utils_more.c                                    :+:      :+:    :+:   */
+/*   ft_blash_check.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 16:38:17 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/28 19:47:27 by mbarutel         ###   ########.fr       */
+/*   Created: 2022/12/29 12:03:10 by mbarutel          #+#    #+#             */
+/*   Updated: 2022/12/29 12:03:37 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-int	increment_whitespace(char **line)
+size_t	ft_bslash_check(char *buff, ssize_t pos)
 {
-	int	i;
+	size_t	len;
+	ssize_t	count;
 
-	i = 0;
-	while (*line && (*line)[i] && ft_isspace((*line)[i]))
-		++i;
-	*line += i;
-	return (i);
-}
-
-int	increment_not_whitespace(char **line)
-{
-	int	i;
-
-	i = 0;
-	while ((*line)[i] && !ft_isspace((*line)[i]))
-		++i;
-	*line += i;
-	return (i);
+	len = 0;
+	count = pos - 1;
+	while (buff[count] == '\\')
+	{
+		len++;
+		if (!count)
+			break ;
+		count--;
+	}
+	if (len && (len % 2))
+		return (1);
+	return (0);
 }

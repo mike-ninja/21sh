@@ -20,16 +20,14 @@
  */
 void	ft_create_prompt_line(t_term *t, ssize_t loc)
 {
-	int	row;
-
-	row = ft_get_linenbr();
 	t->c_row++;
 	t->total_row++;
-	if (row == (t->ws_row - 1))
+	if (t->start_row + t->total_row >= t->ws_row)
+	{
 		ft_run_capability("sf");
-	else
-		row++;
-	ft_setcursor(0, row);
+		t->start_row--;
+	}
+	ft_setcursor(0, t->start_row + t->c_row);
 	ft_printf("{GREEN}");
 	t->c_col = write(1, MINI_PROMPT, (size_t)t->m_prompt_len);
 	ft_printf("{RESET}");

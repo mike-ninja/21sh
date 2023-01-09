@@ -1,40 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unsetenv.c                                      :+:      :+:    :+:   */
+/*   ft_history.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/25 18:13:43 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/05 16:27:10 by mbarutel         ###   ########.fr       */
+/*   Created: 2022/10/17 09:38:04 by mrantil           #+#    #+#             */
+/*   Updated: 2023/01/05 16:27:45 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-/**
- * It removes the environment variables specified by the user
- * 
- * @param sesh The session struct.
- * @param cmd The command line arguments.
- * 
- * @return The return value is the exit status of the last command executed.
+/*
+ * It prints the history of the shell
+ *
+ * @param t the terminal structure
  */
-int	ft_unsetenv(t_session *sesh, char **cmd)
+int	ft_history(t_session *sesh, t_term *t)
 {
-	int		i;
-	char	*ptr;
+	size_t	num_incr;
 
-	i = 0;
+	num_incr = 0;
 	sesh->exit_stat = 0;
-	while (*(cmd + (++i)))
-	{
-		if (ft_env_get(sesh, *(cmd + i)))
-		{
-			ptr = ft_strjoin(*(cmd + i), "=");
-			ft_env_remove(sesh, ptr);
-			ft_strdel(&ptr);
-		}
-	}
+	while (++num_incr < t->v_history.len)
+		ft_printf("%4d  %s\n", num_incr, \
+		(char *)ft_vec_get(&t->v_history, num_incr - 1));
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/19 13:37:00 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/25 19:17:58 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define CTRL_C		3
 # define CTRL_D		4
 # define CTRL_L		12
+// # define CMD_K		
 # define CTRL_W		23
 # define CTRL_U		21
 # define CTRL_Y		25
@@ -52,8 +53,6 @@
 # define PROMPT "$> "
 # define MINI_PROMPT "> "
 
-# define BUFFSIZE   2048
-
 typedef struct clipboard
 {
 	int		type;
@@ -62,8 +61,8 @@ typedef struct clipboard
 
 typedef struct s_term
 {
-	char		inp[BUFFSIZE];
-	char		history_buff[BUFFSIZE];
+	char		inp[BUFF_SIZE];
+	char		history_buff[BUFF_SIZE];
 	t_vec		v_history;
 	char		**nl_addr;
 	char		*history_file;
@@ -112,11 +111,11 @@ int		ft_get_input(void);
 ssize_t	ft_get_prompt_len(t_term *t, ssize_t row);
 int		ft_get_linenbr(void);
 void	ft_heredoc_handling(t_term *t, int index);
-void	ft_history(t_term *t);
-char	*ft_history_file_get(void);
-void	ft_history_get(t_term *t);
+// int		ft_history(t_term *t);
+// char	*ft_history_file_get(void);
+// void	ft_history_get(t_term *t);
 void	ft_history_reset_nl(t_term *t, char *inp);
-void	ft_history_write_to_file(t_term *t);
+// void	ft_history_write_to_file(t_term *t);
 void	ft_history_trigger(t_term *t, ssize_t his);
 void	ft_init(t_term *t);
 void	ft_init_signals(void);

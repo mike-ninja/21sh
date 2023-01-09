@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_quote_flag_reset.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 09:23:06 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/16 17:13:19 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/06 13:44:21 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	ft_quote_flag_reset(t_term *t)
 	t->q_qty = 0;
 	t->quote = 0;
 	t->heredoc = 0;
+	if (t->delim)
+		ft_strdel(&t->delim);
 	while (t->inp[++i])
 	{
 		if ((t->inp[i] == D_QUO || t->inp[i] == S_QUO) && !t->heredoc)
@@ -38,6 +40,8 @@ void	ft_quote_flag_reset(t_term *t)
 			ft_heredoc_handling(t, i);
 			if (!t->heredoc && t->delim)
 				ft_strdel(&t->delim);
+			else
+				ft_delim_fetch(t);
 		}
 	}
 }

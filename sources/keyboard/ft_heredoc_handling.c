@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc_handling.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:57:40 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/18 14:09:21 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/06 13:07:45 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_heredoc_handling(t_term *t, int index)
 	count = start;
 	while (count < t->bytes && t->inp[count] == '<')
 		count++;
-	if ((count - start) >= 2)
+	if ((count - start) == 2)
 		t->heredoc = 1;
 	else
 		t->heredoc = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 20:04:51 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/15 14:08:36 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:39:45 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static char	*write_to_tmp_file(t_term *t, char *str, int fd)
 	cpy = ft_strchr(str, '\n') + 1;
 	if (ft_strrchr(cpy, '\n'))
 		cpy = ft_strsub(cpy, 0, (ft_strrchr(cpy, '\n') - cpy) + 1);
-	if (!ft_strequ(cpy, t->delim))
+	if (*cpy && !ft_strequ(cpy, t->delim))
 	{
 		write(fd, cpy, ft_strlen(cpy));
 		ft_strdel(&cpy);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
+#    By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2022/12/19 16:17:19 by jniemine         ###   ########.fr        #
+#    Updated: 2023/01/06 15:30:41 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ CFLAGS				+=	-Wpedantic
 CFLAGS				+=	-O3
 
 LEAK_CHECK			= -g
-#LEAK_CHECK		+=	-fsanitize=address
+LEAK_CHECK		+=	-fsanitize=address
 
 UNAME				= $(shell uname)
 ifeq ($(UNAME), Darwin)
@@ -77,6 +77,7 @@ UTILITIES		=	utilities/
 BUILTIN			= 	builtins/
 BUILTIN_UTILS	= 	builtin_utils/
 TERMIOS			= 	termios/
+HISTORY			= 	history/
 
 SOURCE_COUNT = $(words $(FILES))
 
@@ -114,11 +115,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(KEYBOARD)ft_delim_fetch \
 				$(KEYBOARD)ft_esc_parse \
 				$(KEYBOARD)ft_get_prompt_len \
-				$(KEYBOARD)ft_history_get \
-				$(KEYBOARD)ft_history_file_get \
 				$(KEYBOARD)ft_history_trigger \
-				$(KEYBOARD)ft_history_write_to_file \
-				$(KEYBOARD)ft_history \
 				$(KEYBOARD)ft_init_signals \
 				$(KEYBOARD)ft_input_cycle \
 				$(KEYBOARD)ft_insertion \
@@ -182,6 +179,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(EXPANSION)ft_expansion_tilde \
 				$(UTILITIES)ft_env_get \
 				$(UTILITIES)ft_err_print \
+				$(UTILITIES)ft_bslash_check \
 				$(BUILTIN)ft_builtins \
 				$(BUILTIN)ft_cd \
 				$(BUILTIN)ft_echo \
@@ -200,6 +198,10 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(TERMIOS)ft_raw_enable \
 				$(INITIALIZE)ft_session_init \
 				$(INITIALIZE)ft_env_init \
+				$(HISTORY)ft_history \
+				$(HISTORY)ft_history_file_get \
+				$(HISTORY)ft_history_get \
+				$(HISTORY)ft_history_write_to_file \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 O_PATHS		=	$(addsuffix .o, $(addprefix $(OBJECTS)/,$(FILES)))
@@ -231,6 +233,7 @@ $(OBJECTS):
 	@mkdir -p $(OBJECTS)/$(BUILTIN)
 	@mkdir -p $(OBJECTS)/$(BUILTIN_UTILS)
 	@mkdir -p $(OBJECTS)/$(TERMIOS)
+	@mkdir -p $(OBJECTS)/$(HISTORY)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"
 	@printf "$(NAME): $(GREEN)$(OBJECTS) directory was created.$(RESET)\n\n\n"
 

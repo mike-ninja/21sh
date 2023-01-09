@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env_remove.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 15:09:29 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/26 15:28:25 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/06 12:57:30 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
+/**
+ * It takes a session and a string, and removes the environment variable that
+ * starts with the string.
+ * 
+ * @param sesh the session struct
+ * @param env_to_clean The environment variable to remove.
+ */
 void	ft_env_remove(t_session *sesh, char *env_to_clean)
 {
 	int		i;

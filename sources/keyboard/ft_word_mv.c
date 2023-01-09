@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:43:30 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/15 13:15:21 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/20 12:21:49 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	ft_word_left(t_term *t)
 		t->index--;
 	}
 	t->c_col += &t->inp[t->index] - t->nl_addr[t->c_row];
-	ft_setcursor(t->c_col, ft_get_linenbr());
+	ft_setcursor(t->c_col, t->start_row + t->c_row);
 }
 
 /*
@@ -62,7 +62,7 @@ static void	ft_word_right(t_term *t)
 		t->index++;
 	}
 	t->c_col += &t->inp[t->index] - t->nl_addr[row];
-	ft_setcursor(t->c_col, ft_get_linenbr());
+	ft_setcursor(t->c_col, t->start_row + t->c_row);
 }
 
 /*

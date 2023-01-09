@@ -17,4 +17,3 @@ Supports CTRL + U, for copying. CTRL + W, for cutting. CTRL + Y, for pasting.
 clone git\
 make\
 ./21\
-HAVE FUN.

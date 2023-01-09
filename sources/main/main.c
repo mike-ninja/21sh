@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/19 15:55:54 by jniemine         ###   ########.fr       */
+/*   Updated: 2022/12/29 12:54:24 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	main_loop(t_session *sesh)
 	int	status;
 
 	status = 1;
+	sesh->term->clipboard.buff = NULL;
 	while (status)
 	{
 		sesh->orig_termios = ft_raw_enable();
@@ -37,10 +38,8 @@ void	main_loop(t_session *sesh)
 
 int	main(void)
 {
-	int				status;
 	t_session		sesh[1];
 
-	status = 1;
 	ft_getent();
 	sesh->orig_termios = ft_raw_enable();
 	banner_print();

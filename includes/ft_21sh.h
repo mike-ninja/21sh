@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/19 16:10:30 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:33:50 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,6 @@ char			*ft_heredoc(t_term *t, char *str);
 /*					TOKENIZER				*/
 t_token			*chop_line(char *line, t_token *args, size_t pointer_n);
 char			*find_argument(char *line, int *i, int *start, int *end);
-int				is_ws(char c);
 void			init_token(char *c, t_token *token, char *line, int cur);
 void			track_used_space(t_token **args, size_t current_pointer_n,
 					size_t *max_pointer_n);
@@ -156,8 +155,8 @@ void			track_used_space(t_token **args, size_t current_pointer_n,
 /*					TOKENIZER UTILS			*/
 void			free_tokens(t_token **tokens);
 int				is_nl(char c);
-int				is_ws(char c);
 int				is_seperator(char c);
+void			tok_quote_flag(char *line, int *end, char *quote_flag);
 
 /*					BUILDTREE				*/
 t_treenode		*build_tree(t_token *tokens);
@@ -201,6 +200,7 @@ char			**ft_env_get(t_session *sesh, char *key);
 int				increment_whitespace(char **line);
 void			free_node(t_treenode *head);
 int				ft_err_print(char *file, char *cmd, char *msg, int fd);
+size_t			ft_bslash_check(char *buff, ssize_t pos);
 
 /*					EXECUTE_TREE			*/
 void			exec_tree(t_treenode *head, char ***environ_cp, char *terminal, \
@@ -231,7 +231,7 @@ void			exe_fail(char **cmd, char **args, char ***env_cp);
 /*					BUILTIN					*/
 int				ft_builtins(t_session *sesh, char ***cmd);
 int				ft_cd(t_session *sesh, char **cmd);
-int				ft_echo(char **cmd);
+int				ft_echo(t_session *sesh, char **cmd);
 int				ft_env(t_session *sesh, char ***cmd);
 void			ft_exit(t_session *sesh, int status);
 int				ft_setenv(t_session *sesh, char **cmd);
@@ -243,5 +243,11 @@ void			ft_env_remove(t_session *sesh, char *env_to_clean);
 int				ft_env_append(t_session *sesh, char **arg);
 int				ft_env_replace(t_session *sesh, char *envn, char **tmp_env);
 void			ft_dir_change(t_session *sesh);
+
+/*			  		 HISTORY				*/
+int				ft_history(t_session *sesh, t_term *t);
+void			ft_history_get(t_term *t);
+char			*ft_history_file_get(void);
+void			ft_history_write_to_file(t_term *t);
 
 #endif
