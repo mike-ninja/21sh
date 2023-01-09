@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tok_find_argument.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:13:39 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/29 12:19:25 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:37:03 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,8 @@ static char	*tok_if_redir(char *line, int *i, int *start, int *end)
 			++(*end);
 		if (*end && line[(*end) - 1] == '&' && line[*end] == '-')
 			return (ft_strsub(line, *start, (++(*end)) - *start));
-		if (line[*end] == '<' || line[*end] == '>' || line[*end] == '&')
+		if (redir_error(&line[*end]))
 		{
-			ft_err_print(NULL, "syntax error near unexpected token",
-				&line[*end], 2);
 			*end = -1;
 			return (NULL);
 		}
@@ -91,8 +89,15 @@ char	*find_argument(char *line, int *i, int *start, int *end)
 			tok_quote_flag(line, end, &quote);
 		if ((line[*end] == '>' || line[*end] == '<') && (*end) > 0)
 			collect_digits(line, &digits, end);
-		else if (is_seperator(*end > 0 && line[*end]))
+		else if (*end > 0 && is_seperator(line[*end])/* && is_seperator(*end > 0 && line[*end])*/)
+		{
+			if (test_if_error(&line[*end + 1]))
+			{
+				*end = -1;
+				return (NULL);
+			}
 			--(*end);
+		}
 	}
 	else
 		*end += operator_len(&line[*end]);
