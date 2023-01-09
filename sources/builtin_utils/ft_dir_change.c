@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dir_change.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 10:57:49 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/30 10:37:50 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/06 12:55:00 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
+/**
+ * It swaps the current working directory with the PWD environment variable
+ * 
+ * @param sesh The session struct.
+ * @param cwd the current working directory
+ */
 static void	swap_pwd(t_session *sesh, char *cwd)
 {
 	char	**pwd;
@@ -31,6 +37,11 @@ static void	swap_pwd(t_session *sesh, char *cwd)
 	}
 }
 
+/**
+ * It swaps the values of the PWD and OLDPWD environment variables
+ * 
+ * @param sesh the session struct
+ */
 static void	swap_oldpwd(t_session *sesh)
 {
 	char	**pwd;
@@ -45,6 +56,12 @@ static void	swap_oldpwd(t_session *sesh)
 	}
 }
 
+/**
+ * It swaps the current working directory and swaps the PWD env varriable
+ * with the new path and updates the with the OLDPWD.
+ * 
+ * @param sesh the session struct
+ */
 void	ft_dir_change(t_session *sesh)
 {
 	char	*oldpwd;

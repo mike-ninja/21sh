@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/18 16:36:42 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/06 13:24:19 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	check_access(char *cmd, char **args, t_session *sesh)
 	if (((cmd && ft_strchr(cmd, '/')) && access(cmd, F_OK) < 0))
 	{
 		ft_err_print(NULL, args[0], "No such file or directory", 2);
+		sesh->exit_stat = 127;
 		return (0);
 	}
 	else if (!cmd || !ft_strchr(cmd, '/'))
@@ -53,17 +54,22 @@ int	check_access(char *cmd, char **args, t_session *sesh)
 			ft_err_print(NULL, args[0], "command not found", 2);
 		else
 			ft_err_print(NULL, args[0], "No such file or directory", 2);
+		sesh->exit_stat = 127;
 		return (0);
 	}
 	stat(cmd, &buf);
 	if (!check_file_validity(&buf, cmd))
+	{
+		sesh->exit_stat = 126;
 		return (0);
+	}
 	return (1);
 }
 
 void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 {
 	char	*cmd;
+	int		access;
 	int		status;
 
 	status = 0;
@@ -73,14 +79,17 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 		return ;
 	if (!check_if_user_exe(args[0], &cmd))
 		cmd = search_bin(args[0], *environ_cp);
-	if (check_access(cmd, args, sesh) && fork_wrap() == 0)
+	access = check_access(cmd, args, sesh);
+	if (access && fork_wrap() == 0)
 	{
 		if (!cmd || execve(cmd, args, *environ_cp) < 0)
 			exe_fail(&cmd, args, environ_cp);
 		exit (1);
 	}
-	wait (&status);
-	if (WTERMSIG(status))
+	wait(&status);
+	if (status & 0177)
 		ft_putchar('\n');
+	if (access)
+		sesh->exit_stat = status >> 8;
 	ft_memdel((void **)&cmd);
 }
