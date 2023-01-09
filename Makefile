@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+         #
+#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/06 15:30:41 by mbarutel         ###   ########.fr        #
+#    Updated: 2023/01/09 14:25:20 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,8 +47,8 @@ CFLAGS				+=	-Wpedantic
 # CFLAGS				+=	-Wconversion
 CFLAGS				+=	-O3
 
-LEAK_CHECK			= -g
-LEAK_CHECK		+=	-fsanitize=address
+# LEAK_CHECK			= -g
+# LEAK_CHECK		+=	-fsanitize=address
 
 UNAME				= $(shell uname)
 ifeq ($(UNAME), Darwin)
@@ -136,6 +136,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(KEYBOARD)ft_history_reset_nl \
 				$(KEYBOARD)ft_nl_removal \
 				$(KEYBOARD)ft_print_input \
+				$(KEYBOARD)ft_history_add \
 				$(KEYBOARD)ft_keyboard \
 				$(LEXER)ft_lexer \
 				$(LEXER)ft_heredoc \

@@ -6,11 +6,13 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:39:35 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/09 10:38:31 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:13:10 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
+
+extern t_term	*g_t;
 
 /*
  * It gets the current line number of the cursor
@@ -28,8 +30,10 @@ int	ft_get_linenbr(void)
 	len = 0;
 	while (read(0, buf + len, 1) == 1)
 	{
-		if (buf[len++] == 'R' || len > 6)
+		if (buf[len++] == 'R')
 			break ;
+		if (len > 6)
+			return (g_t->ws_row);
 	}
 	len = 0;
 	i = 0;

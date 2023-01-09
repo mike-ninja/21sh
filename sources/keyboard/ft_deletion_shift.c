@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 15:21:37 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/18 12:49:41 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:01:42 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_deletion_shift(t_term *t, ssize_t index)
 		ft_quote_flag_check(t, t->index);
 	else if (heredoc)
 	{
-		ft_heredoc_handling(t, t->index - 1);
+		ft_heredoc_handling(t);
 		if (!t->heredoc && t->delim)
 			ft_strdel(&t->delim);
 	}
