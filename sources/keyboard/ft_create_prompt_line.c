@@ -22,6 +22,8 @@ void	ft_create_prompt_line(t_term *t, ssize_t loc)
 {
 	t->c_row++;
 	t->total_row++;
+	if (t->input_cpy)
+		ft_strdel(&t->input_cpy);
 	if (t->start_row + t->total_row >= t->ws_row)
 	{
 		ft_run_capability("sf");

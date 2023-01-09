@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/09 17:13:07 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/09 17:38:02 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,7 +248,7 @@ int				ft_env_replace(t_session *sesh, char *envn, char **tmp_env);
 void			ft_dir_change(t_session *sesh);
 
 /*			  		 HISTORY				*/
-int				ft_history(t_session *sesh, t_term *t);
+int				ft_history(t_term *t);
 void			ft_history_get(t_term *t);
 char			*ft_history_file_get(void);
 void			ft_history_write_to_file(t_term *t);

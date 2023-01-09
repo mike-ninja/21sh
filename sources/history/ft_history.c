@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_history.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:38:04 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/05 16:27:45 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/09 14:59:08 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,15 @@
  *
  * @param t the terminal structure
  */
-int	ft_history(t_session *sesh, t_term *t)
+int	ft_history(t_term *t)
 {
-	size_t	num_incr;
+	int		i;
 
-	num_incr = 0;
-	sesh->exit_stat = 0;
-	while (++num_incr < t->v_history.len)
-		ft_printf("%4d  %s\n", num_incr, \
-		(char *)ft_vec_get(&t->v_history, num_incr - 1));
+	i = 0;
+	while (t->history_arr[i])
+	{
+		ft_printf("%4d %s\n", i, t->history_arr[i]);
+		i++;
+	}
 	return (0);
 }
