@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/09 13:45:48 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:03:03 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	ft_history_push(t_term *t)
 		if (*t->history_buff)
 		{
 			ft_nl_removal(t);
-			ft_vec_push(&t->v_history, t->history_buff);
+			ft_history_add_command(t, t->history_buff);
 			ft_memset((void *)t->history_buff, '\0', \
 			ft_strlen(t->history_buff));
 		}
@@ -105,12 +105,14 @@ void	ft_history_trigger(t_term *t, ssize_t his)
 	ssize_t	row;
 	char	*history;
 
+	history = NULL;
 	if (t->c_row != t->total_row)
 		return ;
 	row = t->c_row;
 	ft_history_push(t);
 	ft_run_capability("vi");
-	history = (char *)ft_vec_get(&t->v_history, t->v_history.len - (size_t)his);
+	if (t->history_arr[t->history_size - his])
+		history = t->history_arr[t->history_size - (size_t)his];
 	ft_history_clear_line(t, row);
 	ft_history_inp_update(t, history);
 	ft_history_reset_nl(t, t->nl_addr[t->history_row]);

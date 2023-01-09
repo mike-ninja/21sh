@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_end_cycle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 12:04:06 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/04 17:30:20 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:00:27 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_end_cycle(t_term *t)
 	{
 		ft_memcpy(t->history_buff, t->inp, t->bytes);
 		ft_nl_removal(t);
-		ft_vec_push(&t->v_history, t->history_buff);
+		ft_history_add_command(t, t->history_buff);
 	}
 	ft_memdel((void **)&t->nl_addr);
 	if (t->input_cpy)

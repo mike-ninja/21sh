@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:56:42 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/09 13:44:51 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:00:20 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	heredoc_reset(t_term *t)
 	{
 		ft_memcpy(t->history_buff, t->inp, t->bytes);
 		ft_nl_removal(t);
-		ft_vec_push(&t->v_history, t->history_buff);
+		ft_history_add_command(t, t->history_buff);
 		ft_strdel(&t->delim);
 	}
 	t->heredoc = 0;

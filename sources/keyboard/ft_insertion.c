@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/20 11:39:43 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:01:32 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	ft_insertion_char(t_term *t)
 	}
 	if (t->inp[t->index - 1] == '<' && !t->heredoc)
 	{
-		ft_heredoc_handling(t, t->index - 1);
+		ft_heredoc_handling(t);
 		if (!t->heredoc && t->delim)
 			ft_strdel(&t->delim);
 	}
