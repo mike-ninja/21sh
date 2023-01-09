@@ -6,7 +6,7 @@
 #    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/09 15:13:11 by jniemine         ###   ########.fr        #
+#    Updated: 2023/01/09 17:13:27 by jniemine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -150,6 +150,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(TOKENIZER)track_used_space \
 				$(TOKENIZER)free_tokens \
 				$(TOKENIZER)tok_error \
+				$(TOKENIZER)tok_if_redir \
 				$(BUILDTREE)build_tree \
 				$(BUILDTREE)make_arg_array \
 				$(BUILDTREE)bt_utils \

@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/09 15:33:06 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/09 17:13:07 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ void			track_used_space(t_token **args, size_t current_pointer_n,
 					size_t *max_pointer_n);
 int				test_if_error(char *str);
 int				redir_error(char *str);
+char			*tok_if_redir(char *line, int *i, int *start, int *end);
 
 /*					TOKENIZER UTILS			*/
 void			free_tokens(t_token **tokens);
