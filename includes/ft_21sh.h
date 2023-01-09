@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/09 16:12:18 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:50:21 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft.h"
 # include "keyboard.h"
 # include "ft_printf.h"
+# include "signal.h"
 # include <sys/stat.h>
 
 /* Do not use zero */

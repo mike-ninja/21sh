@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/08 22:33:00 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/09 17:34:21 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	check_access(char *cmd, char **args, t_session *sesh)
 	return (1);
 }
 
+/* PROCESS IMPLEMENTATION */
 static t_proc *create_process_node(int index, char **args, int pid)
 {
 	t_proc	*ret;
@@ -81,24 +82,20 @@ static t_proc *create_process_node(int index, char **args, int pid)
 
 static void process_ls_append(char **args, t_session *sesh, int pid)
 {
-	int		index;
 	t_proc 	*ptr;
 
-	index = 0;
 	ptr = NULL;
 	if (!sesh->process_ls)
-		sesh->process_ls = create_process_node(index, args, pid);
+		sesh->process_ls = create_process_node(1, args, pid);
 	else
 	{
 		ptr = sesh->process_ls;
-		while (ptr)
-		{
-			index++;
+		while (ptr->next)
 			ptr = ptr->next;
-		}
-		ptr->next =	create_process_node(index, args, pid); 
+		ptr->next =	create_process_node(ptr->index + 1, args, pid); 
 	}
 } 
+/* PROCESS IMPLEMENTATION */
 
 void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 {
@@ -120,7 +117,8 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 	{
 		if (!cmd || execve(cmd, args, *environ_cp) < 0)
 			exe_fail(&cmd, args, environ_cp);
-		exit (1);
+		// exit (1);
+		exit (0);
 	}
 	if (!sesh->bg)
 		waitpid(pid, &status, 0);
