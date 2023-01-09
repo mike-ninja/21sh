@@ -18,4 +18,4 @@ clone git\
 We used Mike's version of basic library clone it to the root:\
 git clone https://github.com/mike-ninja/libft \
 make\
-./21\
+./21
