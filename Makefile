@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
+#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/09 17:37:51 by jniemine         ###   ########.fr        #
+#    Updated: 2023/01/10 10:30:45 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -137,6 +137,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(KEYBOARD)ft_nl_removal \
 				$(KEYBOARD)ft_print_input \
 				$(KEYBOARD)ft_history_add \
+				$(KEYBOARD)ft_set_cur_position \
 				$(KEYBOARD)ft_keyboard \
 				$(LEXER)ft_lexer \
 				$(LEXER)ft_heredoc \
