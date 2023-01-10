@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/09 17:55:26 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/10 11:21:54 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ typedef union u_treenode	t_treenode;
 /*					PROCESS ID				*/
 typedef struct s_process
 {
-	pid_t 				pid;
+	pid_t				pid;
 	int					index;
-	char 				*command;
-	int 				status;
-	struct s_process 	*next;
+	char				**command;
+	int					status;
+	struct s_process	*next;
 }	t_proc;
 /*					TOKEN STRUCT			*/
 typedef struct s_token
@@ -210,7 +210,6 @@ char			*ft_expansion_tilde(t_session *sesh, char *str);
 void			ft_quote_blash_removal(char *buff);
 
 /*					UTILITIES				*/
-int				ft_cd_addr_check(char *file);
 char			**ft_env_get(t_session *sesh, char *key);
 int				increment_whitespace(char **line);
 void			free_node(t_treenode *head);
@@ -249,15 +248,18 @@ int				ft_cd(t_session *sesh, char **cmd);
 int				ft_echo(t_session *sesh, char **cmd);
 int				ft_env(t_session *sesh, char ***cmd);
 void			ft_exit(t_session *sesh, int status);
+int				ft_jobs(t_session *sesh);
 int				ft_setenv(t_session *sesh, char **cmd);
 int				ft_unsetenv(t_session *sesh, char **cmd);
 
 /*			    BUILTIN UTILITIES			*/
-int				ft_env_temp(t_session *sesh, char **cmd, int i);
-void			ft_env_remove(t_session *sesh, char *env_to_clean);
-int				ft_env_append(t_session *sesh, char **arg);
-int				ft_env_replace(t_session *sesh, char *envn, char **tmp_env);
+int				ft_cd_addr_check(char *file);
 void			ft_dir_change(t_session *sesh);
+int				ft_env_append(t_session *sesh, char **arg);
+void			ft_env_remove(t_session *sesh, char *env_to_clean);
+int				ft_env_replace(t_session *sesh, char *envn, char **tmp_env);
+int				ft_env_temp(t_session *sesh, char **cmd, int i);
+int				pid_status(int pid);
 
 /*			  		 HISTORY				*/
 int				ft_history(t_term *t);

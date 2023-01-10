@@ -6,7 +6,7 @@
 #    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/10 10:30:45 by mbarutel         ###   ########.fr        #
+#    Updated: 2023/01/10 11:04:48 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -189,6 +189,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(BUILTIN)ft_echo \
 				$(BUILTIN)ft_env \
 				$(BUILTIN)ft_exit \
+				$(BUILTIN)ft_jobs \
 				$(BUILTIN)ft_setenv \
 				$(BUILTIN)ft_unsetenv \
 				$(BUILTIN_UTILS)ft_cd_addr_check \
@@ -197,6 +198,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(BUILTIN_UTILS)ft_env_remove \
 				$(BUILTIN_UTILS)ft_env_replace \
 				$(BUILTIN_UTILS)ft_env_temp \
+				$(BUILTIN_UTILS)ft_pid_status \
 				$(TERMIOS)ft_getent \
 				$(TERMIOS)ft_raw_disable \
 				$(TERMIOS)ft_raw_enable \

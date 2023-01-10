@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/09 17:34:21 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/10 10:54:49 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,19 @@ int	check_access(char *cmd, char **args, t_session *sesh)
 /* PROCESS IMPLEMENTATION */
 static t_proc *create_process_node(int index, char **args, int pid)
 {
+	int		i;
 	t_proc	*ret;
 
+	i = -1;
 	ret = (t_proc *)ft_memalloc(sizeof(t_proc));
 	ret->index = index;
 	ret->pid = pid;
-	ret->command = ft_strdup(*args);
 	ret->status = 0;
 	ret->next = NULL;
+	ret->command = (char **)ft_memalloc(sizeof(char *) * (ft_arrlen(args) + 1));
+	while (args[++i])
+		ret->command[i] = ft_strdup(args[i]);
+	ret->command[i] = NULL;
 	return (ret);
 }
 
