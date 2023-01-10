@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_session_init.c                                  :+:      :+:    :+:   */
+/*   hash_function.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 16:44:03 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/10 12:05:19 by mrantil          ###   ########.fr       */
+/*   Created: 2022/11/02 10:19:48 by mrantil           #+#    #+#             */
+/*   Updated: 2022/12/06 16:09:15 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-/**
- * It initializes the session struct.
- *
- * @param sesh The session struct.
- */
-void	ft_session_init(t_session *sesh)
+/*
+**	It takes a string and returns an integer
+**	@return The hash value of the program name.
+*/
+size_t hash_function(char *program)
 {
-	sesh->exit_stat = 0;
-	sesh->line = NULL;
-	ft_env_init(sesh);
-	sesh->terminal = ttyname(STDOUT_FILENO);
-	sesh->head = NULL;
-	sesh->tmp_env_key = NULL;
-	sesh->tokens = NULL;
-	hash_init(sesh);
+	size_t	hash;
+	size_t 	c;
+
+	hash = 0;
+	while ((c = (size_t)*program++))
+		hash = c + (hash << 6) + (hash << 16) - hash;
+	return (hash % HASH_SIZE);
 }

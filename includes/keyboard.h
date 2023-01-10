@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/10 10:28:24 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/10 11:13:01 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@
 # include <term.h>
 # include <fcntl.h>
 # include <sys/ioctl.h>
+
+# if __linux__
+#  include <term.h>
+#  include <curses.h>
+#  include <signal.h>
+#  include <limits.h>
+#  include <ctype.h>
+# endif
 
 # define ENTER      10
 # define CTRL_C		3

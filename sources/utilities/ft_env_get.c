@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env_get.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:51:34 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/26 15:39:47 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/10 12:34:41 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 /**
  * It takes a session and a key, and returns a pointer to the environment
  * variable with that key.
- * 
+ *
  * @param sesh The session struct.
  * @param key the key to search for
- * 
+ *
  * @return A pointer to the environment variable.
  */
 char	**ft_env_get(t_session *sesh, char *key)

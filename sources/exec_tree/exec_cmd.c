@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/06 13:24:19 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/10 16:54:11 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,20 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 	char	*cmd;
 	int		access;
 	int		status;
+	int 	hash_flag = 0;
 
 	status = 0;
+	cmd = NULL;
 	if (!args[0])
 		return ;
 	if (!ft_builtins(sesh, &args))
 		return ;
-	if (!check_if_user_exe(args[0], &cmd))
+	cmd = hash_check(sesh, args[0]);
+	if (cmd)
+	{
+		hash_flag = 1;
+	}
+	else if (!check_if_user_exe(args[0], &cmd))
 		cmd = search_bin(args[0], *environ_cp);
 	access = check_access(cmd, args, sesh);
 	if (access && fork_wrap() == 0)
@@ -90,6 +97,11 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 	if (status & 0177)
 		ft_putchar('\n');
 	if (access)
+	{
 		sesh->exit_stat = status >> 8;
+		//put in hash in table here
+		if (!hash_flag)
+			hash_init_struct(sesh, cmd);
+	}
 	ft_memdel((void **)&cmd);
 }

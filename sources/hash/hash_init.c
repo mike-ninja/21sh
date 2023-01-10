@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_session_init.c                                  :+:      :+:    :+:   */
+/*   hash_init.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 16:44:03 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/10 12:05:19 by mrantil          ###   ########.fr       */
+/*   Created: 2022/10/24 15:35:59 by mrantil           #+#    #+#             */
+/*   Updated: 2022/11/14 17:31:51 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-/**
- * It initializes the session struct.
- *
- * @param sesh The session struct.
- */
-void	ft_session_init(t_session *sesh)
+static void	init_ht(t_hash ***ht)
 {
-	sesh->exit_stat = 0;
-	sesh->line = NULL;
-	ft_env_init(sesh);
-	sesh->terminal = ttyname(STDOUT_FILENO);
-	sesh->head = NULL;
-	sesh->tmp_env_key = NULL;
-	sesh->tokens = NULL;
-	hash_init(sesh);
+	int	i;
+
+	*ht = (t_hash **)malloc(sizeof(t_hash *) * (HASH_SIZE + 1));
+	i = 0;
+	while (i <= HASH_SIZE)
+		(*ht)[i++] = NULL;
+}
+
+void	hash_init(t_session *sesh)
+{
+	t_hash	**ht;
+
+	ht = NULL;
+	sesh->ht = ht;
+	init_ht(&sesh->ht);
 }

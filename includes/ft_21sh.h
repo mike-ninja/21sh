@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/09 17:38:02 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/10 16:10:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 # include "keyboard.h"
 # include "ft_printf.h"
 # include <sys/stat.h>
+
+# if __linux__
+#  include <sys/types.h>
+#  include <sys/wait.h>
+# endif
 
 /* Do not use zero */
 # define PIPE 1
@@ -33,6 +38,9 @@
 
 /* limit for filedescriptors */
 # define SH_FD_MAX 255
+
+/* Hash Table */
+# define HASH_SIZE 25
 
 /* Build tree, redir types */
 # define RE_IN_ONE 1
@@ -113,6 +121,14 @@ union u_treenode
 	t_aggregate	aggregate;
 };
 
+/*					HASH					*/
+typedef struct s_hash
+{
+	char			*program;
+	int				hits;
+	struct s_hash	*next;
+}					t_hash;
+
 /*				SESSION STRUCT				*/
 typedef struct session
 {
@@ -120,6 +136,7 @@ typedef struct session
 	t_treenode		*head;
 	t_term			term[1];
 	char			**env;
+	t_hash			**ht;
 	t_token			*tokens;
 	int				exit_stat;
 	char			*terminal;
@@ -252,5 +269,14 @@ int				ft_history(t_term *t);
 void			ft_history_get(t_term *t);
 char			*ft_history_file_get(void);
 void			ft_history_write_to_file(t_term *t);
+
+/*			  		 HASH					*/
+int				ft_hash(t_session *sesh, char **cmd);
+void			hash_init(t_session *sesh);
+void			hash_print(t_hash **ht);
+size_t			hash_function(char *program);
+void			hash_init_struct(t_session *sesh, char *str);
+char			*hash_check(t_session *sesh, char *program);
+void			hash_free(t_hash **ht);
 
 #endif

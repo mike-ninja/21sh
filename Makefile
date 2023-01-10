@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
+#    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/10 10:30:45 by mbarutel         ###   ########.fr        #
+#    Updated: 2023/01/10 15:40:58 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,22 +41,21 @@ MAKEFLAGS			+= --no-print-directory
 
 NAME				=	21sh
 CC					=	gcc
-CFLAGS 				= 	-Wall -Wextra -Werror
+TERMCAP				=	-ltermcap
+CFLAGS 				= 	-Wall -Wextra
 CFLAGS				+=	-Wunreachable-code -Wtype-limits
 CFLAGS				+=	-Wpedantic
 # CFLAGS				+=	-Wconversion
 CFLAGS				+=	-O3
 
-#LEAK_CHECK			= -g
+LEAK_CHECK			= -g
 #LEAK_CHECK		+=	-fsanitize=address
 
 UNAME				= $(shell uname)
 ifeq ($(UNAME), Darwin)
-TERMCAP				=	-ltermcap
+CFLAGS				+= 	-Werror
 endif
 ifeq ($(UNAME), Linux)
-TERMCAP				=	-ltermcap
-CFLAGS				+= 	-Werror
 TERMCAP				=	-lncurses
 endif
 
@@ -78,6 +77,7 @@ BUILTIN			= 	builtins/
 BUILTIN_UTILS	= 	builtin_utils/
 TERMIOS			= 	termios/
 HISTORY			= 	history/
+HASH			= 	hash/
 
 SOURCE_COUNT = $(words $(FILES))
 
@@ -206,6 +206,13 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(HISTORY)ft_history_file_get \
 				$(HISTORY)ft_history_get \
 				$(HISTORY)ft_history_write_to_file \
+				$(HASH)ft_hash \
+				$(HASH)hash_init \
+				$(HASH)hash_print \
+				$(HASH)hash_function \
+				$(HASH)hash_init_struct \
+				$(HASH)hash_check \
+				$(HASH)hash_free \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 O_PATHS		=	$(addsuffix .o, $(addprefix $(OBJECTS)/,$(FILES)))
@@ -238,6 +245,7 @@ $(OBJECTS):
 	@mkdir -p $(OBJECTS)/$(BUILTIN_UTILS)
 	@mkdir -p $(OBJECTS)/$(TERMIOS)
 	@mkdir -p $(OBJECTS)/$(HISTORY)
+	@mkdir -p $(OBJECTS)/$(HASH)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"
 	@printf "$(NAME): $(GREEN)$(OBJECTS) directory was created.$(RESET)\n\n\n"
 
