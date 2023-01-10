@@ -6,29 +6,11 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:25:07 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/20 13:46:36 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/10 10:29:58 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
-
-/**
- * It sets the cursor position
- * to the position of the character at the current index
- * 
- * @param t the term structure
- */
-static void	set_new_cur_pos(t_term *t)
-{
-	t->c_row = 0;
-	while (t->nl_addr[t->c_row] \
-	&& &t->inp[t->index] >= t->nl_addr[t->c_row])
-		t->c_row++;
-	t->c_row--;
-	t->c_col = ft_get_prompt_len(t, t->c_row);
-	t->c_col += &t->inp[t->index] - t->nl_addr[t->c_row];
-	ft_setcursor(t->c_col, t->c_row);
-}
 
 /*
  * It resets the cursor position and prints the trail of the input string
