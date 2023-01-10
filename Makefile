@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
+#    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/09 14:25:20 by mbarutel         ###   ########.fr        #
+#    Updated: 2023/01/09 17:37:51 by jniemine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,8 +47,8 @@ CFLAGS				+=	-Wpedantic
 # CFLAGS				+=	-Wconversion
 CFLAGS				+=	-O3
 
-# LEAK_CHECK			= -g
-# LEAK_CHECK		+=	-fsanitize=address
+#LEAK_CHECK			= -g
+#LEAK_CHECK		+=	-fsanitize=address
 
 UNAME				= $(shell uname)
 ifeq ($(UNAME), Darwin)
@@ -150,6 +150,8 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(TOKENIZER)init_token \
 				$(TOKENIZER)track_used_space \
 				$(TOKENIZER)free_tokens \
+				$(TOKENIZER)tok_error \
+				$(TOKENIZER)tok_if_redir \
 				$(BUILDTREE)build_tree \
 				$(BUILDTREE)make_arg_array \
 				$(BUILDTREE)bt_utils \
