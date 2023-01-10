@@ -6,14 +6,17 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:09:10 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/09 17:08:41 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/10 13:36:13 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-int	test_if_error(char *str)
+int	test_if_error(char *line)
 {
+	char	*str;
+
+	str = line + 1;
 	if (*str == '|')
 		ft_err_print(NULL, "syntax error near unexpected token",
 			"`|'", 1);
@@ -23,7 +26,7 @@ int	test_if_error(char *str)
 	else if (ft_strnequ(str, ";", 1))
 		ft_err_print(NULL, "syntax error near unexpected token",
 			"`;'", 1);
-	else if (*str == '\0')
+	else if (*line != ';' && *str == '\0')
 		ft_err_print(NULL, "syntax error near unexpected token",
 			"`newline'", 1);
 	else

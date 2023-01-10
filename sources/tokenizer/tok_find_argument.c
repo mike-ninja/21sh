@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:13:39 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/09 17:20:19 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:13:09 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ static int	mv_back_if_on_seperator(char *line, int *end)
 {
 	if (*end > 0 && is_seperator(line[*end]))
 	{
-		if (test_if_error(&line[*end + 1]))
+		if (test_if_error(&line[*end]))
 		{
 			*end = -1;
 			return (1);
 		}
-		--(*end);
+		//--(*end);
 	}
 	return (0);
 }

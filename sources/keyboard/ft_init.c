@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/27 13:55:45 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:48:39 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ static void	ft_init_to_zero(t_term *t)
 	t->c_row = 0;
 	t->index = 0;
 	t->bslash = 0;
-	t->ws_col = 0;
-	t->ws_row = 0;
 	t->heredoc = 0;
 	t->total_row = 0;
 	t->history_row = -1;
@@ -53,7 +51,6 @@ void	ft_init(t_term *t)
 	g_t = t;
 	t->nl_addr = NULL;
 	t->delim = NULL;
-	ft_window_size(t);
 	t->prompt_len = (ssize_t)ft_strlen(PROMPT);
 	t->m_prompt_len = (ssize_t)ft_strlen(MINI_PROMPT);
 	t->c_col = t->prompt_len;
