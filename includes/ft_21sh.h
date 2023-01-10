@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/10 11:21:54 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/10 12:19:46 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,8 @@ int				ft_cd(t_session *sesh, char **cmd);
 int				ft_echo(t_session *sesh, char **cmd);
 int				ft_env(t_session *sesh, char ***cmd);
 void			ft_exit(t_session *sesh, int status);
+// int				ft_fg(t_proc *proc, char **cmd);
+int				ft_fg(char **cmd);
 int				ft_jobs(t_session *sesh);
 int				ft_setenv(t_session *sesh, char **cmd);
 int				ft_unsetenv(t_session *sesh, char **cmd);

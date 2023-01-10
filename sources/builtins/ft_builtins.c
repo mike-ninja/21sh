@@ -6,21 +6,11 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:50:01 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/10 11:22:18 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/10 12:20:26 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
-
-static int	ft_foreground(char **cmd)
-{
-	int	nm;
-	int	status;
-
-	nm = ft_atoi(*(cmd + 1));
-	waitpid(nm, &status, 0);
-	return (0);
-}
 
 /**
  * It takes a session and a command, expands the command, and then checks if
@@ -57,7 +47,8 @@ int	ft_builtins(t_session *sesh, char ***cmd)
 		else if (!ft_strcmp(**cmd, "jobs"))
 			return(ft_jobs(sesh));
 		else if (!ft_strcmp(**cmd, "fg"))
-			return(ft_foreground(*cmd));
+			return(ft_fg(*cmd));
+			// return(ft_fg(sesh->process_ls, *cmd));
 		/*TESTING*/
 	}
 	return (1);

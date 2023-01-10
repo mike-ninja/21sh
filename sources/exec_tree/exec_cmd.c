@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/10 10:54:49 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/10 12:22:21 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,19 +85,23 @@ static t_proc *create_process_node(int index, char **args, int pid)
 	return (ret);
 }
 
-static void process_ls_append(char **args, t_session *sesh, int pid)
+static int process_ls_append(char **args, t_session *sesh, int pid)
 {
 	t_proc 	*ptr;
 
 	ptr = NULL;
 	if (!sesh->process_ls)
+	{
 		sesh->process_ls = create_process_node(1, args, pid);
+		return (sesh->process_ls->index);
+	}
 	else
 	{
 		ptr = sesh->process_ls;
 		while (ptr->next)
 			ptr = ptr->next;
 		ptr->next =	create_process_node(ptr->index + 1, args, pid); 
+		return (ptr->next->index);
 	}
 } 
 /* PROCESS IMPLEMENTATION */
@@ -129,9 +133,10 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 		waitpid(pid, &status, 0);
 	else if (pid)
 	{
+		
 		// append process ID NODE HERE
-		process_ls_append(args, sesh, pid);
-		// ft_printf("[%d]", pid);
+		// process_ls_append(args, sesh, pid);
+		ft_printf("[%d] %d\n", process_ls_append(args, sesh, pid), pid);
 	}
 	if (status & 0177)
 		ft_putchar('\n');
