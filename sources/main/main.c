@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/29 12:54:24 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:11:56 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@ int	main(void)
 	t_session		sesh[1];
 
 	ft_getent();
-	sesh->orig_termios = ft_raw_enable();
 	banner_print();
-	ft_raw_disable(sesh->orig_termios);
 	ft_session_init(sesh);
 	ft_history_get(sesh->term);
 	main_loop(sesh);
