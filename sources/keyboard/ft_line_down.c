@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_line_down.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 12:25:34 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/20 12:18:26 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/11 12:44:02 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	ft_move_down(t_term *t, ssize_t prompt_len)
 
 static ssize_t	ft_col_diff(t_term *t, ssize_t len)
 {
-	int	len_cur_row;
+	long	len_cur_row;
 
 	len_cur_row = &t->inp[t->index] - t->nl_addr[t->c_row];
 	if (len_cur_row > len)
