@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/18 20:26:30 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/11 12:41:50 by mbarutel         ###   ########.fr       */
+/*   Created: 2023/01/11 18:22:14 by mbarutel          #+#    #+#             */
+/*   Updated: 2023/01/11 18:22:18 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	ctrl_d(t_term *t)
 		ft_putstr("21sh: warning: here-document at line ");
 		ft_putnbr((int)t->c_row);
 		ft_putstr(" delimited by end-of-file (wanted `EOF')");
+		ft_strcat(t->inp, t->delim);
 		ft_end_cycle(t);
 		return (1);
 	}
