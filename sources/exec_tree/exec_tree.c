@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:23:35 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/27 13:43:37 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/11 12:55:16 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,5 @@ void	exec_tree(t_treenode *head, char ***environ_cp,
 	else if (head->type == CLOSEFD)
 		exec_closefd((t_closefd *)head, environ_cp, terminal, sesh);
 	else if (head->type == CMD)
-		execute_bin(((t_cmdnode *)head)->cmd, environ_cp, sesh);
+		exec_cmd(((t_cmdnode *)head)->cmd, environ_cp, sesh);
 }

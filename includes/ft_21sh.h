@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/10 16:10:28 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/11 13:19:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ union u_treenode
 typedef struct s_hash
 {
 	char			*program;
+	char			*path;
 	int				hits;
 	struct s_hash	*next;
 }					t_hash;
@@ -225,7 +226,7 @@ size_t			ft_bslash_check(char *buff, ssize_t pos);
 /*					EXECUTE_TREE			*/
 void			exec_tree(t_treenode *head, char ***environ_cp, char *terminal, \
 				t_session *sesh);
-void			execute_bin(char **args, char ***environ_cp, t_session *sesh);
+void			exec_cmd(char **args, char ***environ_cp, t_session *sesh);
 void			exec_pipe(t_pipenode *pipenode, char ***environ_cp, \
 				char *terminal, t_session *sesh);
 void			exec_redir(t_redir *node, char ***environ_cp, char *terminal, \
@@ -275,8 +276,8 @@ int				ft_hash(t_session *sesh, char **cmd);
 void			hash_init(t_session *sesh);
 void			hash_print(t_hash **ht);
 size_t			hash_function(char *program);
-void			hash_init_struct(t_session *sesh, char *str);
-char			*hash_check(t_session *sesh, char *program);
+void			hash_init_struct(t_session *sesh, char *str, int hits);
+char			*hash_check(t_session *sesh, char *program, int *hash);
 void			hash_free(t_hash **ht);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/10 16:54:11 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/11 13:28:13 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,27 +66,11 @@ int	check_access(char *cmd, char **args, t_session *sesh)
 	return (1);
 }
 
-void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
+static int	ft_execve(char *cmd, char **args, int access, char ***environ_cp)
 {
-	char	*cmd;
-	int		access;
 	int		status;
-	int 	hash_flag = 0;
 
 	status = 0;
-	cmd = NULL;
-	if (!args[0])
-		return ;
-	if (!ft_builtins(sesh, &args))
-		return ;
-	cmd = hash_check(sesh, args[0]);
-	if (cmd)
-	{
-		hash_flag = 1;
-	}
-	else if (!check_if_user_exe(args[0], &cmd))
-		cmd = search_bin(args[0], *environ_cp);
-	access = check_access(cmd, args, sesh);
 	if (access && fork_wrap() == 0)
 	{
 		if (!cmd || execve(cmd, args, *environ_cp) < 0)
@@ -96,12 +80,31 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 	wait(&status);
 	if (status & 0177)
 		ft_putchar('\n');
+	return (status);
+}
+
+void	exec_cmd(char **args, char ***environ_cp, t_session *sesh)
+{
+	char	*cmd;
+	int		access;
+	int		status;
+	int		hash;
+
+	if (!args[0])
+		return ;
+	if (!ft_builtins(sesh, &args))
+		return ;
+	hash = 0;
+	cmd = hash_check(sesh, args[0], &hash);
+	if (!hash && !check_if_user_exe(args[0], &cmd))
+		cmd = search_bin(args[0], *environ_cp);
+	access = check_access(cmd, args, sesh);
+	status = ft_execve(cmd, args, access, environ_cp);
 	if (access)
 	{
 		sesh->exit_stat = status >> 8;
-		//put in hash in table here
-		if (!hash_flag)
-			hash_init_struct(sesh, cmd);
+		if (!hash)
+			hash_init_struct(sesh, cmd, 1);
 	}
 	ft_memdel((void **)&cmd);
 }
