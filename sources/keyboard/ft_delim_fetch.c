@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_delim_fetch.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 13:35:01 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/18 14:12:54 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/11 12:44:37 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	ft_delim_fetch(t_term *t)
 			end_q = ptr;
 			while (*end_q && !ft_isspace(*end_q))
 				end_q++;
-			t->delim = ft_strsub(ptr, 0, end_q - ptr);
+			t->delim = ft_strsub(ptr, 0, (size_t)(end_q - ptr));
 		}
 		else
 		{

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:56:42 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/10 16:09:00 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/11 12:47:14 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	heredoc_reset(t_term *t)
 {
 	if (t->delim)
 	{
-		ft_memcpy(t->history_buff, t->inp, t->bytes);
+		ft_memcpy(t->history_buff, t->inp, (unsigned long)t->bytes);
 		ft_nl_removal(t);
 		ft_history_add_command(t, t->history_buff);
 		ft_strdel(&t->delim);
