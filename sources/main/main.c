@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/10 15:11:56 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:20:55 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	main_loop(t_session *sesh)
 	{
 		sesh->orig_termios = ft_raw_enable();
 		if (ft_keyboard(sesh->term) == 1)
+		{
+			ft_history_write_to_file(sesh->term);
 			status = 0;
+		}
 		ft_raw_disable(sesh->orig_termios);
 		if (*(sesh->term->inp))
 		{
