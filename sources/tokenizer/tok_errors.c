@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 17:04:42 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/06 17:15:32 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/11 11:51:26 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 static int	control_op_error_split(char *str)
 {
-	if (ft_strnequ(str, ";", 1))
+	if (ft_strnequ(str + 1, ";", 1))
 		ft_err_print(NULL, "syntax error near unexpected token",
 			"`;'", 1);
-	else if (ft_strnequ(str, "(", 1))
+	else if (ft_strnequ(str + 1, "(", 1))
 		ft_err_print(NULL, "syntax error near unexpected token",
 			"`('", 1);
-	else if (ft_strnequ(str, ")", 1))
+	else if (ft_strnequ(str + 1, ")", 1))
 		ft_err_print(NULL, "syntax error near unexpected token",
 			"`)'", 1);
-	else if (*str == '\0')
+	else if (*str != ';' && *(str + 1) == '\0')
 		ft_err_print(NULL, "syntax error near unexpected token",
 			"`newline'", 1);
 	else
@@ -33,19 +33,19 @@ static int	control_op_error_split(char *str)
 
 int	control_op_error(char *str)
 {
-	if (ft_strnequ(str, "||", 2))
+	if (ft_strnequ(str + 1, "||", 2))
 		ft_err_print(NULL, "syntax error near unexpected token",
 			"`||'", 2);
-	else if (ft_strnequ(str, "|", 1))
+	else if (ft_strnequ(str + 1, "|", 1))
 		ft_err_print(NULL, "syntax error near unexpected token",
 			"`|'", 1);
-	else if (ft_strnequ(str, "&&", 2))
+	else if (ft_strnequ(str + 1, "&&", 2))
 		ft_err_print(NULL, "syntax error near unexpected token",
 			"`&&'", 2);
-	else if (ft_strnequ(str, "&", 1))
+	else if (ft_strnequ(str + 1, "&", 1))
 		ft_err_print(NULL, "syntax error near unexpected token",
 			"`&'", 1);
-	else if (ft_strnequ(str, ";;", 2))
+	else if (ft_strnequ(str + 1, ";;", 2))
 		ft_err_print(NULL, "syntax error near unexpected token",
 			"`;;'", 2);
 	return (control_op_error_split(str));

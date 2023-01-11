@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 17:21:17 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/06 17:32:14 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/11 11:51:49 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*tok_if_logical(char *line, int *i, int *start, int *end)
 	{
 		*start = *i;
 		*end = *start + 2;
-		if (control_op_error(&line[*end]))
+		if (control_op_error(&line[*end - 1]))
 		{
 			*end = -1;
 			return (NULL);
@@ -30,7 +30,7 @@ char	*tok_if_logical(char *line, int *i, int *start, int *end)
 	{
 		*start = *i;
 		*end = *start + 1;
-		if (control_op_error(&line[*end]))
+		if (control_op_error(&line[*end - 1]))
 		{
 			*end = -1;
 			return (NULL);
