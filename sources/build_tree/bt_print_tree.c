@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 20:22:15 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/09 13:08:27 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/11 16:33:57 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,42 +59,54 @@ static void printer(t_treenode *head, int n)
 		ft_printf("%s", *((t_cmdnode *)head)->cmd);
 }
 */
-/*
-static void    print_exec(t_treenode *root)
+static void    print_exec(t_treenode *node)
 {
-    size_t    len;
+    size_t		len;
+	t_cmdnode	*root;
 
-    len = ft_arrlen((void **)root->arg);
+	root = (t_cmdnode *)node;
+    len = ft_arrlen(root->cmd);
     ft_printf("exec ");
     if (len > 2)
-        ft_printf("[%s] [1]%s [2]%s [3]%s\n", root->arg[0], \
-        root->arg[1], root->arg[2], root->arg[3]);
+        ft_printf("[%s] [1]%s [2]%s [3]%s\n", root->cmd[0], \
+        root->cmd[1], root->cmd[2], root->cmd[3]);
     else if (len == 2)
-        ft_printf("[%s] %s\n", root->arg[0], root->arg[1]);
+        ft_printf("[%s] %s\n", root->cmd[0], root->cmd[1]);
     else
-        ft_printf("[%s]\n", root->arg[0]);
+        ft_printf("[%s]\n", root->cmd[0]);
 }
 
 static void    check_type(t_treenode *root)
 {
-    if (root->type == CMD && root->type)
+	if (!root)
+		return ;
+    else if (root->type == CMD && root->type)
         print_exec(root);
     else if (root->type == PIPE)
         ft_printf("[|]");
     else if (root->type == REDIR && ((t_redir *)root)->cmd->type == CMD && ((t_redir *)root)->close_fd == STDOUT_FILENO && ((t_redir *)root)->rights & O_APPEND)
         ft_printf(">> [%d] [%s]\n", root->type, *(((t_cmdnode *)((t_redir *)root)->cmd)->cmd));
-    else if (root->type == REDIR && ((t_redir *)root)->cmd->type == CMD && ((t_redir *)root)->close_fd == STDOUT_FILENO)
-        ft_printf("> [%d] [%s]\n", root->type, *(((t_cmdnode *)((t_redir *)root)->cmd)->cmd));
-    else if (root->type == REDIR && ((t_redir *)root)->cmd->type == CMD && ((t_redir *)root)->close_fd == STDIN_FILENO)
-        ft_printf("> [%d] [%s]\n", root->type, *(((t_cmdnode *)((t_redir *)root)->cmd)->cmd));
-//    else if (root->type == AMP)
-//        ft_printf("[&]");
+    else if (root->type == REDIR /*&& ((t_redir *)root)->cmd->type == CMD*/ && ((t_redir *)root)->close_fd == STDOUT_FILENO)
+        ft_printf("> [%d]\n", root->type/*, *(((t_cmdnode *)((t_redir *)root)->cmd)->cmd)*/);
+    else if (root->type == REDIR /*&& ((t_redir *)root)->cmd->type == CMD*/ && ((t_redir *)root)->close_fd == STDIN_FILENO)
+        ft_printf("> [%d]\n", root->type/*, *(((t_cmdnode *)((t_redir *)root)->cmd)->cmd)*/);
     else if (root->type == SEMICOLON)
+	{
         ft_printf("[;]");
+	}
     else if (root->type == AGGREGATION)
 	{
-        ft_printf(">& [%d] [%s]\n", root->type, root->);//
+        ft_printf(">& [%d] [%s]\n", root->type, ((t_aggregate *)root)->cmd);
 	}
+}
+
+void	print_spaces(int lvl)
+{
+	int i;
+
+    i = COUNT;
+    while (i++ < lvl)
+        ft_printf(" ");
 }
 
 void    rec_print_tree(t_treenode *root, int lvl)
@@ -104,13 +116,46 @@ void    rec_print_tree(t_treenode *root, int lvl)
     if (root == NULL)
         return ;
     lvl += COUNT;
-    rec_print_tree(((t_semicolon *)root)->right, lvl);
-    ft_printf("\n");
-    i = COUNT;
-    while (i++ < lvl)
-        ft_printf(" ");
-    check_type(root);
-    rec_print_tree(((t_semicolon *)root)->left, lvl);
+	//print_spaces(lvl);
+    if (root->type == PIPE)
+	{
+		rec_print_tree(((t_pipenode *)root)->left, lvl);
+		print_spaces(lvl);
+	    	check_type(root);
+	 	   ft_printf("\n");
+//	    ft_printf("\n");
+    //	lvl += COUNT;
+		rec_print_tree(((t_pipenode *)root)->right, lvl);
+	}
+    else if (root->type == REDIR)
+	{
+		print_spaces(lvl);
+    	check_type(root);
+		rec_print_tree(((t_redir *)root)->cmd, lvl);
+//    	check_type(root);
+	}
+    else if (root->type == SEMICOLON)
+	{
+		rec_print_tree(((t_semicolon *)root)->left, lvl);
+		print_spaces(lvl);
+	  	check_type(root);
+		ft_printf("\n");
+		rec_print_tree(((t_semicolon *)root)->right, lvl);
+	}
+    else if (root->type == AGGREGATION)
+		rec_print_tree(((t_aggregate *)root)->cmd, lvl);
+	else
+	{
+		print_spaces(lvl);
+    	check_type(root);
+	}
+//	if (root)
+//		rec_print_tree(root, lvl);
+//    ft_printf("\n");
+
+//    check_type(root);
+//	if (root)
+// 	   rec_print_tree(root, lvl);
 }
 
 void    tree_print(t_treenode *root)
@@ -123,12 +168,10 @@ void    tree_print(t_treenode *root)
 
 void print_tree(t_treenode *head)
 {
-	int n;
+	//int n;
 
-	n = calculate_nodes(head, 0);
-//	tree_print(head);
-//	printer(head, n);
+//	n = calculate_nodes(head, 0);
+	tree_print(head);
 //	ft_printf("N: %d\n", n);
-//	exit (0);
+	exit (0);
 }
-*/
