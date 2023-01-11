@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/11 16:27:15 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/11 21:44:29 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,6 +262,7 @@ int				ft_env_replace(t_session *sesh, char *envn, char **tmp_env);
 int				ft_env_temp(t_session *sesh, char **cmd, int i);
 int				pid_status(int pid);
 void			ft_print_dbl_array(char **cmd);
+void			update_precedence(t_proc *head, int mode);
 
 /*			  		 HISTORY				*/
 int				ft_history(t_term *t);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/11 15:07:17 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/11 21:30:26 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 	if (!check_if_user_exe(args[0], &cmd))
 		cmd = search_bin(args[0], *environ_cp);
 	access = check_access(cmd, args, sesh);
-	pid = fork_wrap();
+	if (access)
+		pid = fork_wrap();
 	if (access && pid == 0)
 	{
 		if (!cmd || execve(cmd, args, *environ_cp) < 0)
@@ -89,9 +90,11 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 		// exit (1);
 		exit (0);
 	}
-	if (!sesh->bg)
+	if (!sesh->bg && cmd)
+	{
 		waitpid(pid, &status, 0);
-	else if (pid)
+	}
+	else if (pid && cmd)
 	{
 		// append process ID NODE HERE
 		ft_printf("[%d] %d\n", process_node_append(args, sesh, pid), pid);

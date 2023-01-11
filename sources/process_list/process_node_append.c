@@ -54,6 +54,7 @@ int process_node_append(char **args, t_session *sesh, int pid)
 	if (!sesh->process_ls)
 	{
 		sesh->process_ls = create_process_node(1, args, pid);
+		update_precedence(sesh->process_ls, 0);
 		return (sesh->process_ls->index);
 	}
 	else
@@ -62,6 +63,7 @@ int process_node_append(char **args, t_session *sesh, int pid)
 		while (ptr->next)
 			ptr = ptr->next;
 		ptr->next =	create_process_node(ptr->index + 1, args, pid); 
+		update_precedence(sesh->process_ls, 0);
 		return (ptr->next->index);
 	}
 } 
