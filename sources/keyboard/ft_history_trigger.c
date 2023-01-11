@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_history_trigger.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/09 15:03:03 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/11 12:46:25 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ static void	ft_history_push(t_term *t)
  */
 static void	ft_historycpy(t_term *t, char *dst, char *src)
 {
-	int		i;
-	size_t	len;
+	int	i;
+	int	len;
 
 	i = -1;
-	len = ft_strlen(t->inp);
+	len = (int)ft_strlen(t->inp);
 	while (src[++i] && (len + i) < (BUFF_SIZE - 1))
 		dst[i] = src[i];
 }
@@ -111,7 +111,7 @@ void	ft_history_trigger(t_term *t, ssize_t his)
 	row = t->c_row;
 	ft_history_push(t);
 	ft_run_capability("vi");
-	if (t->history_arr[t->history_size - his])
+	if (t->history_arr[t->history_size - (unsigned long)his])
 		history = t->history_arr[t->history_size - (size_t)his];
 	ft_history_clear_line(t, row);
 	ft_history_inp_update(t, history);

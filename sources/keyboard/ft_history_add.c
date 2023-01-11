@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_history_add.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:22:24 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/09 14:49:46 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/11 12:49:54 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,6 @@ static void	add_to_capped_history(t_term *t, char *command)
 	ft_arrclean(t->history_arr);
 	t->history_arr = temp;
 }
-
-/*
-	memmove possible
-*/
 
 static void	increase_history_size(t_term *t)
 {

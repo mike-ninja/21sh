@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expansion_dollar.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:57:25 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/18 15:42:30 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/11 11:03:7 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,61 @@ static char	**ft_special_ch_split(char *str)
  * @param buff the buffer to write to
  * @param arg the string to be parsed
  */
-static void	ft_find_env(t_session *sesh, char *buff, char *arg)
+static char	*ft_find_env(t_session *sesh, char *arg)
 {
+	char	*ret;
 	char	*key;
 	char	**env;
 	int		key_len;
 
+	ret = NULL;
 	key_len = 0;
 	while (arg[key_len] && !ft_isspace(arg[key_len]))
 		key_len++;
 	key = ft_strsub(arg, 1, key_len - 1);
 	env = ft_env_get(sesh, key);
 	if (env)
-		ft_strcat(buff, ft_strchr(*env, '=') + 1);
+		ret = ft_strdup(ft_strchr(*env, '=') + 1);
+	else
+		ret = ft_strnew(1);
 	if (arg[key_len])
-		ft_strcat(buff, arg + key_len);
+		ret = strjoin_head(ret, arg + key_len);
 	ft_strdel(&key);
+	return (ret);
+}
+
+/**
+ * It takes a string, splits it on the '$' character, and then catinates the 
+ * expansion of the split strings.
+ * 
+ * @param sesh the session struct
+ * @param split_dollar This is the string that is being split by the dollar sign.
+ * @param buff This is the buffer that will be returned.
+ */
+static void	catinate_expansion(t_session *sesh, char **splits, char **buff)
+{
+	char	*tofree;
+
+	tofree = NULL;
+	if (**splits == '$' && ft_strlen(*splits) > 1)
+	{
+		if (!*buff)
+			*buff = ft_find_env(sesh, *splits);
+		else
+		{
+			tofree = ft_find_env(sesh, *splits);
+			*buff = strjoin_head(*buff, tofree);
+			ft_strdel(&tofree);
+		}
+	}
+	else
+	{
+		if (!*buff)
+			*buff = ft_strdup(*splits);
+		else
+			*buff = strjoin_head(*buff, *splits);
+	}
+	ft_strdel(splits);
 }
 
 /**
@@ -103,24 +142,18 @@ static void	ft_find_env(t_session *sesh, char *buff, char *arg)
 char	*ft_expansion_dollar(t_session *sesh, char *str)
 {
 	int		i;
-	char	buff[BUFF_SIZE];
+	char	*buff;
 	char	**split_dollar;
 
 	i = -1;
+	buff = NULL;
 	if (!ft_strcmp(str, "$$"))
 		return (ft_itoa(getpid()));
 	if (!ft_strcmp(str, "$?"))
 		return (ft_itoa(sesh->exit_stat));
-	ft_bzero(buff, BUFF_SIZE);
 	split_dollar = ft_special_ch_split(str);
 	while (split_dollar[++i])
-	{
-		if (*split_dollar[i] == '$' && ft_strlen(split_dollar[i]) > 1)
-			ft_find_env(sesh, buff, split_dollar[i]);
-		else
-			ft_strcat(buff, split_dollar[i]);
-		ft_strdel(&split_dollar[i]);
-	}
+		catinate_expansion(sesh, &split_dollar[i], &buff);
 	ft_memdel((void **)&split_dollar);
-	return (ft_strdup(buff));
+	return (buff);
 }
