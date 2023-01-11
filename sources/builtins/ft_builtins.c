@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:50:01 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/10 12:20:26 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/11 16:19:57 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_builtins(t_session *sesh, char ***cmd)
 		else if (!ft_strcmp(**cmd, "jobs"))
 			return(ft_jobs(sesh));
 		else if (!ft_strcmp(**cmd, "fg"))
-			return(ft_fg(*cmd));
+			return(ft_fg(sesh, *cmd));
 			// return(ft_fg(sesh->process_ls, *cmd));
 		/*TESTING*/
 	}

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
+#    By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/10 11:48:21 by mbarutel         ###   ########.fr        #
+#    Updated: 2023/01/11 16:26:48 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,23 +61,25 @@ TERMCAP				=	-lncurses
 endif
 
 SOURCES 		= 	sources
-KEYBOARD		= 	keyboard/
 BANNER			= 	banner/
-MAIN			= 	main/
+BUILDTREE		=	build_tree/
+BUILTIN_UTILS	= 	builtin_utils/
+BUILTIN			= 	builtins/
+EXECTREE		=	exec_tree/
+EXPANSION		=	expansion/
+HISTORY			= 	history/
+INITIALIZE		=	initialize/
+KEYBOARD		= 	keyboard/
 LEXER			= 	lexer/
+MAIN			= 	main/
+PROCESS_LIST	= 	process_list/
+TERMIOS			= 	termios/
+TOKENIZER		=	tokenizer/
+UTILITIES		=	utilities/
+
 OBJECTS 		= 	objects
 INCLUDES		= 	includes/
 LIBRARIES 		= 	libft/
-TOKENIZER		=	tokenizer/
-BUILDTREE		=	build_tree/
-EXECTREE		=	exec_tree/
-INITIALIZE		=	initialize/
-EXPANSION		=	expansion/
-UTILITIES		=	utilities/
-BUILTIN			= 	builtins/
-BUILTIN_UTILS	= 	builtin_utils/
-TERMIOS			= 	termios/
-HISTORY			= 	history/
 
 SOURCE_COUNT = $(words $(FILES))
 
@@ -145,6 +147,9 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(MAIN)main \
 				$(MAIN)shell_end_cycle \
 				$(MAIN)reset_fd \
+				$(PROCESS_LIST)process_getpid \
+				$(PROCESS_LIST)process_node_append \
+				$(PROCESS_LIST)process_node_delete \
 				$(TOKENIZER)tokenizer \
 				$(TOKENIZER)token_utils \
 				$(TOKENIZER)tok_find_argument \
@@ -200,6 +205,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(BUILTIN_UTILS)ft_env_replace \
 				$(BUILTIN_UTILS)ft_env_temp \
 				$(BUILTIN_UTILS)ft_pid_status \
+				$(BUILTIN_UTILS)ft_print_dbl_array \
 				$(TERMIOS)ft_getent \
 				$(TERMIOS)ft_raw_disable \
 				$(TERMIOS)ft_raw_enable \
@@ -241,6 +247,7 @@ $(OBJECTS):
 	@mkdir -p $(OBJECTS)/$(BUILTIN_UTILS)
 	@mkdir -p $(OBJECTS)/$(TERMIOS)
 	@mkdir -p $(OBJECTS)/$(HISTORY)
+	@mkdir -p $(OBJECTS)/$(PROCESS_LIST)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"
 	@printf "$(NAME): $(GREEN)$(OBJECTS) directory was created.$(RESET)\n\n\n"
 

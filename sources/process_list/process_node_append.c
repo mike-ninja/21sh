@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_table.c                                    :+:      :+:    :+:   */
+/*   process_node_append.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 20:05:53 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/09 16:39:06 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/11 15:23:15y mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_21sh.h"
 
 /*
   Initialise process list - DONE
@@ -26,3 +27,41 @@
   man 2 kill() -> to check if process is still running
   
 */
+
+static t_proc *create_process_node(int index, char **args, int pid)
+{
+	int		i;
+	t_proc	*ret;
+
+	i = -1;
+	ret = (t_proc *)ft_memalloc(sizeof(t_proc));
+	ret->index = index;
+	ret->pid = pid;
+	ret->job = 0;
+	ret->next = NULL;
+	ret->command = (char **)ft_memalloc(sizeof(char *) * (ft_arrlen(args) + 1));
+	while (args[++i])
+		ret->command[i] = ft_strdup(args[i]);
+	ret->command[i] = NULL;
+	return (ret);
+}
+
+int process_node_append(char **args, t_session *sesh, int pid)
+{
+	t_proc 	*ptr;
+
+	ptr = NULL;
+	if (!sesh->process_ls)
+	{
+		sesh->process_ls = create_process_node(1, args, pid);
+		return (sesh->process_ls->index);
+	}
+	else
+	{
+		ptr = sesh->process_ls;
+		while (ptr->next)
+			ptr = ptr->next;
+		ptr->next =	create_process_node(ptr->index + 1, args, pid); 
+		return (ptr->next->index);
+	}
+} 
