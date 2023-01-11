@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/09 10:24:21 by jniemine         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/01/11 11:40:58 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef FT_21SH_H
 # define FT_21SH_H
@@ -162,10 +163,11 @@ char			*find_argument(char *line, int *i, int *start, int *end);
 void			init_token(char *c, t_token *token, char *line, int cur);
 void			track_used_space(t_token **args, size_t current_pointer_n,
 					size_t *max_pointer_n);
+int				test_if_error(char *str);
+char			*tok_if_redir(char *line, int *i, int *start, int *end);
 int				redir_error(char *str);
 int				control_op_error(char *str);
 char			*tok_if_logical(char *line, int *i, int *start, int *end);
-char			*tok_if_redir(char *line, int *i, int *start, int *end);
 
 /*					TOKENIZER UTILS			*/
 void			free_tokens(t_token **tokens);
@@ -262,7 +264,7 @@ int				ft_env_replace(t_session *sesh, char *envn, char **tmp_env);
 void			ft_dir_change(t_session *sesh);
 
 /*			  		 HISTORY				*/
-int				ft_history(t_session *sesh, t_term *t);
+int				ft_history(t_term *t);
 void			ft_history_get(t_term *t);
 char			*ft_history_file_get(void);
 void			ft_history_write_to_file(t_term *t);

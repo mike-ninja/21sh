@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 12:04:06 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/04 17:30:20 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:35:03 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,11 @@
  */
 void	ft_end_cycle(t_term *t)
 {
-	t->start_row = ft_get_linenbr();
 	if (t->bytes)
 	{
 		ft_memcpy(t->history_buff, t->inp, t->bytes);
 		ft_nl_removal(t);
-		ft_vec_push(&t->v_history, t->history_buff);
+		ft_history_add_command(t, t->history_buff);
 	}
 	ft_memdel((void **)&t->nl_addr);
 	if (t->input_cpy)

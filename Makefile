@@ -6,7 +6,7 @@
 #    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/09 10:24:39 by jniemine         ###   ########.fr        #
+#    Updated: 2023/01/11 11:39:38 by jniemine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,8 +47,8 @@ CFLAGS				+=	-Wpedantic
 # CFLAGS				+=	-Wconversion
 CFLAGS				+=	-O3
 
-LEAK_CHECK			= -g
-LEAK_CHECK		+=	-fsanitize=address
+#LEAK_CHECK			= -g
+#LEAK_CHECK		+=	-fsanitize=address
 
 UNAME				= $(shell uname)
 ifeq ($(UNAME), Darwin)
@@ -136,6 +136,8 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(KEYBOARD)ft_history_reset_nl \
 				$(KEYBOARD)ft_nl_removal \
 				$(KEYBOARD)ft_print_input \
+				$(KEYBOARD)ft_history_add \
+				$(KEYBOARD)ft_set_cur_position \
 				$(KEYBOARD)ft_keyboard \
 				$(LEXER)ft_lexer \
 				$(LEXER)ft_heredoc \
@@ -152,6 +154,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(TOKENIZER)tok_errors \
 				$(TOKENIZER)tok_if_logical \
 				$(TOKENIZER)tok_if_redir \
+				$(TOKENIZER)tok_error \
 				$(BUILDTREE)build_tree \
 				$(BUILDTREE)make_arg_array \
 				$(BUILDTREE)bt_utils \

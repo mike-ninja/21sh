@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc_handling.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:57:40 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/06 13:07:45 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:59:59 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,23 @@
  *
  * @param t the term structure
  */
-void	ft_heredoc_handling(t_term *t, int index)
+void	ft_heredoc_handling(t_term *t)
 {
-	ssize_t	start;
 	ssize_t	count;
+	ssize_t	start;
 
-	start = index;
-	while (start && t->inp[start] == '<')
-		start--;
-	if (start)
-		start++;
-	count = start;
-	while (count < t->bytes && t->inp[count] == '<')
-		count++;
-	if ((count - start) == 2)
+	count = 0;
+	start = -1;
+	while (t->inp[++start] && count <= 2)
+	{
+		if (t->inp[start] == '<')
+			count++;
+		else if (t->inp[start] != '<' && count == 2)
+			break ;
+		else
+			count = 0;
+	}	
+	if (count == 2)
 		t->heredoc = 1;
 	else
 		t->heredoc = 0;

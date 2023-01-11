@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/06 17:24:41 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/06 17:27:07 by jniemine         ###   ########.fr       */
+/*   Created: 2023/01/09 17:11:18 by jniemine          #+#    #+#             */
+/*   Updated: 2023/01/11 11:42:40 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static void	traverse_to_end(char *line, int *end)
 		++(*end);
 }
 
+/*	Seems that start is only used in here as a temp to i, investigate
+	, refactor, conquer. */
 char	*tok_if_redir(char *line, int *i, int *start, int *end)
 {
 	int	digits;
@@ -36,7 +38,7 @@ char	*tok_if_redir(char *line, int *i, int *start, int *end)
 			++(*end);
 		if (*end && line[(*end) - 1] == '&' && line[*end] == '-')
 			return (ft_strsub(line, *start, (++(*end)) - *start));
-		if (redir_error(&line[*end]) || control_op_error(&line[*end]))
+		if (redir_error(&line[*end]))
 		{
 			*end = -1;
 			return (NULL);

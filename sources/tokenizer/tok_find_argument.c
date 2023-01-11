@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:13:39 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/06 17:30:21 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/11 11:42:10 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,20 @@ char	*if_redir_or_logical(char *line, int *i, int *start, int *end)
 	return (ret);
 }
 
+static int	mv_back_if_on_seperator(char *line, int *end)
+{
+	if (*end > 0 && is_seperator(line[*end]))
+	{
+		if (test_if_error(&line[*end]))
+		{
+			*end = -1;
+			return (1);
+		}
+		//--(*end);
+	}
+	return (0);
+}
+
 char	*find_argument(char *line, int *i, int *start, int *end)
 {
 	char	*ret;
@@ -65,8 +79,8 @@ char	*find_argument(char *line, int *i, int *start, int *end)
 			tok_quote_flag(line, end, &quote);
 		if ((line[*end] == '>' || line[*end] == '<') && (*end) > 0)
 			collect_digits(line, &digits, end);
-		else if (is_seperator(*end > 0 && line[*end]))
-			--(*end);
+		else if (mv_back_if_on_seperator(line, end))
+			return (NULL);
 	}
 	else
 		*end += operator_len(&line[*end]);
