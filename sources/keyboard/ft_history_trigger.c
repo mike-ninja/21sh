@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/12 12:49:54 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:25:01 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ static void	ft_history_inp_update(t_term *t, char *history)
  */
 static void	ft_history_clear_line(t_term *t, ssize_t row)
 {
-	ft_setcursor(0, (t->term_val[1] + t->history_row));
+	if (!t->history_row)
+		ft_setcursor(t->term_val[0], (t->term_val[1] + t->history_row));
+	else
+		ft_setcursor(0, (t->term_val[1] + t->history_row));
 	if (row > t->history_row)
 	{
 		while (row > t->history_row)

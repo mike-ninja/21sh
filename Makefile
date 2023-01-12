@@ -6,7 +6,7 @@
 #    By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/12 12:43:27 by mbarutel         ###   ########.fr        #
+#    Updated: 2023/01/12 13:02:22 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,7 +96,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(KEYBOARD)ft_cut \
 				$(KEYBOARD)ft_end_cycle \
 				$(KEYBOARD)ft_get_input \
-				$(KEYBOARD)ft_getline_nbr \
+				$(KEYBOARD)ft_get_term_val \
 				$(KEYBOARD)ft_heredoc_handling \
 				$(KEYBOARD)ft_init \
 				$(KEYBOARD)ft_line_down \
