@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:55:11 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/12 14:46:51 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/12 16:42:36 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,10 @@
 
 static char	*look_for_expansion(t_session *sesh, char **cmd, int i)
 {
-/* 	char	*excla; */
-
 	if (*cmd[i] != '\'' && ft_strchr(cmd[i], '$') && ft_strlen(cmd[i]) > 1)
 		return (ft_expansion_dollar(sesh, cmd[i]));
 	else if (**(cmd + i) == '~')
 		return (ft_expansion_tilde(sesh, cmd[i]));
-	/* excla = ft_strchr(cmd[i], '!');
-	if (*cmd[i] != '\'' && excla && excla[1] == '!' && excla[2] != '!'&& ft_strlen(cmd[i]) > 1)
-		return (ft_expansion_excla(cmd[i], i)); */
 	return (NULL);
 }
 
