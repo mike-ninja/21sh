@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/10 15:48:39 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/12 12:59:45 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ void	ft_init(t_term *t)
 	ft_memset(t->inp, '\0', BUFF_SIZE);
 	ft_memset(t->history_buff, '\0', BUFF_SIZE);
 	ft_init_to_zero(t);
-	t->start_row = ft_get_linenbr();
+	get_term_val(t->term_val);
 	g_t = t;
 	t->nl_addr = NULL;
 	t->delim = NULL;
 	t->prompt_len = (ssize_t)ft_strlen(PROMPT);
 	t->m_prompt_len = (ssize_t)ft_strlen(MINI_PROMPT);
-	t->c_col = t->prompt_len;
+	t->c_col = t->term_val[0];
 	t->input_cpy = NULL;
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
+#    By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/11 21:49:31 by mbarutel         ###   ########.fr        #
+#    Updated: 2023/01/12 18:23:31 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,8 +47,8 @@ CFLAGS				+=	-Wpedantic
 # CFLAGS				+=	-Wconversion
 CFLAGS				+=	-O3
 
-#LEAK_CHECK			= -g
-#LEAK_CHECK		+=	-fsanitize=address
+# LEAK_CHECK			= -g
+# LEAK_CHECK		+=	-fsanitize=address
 
 UNAME				= $(shell uname)
 ifeq ($(UNAME), Darwin)
@@ -98,7 +98,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(KEYBOARD)ft_cut \
 				$(KEYBOARD)ft_end_cycle \
 				$(KEYBOARD)ft_get_input \
-				$(KEYBOARD)ft_getline_nbr \
+				$(KEYBOARD)ft_get_term_val \
 				$(KEYBOARD)ft_heredoc_handling \
 				$(KEYBOARD)ft_init \
 				$(KEYBOARD)ft_line_down \
@@ -136,6 +136,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(KEYBOARD)ft_word_mv \
 				$(KEYBOARD)ft_ctrl \
 				$(KEYBOARD)ft_history_reset_nl \
+				$(KEYBOARD)ft_history_trigger_row \
 				$(KEYBOARD)ft_nl_removal \
 				$(KEYBOARD)ft_print_input \
 				$(KEYBOARD)ft_history_add \

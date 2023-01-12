@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_word_mv.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:43:30 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/20 12:21:49 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/12 12:37:47 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ static void	ft_word_left(t_term *t)
 		t->index--;
 	}
 	t->c_col += &t->inp[t->index] - t->nl_addr[t->c_row];
-	ft_setcursor(t->c_col, t->start_row + t->c_row);
+	if (!t->c_row)
+		t->c_col += t->term_val[0];
+	ft_setcursor(t->c_col, t->term_val[1] + t->c_row);
 }
 
 /*
@@ -62,7 +64,9 @@ static void	ft_word_right(t_term *t)
 		t->index++;
 	}
 	t->c_col += &t->inp[t->index] - t->nl_addr[row];
-	ft_setcursor(t->c_col, t->start_row + t->c_row);
+	if (!t->c_row)
+		t->c_col += t->term_val[0];
+	ft_setcursor(t->c_col, t->term_val[1] + t->c_row);
 }
 
 /*

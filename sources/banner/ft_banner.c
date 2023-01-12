@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_banner.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 10:31:02 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/18 12:19:21 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:08:34 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@ static int	banner_padding(size_t str_len)
 {
 	struct winsize	arg;
 
-	ioctl(STDOUT_FILENO, TIOCGWINSZ, &arg);
+	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &arg) < 0)
+	{
+		ft_err_print(NULL, NULL, "could not get the terminal size", 2);
+		exit(1);
+	}
 	return ((arg.ws_col - str_len) >> 1);
 }
 

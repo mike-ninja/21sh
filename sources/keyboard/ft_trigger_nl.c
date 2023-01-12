@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:21:29 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/04 13:50:58 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:55:14 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static void	ft_scroll_down(t_term *t)
 		ft_run_capability("sf");
 		ft_run_capability("rc");
 	}
-	ft_run_capability("do");
+	else
+		ft_run_capability("do");
 	ft_run_capability("ve");
 }
 
@@ -45,19 +46,21 @@ void	ft_trigger_nl(t_term *t)
 	if (len == t->ws_col)
 	{
 		t->total_row++;
-		if ((t->start_row + t->total_row) >= t->ws_row)
+		if ((t->term_val[1] + t->total_row) >= t->ws_row)
 		{
-			t->start_row--;
+			t->term_val[1]--;
 			ft_scroll_down(t);
 		}
 		if (t->nl_addr[t->c_row + 1])
 			ft_reset_nl_addr(t);
 		else
+		{
 			ft_add_nl_last_row(t, t->inp, t->bytes);
+		}
 	}
 	if (t->c_col == t->ws_col)
 	{
 		t->c_col = 0;
-		ft_setcursor(t->c_col, t->start_row + ++t->c_row);
+		ft_setcursor(t->c_col, t->term_val[1] + ++t->c_row);
 	}
 }
