@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:23:35 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/27 13:43:37 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:16:15 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,13 @@ void	free_node(t_treenode *head)
 		free_node(((t_pipenode *)head)->right);
 		((t_pipenode *)head)->right = NULL;
 	}
+	else if (head->type == LOGICAL_AND || head->type == LOGICAL_OR)
+	{
+		free_node(((t_logicalop *)head)->left);
+		((t_logicalop *)head)->left = NULL;
+		free_node(((t_logicalop *)head)->right);
+		((t_logicalop *)head)->right = NULL;
+	}
 	free_rest(head);
 }
 
@@ -77,4 +84,6 @@ void	exec_tree(t_treenode *head, char ***environ_cp,
 		exec_closefd((t_closefd *)head, environ_cp, terminal, sesh);
 	else if (head->type == CMD)
 		execute_bin(((t_cmdnode *)head)->cmd, environ_cp, sesh);
+	else if (head->type == LOGICAL_AND || head->type == LOGICAL_OR)
+		exec_logicalop(((t_logicalop *)head), environ_cp, terminal, sesh);
 }
