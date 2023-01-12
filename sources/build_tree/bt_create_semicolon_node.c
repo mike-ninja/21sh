@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:43:28 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/12 14:29:15 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:41:07 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,15 @@ t_treenode	*create_logical_op_node(t_token *tokens, int idx_logical_op, int semi
 	next_op_node = next_logical_op(tokens, idx_logical_op + 1, semicol);
 	if (next_op_node >= 0)
 		((t_logicalop *)logical_op)->right = create_logical_op_node(tokens, next_op_node, semicol);
-	else
-	{
-		start_of_left_cmd = idx_logical_op - 1;
-		while (start_of_left_cmd > 0 && !is_semicolon_or_ampersand(tokens[start_of_left_cmd].token)
-				&& !is_logicalop(tokens[start_of_left_cmd].token))
-			--start_of_left_cmd;
-		ft_printf("START LEFT: %d\n", start_of_left_cmd);
-		((t_logicalop *)logical_op)->left = create_command_tree(tokens, start_of_left_cmd, idx_logical_op);
+	start_of_left_cmd = idx_logical_op - 1;
+	while (start_of_left_cmd > 0 && !is_semicolon_or_ampersand(tokens[start_of_left_cmd].token)
+			&& !is_logicalop(tokens[start_of_left_cmd].token))
+		--start_of_left_cmd;
+	if (start_of_left_cmd > 0)
+		++start_of_left_cmd;
+	((t_logicalop *)logical_op)->left = create_command_tree(tokens, start_of_left_cmd, idx_logical_op);
+	if (((t_logicalop *)logical_op)->right == NULL)
 		((t_logicalop *)logical_op)->right = create_command_tree(tokens, idx_logical_op + 1, semicol);
-	}
 	return (logical_op);
 }
 
@@ -84,7 +83,6 @@ t_treenode	*create_logical_op_tree(t_token *tokens, int i_tok, int semicol)
 	t_treenode	*head;
 
 	logical_op = next_logical_op(tokens, i_tok, semicol);
-	ft_printf("NEXT: %d\n", logical_op);
 	if (logical_op >= 0)
 		head = create_logical_op_node(tokens, logical_op, semicol);
 	else
