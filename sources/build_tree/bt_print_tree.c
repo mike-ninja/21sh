@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 20:22:15 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/12 18:40:04 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:49:15 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,13 @@ static void	check_type(t_treenode *root)
 		print_exec(root);
 	else if (root->type == PIPE)
 		ft_printf("[|]");
-	else if (root->type == REDIR && ((t_redir *)root)->cmd->type == CMD && ((t_redir *)root)->close_fd == STDOUT_FILENO && ((t_redir *)root)->rights & O_APPEND)
-		ft_printf(">> [%d] [%s]\n", root->type, *(((t_cmdnode *)((t_redir *)root)->cmd)->cmd));
-	else if (root->type == REDIR && ((t_redir *)root)->close_fd == STDOUT_FILENO)
+	else if (root->type == REDIR && ((t_redir *)root)->cmd->type == CMD
+		&& ((t_redir *)root)->close_fd == STDOUT_FILENO
+		&& ((t_redir *)root)->rights & O_APPEND)
+		ft_printf(">> [%d] [%s]\n",
+			root->type, *(((t_cmdnode *)((t_redir *)root)->cmd)->cmd));
+	else if (root->type == REDIR
+		&& ((t_redir *)root)->close_fd == STDOUT_FILENO)
 		ft_printf("> [%d]\n", root->type);
 	else if (root->type == REDIR && ((t_redir *)root)->close_fd == STDIN_FILENO)
 		ft_printf("> [%d]\n", root->type);
@@ -64,6 +68,14 @@ void	split_print_tree(t_treenode *root, int lvl)
 		check_type(root);
 		ft_printf("\n");
 		rec_print_tree(((t_logicalop *)root)->right, lvl);
+	}
+	else if (root->type == SEMICOLON)
+	{
+		rec_print_tree(((t_semicolon *)root)->left, lvl);
+		print_spaces(lvl);
+		check_type(root);
+		ft_printf("\n");
+		rec_print_tree(((t_semicolon *)root)->right, lvl);
 	}
 	else
 	{
@@ -90,14 +102,6 @@ void	rec_print_tree(t_treenode *root, int lvl)
 		print_spaces(lvl);
 		check_type(root);
 		rec_print_tree(((t_redir *)root)->cmd, lvl);
-	}
-	else if (root->type == SEMICOLON)
-	{
-		rec_print_tree(((t_semicolon *)root)->left, lvl);
-		print_spaces(lvl);
-	  	check_type(root);
-		ft_printf("\n");
-		rec_print_tree(((t_semicolon *)root)->right, lvl);
 	}
 	split_print_tree(root, lvl);
 }

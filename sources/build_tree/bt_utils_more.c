@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:38:17 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/12 16:01:27 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:44:40 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	increment_not_whitespace(char **line)
 
 void	print_spaces(int lvl)
 {
-	int i;
+	int	i;
 
 	i = COUNT;
 	while (i++ < lvl)
