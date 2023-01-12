@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 08:42:47 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/16 14:00:15 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:44:27 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 int	ft_getent(void)
 {
 	char	*termtype;
-	char	term_buffer[2048];
 	int		status;
 
 	termtype = getenv("TERM");
@@ -30,7 +29,7 @@ int	ft_getent(void)
 		ft_err_print(NULL, NULL, "could not get the TERM env", 2);
 		exit(1);
 	}
-	status = tgetent(term_buffer, termtype);
+	status = tgetent(NULL, termtype);
 	if (status < 0)
 	{
 		ft_err_print(NULL, NULL, "could not access the termcap data base", 2);
