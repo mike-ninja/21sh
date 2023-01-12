@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_input.c                                     :+:      :+:    :+:   */
+/*   ft_history_trigger_row.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/12 07:52:49 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/12 17:14:45 by mbarutel         ###   ########.fr       */
+/*   Created: 2023/01/12 16:04:22 by mbarutel          #+#    #+#             */
+/*   Updated: 2023/01/12 16:07:37 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-/*
- * It reads one character from the standard input and returns it
- *
- * @return The character that was read from the standard input.
- */
-int	ft_get_input(void)
+ssize_t	ft_history_trigger_row(t_term *t)
 {
-	int	c;
+	ssize_t	row;
 
-	c = 0;
-	read(STDIN_FILENO, &c, 1);
-	return (c);
+	if (t->history_row == -1)
+	{
+		row = t->c_row;
+		while (row && !ft_is_prompt_line(t, row))
+			row--;
+	}
+	else
+		row = t->history_row;
+	return (row);
 }
