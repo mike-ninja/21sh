@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:29:50 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/09 13:05:32 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/12 12:53:32 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_history_reset_nl(t_term *t, char *inp)
 	ssize_t	i;
 	ssize_t	col;
 	ssize_t	row;
+	ssize_t	prompt_len;
 
 	i = -1;
 	col = 0;
@@ -30,7 +31,10 @@ void	ft_history_reset_nl(t_term *t, char *inp)
 	while (inp[++i])
 	{
 		col++;
-		if (((col + ft_get_prompt_len(t, row))) == t->ws_col || inp[i] == '\n')
+		prompt_len = ft_get_prompt_len(t, row);
+		if (!row)
+			prompt_len += t->term_val[0];
+		if ((col + prompt_len) == t->ws_col || inp[i] == '\n')
 		{
 			row++;
 			col = 0;

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:21:29 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/04 13:50:58 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/12 11:42:52 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,35 @@ static void	ft_scroll_down(t_term *t)
  *
  * @param t the term structure
  */
+// void	ft_trigger_nl(t_term *t)
+// {
+// 	ssize_t	len;
+// 	ssize_t	row;
+
+// 	row = ft_row_lowest_line(t);
+// 	len = ft_len_lowest_line(t, row);
+// 	if (len == t->ws_col)
+// 	{
+// 		ft_putstr("HELL");
+// 		t->total_row++;
+// 		if ((t->term_val[1] + t->total_row) >= t->ws_row)
+// 		{
+// 			t->term_val[1]--;
+// 			ft_scroll_down(t);
+// 		}
+// 		if (t->nl_addr[t->c_row + 1])
+// 			ft_reset_nl_addr(t);
+// 		else
+// 		{
+// 			ft_add_nl_last_row(t, t->inp, t->bytes);
+// 		}
+// 	}
+// 	if (t->c_col == t->ws_col)
+// 	{
+// 		t->c_col = 0;
+// 		ft_setcursor(t->c_col, t->term_val[1] + ++t->c_row);
+// 	}
+// }
 void	ft_trigger_nl(t_term *t)
 {
 	ssize_t	len;
@@ -45,19 +74,21 @@ void	ft_trigger_nl(t_term *t)
 	if (len == t->ws_col)
 	{
 		t->total_row++;
-		if ((t->start_row + t->total_row) >= t->ws_row)
+		if ((t->term_val[1] + t->total_row) >= t->ws_row)
 		{
-			t->start_row--;
+			t->term_val[1]--;
 			ft_scroll_down(t);
 		}
 		if (t->nl_addr[t->c_row + 1])
 			ft_reset_nl_addr(t);
 		else
+		{
 			ft_add_nl_last_row(t, t->inp, t->bytes);
+		}
 	}
 	if (t->c_col == t->ws_col)
 	{
 		t->c_col = 0;
-		ft_setcursor(t->c_col, t->start_row + ++t->c_row);
+		ft_setcursor(t->c_col, t->term_val[1] + ++t->c_row);
 	}
 }

@@ -24,13 +24,13 @@ void	ft_create_prompt_line(t_term *t, ssize_t loc)
 	t->c_row = t->total_row;
 	if (t->input_cpy)
 		ft_strdel(&t->input_cpy);
-	if (t->start_row + t->total_row >= t->ws_row)
+	if (t->term_val[1] + t->total_row >= t->ws_row)
 	{
 		ft_setcursor(0, t->ws_row);
 		ft_run_capability("sf");
-		t->start_row--;
+		t->term_val[1]--;
 	}
-	ft_setcursor(0, t->start_row + t->total_row);
+	ft_setcursor(0, t->term_val[1] + t->total_row);
 	ft_printf("{GREEN}");
 	t->c_col = write(1, MINI_PROMPT, (size_t)t->m_prompt_len);
 	ft_printf("{RESET}");

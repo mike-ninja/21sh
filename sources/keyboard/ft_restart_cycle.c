@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:56:42 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/11 12:47:14 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:08:11 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_restart_cycle(t_term *t)
 	ft_strclr(t->inp);
 	ft_strclr(t->history_buff);
 	ft_printf("\n{GREEN}");
-	t->c_col = write(1, PROMPT, (size_t)t->prompt_len);
+	get_term_val(t->term_val);
+	write(1, PROMPT, (size_t)t->prompt_len);
 	ft_printf("{RESET}");
-	t->start_row = ft_get_linenbr();
 }

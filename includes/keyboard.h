@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/10 10:28:24 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:02:30 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ typedef struct s_term
 	ssize_t		ws_row;
 	ssize_t		index;
 	ssize_t		bytes;
-	ssize_t		start_row;
 	ssize_t		c_col;
 	ssize_t		c_row;
 	ssize_t		total_row;
@@ -87,6 +86,7 @@ typedef struct s_term
 	int			ch;
 	char		quote;
 	t_clipboard	clipboard;
+	ssize_t		term_val[2];
 }			t_term;
 
 void	sig_handler(int num);
@@ -109,7 +109,7 @@ void	ft_end_cycle(t_term *t);
 void	ft_esc_parse(t_term *t);
 int		ft_get_input(void);
 ssize_t	ft_get_prompt_len(t_term *t, ssize_t row);
-int		ft_get_linenbr(void);
+void	get_term_val(ssize_t *term_val);
 void	set_new_cur_pos(t_term *t);
 void	ft_heredoc_handling(t_term *t);
 void	ft_history_reset_nl(t_term *t, char *inp);

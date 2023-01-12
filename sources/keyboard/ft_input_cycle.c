@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/12 10:33:39 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/12 11:25:45 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	ft_isprint_or_enter(t_term *t)
 			|| (t->delim && !ft_strcmp(t->nl_addr[t->total_row], t->delim)))
 		{
 			ft_end_cycle(t);
-			ft_setcursor(0, t->start_row + t->total_row);
+			ft_setcursor(0, t->term_val[1] + t->total_row);
 			return (1);
 		}
 		t->bslash = 0;
@@ -73,7 +73,7 @@ int	ft_input_cycle(t_term *t)
 
 	ft_add_nl_last_row(t, t->inp, 0);
 	ft_printf("{GREEN}");
-	t->c_col = write(1, PROMPT, (size_t)t->prompt_len);
+	t->c_col += write(1, PROMPT, (size_t)t->prompt_len);
 	ft_printf("{RESET}");
 	while (t->ch != -1)
 	{

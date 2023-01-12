@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 12:25:34 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/11 12:44:02 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/12 11:54:22 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,5 @@ void	ft_line_down(t_term *t)
 		ft_move_down(t, prompt_len);
 	else
 		ft_move_down_end_line(t, len, prompt_len);
-	ft_setcursor(t->c_col, t->start_row + ++t->c_row);
+	ft_setcursor(t->c_col, t->term_val[1] + ++t->c_row);
 }

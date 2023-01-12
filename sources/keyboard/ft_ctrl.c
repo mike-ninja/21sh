@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ctrl.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 09:36:28 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/10 10:27:57 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/12 11:19:59 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_ctrl(t_term *t)
 		ft_paste(t);
 	else if (t->ch == CTRL_L)
 	{
-		t->start_row = 0;
+		t->term_val[1] = 0;
 		ft_run_capability("vi");
 		ft_run_capability("cl");
 		ft_print_input(t, 0, 0);

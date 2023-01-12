@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_getline_nbr.c                                   :+:      :+:    :+:   */
+/*   ft_get_term_val.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:39:35 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/10 16:20:26 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:19:35 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,18 @@ extern t_term	*g_t;
  *
  * @return The line number of the cursor.
  */
-int	ft_get_linenbr(void)
+
+void	get_term_val(ssize_t *term_val)
 {
 	char	buf[32];
 	int		len;
-	int		i;
 
 	ft_memset(buf, '\0', sizeof(buf));
 	write(0, "\033[6n", 4);
 	read(0, buf, 32);
-	i = 0;
-	len = 0;
-	while (buf[i] && buf[i] != ';')
-	{
-		if (ft_isdigit(buf[i]))
-			buf[len++] = buf[i];
-		i++;
-	}
-	ft_strclr(buf + len);
-	return (ft_atoi(buf) - 1);
+	len = ft_strlen(buf);
+	while (len && buf[len] != ';')
+		len--;
+	term_val[0] = ft_atoi(buf + len + 1) - 1;
+	term_val[1] = ft_atoi(buf + 2) - 1;
 }
