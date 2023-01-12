@@ -1,44 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bt_utils_more.c                                    :+:      :+:    :+:   */
+/*   bt_create_command_tree.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 16:38:17 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/12 16:01:27 by jniemine         ###   ########.fr       */
+/*   Created: 2023/01/12 15:49:58 by jniemine          #+#    #+#             */
+/*   Updated: 2023/01/12 15:50:20 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-int	increment_whitespace(char **line)
+t_treenode	*create_command_tree(t_token *tokens, int i_tok, int semicol)
 {
-	int	i;
+	int			pipe;
+	t_treenode	*head;
 
-	i = 0;
-	while (*line && (*line)[i] && ft_isspace((*line)[i]))
-		++i;
-	*line += i;
-	return (i);
-}
-
-int	increment_not_whitespace(char **line)
-{
-	int	i;
-
-	i = 0;
-	while ((*line)[i] && !ft_isspace((*line)[i]))
-		++i;
-	*line += i;
-	return (i);
-}
-
-void	print_spaces(int lvl)
-{
-	int i;
-
-	i = COUNT;
-	while (i++ < lvl)
-		ft_printf(" ");
+	if (tokens[i_tok].token == SEMICOLON)
+		return (NULL);
+	pipe = foreseer_of_tokens(tokens, PIPE, i_tok, semicol);
+	if (pipe >= 0)
+		head = create_pipe_node(tokens, pipe);
+	else
+		head = parse_right_cmd(tokens, i_tok);
+	return (head);
 }

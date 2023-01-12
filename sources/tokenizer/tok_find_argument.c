@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:13:39 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/12 13:23:42 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:55:39 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static int	operator_len(char *op)
 	{
 		if (op[0] == '>' && ((op[1] == '>' || op[1] == '&')
 				|| (op[0] == '<' && (op[1] == '<' || op[1] == '&'
-				|| (op[0] == '&' && op[1] == '&')
-				|| (op[0] == '|' && op[1] == '|')))))
+						|| (op[0] == '&' && op[1] == '&')
+						|| (op[0] == '|' && op[1] == '|')))))
 			return (2);
 		else if ((op[0] == '>' || op[0] == '<')
 			&& op[1] == '&' && op[2] == '-')
@@ -78,8 +78,6 @@ char	*find_argument(char *line, int *i, int *start, int *end)
 	{
 		while ((line[*end] && !is_seperator(line[*end])) || quote)
 			tok_quote_flag(line, end, &quote);
-	//	if ((line[*end] == '>' || line[*end] == '<') && (*end) > 0) //WHY DO I NEED THIS STILL?? DO I??
-	//		collect_digits(line, &digits, end);
 	}
 	else
 	{
