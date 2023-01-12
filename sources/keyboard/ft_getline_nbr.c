@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:39:35 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/10 16:20:26 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/12 11:17:03 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ int	ft_get_linenbr(void)
 	ft_memset(buf, '\0', sizeof(buf));
 	write(0, "\033[6n", 4);
 	read(0, buf, 32);
+	len = ft_strlen(buf);
+	ft_printf("len -> %d\n", len);
+	ft_putstr_fd(buf, 1);
+	while (len && buf[len] != ';')
+		len--;
+	ft_printf("col -> %d\n", ft_atoi(buf + len + 1));
+	ft_printf("row -> %d\n", ft_atoi(buf + 2));
 	i = 0;
 	len = 0;
 	while (buf[i] && buf[i] != ';')
@@ -38,4 +45,41 @@ int	ft_get_linenbr(void)
 	}
 	ft_strclr(buf + len);
 	return (ft_atoi(buf) - 1);
+}
+// int	ft_get_linenbr(void)
+// {
+// 	char	buf[32];
+// 	int		len;
+// 	int		i;
+
+// 	ft_memset(buf, '\0', sizeof(buf));
+// 	write(0, "\033[6n", 4);
+// 	read(0, buf, 32);
+// 	i = 0;
+// 	len = 0;
+// 	while (buf[i] && buf[i] != ';')
+// 	{
+// 		if (ft_isdigit(buf[i]))
+// 			buf[len++] = buf[i];
+// 		i++;
+// 	}
+// 	ft_strclr(buf + len);
+// 	return (ft_atoi(buf) - 1);
+// }
+
+void	get_term_val(ssize_t *term_val)
+{
+	char	buf[32];
+	int		len;
+
+	ft_memset(buf, '\0', sizeof(buf));
+	write(0, "\033[6n", 4);
+	read(0, buf, 32);
+	len = ft_strlen(buf);
+	ft_printf("len -> %d\n", len);
+	ft_putstr_fd(buf, 1);
+	while (len && buf[len] != ';')
+		len--;
+	term_val[0] = ft_atoi(buf + len + 1);
+	term_val[1] = ft_atoi(buf + 2);
 }
