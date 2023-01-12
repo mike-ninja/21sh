@@ -6,13 +6,13 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 19:00:00 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/12 19:17:46 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:21:51 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-void	exe_logical_and(t_logicalop *logicalop, char ***environ_cp,
+static void	exe_logical_and(t_logicalop *logicalop, char ***environ_cp,
 		char *terminal, t_session *sesh)
 {
 	exec_tree(logicalop->left, environ_cp, terminal, sesh);
@@ -20,7 +20,7 @@ void	exe_logical_and(t_logicalop *logicalop, char ***environ_cp,
 		exec_tree(logicalop->right, environ_cp, terminal, sesh);
 }
 
-void	exe_logical_or(t_logicalop *logicalop, char ***environ_cp,
+static void	exe_logical_or(t_logicalop *logicalop, char ***environ_cp,
 		char *terminal, t_session *sesh)
 {
 	exec_tree(logicalop->left, environ_cp, terminal, sesh);
