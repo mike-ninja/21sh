@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 20:22:15 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/12 16:08:40 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:40:04 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	check_type(t_treenode *root)
 
 void	split_print_tree(t_treenode *root, int lvl)
 {
-	else if (root->type == AGGREGATION)
+	if (root->type == AGGREGATION)
 		rec_print_tree(((t_aggregate *)root)->cmd, lvl);
 	else if (root->type == LOGICAL_AND || root->type == LOGICAL_OR)
 	{

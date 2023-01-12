@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/01/12 16:02:26 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:41:12 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,7 @@ void			print_spaces(int lvl);
 int				is_semicolon_or_ampersand(int token);
 int				is_logicalop(int token);
 t_treenode		*create_logical_op_tree(t_token *tokens, int i_tok, int semicol);
-
+void			rec_print_tree(t_treenode *root, int lvl);
 
 /*					EXPANSION				*/
 void			ft_expansion(t_session *sesh, char **cmd);
