@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/12 10:56:10 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/12 11:19:59 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	ft_insertion_enter(t_term *t)
 {
 	if (ft_delim_fetch(t))
 	{
-		t->start_row++;
+		t->term_val[1]++;
 		return ;
 	}
 	t->bslash = ft_bslash_escape_check(t, t->bytes);

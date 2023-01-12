@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_arrow_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:27:59 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/09 14:55:00 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/12 12:35:14 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	ft_right(t_term *t)
 	if (&t->inp[t->index] == &t->nl_addr[t->c_row + 1][-1])
 	{
 		t->c_col = -1;
-		ft_setcursor(++t->c_col, t->start_row + ++t->c_row);
+		ft_setcursor(++t->c_col, t->term_val[1] + ++t->c_row);
 	}
 	else
 	{
@@ -58,7 +58,9 @@ static void	ft_left(t_term *t)
 		else if (ft_is_prompt_line(t, t->c_row - 1))
 			t->c_col = t->m_prompt_len;
 		t->c_col += t->nl_addr[t->c_row] - t->nl_addr[t->c_row - 1];
-		ft_setcursor(--t->c_col, t->start_row + --t->c_row);
+		if (t->c_row == 1)
+			t->c_col += t->term_val[0];
+		ft_setcursor(--t->c_col, t->term_val[1] + --t->c_row);
 	}
 	else
 	{
