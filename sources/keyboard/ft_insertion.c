@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/11 12:46:51 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/12 10:56:10 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,22 @@ static void	ft_insertion_char(t_term *t)
  */
 static void	ft_insertion_enter(t_term *t)
 {
-	if (!t->nl_addr[t->c_row + 1])
+	if (ft_delim_fetch(t))
 	{
-		if (ft_delim_fetch(t))
-			return ;
-		t->bslash = ft_bslash_escape_check(t, t->bytes);
-		if (t->q_qty % 2 \
-			|| (t->heredoc \
-			&& (t->delim && ft_strcmp(t->nl_addr[t->c_row], t->delim))) \
-			|| t->bslash)
-		{
-			t->history_row = -1;
-			ft_memcpy(t->history_buff, t->inp, (unsigned long)t->bytes);
-			t->inp[t->bytes++] = (char)t->ch;
-			ft_create_prompt_line(t, t->bytes);
-			t->index = t->bytes;
-		}
+		t->start_row++;
+		return ;
+	}
+	t->bslash = ft_bslash_escape_check(t, t->bytes);
+	if (t->q_qty % 2 \
+		|| (t->heredoc \
+		&& (t->delim && ft_strcmp(t->nl_addr[t->total_row], t->delim))) \
+		|| t->bslash)
+	{
+		t->history_row = -1;
+		ft_memcpy(t->history_buff, t->inp, (unsigned long)t->bytes);
+		t->inp[t->bytes++] = (char)t->ch;
+		ft_create_prompt_line(t, t->bytes);
+		t->index = t->bytes;
 	}
 }
 

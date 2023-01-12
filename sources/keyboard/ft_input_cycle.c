@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_input_cycle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/09 13:26:07 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/12 10:33:39 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,13 @@ static int	ft_isprint_or_enter(t_term *t)
 {
 	if ((ft_isprint(t->ch) || t->ch == ENTER) && t->bytes < (BUFF_SIZE - 1))
 		ft_insertion(t);
-	if (t->ch == ENTER && t->c_row == t->total_row)
+	if (t->ch == ENTER)
 	{
 		if ((!t->bslash && !(t->q_qty % 2) && !t->delim) \
-			|| (t->delim && !ft_strcmp(t->nl_addr[t->c_row], t->delim)))
+			|| (t->delim && !ft_strcmp(t->nl_addr[t->total_row], t->delim)))
 		{
 			ft_end_cycle(t);
+			ft_setcursor(0, t->start_row + t->total_row);
 			return (1);
 		}
 		t->bslash = 0;
