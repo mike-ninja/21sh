@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 20:22:15 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/11 16:33:57 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/12 14:09:59 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,10 @@ static void    check_type(t_treenode *root)
 	{
         ft_printf(">& [%d] [%s]\n", root->type, ((t_aggregate *)root)->cmd);
 	}
+	else if (root->type == LOGICAL_AND)
+        ft_printf("[&&]");
+	else if (root->type == LOGICAL_OR)
+        ft_printf("[||]");
 }
 
 void	print_spaces(int lvl)
@@ -144,6 +148,14 @@ void    rec_print_tree(t_treenode *root, int lvl)
 	}
     else if (root->type == AGGREGATION)
 		rec_print_tree(((t_aggregate *)root)->cmd, lvl);
+    else if (root->type == LOGICAL_AND || root->type == LOGICAL_OR)
+	{
+		rec_print_tree(((t_logicalop *)root)->left, lvl);
+		print_spaces(lvl);
+		check_type(root);
+		ft_printf("\n");
+		rec_print_tree(((t_logicalop *)root)->right, lvl);
+	}
 	else
 	{
 		print_spaces(lvl);

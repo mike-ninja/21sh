@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/01/11 11:40:58 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/12 14:24:24 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ union u_treenode
 	t_pipenode	pipe;
 	t_semicolon	semicolon;
 	t_aggregate	aggregate;
+	t_logicalop	logicalop;
 };
 
 /*				SESSION STRUCT				*/
@@ -168,6 +169,7 @@ char			*tok_if_redir(char *line, int *i, int *start, int *end);
 int				redir_error(char *str);
 int				control_op_error(char *str);
 char			*tok_if_logical(char *line, int *i, int *start, int *end);
+void			print_tokens(t_token *tokens);
 
 /*					TOKENIZER UTILS			*/
 void			free_tokens(t_token **tokens);
@@ -206,6 +208,8 @@ void			combine_words(t_token *tokens);
 int				test_if_file(char *file);
 t_treenode		*create_command_tree(t_token *tokens, int i_tok, int semicol);
 void			print_tree(t_treenode *head);
+int				is_semicolon_or_ampersand(int token);
+int				is_logicalop(int token);
 
 /*					EXPANSION				*/
 void			ft_expansion(t_session *sesh, char **cmd);

@@ -6,7 +6,7 @@
 #    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/11 14:44:51 by jniemine         ###   ########.fr        #
+#    Updated: 2023/01/12 14:27:28 by jniemine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -154,9 +154,11 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(TOKENIZER)tok_if_logical \
 				$(TOKENIZER)tok_if_redir \
 				$(TOKENIZER)tok_errors \
+				$(TOKENIZER)tok_print_tokens \
 				$(BUILDTREE)build_tree \
 				$(BUILDTREE)make_arg_array \
 				$(BUILDTREE)bt_utils \
+				$(BUILDTREE)bt_utils_2 \
 				$(BUILDTREE)bt_utils_more \
 				$(BUILDTREE)bt_create_pipe_node \
 				$(BUILDTREE)bt_create_semicolon_node \

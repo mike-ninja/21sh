@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:13:39 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/11 14:45:01 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:23:42 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ static int	operator_len(char *op)
 	if (is_seperator(*op))
 	{
 		if (op[0] == '>' && ((op[1] == '>' || op[1] == '&')
-				|| (op[0] == '<' && (op[1] == '<' || op[1] == '&'))))
+				|| (op[0] == '<' && (op[1] == '<' || op[1] == '&'
+				|| (op[0] == '&' && op[1] == '&')
+				|| (op[0] == '|' && op[1] == '|')))))
 			return (2);
 		else if ((op[0] == '>' || op[0] == '<')
 			&& op[1] == '&' && op[2] == '-')
@@ -35,7 +37,7 @@ static void	collect_digits(char *line, int *digits, int *end)
 		*end -= (*digits);
 }
 
-char	*if_redir_or_logical(char *line, int *i, int *start, int *end)
+static char	*if_redir_or_logical(char *line, int *i, int *start, int *end)
 {
 	char	*ret;
 
@@ -46,7 +48,7 @@ char	*if_redir_or_logical(char *line, int *i, int *start, int *end)
 	return (ret);
 }
 
-static int	mv_back_if_on_seperator(char *line, int *end)
+static int	test_operator_error(char *line, int *end)
 {
 	if (*end > 0 && is_seperator(line[*end]))
 	{
@@ -76,13 +78,15 @@ char	*find_argument(char *line, int *i, int *start, int *end)
 	{
 		while ((line[*end] && !is_seperator(line[*end])) || quote)
 			tok_quote_flag(line, end, &quote);
-		if ((line[*end] == '>' || line[*end] == '<') && (*end) > 0)
-			collect_digits(line, &digits, end);
-		else if (mv_back_if_on_seperator(line, end))
-			return (NULL);
+	//	if ((line[*end] == '>' || line[*end] == '<') && (*end) > 0) //WHY DO I NEED THIS STILL?? DO I??
+	//		collect_digits(line, &digits, end);
 	}
 	else
+	{
+		if (test_operator_error(line, end))
+			return (NULL);
 		*end += operator_len(&line[*end]);
+	}
 	if (*end == *start)
 		++(*end);
 	return (ft_strsub(line, *i, *end - *i));

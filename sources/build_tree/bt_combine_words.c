@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bt_combine_words.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:45:48 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/20 10:48:58 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/12 14:34:18 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	combine_words(t_token *tokens)
 	if (!tokens)
 		return ;
 	while (tokens[i_tok].value && tokens[i_tok].token != PIPE
-		&& tokens[i_tok].token != SEMICOLON)
+		&& !is_logicalop(tokens[i_tok].token)
+		&& !is_semicolon_or_ampersand(tokens[i_tok].token))
 	{
 		if (first_word < 0 && tokens[i_tok].token == WORD)
 			first_word = i_tok;

@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/11 14:55:10 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/12 14:32:38 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ t_treenode	*parse_right_cmd(t_token *tokens, int i_tok)
 	cmd = -1;
 	start = i_tok;
 	while (cmd < 0 && tokens[i_tok].value && tokens[i_tok].token != PIPE
-		&& tokens[i_tok].token != SEMICOLON)
+		&& !is_logicalop(tokens[i_tok].token)
+		&& !is_semicolon_or_ampersand(tokens[i_tok].token))
 	{
 		if (tokens[i_tok].token == WORD)
 			cmd = i_tok;
