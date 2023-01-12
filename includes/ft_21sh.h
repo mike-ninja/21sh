@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/01/12 19:10:15 by jniemine         ###   ########.fr       */
+/*   Created: 2023/01/12 22:59:19 by jniemine          #+#    #+#             */
+/*   Updated: 2023/01/13 00:14:00 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef FT_21SH_H
 # define FT_21SH_H
@@ -20,7 +19,7 @@
 # include <sys/stat.h>
 
 /* For print_tree */
-#define COUNT 10
+# define COUNT 10
 
 /* Do not use zero */
 # define PIPE 1
@@ -64,6 +63,13 @@ typedef struct s_semicolon
 	t_treenode	*left;
 	t_treenode	*right;
 }	t_semicolon;
+
+/*					AMPERSAND NODE			*/
+typedef struct s_ampersand
+{
+	int			type;
+	t_treenode	*cmd;
+}	t_ampersand;
 
 /*					LOGICAL NODE			*/
 typedef struct s_logicalop
@@ -127,6 +133,7 @@ union u_treenode
 	t_semicolon	semicolon;
 	t_aggregate	aggregate;
 	t_logicalop	logicalop;
+	t_ampersand	ampersand;
 };
 
 /*				SESSION STRUCT				*/
@@ -214,10 +221,12 @@ void			print_tree(t_treenode *head);
 void			print_spaces(int lvl);
 int				is_semicolon_or_ampersand(int token);
 int				is_logicalop(int token);
-t_treenode		*create_logical_op_tree(t_token *tokens, int i_tok, int semicol);
+t_treenode		*create_logical_op_tree(t_token *tokens,
+					int i_tok, int semicol);
 void			rec_print_tree(t_treenode *root, int lvl);
 void			exec_logicalop(t_logicalop *logicalop, char ***environ_cp,
-				char *terminal, t_session *sesh);
+					char *terminal, t_session *sesh);
+t_treenode		*create_ampersand_node(t_token *tokens, int i_tok, int end);
 
 /*					EXPANSION				*/
 void			ft_expansion(t_session *sesh, char **cmd);

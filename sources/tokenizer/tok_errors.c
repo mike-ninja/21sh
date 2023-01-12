@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 17:04:42 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/12 13:26:54 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/12 23:30:06 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	control_op_error_split(char *str)
 	else if (ft_strnequ(str + 1, ")", 1))
 		ft_err_print(NULL, "syntax error near unexpected token",
 			"`)'", 1);
-	else if (*str != ';' && *(str + 1) == '\0')
+	else if (*str != '&' && *str != ';' && *(str + 1) == '\0')
 		ft_err_print(NULL, "syntax error near unexpected token",
 			"`newline'", 1);
 	else
