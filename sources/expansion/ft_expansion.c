@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expansion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:55:11 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/11 12:52:19 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/12 14:46:51 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
+
+static char	*look_for_expansion(t_session *sesh, char **cmd, int i)
+{
+/* 	char	*excla; */
+
+	if (*cmd[i] != '\'' && ft_strchr(cmd[i], '$') && ft_strlen(cmd[i]) > 1)
+		return (ft_expansion_dollar(sesh, cmd[i]));
+	else if (**(cmd + i) == '~')
+		return (ft_expansion_tilde(sesh, cmd[i]));
+	/* excla = ft_strchr(cmd[i], '!');
+	if (*cmd[i] != '\'' && excla && excla[1] == '!' && excla[2] != '!'&& ft_strlen(cmd[i]) > 1)
+		return (ft_expansion_excla(cmd[i], i)); */
+	return (NULL);
+}
 
 /**
  * It loops through each word in the command, and if it finds a dollar sign,
@@ -30,10 +44,7 @@ void	ft_expansion(t_session *sesh, char **cmd)
 	while (cmd[++i])
 	{
 		expanded = NULL;
-		if (*cmd[i] != '\'' && ft_strchr(cmd[i], '$') && ft_strlen(cmd[i]) > 1)
-			expanded = ft_expansion_dollar(sesh, cmd[i]);
-		else if (**(cmd + i) == '~')
-			expanded = ft_expansion_tilde(sesh, cmd[i]);
+		expanded = look_for_expansion(sesh, cmd, i);
 		if (!expanded)
 			buff = ft_strdup(cmd[i]);
 		else
