@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:22:14 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/11 18:22:18 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:49:17mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	ctrl_d(t_term *t)
 		ft_putstr("21sh: warning: here-document at line ");
 		ft_putnbr((int)t->c_row);
 		ft_putstr(" delimited by end-of-file (wanted `EOF')");
+		ft_delim_fetch(t);
 		ft_strcat(t->inp, t->delim);
 		ft_end_cycle(t);
 		return (1);

@@ -6,13 +6,13 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:44:03 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/12 17:08:04 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:28:28 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-static void	init_window_size(t_term *term)
+void	init_window_size(t_term *term)
 {
 	struct winsize	w;
 
@@ -32,7 +32,6 @@ static void	init_window_size(t_term *term)
  */
 void	ft_session_init(t_session *sesh)
 {
-	init_window_size(sesh->term);
 	sesh->exit_stat = 0;
 	sesh->line = NULL;
 	ft_env_init(sesh);

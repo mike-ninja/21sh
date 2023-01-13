@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/13 12:21:54 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:59:01 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	ft_isprint_or_enter(t_term *t)
 
 static int	ctrl_d_exit(void)
 {
-	ft_printf("\n{RED}exit{RESET");
+	ft_printf("\n{RED}exit{RESET}");
 	return (1);
 }
 

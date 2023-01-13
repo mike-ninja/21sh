@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:15:20 by jakken            #+#    #+#             */
-/*   Updated: 2022/12/18 17:15:04 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:22:40 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ int	fork_wrap(void)
 	if (pid == -1)
 		error_exit("fork failed\n");
 	if (pid)
+	{
 		signal(SIGINT, SIG_IGN);
+		signal(SIGWINCH, SIG_IGN);
+	}
 	return (pid);
 }
 

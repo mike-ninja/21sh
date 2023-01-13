@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/11 18:20:55 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:27:55 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	main_loop(t_session *sesh)
 	sesh->term->clipboard.buff = NULL;
 	while (status)
 	{
+		init_window_size(sesh->term);
 		sesh->orig_termios = ft_raw_enable();
 		if (ft_keyboard(sesh->term) == 1)
 		{
