@@ -6,15 +6,15 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 23:56:47 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/13 11:39:35 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/13 13:49:32 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-t_treenode *init_ampersand_node(void)
+t_treenode	*init_ampersand_node(void)
 {
-	t_treenode *ampersand;
+	t_treenode	*ampersand;
 
 	ampersand = ft_memalloc(sizeof(t_treenode));
 	ampersand->type = AMPERSAND;

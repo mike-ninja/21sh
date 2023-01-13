@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 22:59:19 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/13 11:15:38 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:59:52 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,9 @@ void			exec_logicalop(t_logicalop *logicalop, char ***environ_cp,
 //t_treenode		*create_ampersand_node(t_token *tokens, int i_tok, int end);
 t_treenode		*init_ampersand_node(void);
 t_treenode		*init_semicolon(void);
+void			print_exec(t_treenode *node);
+void			check_type(t_treenode *root);
+int				next_semicolon_or_ampersand(t_token *tokens, int i_tok, int end);
 
 /*					EXPANSION				*/
 void			ft_expansion(t_session *sesh, char **cmd);

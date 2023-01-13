@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:43:28 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/13 11:40:20 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/13 20:00:57 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,55 +31,79 @@ int	next_semicolon_or_ampersand(t_token *tokens, int i_tok, int end)
 
 	next_semicol = foreseer_of_tokens(tokens, SEMICOLON, i_tok, end);
 	next_ampersand = foreseer_of_tokens(tokens, AMPERSAND, i_tok, end);
-	if (next_semicol < next_ampersand)
-		return (next_semicol);
+	if (next_semicol >= 0)
+	{
+		if (next_ampersand < 0)
+			return (next_semicol);
+		if (next_semicol < next_ampersand)
+			return (next_semicol);
+	}
 	return (next_ampersand);
 }
 
-/* <cmd>& buts it in the background, doing <samecmd>& again kills the old and stars a new */
-/* Ampersand node should also have just right and left, right for next node left for cmd */
-/* man kill -> SIGCONT, could be answer for vim ctrl+z problem */
+static int init_values(int next_semi_or_amp,
+		t_token *tokens, int i_tok, t_treenode **semi_or_amp)
+{
+	int	type;
 
-//TODO, now it always creates redir node.
+	if (next_semi_or_amp >= 0)
+		type = tokens[next_semi_or_amp].token;
+	else
+		type = tokens[i_tok].token;
+	if (type == AMPERSAND)
+		*semi_or_amp = init_ampersand_node();
+	else
+	{
+		ft_printf("SEMIINIT\n");
+		*semi_or_amp = init_semicolon();
+	}
+	return (type);
+}
+
+/*	<cmd>& buts it in the background,
+	doing <samecmd>& again kills the old and stars a new */
+/* man kill -> SIGCONT, could be answer for vim ctrl+z problem */
 t_treenode	*create_semicolon_node(t_token *tokens, int i_tok, int end)
 {
 	t_treenode	*semi_or_amp;
 	int			next_semi_or_amp;
 	int			type;
+	int			delim;
 
-	ft_printf("YEAAAAAAA\n");
+	ft_printf("ITOK: %d\n", i_tok);
 	if (!tokens[i_tok].token)
 		return (NULL);
-	type = tokens[i_tok].token;
-	if (type == SEMICOLON)
-		semi_or_amp = init_semicolon();
+	next_semi_or_amp = next_semicolon_or_ampersand(tokens, i_tok, end);
+	ft_printf("NEXTSEMI: %d\n", next_semi_or_amp);
+	type = init_values(next_semi_or_amp, tokens, i_tok, &semi_or_amp);
+	if (next_semi_or_amp >= 0)
+		delim = next_semi_or_amp;
+	else
+		delim = end;
+	if (type == AMPERSAND)
+	{
+		ft_printf("ITOK THE SECOND: %d\n", i_tok);
+		(((t_ampersand *)semi_or_amp)->left) = create_logical_op_tree(tokens,
+				i_tok, delim);
+		print_tree(semi_or_amp);
+	}
 	else
 	{
-		ft_printf("WTF\n");
-		semi_or_amp = init_ampersand_node();
+		ft_printf("DELIM: %d\n", delim);
+		(((t_semicolon *)semi_or_amp)->left) = create_logical_op_tree(tokens,
+				i_tok, delim);
 	}
-	next_semi_or_amp = next_semicolon_or_ampersand(tokens, i_tok, end);
+	//next_semi_or_amp = next_semicolon_or_ampersand(tokens, next_semi_or_amp + 1, end);
+	ft_printf("NEXTSEMI 2: %d\n", next_semi_or_amp);
 	if (next_semi_or_amp >= 0)
 	{
-		ft_printf("NO\n");
-		if (type == SEMICOLON)
-			(((t_semicolon *)semi_or_amp)->right) = create_semicolon_node(tokens,
-				next_semi_or_amp + 1, end);
+		ft_printf("NOT HERE\n");
+		if (type == AMPERSAND)
+			(((t_ampersand *)semi_or_amp)->right) = create_semicolon_node(
+					tokens, next_semi_or_amp + 1, end);
 		else
-			(((t_ampersand *)semi_or_amp)->right) = create_semicolon_node(tokens,
-				next_semi_or_amp + 1, end);
-	}
-	else
-		next_semi_or_amp = end;
-	if (type == SEMICOLON)
-		(((t_semicolon *)semi_or_amp)->left) = create_logical_op_tree(tokens,
-				i_tok, next_semi_or_amp);
-	else
-	{
-		ft_printf("YES\n");
-		(((t_ampersand *)semi_or_amp)->left) = create_logical_op_tree(tokens,
-				i_tok, next_semi_or_amp);
-		ft_printf("NODE: %s\n", (*((t_cmdnode *)(((t_ampersand *)semi_or_amp)->left))->cmd));
+			(((t_semicolon *)semi_or_amp)->right) = create_semicolon_node(
+					tokens, next_semi_or_amp + 1, end);
 	}
 	return (semi_or_amp);
 }
