@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/11 21:44:29 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/13 10:01:06 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ int				ft_getent(void);
 void			ft_raw_disable(struct termios orig_termios);
 
 /*				  INITIALIZE				*/
+void			ft_init_signals(void);
 void			ft_env_init(t_session *sesh);
 void			ft_session_init(t_session *sesh);
 

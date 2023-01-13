@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/11 21:30:26 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/13 10:14:46 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,7 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 	{
 		if (!cmd || execve(cmd, args, *environ_cp) < 0)
 			exe_fail(&cmd, args, environ_cp);
-		// exit (1);
-		exit (0);
+		exit (1);
 	}
 	if (!sesh->bg && cmd)
 	{

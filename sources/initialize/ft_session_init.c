@@ -6,11 +6,13 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:44:03 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/12 18:23:53 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/13 10:16:50 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
+
+t_session	*g_t;
 
 static void	init_window_size(t_term *term)
 {
@@ -32,8 +34,10 @@ static void	init_window_size(t_term *term)
  */
 void	ft_session_init(t_session *sesh)
 {
+	ft_init_signals();
 	init_window_size(sesh->term);
-	sesh->bg = 0;
+	g_t = sesh;
+	sesh->bg = 0; // delete this when done with process control
 	sesh->exit_stat = 0;
 	sesh->line = NULL;
 	ft_env_init(sesh);

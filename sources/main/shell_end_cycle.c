@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_end_cycle.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 14:26:23 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/08 21:13:47 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/13 10:14:16 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ void	shell_end_cycle(t_session *sesh)
 	free_tokens(&sesh->tokens);
 	reset_fd(sesh->terminal);
 	ft_reset_tmp_env(sesh);
+	ft_init_signals();
 	sesh->bg = 0;
 }

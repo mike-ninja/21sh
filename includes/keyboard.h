@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/12 16:07:55 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/13 10:00:47 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ void	ft_history_reset_nl(t_term *t);
 void	ft_history_trigger(t_term *t, ssize_t his);
 ssize_t	ft_history_trigger_row(t_term *t);
 void	ft_init(t_term *t);
-void	ft_init_signals(void);
 int		ft_input_cycle(t_term *t);
 void	ft_insertion(t_term *t);
 char	*ft_is_prompt_line(t_term *t, ssize_t row);

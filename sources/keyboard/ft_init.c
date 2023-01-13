@@ -6,13 +6,13 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/12 12:59:45 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/13 10:11:17 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-t_term	*g_t;
+// t_term	*g_t;
 
 /*
  * It initializes all the variables in the t_term structure to zero
@@ -43,12 +43,12 @@ static void	ft_init_to_zero(t_term *t)
  */
 void	ft_init(t_term *t)
 {
-	ft_init_signals();
+	// ft_init_signals();
 	ft_memset(t->inp, '\0', BUFF_SIZE);
 	ft_memset(t->history_buff, '\0', BUFF_SIZE);
 	ft_init_to_zero(t);
 	get_term_val(t->term_val);
-	g_t = t;
+	// g_t = t;
 	t->nl_addr = NULL;
 	t->delim = NULL;
 	t->prompt_len = (ssize_t)ft_strlen(PROMPT);
