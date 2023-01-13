@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:38:04 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/12 18:19:32 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/13 15:08:27 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_history(t_term *t)
 	i = 0;
 	while (t->history_arr[i])
 	{
-		ft_printf("%4d %s\n", i, t->history_arr[i]);
+		ft_printf("%4d %s\n", i + 1, t->history_arr[i]);
 		i++;
 	}
 	return (0);

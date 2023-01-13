@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:59:21 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/12 16:24:53 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/13 11:08:10 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	ft_history_write_to_file(t_term *t)
 	if (fd)
 	{
 		cpy = 0;
-		/* if (t->history_size > MAX_HISTORY)
-			cpy = t->history_size % MAX_HISTORY; */
 		while (cpy < t->history_size)
 		{
 			ft_putendl_fd((char *)t->history_arr[cpy], fd);

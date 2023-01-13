@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/12 14:38:22 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/13 16:53:35 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,7 +251,7 @@ void			ft_dir_change(t_session *sesh);
 /*			  		 HISTORY				*/
 int				ft_history(t_term *t);
 void			ft_history_get(t_term *t);
-char			*ft_history_file_get(void);
+int				ft_history_expantion(t_term *t);
 void			ft_history_write_to_file(t_term *t);
 
 #endif

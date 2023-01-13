@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/12 15:47:44 by mrantil          ###   ########.fr        #
+#    Updated: 2023/01/13 14:49:03 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -204,8 +204,8 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(INITIALIZE)ft_session_init \
 				$(INITIALIZE)ft_env_init \
 				$(HISTORY)ft_history \
-				$(HISTORY)ft_history_file_get \
 				$(HISTORY)ft_history_get \
+				$(HISTORY)ft_history_expansion \
 				$(HISTORY)ft_history_write_to_file \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))

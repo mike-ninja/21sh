@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:22:24 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/12 15:57:52 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/13 12:01:52 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,21 @@ static void	add_to_capped_history(t_term *t, char *command)
 {
 	char	**temp;
 	int		i;
+	int		j;
 
-	temp = (char **)malloc(sizeof(char *) * (MAX_HISTORY + 2));
+	temp = (char **)malloc(sizeof(char *) * (MAX_HISTORY + 1));
 	if (!temp)
 	{
 		ft_putendl_fd("21sh: malloc error, add_to_capped_history()", 2);
 		exit(1);
 	}
-	i = -1;
-	while (t->history_arr[++i + 1])
-		temp[i] = ft_strdup(t->history_arr[i + 1]);
-	temp[i++] = ft_strdup(command);
-	temp[i] = NULL;
+	i = MAX_HISTORY / 2;
+	j = 0;
+	while (t->history_arr[++i])
+		temp[j++] = ft_strdup(t->history_arr[i]);
+	temp[j++] = ft_strdup(command);
+	temp[j] = NULL;
+	t->history_size = j;
 	ft_arrclean(t->history_arr);
 	t->history_arr = temp;
 }
@@ -59,7 +62,7 @@ void	ft_history_add_command(t_term *t, char *command)
 	int	i;
 
 	i = 0;
-	if (t->history_size <= MAX_HISTORY)
+	if (t->history_size < MAX_HISTORY)
 	{
 		while (command[i] && ft_isspace(command[i]))
 			i++;
