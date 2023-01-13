@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 22:59:19 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/13 00:14:00 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/13 11:15:38 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ typedef struct s_semicolon
 typedef struct s_ampersand
 {
 	int			type;
-	t_treenode	*cmd;
+	t_treenode	*left;
+	t_treenode	*right;
 }	t_ampersand;
 
 /*					LOGICAL NODE			*/
@@ -226,7 +227,9 @@ t_treenode		*create_logical_op_tree(t_token *tokens,
 void			rec_print_tree(t_treenode *root, int lvl);
 void			exec_logicalop(t_logicalop *logicalop, char ***environ_cp,
 					char *terminal, t_session *sesh);
-t_treenode		*create_ampersand_node(t_token *tokens, int i_tok, int end);
+//t_treenode		*create_ampersand_node(t_token *tokens, int i_tok, int end);
+t_treenode		*init_ampersand_node(void);
+t_treenode		*init_semicolon(void);
 
 /*					EXPANSION				*/
 void			ft_expansion(t_session *sesh, char **cmd);

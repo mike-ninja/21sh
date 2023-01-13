@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 20:22:15 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/12 18:49:15 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/13 11:36:58 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static void	check_type(t_treenode *root)
 		ft_printf("> [%d]\n", root->type);
 	else if (root->type == SEMICOLON)
 		ft_printf("[;]");
+	else if (root->type == AMPERSAND)
+		ft_printf("[&]");
 	else if (root->type == AGGREGATION)
 		ft_printf(">& [%d] [%s]\n", root->type, ((t_aggregate *)root)->cmd);
 	else if (root->type == LOGICAL_AND)
@@ -76,6 +78,14 @@ void	split_print_tree(t_treenode *root, int lvl)
 		check_type(root);
 		ft_printf("\n");
 		rec_print_tree(((t_semicolon *)root)->right, lvl);
+	}
+	else if (root->type == AMPERSAND)
+	{
+		rec_print_tree(((t_ampersand *)root)->left, lvl);
+		print_spaces(lvl);
+		check_type(root);
+		ft_printf("\n");
+		rec_print_tree(((t_ampersand *)root)->right, lvl);
 	}
 	else
 	{
