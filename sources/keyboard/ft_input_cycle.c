@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/12 11:25:45 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/13 12:01:28 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,17 @@ static void	ft_backspace_or_escape(t_term *t)
  */
 static int	ft_isprint_or_enter(t_term *t)
 {
+	ssize_t heredoc_delim_row;
+	
 	if ((ft_isprint(t->ch) || t->ch == ENTER) && t->bytes < (BUFF_SIZE - 1))
 		ft_insertion(t);
 	if (t->ch == ENTER)
 	{
+		heredoc_delim_row = t->total_row;
+		while (heredoc_delim_row && !ft_is_prompt_line(t, heredoc_delim_row))
+			heredoc_delim_row--;
 		if ((!t->bslash && !(t->q_qty % 2) && !t->delim) \
-			|| (t->delim && !ft_strcmp(t->nl_addr[t->total_row], t->delim)))
+			|| (t->delim && !ft_strcmp(t->nl_addr[heredoc_delim_row], t->delim)))
 		{
 			ft_end_cycle(t);
 			ft_setcursor(0, t->term_val[1] + t->total_row);
