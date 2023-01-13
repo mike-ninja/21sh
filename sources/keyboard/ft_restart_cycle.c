@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_restart_cycle.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:56:42 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/13 16:51:14 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/13 19:55:37 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,13 @@ static void	heredoc_reset(t_term *t)
 
 void	ft_restart_cycle(t_term *t)
 {
-	ft_setcursor(0, (t->term_val[1] + t->total_row) + 1);
+	if (t->term_val[1] + t->total_row + 1 == t->ws_row)
+	{
+		ft_setcursor(0, t->ws_row);
+		ft_run_capability("sf");
+	}
+	else
+		ft_setcursor(0, (t->term_val[1] + t->total_row) + 1);
 	heredoc_reset(t);
 	t->ch = 0;
 	t->his = 0;
