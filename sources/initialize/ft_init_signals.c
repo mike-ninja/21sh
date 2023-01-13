@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 18:17:16 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/13 10:04:53 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/13 10:38:37 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,24 @@ void	sig_handler(int num)
 		ft_window_size(g_t->term);
 	if (num == SIGINT)
 		ft_restart_cycle(g_t->term);
+	if (num == SIGTSTP)
+	{
+		t_proc *ptr = g_t->process_ls;
+
+		ft_printf("THIS HAPPENS\n");
+		while (ptr)
+		{
+			if (ptr->job == '+')
+			{
+				
+				kill(ptr->pid, SIGSTOP);
+				break ;
+			}
+			ptr = ptr->next;
+		}
+		
+		// Do nothing at this point	
+	}
 }
 
 /*
@@ -35,4 +53,5 @@ void	ft_init_signals(void)
 {
 	signal(SIGWINCH, sig_handler);
 	signal(SIGINT, sig_handler);
+	signal(SIGTSTP, sig_handler);
 }
