@@ -6,7 +6,7 @@
 #    By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/12 18:23:31 by mbarutel         ###   ########.fr        #
+#    Updated: 2023/01/13 10:01:47 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -118,7 +118,6 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(KEYBOARD)ft_esc_parse \
 				$(KEYBOARD)ft_get_prompt_len \
 				$(KEYBOARD)ft_history_trigger \
-				$(KEYBOARD)ft_init_signals \
 				$(KEYBOARD)ft_input_cycle \
 				$(KEYBOARD)ft_insertion \
 				$(KEYBOARD)ft_mv_prompt_len \
@@ -211,6 +210,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(TERMIOS)ft_getent \
 				$(TERMIOS)ft_raw_disable \
 				$(TERMIOS)ft_raw_enable \
+				$(INITIALIZE)ft_init_signals \
 				$(INITIALIZE)ft_session_init \
 				$(INITIALIZE)ft_env_init \
 				$(HISTORY)ft_history \
