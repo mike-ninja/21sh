@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:23:35 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/12 19:16:15 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/13 20:09:45 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ static void	free_rest(t_treenode *head)
 	{
 		ft_strdel(&((t_aggregate *)head)->dest);
 		free_node(((t_aggregate *)head)->cmd);
+	}
+	else if (head->type == AMPERSAND)
+	{
+		free_node(((t_ampersand *)head)->left);
+		((t_semicolon *)head)->left = NULL;
+		free_node(((t_ampersand *)head)->right);
+		((t_semicolon *)head)->right = NULL;
 	}
 	ft_memdel((void **)&head);
 }
@@ -86,4 +93,11 @@ void	exec_tree(t_treenode *head, char ***environ_cp,
 		execute_bin(((t_cmdnode *)head)->cmd, environ_cp, sesh);
 	else if (head->type == LOGICAL_AND || head->type == LOGICAL_OR)
 		exec_logicalop(((t_logicalop *)head), environ_cp, terminal, sesh);
+	else if (head->type == AMPERSAND)
+	{
+		exec_tree((((t_ampersand *)head)->left), environ_cp, terminal, sesh);
+		reset_fd(terminal);
+		exec_tree((((t_ampersand *)head)->right), environ_cp, terminal, sesh);
+		reset_fd(terminal);
+	}
 }
