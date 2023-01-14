@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:25:07 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/14 09:52:14 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/14 10:34:17 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	ft_window_size(t_term *t)
 	else
 	{
 		get_term_val(t->term_val);
+		t->c_col = t->term_val[0];
+		t->term_val[0] = 0;
 	}
 	ft_run_capability("ve");
 }
