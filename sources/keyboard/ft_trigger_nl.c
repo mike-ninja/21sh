@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_trigger_nl.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:21:29 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/12 15:55:14 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/14 10:10:25 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ void	ft_trigger_nl(t_term *t)
 		if (t->nl_addr[t->c_row + 1])
 			ft_reset_nl_addr(t);
 		else
-		{
 			ft_add_nl_last_row(t, t->inp, t->bytes);
-		}
 	}
 	if (t->c_col == t->ws_col)
 	{
