@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_session_init.c                                  :+:      :+:    :+:   */
+/*   set_signal_fork.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 16:44:03 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/14 09:22:57 by mbarutel         ###   ########.fr       */
+/*   Created: 2023/01/14 09:24:56 by mbarutel          #+#    #+#             */
+/*   Updated: 2023/01/14 09:29:18 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-t_session	*g_session;
-
-/**
- * It initializes the session struct.
- *
- * @param sesh The session struct.
- */
-void	ft_session_init(t_session *sesh)
+void	set_signal_fork(int pid)
 {
-	init_window_size(sesh->term);
-	g_session = sesh;
-	sesh->exit_stat = 0;
-	sesh->line = NULL;
-	ft_env_init(sesh);
-	sesh->terminal = ttyname(STDOUT_FILENO);
-	sesh->head = NULL;
-	sesh->tmp_env_key = NULL;
-	sesh->tokens = NULL;
+	if (pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGWINCH, SIG_DFL);
+	}
+	else
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGWINCH, sigwinch_inchild_handler);
+	}
 }

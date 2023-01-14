@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:56:42 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/13 19:55:37 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/14 09:13:22 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,21 @@ static void	heredoc_reset(t_term *t)
 		ft_strdel(&t->delim);
 	}
 	t->heredoc = 0;
+}
+
+static void	reset_values(t_term *t)
+{
+	t->ch = 0;
+	t->his = 0;
+	t->c_col = 0;
+	t->quote = 0;
+	t->q_qty = 0;
+	t->bytes = 0;
+	t->index = 0;
+	t->bslash = 0;
+	t->total_row = 0;
+	t->history_row = -1;
+	t->c_row = t->total_row;
 }
 
 /*
@@ -41,17 +56,7 @@ void	ft_restart_cycle(t_term *t)
 	else
 		ft_setcursor(0, (t->term_val[1] + t->total_row) + 1);
 	heredoc_reset(t);
-	t->ch = 0;
-	t->his = 0;
-	t->c_col = 0;
-	t->quote = 0;
-	t->q_qty = 0;
-	t->bytes = 0;
-	t->index = 0;
-	t->bslash = 0;
-	t->total_row = 0;
-	t->history_row = -1;
-	t->c_row = t->total_row;
+	reset_values(t);
 	if (t->input_cpy)
 		ft_strdel(&t->input_cpy);
 	ft_memdel((void **)&t->nl_addr);

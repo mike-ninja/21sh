@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+         #
+#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/12 16:08:57 by mbarutel         ###   ########.fr        #
+#    Updated: 2023/01/14 09:29:10 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,23 +61,24 @@ TERMCAP				=	-lncurses
 endif
 
 SOURCES 		= 	sources
-KEYBOARD		= 	keyboard/
-BANNER			= 	banner/
-MAIN			= 	main/
-LEXER			= 	lexer/
-OBJECTS 		= 	objects
 INCLUDES		= 	includes/
 LIBRARIES 		= 	libft/
-TOKENIZER		=	tokenizer/
+BANNER			= 	banner/
 BUILDTREE		=	build_tree/
-EXECTREE		=	exec_tree/
-INITIALIZE		=	initialize/
-EXPANSION		=	expansion/
-UTILITIES		=	utilities/
 BUILTIN			= 	builtins/
 BUILTIN_UTILS	= 	builtin_utils/
-TERMIOS			= 	termios/
+EXECTREE		=	exec_tree/
+EXPANSION		=	expansion/
 HISTORY			= 	history/
+INITIALIZE		=	initialize/
+KEYBOARD		= 	keyboard/
+LEXER			= 	lexer/
+MAIN			= 	main/
+SIGNALS			= 	signals/
+OBJECTS 		= 	objects
+TERMIOS			= 	termios/
+TOKENIZER		=	tokenizer/
+UTILITIES		=	utilities/
 
 SOURCE_COUNT = $(words $(FILES))
 
@@ -116,7 +117,6 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(KEYBOARD)ft_esc_parse \
 				$(KEYBOARD)ft_get_prompt_len \
 				$(KEYBOARD)ft_history_trigger \
-				$(KEYBOARD)ft_init_signals \
 				$(KEYBOARD)ft_input_cycle \
 				$(KEYBOARD)ft_insertion \
 				$(KEYBOARD)ft_mv_prompt_len \
@@ -146,6 +146,8 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(MAIN)main \
 				$(MAIN)shell_end_cycle \
 				$(MAIN)reset_fd \
+				$(SIGNALS)sig_session_handler \
+				$(SIGNALS)set_signal_fork \
 				$(TOKENIZER)tokenizer \
 				$(TOKENIZER)token_utils \
 				$(TOKENIZER)tok_find_argument \
@@ -201,8 +203,10 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(TERMIOS)ft_getent \
 				$(TERMIOS)ft_raw_disable \
 				$(TERMIOS)ft_raw_enable \
-				$(INITIALIZE)ft_session_init \
 				$(INITIALIZE)ft_env_init \
+				$(INITIALIZE)ft_init_signals \
+				$(INITIALIZE)ft_init_window_size \
+				$(INITIALIZE)ft_session_init \
 				$(HISTORY)ft_history \
 				$(HISTORY)ft_history_file_get \
 				$(HISTORY)ft_history_get \
@@ -239,6 +243,7 @@ $(OBJECTS):
 	@mkdir -p $(OBJECTS)/$(BUILTIN_UTILS)
 	@mkdir -p $(OBJECTS)/$(TERMIOS)
 	@mkdir -p $(OBJECTS)/$(HISTORY)
+	@mkdir -p $(OBJECTS)/$(SIGNALS)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"
 	@printf "$(NAME): $(GREEN)$(OBJECTS) directory was created.$(RESET)\n\n\n"
 

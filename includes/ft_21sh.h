@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/13 17:29:00 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/14 09:27:19 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ int				ft_getent(void);
 void			ft_raw_disable(struct termios orig_termios);
 
 /*				  INITIALIZE				*/
+void			ft_init_signals(void);
 void			init_window_size(t_term *term);
 void			ft_env_init(t_session *sesh);
 void			ft_session_init(t_session *sesh);
@@ -254,4 +255,8 @@ void			ft_history_get(t_term *t);
 char			*ft_history_file_get(void);
 void			ft_history_write_to_file(t_term *t);
 
+/*			  		 SIGNALS				*/
+void			set_signal_fork(int num);
+void			sig_session_handler(int num);
+void			sigwinch_inchild_handler(int num);
 #endif
