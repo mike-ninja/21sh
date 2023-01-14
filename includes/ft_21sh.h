@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/14 09:27:19 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/14 22:43:08 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,16 @@
 # define RE_OUT_TWO 5
 
 typedef union u_treenode	t_treenode;
+
+/*					PROCESS ID				*/
+typedef struct s_process
+{
+	pid_t				pid;
+	int					index;
+	char				**command;
+	char				job;
+	struct s_process	*next;
+}	t_proc;
 
 /*					TOKEN STRUCT			*/
 typedef struct s_token
@@ -116,6 +126,8 @@ union u_treenode
 /*				SESSION STRUCT				*/
 typedef struct session
 {
+	int				process_control;
+	t_proc			*process;
 	char			*line;
 	t_treenode		*head;
 	t_term			term[1];
@@ -239,6 +251,8 @@ int				ft_cd(t_session *sesh, char **cmd);
 int				ft_echo(t_session *sesh, char **cmd);
 int				ft_env(t_session *sesh, char ***cmd);
 void			ft_exit(t_session *sesh, int status);
+int				ft_jobs(t_session *sesh);
+int				ft_fg(t_session *sesh, char **cmd);
 int				ft_setenv(t_session *sesh, char **cmd);
 int				ft_unsetenv(t_session *sesh, char **cmd);
 
@@ -248,6 +262,8 @@ void			ft_env_remove(t_session *sesh, char *env_to_clean);
 int				ft_env_append(t_session *sesh, char **arg);
 int				ft_env_replace(t_session *sesh, char *envn, char **tmp_env);
 void			ft_dir_change(t_session *sesh);
+int				pid_status(int pid);
+void 			ft_print_dbl_array(char **cmd);
 
 /*			  		 HISTORY				*/
 int				ft_history(t_term *t);
@@ -259,4 +275,10 @@ void			ft_history_write_to_file(t_term *t);
 void			set_signal_fork(int num);
 void			sig_session_handler(int num);
 void			sigwinch_inchild_handler(int num);
+
+/*			  		 PROCESS 				*/
+t_proc			*process_getpid(int index, char *cmd, char sign, t_proc *head);
+int				process_node_append(char **args, t_session *sesh, int pid);
+t_proc 			*process_node_delete(t_proc *prev, t_proc *curr);
+
 #endif

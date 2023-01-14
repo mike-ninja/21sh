@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:50:01 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/09 14:41:04 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/14 22:38:28 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ int	ft_builtins(t_session *sesh, char ***cmd)
 			return (ft_history(sesh->term));
 		else if (!ft_strcmp(**cmd, "exit"))
 			ft_exit(sesh, 0);
+		else if (!ft_strcmp(**cmd, "sleep"))
+			sesh->process_control = 1;
+		else if (!ft_strcmp(**cmd, "jobs"))
+			return(ft_jobs(sesh));
+		else if (!ft_strcmp(**cmd, "fg"))
+			return(ft_fg(sesh, *cmd));
 	}
 	return (1);
 }

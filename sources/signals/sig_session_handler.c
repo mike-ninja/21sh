@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 09:02:29 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/14 09:31:26 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/14 23:03:31 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ void	sig_session_handler(int num)
 		ft_window_size(g_session->term);
 	if (num == SIGINT)
 		ft_restart_cycle(g_session->term);
+	if (num == SIGSTOP)
+	{
+		ft_printf("THIS HAPPENS\n");
+	}
 }
 
 void	sigwinch_inchild_handler(int num)

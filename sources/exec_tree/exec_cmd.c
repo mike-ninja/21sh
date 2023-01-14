@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/06 13:24:19 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/14 23:10:26 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 	char	*cmd;
 	int		access;
 	int		status;
+	pid_t	pid;
 
 	status = 0;
 	if (!args[0])
@@ -80,13 +81,33 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 	if (!check_if_user_exe(args[0], &cmd))
 		cmd = search_bin(args[0], *environ_cp);
 	access = check_access(cmd, args, sesh);
-	if (access && fork_wrap() == 0)
+	if (cmd && access)
+		pid = fork_wrap();
+	if (cmd && access && sesh->process_control == 1)
+	{
+		pid_t group_id;
+		
+		group_id = 0;
+		if (pid == 0)
+		{
+			group_id = setsid();
+			if (group_id == -1)
+			{
+				ft_putstr_fd("setsid() fail\n", 2);
+				exit(1);
+			}
+		}
+		else
+			ft_printf("[%d] %d\n", process_node_append(args, sesh, pid), pid);
+	}
+	if (access && pid == 0)
 	{
 		if (!cmd || execve(cmd, args, *environ_cp) < 0)
 			exe_fail(&cmd, args, environ_cp);
 		exit (1);
 	}
-	wait(&status);
+	if (cmd && access && sesh->process_control == 0)
+		wait(&status);
 	if (status & 0177)
 		ft_putchar('\n');
 	if (access)

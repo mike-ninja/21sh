@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_session_init.c                                  :+:      :+:    :+:   */
+/*   ft_pid_status.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 16:44:03 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/14 22:20:48 by mbarutel         ###   ########.fr       */
+/*   Created: 2023/01/10 11:04:08 by mbarutel          #+#    #+#             */
+/*   Updated: 2023/01/14 22:41:38 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-t_session	*g_session;
-
-/**
- * It initializes the session struct.
- *
- * @param sesh The session struct.
- */
-void	ft_session_init(t_session *sesh)
+int	pid_status(int pid)
 {
-	sesh->process = NULL;
-	sesh->process_control = 0;
-	init_window_size(sesh->term);
-	g_session = sesh;
-	sesh->exit_stat = 0;
-	sesh->line = NULL;
-	ft_env_init(sesh);
-	sesh->terminal = ttyname(STDOUT_FILENO);
-	sesh->head = NULL;
-	sesh->tmp_env_key = NULL;
-	sesh->tokens = NULL;
+	int		status;
+	pid_t	return_pid;
+
+	return_pid = waitpid(pid, &status, WNOHANG);
+	if (return_pid == -1) 
+		return (-1);
+	else if (return_pid == 0) 
+		return (1);
+	else if (return_pid == pid) 
+		return (0);
+	return (-1);
 }

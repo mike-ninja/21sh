@@ -6,7 +6,7 @@
 #    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/14 17:21:35 by mbarutel         ###   ########.fr        #
+#    Updated: 2023/01/14 22:42:23 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,7 @@ INITIALIZE		=	initialize/
 KEYBOARD		= 	keyboard/
 LEXER			= 	lexer/
 MAIN			= 	main/
+PROCESS			= 	process/
 SIGNALS			= 	signals/
 OBJECTS 		= 	objects
 TERMIOS			= 	termios/
@@ -146,6 +147,9 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(MAIN)main \
 				$(MAIN)shell_end_cycle \
 				$(MAIN)reset_fd \
+				$(PROCESS)process_getpid \
+				$(PROCESS)process_node_append \
+				$(PROCESS)process_node_delete \
 				$(SIGNALS)sig_session_handler \
 				$(SIGNALS)set_signal_fork \
 				$(TOKENIZER)tokenizer \
@@ -192,6 +196,8 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(BUILTIN)ft_echo \
 				$(BUILTIN)ft_env \
 				$(BUILTIN)ft_exit \
+				$(BUILTIN)ft_jobs \
+				$(BUILTIN)ft_fg \
 				$(BUILTIN)ft_setenv \
 				$(BUILTIN)ft_unsetenv \
 				$(BUILTIN_UTILS)ft_cd_addr_check \
@@ -200,6 +206,8 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(BUILTIN_UTILS)ft_env_remove \
 				$(BUILTIN_UTILS)ft_env_replace \
 				$(BUILTIN_UTILS)ft_env_temp \
+				$(BUILTIN_UTILS)ft_pid_status \
+				$(BUILTIN_UTILS)ft_print_dbl_array \
 				$(TERMIOS)ft_getent \
 				$(TERMIOS)ft_raw_disable \
 				$(TERMIOS)ft_raw_enable \
@@ -244,6 +252,7 @@ $(OBJECTS):
 	@mkdir -p $(OBJECTS)/$(TERMIOS)
 	@mkdir -p $(OBJECTS)/$(HISTORY)
 	@mkdir -p $(OBJECTS)/$(SIGNALS)
+	@mkdir -p $(OBJECTS)/$(PROCESS)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"
 	@printf "$(NAME): $(GREEN)$(OBJECTS) directory was created.$(RESET)\n\n\n"
 
