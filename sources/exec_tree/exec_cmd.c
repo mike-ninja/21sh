@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/16 19:37:22 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:12:59 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 		if (pid && sesh->process_control)
 			ft_printf("[%d] %d\n", process_node_append(args, sesh, pid), pid);
 		else if (pid)
-			process_node_append(args, sesh, pid);
+		process_node_append(args, sesh, pid);
 		// else if (pid == 0 && sesh->process)
 		// 	setsid()
 	}

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 11:04:08 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/16 17:06:49 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:49:21 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,25 @@ int pid_status(int pid)
 {
     int status;
 	
-    waitpid(pid, &status, WNOHANG);
-    if (WIFEXITED(status)) {
-        return 0; // Process finished
-    } else if (WIFSTOPPED(status)) {
-        return 1; // Process suspended
-    } else if (WIFSIGNALED(status)) {
-        return 2; // Process killed by a signal
-    } else {
-        return 3; // Process is still running
-    }
+	ft_printf("%d", pid);
+    waitpid(pid, &status, WUNTRACED | WNOHANG);
+    // if (WIFSTOPPED(status))
+    //     return 1; // Process suspended
+    // if (WIFEXITED(status))
+    //     return 0; // Process finished
+    // else if (WTERMSIG(status))
+    //     
+    // else
+    //     return 3; // Process is still running
+	ft_printf("status %d\n", status);
+	if (WIFEXITED(status))
+		return 0; // Process has finished/
+	else if (WIFSIGNALED(status))
+	{
+		if (WIFSTOPPED(status))
+			return 1; //  Process is suspended
+		if (WTERMSIG(status))
+			return 2; // Process terminated by a signal
+	}
+	return 3; // Process is running
 }
-
