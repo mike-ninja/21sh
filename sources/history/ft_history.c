@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:38:04 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/13 15:08:27 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/16 09:56:23 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,15 @@
  *
  * @param t the terminal structure
  */
-int	ft_history(t_term *t)
+int	ft_history(t_term *t, char **cmd)
 {
 	int		i;
 
+	if (cmd[1])
+	{
+		ft_putendl_fd("42sh: history: too many arguments", 2);
+		return (0);
+	}
 	i = 0;
 	while (t->history_arr[i])
 	{

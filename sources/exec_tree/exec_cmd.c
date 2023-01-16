@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/06 13:24:19 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/16 13:53:23 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,24 +66,24 @@ int	check_access(char *cmd, char **args, t_session *sesh)
 	return (1);
 }
 
-void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
+void	execute_bin(char ***args, char ***environ_cp, t_session *sesh)
 {
 	char	*cmd;
 	int		access;
 	int		status;
 
 	status = 0;
-	if (!args[0])
+	if (!(*args)[0])
 		return ;
-	if (!ft_builtins(sesh, &args))
+	if (!ft_builtins(sesh, &(*args)))
 		return ;
-	if (!check_if_user_exe(args[0], &cmd))
-		cmd = search_bin(args[0], *environ_cp);
-	access = check_access(cmd, args, sesh);
+	if (!check_if_user_exe((*args)[0], &cmd))
+		cmd = search_bin((*args)[0], *environ_cp);
+	access = check_access(cmd, (*args), sesh);
 	if (access && fork_wrap() == 0)
 	{
-		if (!cmd || execve(cmd, args, *environ_cp) < 0)
-			exe_fail(&cmd, args, environ_cp);
+		if (!cmd || execve(cmd, (*args), *environ_cp) < 0)
+			exe_fail(&cmd, (*args), environ_cp);
 		exit (1);
 	}
 	wait(&status);

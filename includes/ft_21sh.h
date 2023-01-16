@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/13 16:53:35 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/16 15:43:43 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@
 # define RE_IN_TRI 3
 # define RE_OUT_ONE 4
 # define RE_OUT_TWO 5
+
+/* For fc builtin */
+# define FC_FLAGS "srnle"
 
 typedef union u_treenode	t_treenode;
 
@@ -209,7 +212,7 @@ size_t			ft_bslash_check(char *buff, ssize_t pos);
 /*					EXECUTE_TREE			*/
 void			exec_tree(t_treenode *head, char ***environ_cp, char *terminal, \
 				t_session *sesh);
-void			execute_bin(char **args, char ***environ_cp, t_session *sesh);
+void			execute_bin(char ***args, char ***environ_cp, t_session *sesh);
 void			exec_pipe(t_pipenode *pipenode, char ***environ_cp, \
 				char *terminal, t_session *sesh);
 void			exec_redir(t_redir *node, char ***environ_cp, char *terminal, \
@@ -249,9 +252,10 @@ int				ft_env_replace(t_session *sesh, char *envn, char **tmp_env);
 void			ft_dir_change(t_session *sesh);
 
 /*			  		 HISTORY				*/
-int				ft_history(t_term *t);
+int				ft_history(t_term *t, char **cmd);
 void			ft_history_get(t_term *t);
 int				ft_history_expantion(t_term *t);
 void			ft_history_write_to_file(t_term *t);
+int				ft_fc(t_session *sesh, char ***cmd);
 
 #endif

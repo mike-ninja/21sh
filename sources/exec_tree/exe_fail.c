@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_fail.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 21:38:50 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/14 21:39:24 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/16 13:16:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_freeda(void ***a, size_t row)
 	unsigned int	i;
 
 	i = -1;
-	if (!a)
+	if (!a || !*a || !(*a)[0])
 		return (1);
 	while ((*a)[++i] && i < row)
 		ft_strdel((char **)&(*a)[i]);
@@ -29,7 +29,7 @@ size_t	calc_chptr(char **arr)
 {
 	size_t	i;
 
-	if (!arr)
+	if (!arr || !arr[0])
 		return (0);
 	i = 0;
 	while (arr[i])

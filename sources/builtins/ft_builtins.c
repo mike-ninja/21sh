@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:50:01 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/12 18:19:38 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/16 14:44:46 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ int	ft_builtins(t_session *sesh, char ***cmd)
 		else if (!ft_strcmp(**cmd, "echo"))
 			return (ft_echo(sesh, *cmd));
 		else if (!ft_strcmp(**cmd, "history"))
-			return (ft_history(sesh->term));
+			return (ft_history(sesh->term, *cmd));
+		else if (!ft_strcmp(**cmd, "fc"))
+			return (ft_fc(sesh, cmd));
 		else if (!ft_strcmp(**cmd, "exit"))
 			ft_exit(sesh, 0);
 	}
