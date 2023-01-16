@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/16 17:00:07 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/16 18:42:19 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,17 +127,18 @@ union u_treenode
 /*				SESSION STRUCT				*/
 typedef struct session
 {
-	int				process_control;
-	t_proc			*process;
-	char			*line;
-	t_treenode		*head;
-	t_term			term[1];
-	char			**env;
-	t_token			*tokens;
-	int				exit_stat;
-	char			*terminal;
-	char			**tmp_env_key;
-	struct termios	orig_termios;
+	int					process_control;
+	struct sigaction	sig_action;
+	t_proc				*process;
+	char				*line;
+	t_treenode			*head;
+	t_term				term[1];
+	char				**env;
+	t_token				*tokens;
+	int					exit_stat;
+	char				*terminal;
+	char				**tmp_env_key;
+	struct termios		orig_termios;
 }				t_session;
 
 /*					HEADER					*/
@@ -276,6 +277,7 @@ void			ft_history_write_to_file(t_term *t);
 void			sigstop_handler(int num); // NEW
 void			set_signal_fork(int num);
 void			sig_session_handler(int num);
+void			sigchild_handler(int num);
 void			sigwinc_wait_handle(int num);
 
 /*			  		 PROCESS 				*/

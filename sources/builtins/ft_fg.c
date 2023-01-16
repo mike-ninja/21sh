@@ -50,6 +50,11 @@ int	ft_fg(t_session *sesh, char **cmd)
 	{
 		ft_print_dbl_array(process->command);
 		ft_putchar('\n');
+		signal(SIGINT, sigchild_handler);
+		signal(SIGWINCH, sigchild_handler);
+		signal(SIGTSTP, sigchild_handler);
+		signal(SIGSTOP, sigchild_handler);
+		kill(process->pid, SIGCONT);
 		waitpid(process->pid, &status, WUNTRACED);
 		if (status & 0177)
 			ft_putchar('\n');

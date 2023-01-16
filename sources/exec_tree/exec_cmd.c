@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/16 17:49:11 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/16 19:37:22 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,35 +89,41 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 			ft_printf("[%d] %d\n", process_node_append(args, sesh, pid), pid);
 		else if (pid)
 			process_node_append(args, sesh, pid);
-		else if (pid == 0 && sesh->process_control)
-			setsid(); // This puts the process into its own sessino to ensure that this process will continue to run in the background
+		// else if (pid == 0 && sesh->process)
+		// 	setsid()
 	}
 	if (access && pid == 0)
 	{
+		setsid();
 		if (!cmd || execve(cmd, args, *environ_cp) < 0)
 			exe_fail(&cmd, args, environ_cp);
 		exit (1);
 	}
 	if (cmd && access && sesh->process_control == 0)
 	{
-		wait(&status);
-		t_proc *ptr = sesh->process;
-		t_proc *prev;
+		// wait(&status);
+		waitpid(pid, &status, WUNTRACED);
 
-		prev = NULL;
-		while (ptr)
-		{
-			if (ptr->pid == pid)
+		if (WIFEXITED(status))
+		{	
+			t_proc *ptr = sesh->process;
+			t_proc *prev;
+
+			prev = NULL;
+			while (ptr)
 			{
-				process_node_delete(prev, &ptr);
-				if (!prev)
-					sesh->process = ptr;
-				break ;
-			}
-			else
-			{
-				prev = ptr;
-				ptr = ptr->next;
+				if (ptr->pid == pid)
+				{
+					process_node_delete(prev, &ptr);
+					if (!prev)
+						sesh->process = ptr;
+					break ;
+				}
+				else
+				{
+					prev = ptr;
+					ptr = ptr->next;
+				}
 			}
 		}
 	}

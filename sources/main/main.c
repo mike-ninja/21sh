@@ -6,11 +6,18 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/14 22:01:02 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/16 18:48:38 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
+
+// static void	init_sig_action(struct sigaction *sig_action)
+// {
+// 	sig_action->sa_handler = sig_session_handler;
+	
+// 	sigaction(SIGINT, sig_action, NULL);
+// }
 
 void	main_loop(t_session *sesh)
 {
@@ -22,6 +29,7 @@ void	main_loop(t_session *sesh)
 	{
 		sesh->process_control = 0;
 		ft_init_signals();
+		// init_sig_action(&sesh->sig_action);
 		sesh->orig_termios = ft_raw_enable();
 		if (ft_keyboard(sesh->term) == 1)
 		{
