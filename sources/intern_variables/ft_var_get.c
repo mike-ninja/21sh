@@ -1,41 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env_get.c                                       :+:      :+:    :+:   */
+/*   ft_var_get.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mviinika <mviinika@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 16:51:34 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/16 13:47:25 by mviinika         ###   ########.fr       */
+/*   Created: 2023/01/16 13:50:14 by mviinika          #+#    #+#             */
+/*   Updated: 2023/01/16 15:13:07 by mviinika         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-/**
- * It takes a session and a key, and returns a pointer to the environment
- * variable with that key.
- * 
- * @param sesh The session struct.
- * @param key the key to search for
- * 
- * @return A pointer to the environment variable.
- */
-char	**ft_env_get(t_session *sesh, char *key)
+char	**ft_var_get(t_session *sesh, char *key, int *count)
 {
-	char	**env;
+	char	**vars;
 	char	*key_full;
 
-	env = sesh->env;
+	vars = sesh->intr_vars;
 	key_full = ft_strjoin(key, "=");
-	while (*env)
+	while (*vars)
 	{
-		if (ft_strnequ(*env, key_full, ft_strlen(key_full)))
+		if (ft_strnequ(*vars, key_full, ft_strlen(key_full)))
 		{
 			ft_strdel(&key_full);
-			return (env);
+			return (vars);
 		}
-		env++;
+		*count += 1;
+		vars++;
 	}
 	ft_strdel(&key_full);
 	return (NULL);

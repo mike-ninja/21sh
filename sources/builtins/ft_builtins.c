@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mviinika <mviinika@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:50:01 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/09 14:41:04 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/16 15:18:09 by mviinika         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,23 @@ int	ft_builtins(t_session *sesh, char ***cmd)
 	if (sesh && cmd)
 	{
 		ft_expansion(sesh, *cmd);
-		if (!ft_strcmp(**cmd, "env"))
-			return (ft_env(sesh, cmd));
-		else if (!ft_strcmp(**cmd, "setenv"))
-			return (ft_setenv(sesh, *cmd));
-		else if (!ft_strcmp(**cmd, "unsetenv"))
-			return (ft_unsetenv(sesh, *cmd));
-		else if (!ft_strcmp(**cmd, "cd"))
+		*(cmd) += ft_variables(sesh, cmd);
+		ft_printf("intern var %s\n", **cmd);
+		if (**cmd == NULL)
+			return 0;
+		else if (**cmd && !ft_strcmp(**cmd, "set"))
+			return (ft_set(sesh, cmd));
+		else if (**cmd && !ft_strcmp(**cmd, "export"))
+			return (ft_export(sesh, *cmd));
+		else if (**cmd && !ft_strcmp(**cmd, "unset"))
+			return (ft_unset(sesh, *cmd));
+		else if (**cmd && !ft_strcmp(**cmd, "cd"))
 			return (ft_cd(sesh, *cmd));
-		else if (!ft_strcmp(**cmd, "echo"))
+		else if (**cmd && !ft_strcmp(**cmd, "echo"))
 			return (ft_echo(sesh, *cmd));
-		else if (!ft_strcmp(**cmd, "history"))
+		else if (**cmd && !ft_strcmp(**cmd, "history"))
 			return (ft_history(sesh->term));
-		else if (!ft_strcmp(**cmd, "exit"))
+		else if (**cmd && !ft_strcmp(**cmd, "exit"))
 			ft_exit(sesh, 0);
 	}
 	return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env_append.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mviinika <mviinika@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 20:12:44 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/06 12:58:33 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/16 14:23:28 by mviinika         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	ft_env_append(t_session *sesh, char **arg)
 	char	**new_array;
 
 	i = -1;
+	ft_printf("tama ni%s\n", *arg);
 	new_array = (char **)ft_memalloc(sizeof(char *) * \
 	(ft_arrlen(sesh->env) + 2));
 	while (sesh->env[++i])

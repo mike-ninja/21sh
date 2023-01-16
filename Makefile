@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
+#    By: mviinika <mviinika@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/10 10:30:45 by mbarutel         ###   ########.fr        #
+#    Updated: 2023/01/16 15:17:31 by mviinika         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,13 +41,13 @@ MAKEFLAGS			+= --no-print-directory
 
 NAME				=	21sh
 CC					=	gcc
-CFLAGS 				= 	-Wall -Wextra -Werror
+#CFLAGS 				= 	-Wall -Wextra -Werror
 CFLAGS				+=	-Wunreachable-code -Wtype-limits
 CFLAGS				+=	-Wpedantic
 # CFLAGS				+=	-Wconversion
 CFLAGS				+=	-O3
 
-#LEAK_CHECK			= -g
+LEAK_CHECK			= -g
 #LEAK_CHECK		+=	-fsanitize=address
 
 UNAME				= $(shell uname)
@@ -56,7 +56,7 @@ TERMCAP				=	-ltermcap
 endif
 ifeq ($(UNAME), Linux)
 TERMCAP				=	-ltermcap
-CFLAGS				+= 	-Werror
+#CFLAGS				+= 	-Werror
 TERMCAP				=	-lncurses
 endif
 
@@ -78,6 +78,7 @@ BUILTIN			= 	builtins/
 BUILTIN_UTILS	= 	builtin_utils/
 TERMIOS			= 	termios/
 HISTORY			= 	history/
+INTERN_VARS		=	intern_variables/
 
 SOURCE_COUNT = $(words $(FILES))
 
@@ -187,10 +188,10 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(BUILTIN)ft_builtins \
 				$(BUILTIN)ft_cd \
 				$(BUILTIN)ft_echo \
-				$(BUILTIN)ft_env \
+				$(BUILTIN)ft_set \
 				$(BUILTIN)ft_exit \
-				$(BUILTIN)ft_setenv \
-				$(BUILTIN)ft_unsetenv \
+				$(BUILTIN)ft_export \
+				$(BUILTIN)ft_unset \
 				$(BUILTIN_UTILS)ft_cd_addr_check \
 				$(BUILTIN_UTILS)ft_dir_change \
 				$(BUILTIN_UTILS)ft_env_append \
@@ -206,6 +207,9 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(HISTORY)ft_history_file_get \
 				$(HISTORY)ft_history_get \
 				$(HISTORY)ft_history_write_to_file \
+				$(INTERN_VARS)ft_variables \
+				$(INTERN_VARS)add_var \
+				$(INTERN_VARS)ft_var_get \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 O_PATHS		=	$(addsuffix .o, $(addprefix $(OBJECTS)/,$(FILES)))
@@ -238,6 +242,7 @@ $(OBJECTS):
 	@mkdir -p $(OBJECTS)/$(BUILTIN_UTILS)
 	@mkdir -p $(OBJECTS)/$(TERMIOS)
 	@mkdir -p $(OBJECTS)/$(HISTORY)
+	@mkdir -p $(OBJECTS)/$(INTERN_VARS)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"
 	@printf "$(NAME): $(GREEN)$(OBJECTS) directory was created.$(RESET)\n\n\n"
 

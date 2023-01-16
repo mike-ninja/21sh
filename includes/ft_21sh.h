@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mviinika <mviinika@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/09 17:38:02 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/16 15:16:45 by mviinika         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ typedef struct session
 	t_treenode		*head;
 	t_term			term[1];
 	char			**env;
+	char			**intr_vars;
 	t_token			*tokens;
 	int				exit_stat;
 	char			*terminal;
@@ -235,10 +236,10 @@ void			exe_fail(char **cmd, char **args, char ***env_cp);
 int				ft_builtins(t_session *sesh, char ***cmd);
 int				ft_cd(t_session *sesh, char **cmd);
 int				ft_echo(t_session *sesh, char **cmd);
-int				ft_env(t_session *sesh, char ***cmd);
+int				ft_set(t_session *sesh, char ***cmd);
 void			ft_exit(t_session *sesh, int status);
-int				ft_setenv(t_session *sesh, char **cmd);
-int				ft_unsetenv(t_session *sesh, char **cmd);
+int				ft_export(t_session *sesh, char **cmd);
+int				ft_unset(t_session *sesh, char **cmd);
 
 /*			    BUILTIN UTILITIES			*/
 int				ft_env_temp(t_session *sesh, char **cmd, int i);
@@ -252,5 +253,12 @@ int				ft_history(t_term *t);
 void			ft_history_get(t_term *t);
 char			*ft_history_file_get(void);
 void			ft_history_write_to_file(t_term *t);
+
+/*			  	INTERN VARIABLES			*/
+int				ft_variables(t_session *sesh, char ***cmd);
+int				add_var(t_session *sesh, char **cmd);
+int 			is_var(char *cmd);
+int 			find_var(t_session *sesh, char *cmd, int var_len, int *ret);
+char			**ft_var_get(t_session *sesh, char *key, int *count);
 
 #endif

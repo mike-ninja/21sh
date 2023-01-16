@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mviinika <mviinika@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:42:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/14 20:08:18 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/16 13:13:11 by mviinika         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	ft_env_init(t_session *sesh)
 
 	i = -1;
 	sesh->env = (char **)ft_memalloc(sizeof(char *) * (ft_arrlen(environ) + 1));
+	sesh->intr_vars = (char **)ft_memalloc(sizeof(char *) * 100);
 	while (environ[++i])
 	{
 		if (ft_strstr(environ[i], "SHLVL="))
