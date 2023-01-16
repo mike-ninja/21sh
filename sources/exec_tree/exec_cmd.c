@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/16 15:29:35 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/16 16:51:15 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,10 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 		pid = fork_wrap();
 	if (cmd && access)
 	{
-		if (pid)
+		if (pid && sesh->process_control)
 			ft_printf("[%d] %d\n", process_node_append(args, sesh, pid), pid);
+		else if (pid)
+			process_node_append(args, sesh, pid);	
 	}
 	if (access && pid == 0)
 	{
@@ -97,23 +99,25 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 	if (cmd && access && sesh->process_control == 0)
 	{
 		wait(&status);
-		// t_proc *ptr = sesh->process;
-		// t_proc *prev;
+		t_proc *ptr = sesh->process;
+		t_proc *prev;
 
-		// prev = NULL;
-		// while (ptr->next && ptr->pid != pid)
-		// {
-		// 	prev = ptr;
-		// 	ptr = ptr->next;
-		// }
-		// process_node_delete_v2(&ptr);
-		// if (prev)
-		// 	prev->next = ptr;
-		// else
-		// if (!prev)
-		// 	sesh->process = ptr;
-		// else if (!ptr && !prev)
-		// 	sesh->process = NULL;
+		prev = NULL;
+		while (ptr)
+		{
+			if (ptr->pid == pid)
+			{
+				process_node_delete_v3(prev, &ptr);
+				if (!prev)
+					sesh->process = ptr;
+				break ;
+			}
+			else
+			{
+				prev = ptr;
+				ptr = ptr->next;
+			}
+		}
 	}
 	if (status & 0177)
 		ft_putchar('\n');
