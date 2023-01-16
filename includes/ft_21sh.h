@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/15 17:17:01 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/16 15:29:49 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,6 +281,8 @@ void			sigwinc_wait_handle(int num);
 /*			  		 PROCESS 				*/
 t_proc			*process_getpid(int index, char *cmd, char sign, t_proc *head);
 int				process_node_append(char **args, t_session *sesh, int pid);
-t_proc 			*process_node_delete(t_proc *prev, t_proc *curr);
+// t_proc 			*process_node_delete(t_proc *prev, t_proc *curr);
+// // void 			process_node_delete_v2(t_proc **curr);
+void			process_node_delete_v3(t_proc *prev, t_proc **curr);
 
 #endif

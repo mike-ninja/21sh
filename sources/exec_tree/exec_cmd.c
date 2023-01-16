@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/15 20:20:27 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/16 15:29:35 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,10 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 	if (cmd && access)
 		pid = fork_wrap();
 	if (cmd && access)
+	{
 		if (pid)
 			ft_printf("[%d] %d\n", process_node_append(args, sesh, pid), pid);
+	}
 	if (access && pid == 0)
 	{
 		if (!cmd || execve(cmd, args, *environ_cp) < 0)
@@ -95,19 +97,23 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 	if (cmd && access && sesh->process_control == 0)
 	{
 		wait(&status);
-		t_proc *ptr = sesh->process;
-		t_proc *prev;
+		// t_proc *ptr = sesh->process;
+		// t_proc *prev;
 
-		prev = NULL;
-		while (ptr && ptr->pid != pid)
-		{
-			if (ptr->next)
-				prev = ptr;
-			ptr = ptr->next;
-		}
-		if (!prev && !ptr)
-			sesh->process = NULL;
-		process_node_delete(prev, ptr);
+		// prev = NULL;
+		// while (ptr->next && ptr->pid != pid)
+		// {
+		// 	prev = ptr;
+		// 	ptr = ptr->next;
+		// }
+		// process_node_delete_v2(&ptr);
+		// if (prev)
+		// 	prev->next = ptr;
+		// else
+		// if (!prev)
+		// 	sesh->process = ptr;
+		// else if (!ptr && !prev)
+		// 	sesh->process = NULL;
 	}
 	if (status & 0177)
 		ft_putchar('\n');

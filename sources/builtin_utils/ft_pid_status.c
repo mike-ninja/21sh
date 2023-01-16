@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pid_status.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 11:04:08 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/15 18:04:02 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/16 12:05:16 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	pid_status(int pid)
 	pid_t	return_pid;
 
 	return_pid = waitpid(pid, &status, WNOHANG | WUNTRACED);
-	ft_printf("[%d]", status);
+	// ft_printf("[%d]", status);
 	if (WIFSTOPPED(status))
 		ft_printf("stoppoed");
 	if (return_pid == -1) 
