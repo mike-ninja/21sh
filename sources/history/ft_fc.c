@@ -57,7 +57,7 @@ static void	init_filename(char ***filename, char *editor)
 	(*filename)[2] = NULL;
 }
 
-static char	**open_editor(char *editor, t_session *sesh, int *status)
+static char	**open_editor(char *editor, t_session *sesh)
 {
 	int		fd;
 	char	**filename;
@@ -66,7 +66,6 @@ static char	**open_editor(char *editor, t_session *sesh, int *status)
 	fd = open(filename[1], O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
-		(*status)--;
 		print_error(2);
 		return (NULL);
 	}
@@ -78,7 +77,6 @@ static char	**open_editor(char *editor, t_session *sesh, int *status)
 	}
 	wait(0);
 	close(fd);
-	(*status)++;
 	return (filename);
 }
 
@@ -128,35 +126,9 @@ static void	overwrite_history(t_session *sesh, char *ret_cmd)
 	sesh->term->history_arr[sesh->term->history_size - 1] = ft_strdup(ret_cmd);
 }
 
-int	ft_fc(t_session *sesh, char ***cmd)
+static int	check_flags(t_session *sesh, char ***cmd)
 {
-	char	*editor;
-	char	**filename;
-	int		status;
-	char	*ret_cmd;
-
-	if ((*cmd && !(*cmd)[1]) || (*cmd && ft_strnequ((*cmd)[1], "-e", 2) && (*cmd)[2]))
-	{
-		if ((*cmd && ft_strnequ((*cmd)[1], "-e", 2) && (*cmd)[2]))
-			editor = search_bin((*cmd)[2], sesh->env);
-		else
-			editor = get_editor(sesh->env);
-		if (!editor)
-			return (print_error(1));
-		status = 0;
-		filename = open_editor(editor, sesh, &status);
-		if (status == 0)
-			return (0);
-		ret_cmd = NULL;
-		status = read_file(cmd, filename, &ret_cmd);
-		if (status == 0)
-			return (0);
-		ft_expansion(sesh, *cmd);
-		overwrite_history(sesh, ret_cmd);
-		ft_strdel(&ret_cmd);
-		ft_freeda((void ***)&filename, calc_chptr(filename));
-	}
-	else if (*cmd && ft_strnequ((*cmd)[1], "-s", 2))
+	if (*cmd && ft_strnequ((*cmd)[1], "-s", 2))
 	{
 		//this is for history
 		ft_strdel(&sesh->term->history_arr[sesh->term->history_size - 1]);
@@ -188,10 +160,11 @@ int	ft_fc(t_session *sesh, char ***cmd)
 		/* Printing the history. */
 			while (sesh->term->history_arr[i])
 			{
-				ft_printf("%8d %s\n", i + 1, sesh->term->history_arr[i]);
+				ft_printf("%-8d %s\n", i + 1, sesh->term->history_arr[i]);
 				i++;
 			}
 		}
+		return (0);
 	}
 	else if (*cmd && ft_strnequ((*cmd)[1], "-rl", 3))
 	{
@@ -203,8 +176,41 @@ int	ft_fc(t_session *sesh, char ***cmd)
 			ft_printf("%-8d %s\n", i + 1, sesh->term->history_arr[i]);
 			i++;
 		}
+		return (0);
 	}
 	else
 		ft_putendl_fd("42sh: fc: invalid option\nfc: usage: fc [-e editor] [first] [last] or fc -l [first] [last] or fc -s [pat=rep] [command]", 2);
-	return (1);
+	return (0);
+}
+
+int	ft_fc(t_session *sesh, char ***cmd)
+{
+	char	*editor;
+	char	**filename;
+	char	*ret_cmd;
+	int		ret;
+
+	if ((*cmd && !(*cmd)[1]) || (*cmd && ft_strnequ((*cmd)[1], "-e", 2) && (*cmd)[2]))
+	{
+		if ((*cmd && ft_strnequ((*cmd)[1], "-e", 2) && (*cmd)[2]))
+			editor = search_bin((*cmd)[2], sesh->env);
+		else
+			editor = get_editor(sesh->env);
+		if (!editor)
+			return (print_error(1));
+		filename = open_editor(editor, sesh);
+		if (!filename)
+			return (0);
+		ret_cmd = NULL;
+		if (!read_file(cmd, filename, &ret_cmd))
+			return (0);
+		ft_expansion(sesh, *cmd);
+		overwrite_history(sesh, ret_cmd);
+		ft_strdel(&ret_cmd);
+		ft_freeda((void ***)&filename, calc_chptr(filename));
+		ret = 1;
+	}
+	else
+		ret = check_flags(sesh, cmd);
+	return (ret);
 }

@@ -18,6 +18,11 @@
 # include "ft_printf.h"
 # include <sys/stat.h>
 
+# if __linux__
+#  include <sys/types.h>
+#  include <sys/wait.h>
+# endif
+
 /* Do not use zero */
 # define PIPE 1
 # define CMD 2
