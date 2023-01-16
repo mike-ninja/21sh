@@ -6,7 +6,7 @@
 #    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/13 13:42:15 by jniemine         ###   ########.fr        #
+#    Updated: 2023/01/16 18:55:16 by jniemine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,6 +78,7 @@ BUILTIN			= 	builtins/
 BUILTIN_UTILS	= 	builtin_utils/
 TERMIOS			= 	termios/
 HISTORY			= 	history/
+FT_TEST			=	ft_test/
 
 SOURCE_COUNT = $(words $(FILES))
 
@@ -217,6 +218,9 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(HISTORY)ft_history_file_get \
 				$(HISTORY)ft_history_get \
 				$(HISTORY)ft_history_write_to_file \
+				$(FT_TEST)ft_test \
+				$(FT_TEST)ft_test_is_unary \
+				$(FT_TEST)ft_test_is_binary
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 O_PATHS		=	$(addsuffix .o, $(addprefix $(OBJECTS)/,$(FILES)))
@@ -249,6 +253,7 @@ $(OBJECTS):
 	@mkdir -p $(OBJECTS)/$(BUILTIN_UTILS)
 	@mkdir -p $(OBJECTS)/$(TERMIOS)
 	@mkdir -p $(OBJECTS)/$(HISTORY)
+	@mkdir -p $(OBJECTS)/$(FT_TEST)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"
 	@printf "$(NAME): $(GREEN)$(OBJECTS) directory was created.$(RESET)\n\n\n"
 

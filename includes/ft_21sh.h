@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 22:59:19 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/13 17:59:52 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/16 18:50:46 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,6 +282,9 @@ int				ft_env(t_session *sesh, char ***cmd);
 void			ft_exit(t_session *sesh, int status);
 int				ft_setenv(t_session *sesh, char **cmd);
 int				ft_unsetenv(t_session *sesh, char **cmd);
+int				ft_test(t_session *sesh, char **cmd);
+int				is_binary(char *str);
+int				is_unary(char *str);
 
 /*			    BUILTIN UTILITIES			*/
 int				ft_env_temp(t_session *sesh, char **cmd, int i);
