@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/16 16:51:15 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/16 17:49:11 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,9 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 		if (pid && sesh->process_control)
 			ft_printf("[%d] %d\n", process_node_append(args, sesh, pid), pid);
 		else if (pid)
-			process_node_append(args, sesh, pid);	
+			process_node_append(args, sesh, pid);
+		else if (pid == 0 && sesh->process_control)
+			setsid(); // This puts the process into its own sessino to ensure that this process will continue to run in the background
 	}
 	if (access && pid == 0)
 	{
@@ -107,7 +109,7 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 		{
 			if (ptr->pid == pid)
 			{
-				process_node_delete_v3(prev, &ptr);
+				process_node_delete(prev, &ptr);
 				if (!prev)
 					sesh->process = ptr;
 				break ;

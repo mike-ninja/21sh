@@ -12,6 +12,18 @@
 
 #include "ft_21sh.h"
 
+static void	display_state(int state)
+{
+	if (state == 0)
+		ft_printf("%2s%-24s", "", "Done");
+	else if (state == 1)
+		ft_printf("%2s%-24s", "", "Stopped");
+	else if (state == 2)
+		ft_printf("%2s%-24s", "", "Terminated");
+	else if (state == 3)
+		ft_printf("%2s%-24s", "", "Running");
+}
+
 int	ft_jobs(t_session *sesh)
 {
 	int		state;
@@ -25,14 +37,11 @@ int	ft_jobs(t_session *sesh)
 		state = pid_status(curr->pid);
 		ft_printf("[%d]", curr->index);
 		ft_printf("%c", curr->job);
-		if (state)
-			ft_printf("%2s%-24s", "", "Running");
-		else
-			ft_printf("%2s%-24s", "", "Done");
+		display_state(state);
 		ft_print_dbl_array(curr->command);
 		if (state <= 0)
 		{
-			process_node_delete_v3(prev, &curr);
+			process_node_delete(prev, &curr);
 			if (!prev)
 				sesh->process = curr;
 		}
@@ -65,7 +74,7 @@ int	ft_jobs(t_session *sesh)
 // 		ft_print_dbl_array(curr->command);
 // 		if (state <= 0)
 // 		{
-// 			process_node_delete_v3(prev, &curr);
+// 			process_node_delete(prev, &curr);
 // 		}
 // 		else
 // 		{
