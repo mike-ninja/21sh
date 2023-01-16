@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/14 22:43:08 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/15 17:17:01 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_21SH_H
 
 # include "libft.h"
+# include "signal.h"
 # include "keyboard.h"
 # include "ft_printf.h"
 # include <sys/stat.h>
@@ -272,9 +273,10 @@ char			*ft_history_file_get(void);
 void			ft_history_write_to_file(t_term *t);
 
 /*			  		 SIGNALS				*/
+void			sigstop_handler(int num); // NEW
 void			set_signal_fork(int num);
 void			sig_session_handler(int num);
-void			sigwinch_inchild_handler(int num);
+void			sigwinc_wait_handle(int num);
 
 /*			  		 PROCESS 				*/
 t_proc			*process_getpid(int index, char *cmd, char sign, t_proc *head);

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 10:58:00 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/14 23:00:32 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/15 20:45:31 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	ft_jobs(t_session *sesh)
 	int		state;
 	t_proc	*prev;
 	t_proc 	*curr;
+	t_proc 	*next;
 
 	prev = NULL;
 	curr = sesh->process;
@@ -32,11 +33,12 @@ int	ft_jobs(t_session *sesh)
 		ft_print_dbl_array(curr->command);
 		if (state <= 0)
 		{
+			next = curr->next;
 			curr = process_node_delete(prev, curr);
-			if (!curr)
+			if (!curr && !next)
 				sesh->process = NULL;
 		}
-		if (curr)
+		if (curr && curr != next) // problem here
 		{
 			prev = curr;
 			curr = curr->next;

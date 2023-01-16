@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/14 23:10:26 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/15 20:20:27 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,23 +83,9 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 	access = check_access(cmd, args, sesh);
 	if (cmd && access)
 		pid = fork_wrap();
-	if (cmd && access && sesh->process_control == 1)
-	{
-		pid_t group_id;
-		
-		group_id = 0;
-		if (pid == 0)
-		{
-			group_id = setsid();
-			if (group_id == -1)
-			{
-				ft_putstr_fd("setsid() fail\n", 2);
-				exit(1);
-			}
-		}
-		else
+	if (cmd && access)
+		if (pid)
 			ft_printf("[%d] %d\n", process_node_append(args, sesh, pid), pid);
-	}
 	if (access && pid == 0)
 	{
 		if (!cmd || execve(cmd, args, *environ_cp) < 0)
@@ -107,7 +93,22 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 		exit (1);
 	}
 	if (cmd && access && sesh->process_control == 0)
+	{
 		wait(&status);
+		t_proc *ptr = sesh->process;
+		t_proc *prev;
+
+		prev = NULL;
+		while (ptr && ptr->pid != pid)
+		{
+			if (ptr->next)
+				prev = ptr;
+			ptr = ptr->next;
+		}
+		if (!prev && !ptr)
+			sesh->process = NULL;
+		process_node_delete(prev, ptr);
+	}
 	if (status & 0177)
 		ft_putchar('\n');
 	if (access)

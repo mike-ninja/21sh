@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 09:02:29 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/14 23:03:31 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/15 20:17:10 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,9 @@ void	sig_session_handler(int num)
 		ft_window_size(g_session->term);
 	if (num == SIGINT)
 		ft_restart_cycle(g_session->term);
-	if (num == SIGSTOP)
-	{
-		ft_printf("THIS HAPPENS\n");
-	}
 }
 
-void	sigwinch_inchild_handler(int num)
+void	sigwinc_wait_handle(int num)
 {	
 	struct winsize	size;
 
@@ -45,5 +41,18 @@ void	sigwinch_inchild_handler(int num)
 		}
 		g_session->term->ws_col = size.ws_col;
 		g_session->term->ws_row = size.ws_row;
+	}
+}
+
+void	sigstop_handler(int num)
+{	
+	if (num == SIGTSTP)
+	{
+		// pid_t pid;
+
+		// pid = getpid();
+		// ft_printf("%d", pid);
+		// t_proc	*ptr = g_session->process;
+		// kill(getpid(), SIGTSTP);
 	}
 }

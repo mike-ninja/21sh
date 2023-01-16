@@ -50,8 +50,7 @@ int	ft_fg(t_session *sesh, char **cmd)
 	{
 		ft_print_dbl_array(process->command);
 		ft_putchar('\n');
-		signal(SIGINT, SIG_IGN);
-		waitpid(process->pid, &status, 0);
+		waitpid(process->pid, &status, WUNTRACED);
 		if (status & 0177)
 			ft_putchar('\n');
 	}

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 11:04:08 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/14 22:41:38 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/15 18:04:02 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ int	pid_status(int pid)
 	int		status;
 	pid_t	return_pid;
 
-	return_pid = waitpid(pid, &status, WNOHANG);
+	return_pid = waitpid(pid, &status, WNOHANG | WUNTRACED);
+	ft_printf("[%d]", status);
+	if (WIFSTOPPED(status))
+		ft_printf("stoppoed");
 	if (return_pid == -1) 
 		return (-1);
 	else if (return_pid == 0) 
