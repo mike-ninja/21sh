@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/16 13:15:41 by mrantil          ###   ########.fr        #
+#    Updated: 2023/01/17 10:21:21 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ CFLAGS				+=	-Wpedantic
 CFLAGS				+=	-O3
 
 LEAK_CHECK			= -g
-#LEAK_CHECK		+=	-fsanitize=address
+LEAK_CHECK		+=	-fsanitize=address
 
 UNAME				= $(shell uname)
 ifeq ($(UNAME), Darwin)
@@ -78,6 +78,7 @@ BUILTIN			= 	builtins/
 BUILTIN_UTILS	= 	builtin_utils/
 TERMIOS			= 	termios/
 HISTORY			= 	history/
+FC				= 	fc/
 
 SOURCE_COUNT = $(words $(FILES))
 
@@ -208,7 +209,9 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(HISTORY)ft_history_get \
 				$(HISTORY)ft_history_expansion \
 				$(HISTORY)ft_history_write_to_file \
-				$(HISTORY)ft_fc \
+				$(FC)ft_fc \
+				$(FC)fc_print_error \
+				$(FC)fc_check_flags \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 O_PATHS		=	$(addsuffix .o, $(addprefix $(OBJECTS)/,$(FILES)))
@@ -241,6 +244,7 @@ $(OBJECTS):
 	@mkdir -p $(OBJECTS)/$(BUILTIN_UTILS)
 	@mkdir -p $(OBJECTS)/$(TERMIOS)
 	@mkdir -p $(OBJECTS)/$(HISTORY)
+	@mkdir -p $(OBJECTS)/$(FC)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"
 	@printf "$(NAME): $(GREEN)$(OBJECTS) directory was created.$(RESET)\n\n\n"
 

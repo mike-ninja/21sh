@@ -23,6 +23,7 @@ static int	print_error(t_term *t, char *str, int prefix)
 	return (0);
 }
 
+//add to libft
 static char	*ft_strjoin_three(char *s1, char *s2, char *s3)
 {
 	size_t	total;

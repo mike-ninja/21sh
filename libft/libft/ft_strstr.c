@@ -14,14 +14,14 @@
 
 /**
  * It compares the first character of the needle to the first character of the
- * haystack. If they are the same, it compares the needle to the haystack 
+ * haystack. If they are the same, it compares the needle to the haystack
  * starting at the first character of the haystack. If the needle is found,
  * it returns a pointer to the first character of the needle in the haystack.
  * If the needle is not found, it returns NULL
- * 
+ *
  * @param haystack The string to search in
  * @param needle "ll"
- * 
+ *
  * @return The address of the first character of the first occurrence of the
  * string needle in the string haystack.
  */

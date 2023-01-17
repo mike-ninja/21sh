@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/16 15:43:43 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/17 11:25:24 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@
 # define RE_OUT_TWO 5
 
 /* For fc builtin */
-# define FC_FLAGS "srnle"
+# define FC_FLAGS "srnl"
+# define FC_LEN 17
 
 typedef union u_treenode	t_treenode;
 
@@ -261,6 +262,10 @@ int				ft_history(t_term *t, char **cmd);
 void			ft_history_get(t_term *t);
 int				ft_history_expantion(t_term *t);
 void			ft_history_write_to_file(t_term *t);
+
+/*			  		 FC						*/
 int				ft_fc(t_session *sesh, char ***cmd);
+int				fc_check_flags(t_session *sesh, char ***cmd);
+int				fc_print_error(int check);
 
 #endif
