@@ -6,7 +6,7 @@
 /*   By: mviinika <mviinika@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 11:40:05 by mviinika          #+#    #+#             */
-/*   Updated: 2023/01/17 15:59:27 by mviinika         ###   ########.fr       */
+/*   Updated: 2023/01/17 16:03:25 by mviinika         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,15 @@ char	*subst_param(t_session *sesh, char *var, char *subst, int format)
 			expanded = ft_strdup(var);
 		return (expanded);
 	}
+	else if (format == 1)
+	{
+		ft_printf("[%s]", var);
+		if (!*var)
+			expanded = ft_strdup(subst + 1);
+		else
+			expanded = ft_strdup(var);
+		return (expanded);
+	}
 	return (expanded);
 }
 
@@ -84,11 +93,11 @@ int	format_mode(char *var)
 	if (subst_mode == '-')
 		format = 0;
 	else if (subst_mode == '+')
-		format = 2;
+		format = 1;
 	else if (subst_mode == '=')
-		format = 3;
+		format = 2;
 	else if (subst_mode == '?')
-		format = 4;
+		format = 3;
 	return (format);
 }
 
