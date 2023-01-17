@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
+#    By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/14 22:42:23 by mbarutel         ###   ########.fr        #
+#    Updated: 2023/01/17 17:53:14 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -189,6 +189,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(EXPANSION)ft_expansion_dollar \
 				$(EXPANSION)ft_expansion_tilde \
 				$(UTILITIES)ft_env_get \
+				$(UTILITIES)ft_display_process_node \
 				$(UTILITIES)ft_err_print \
 				$(UTILITIES)ft_bslash_check \
 				$(BUILTIN)ft_builtins \

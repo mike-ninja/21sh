@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 09:02:29 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/17 11:04:43 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/17 17:56:53 mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,22 @@ void	sigchild_handler(int num)
 		kill(g_session->process->pid, SIGINT);
 	else if (num == SIGTSTP)
 	{
-		ft_printf("SIGTSTP\n");
-		kill(g_session->process->pid, SIGSTOP);
+		t_proc *ptr = g_session->process;
+
+		while (ptr)
+		{
+			if (ptr->job == '+')
+			{
+				ft_putchar('\n');
+				ptr->status = SUSPENDED;	
+				display_process_node(ptr);
+				kill(ptr->pid, SIGSTOP);
+			}
+			ptr = ptr->next;
+		}
 	}
 	else if (num == SIGSTOP)
 	{
-		ft_printf("SIGSTOP\n");
 		kill(g_session->process->pid, SIGSTOP);
 	}
 	// else if (num == SIGCONT)
@@ -76,18 +86,5 @@ void	sigwinc_wait_handle(int num)
 		}
 		g_session->term->ws_col = size.ws_col;
 		g_session->term->ws_row = size.ws_row;
-	}
-}
-
-void	sigstop_handler(int num)
-{	
-	if (num == SIGTSTP)
-	{
-		// pid_t pid;
-
-		// pid = getpid();
-		// ft_printf("%d", pid);
-		// t_proc	*ptr = g_session->process;
-		// kill(getpid(), SIGTSTP);
 	}
 }

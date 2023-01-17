@@ -42,6 +42,7 @@ int	ft_fg(t_session *sesh, char **cmd)
 {
 	int		status;
 	t_proc	*process;
+	pid_t	state;
 
 	process = fg_parsing(sesh->process , *(cmd + 1));
 	if (!process)
@@ -55,9 +56,14 @@ int	ft_fg(t_session *sesh, char **cmd)
 		signal(SIGTSTP, sigchild_handler);
 		signal(SIGSTOP, sigchild_handler);
 		kill(process->pid, SIGCONT);
-		waitpid(process->pid, &status, WUNTRACED);
-		if (status & 0177)
-			ft_putchar('\n');
+		state = waitpid(process->pid, &status, WUNTRACED);
+		if (state == -1 || state == process->pid)
+		{
+			ft_printf("This happens %d\n", state);
+			process_node_delete(sesh, &process);
+		}
+		// if (status & 0177)
+		// 	ft_putchar('\n');
 	}
 	return (0);
 }

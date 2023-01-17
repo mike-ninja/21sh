@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_node_append.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 22:10:49 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/14 22:47:07 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/17 17:13:55 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,19 @@
   
 */
 
-static t_proc *create_process_node(int index, char **args, int pid)
+static t_proc *create_process_node(int index, char **args, int pid, t_proc *prev)
 {
 	int		i;
 	t_proc	*ret;
 
 	i = -1;
 	ret = (t_proc *)ft_memalloc(sizeof(t_proc));
-	ret->index = index;
+	ret->job = '+';
 	ret->pid = pid;
-	ret->job = 0;
+	ret->status = RUNNING;
+	ret->index = index;
 	ret->next = NULL;
+	ret->prev = prev;
 	ret->command = (char **)ft_memalloc(sizeof(char *) * (ft_arrlen(args) + 1));
 	while (args[++i])
 		ret->command[i] = ft_strdup(args[i]);
@@ -47,21 +49,24 @@ static t_proc *create_process_node(int index, char **args, int pid)
 int process_node_append(char **args, t_session *sesh, int pid)
 {
 	t_proc 	*ptr;
+	t_proc 	*prev;
 
 	ptr = NULL;
+	prev = NULL;
 	if (!sesh->process)
 	{
-		sesh->process = create_process_node(1, args, pid);
-		// update_precedence(sesh->process, 0);
+		sesh->process = create_process_node(1, args, pid, prev);
 		return (sesh->process->index);
 	}
 	else
 	{
 		ptr = sesh->process;
 		while (ptr->next)
+		{
+			prev = ptr;
 			ptr = ptr->next;
-		ptr->next =	create_process_node(ptr->index + 1, args, pid); 
-		// update_precedence(sesh->process, 0);
+		}
+		ptr->next =	create_process_node(ptr->index + 1, args, pid, prev); 
 		return (ptr->next->index);
 	}
 } 

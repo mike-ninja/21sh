@@ -6,25 +6,30 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 11:04:08 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/17 10:50:30 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/17 15:50:44y mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-int pid_status(int pid) 
+int pid_status(pid_t pid) 
 {
-    int status;
-	
-    waitpid(pid, &status, WNOHANG | WUNTRACED);
-	if (WIFEXITED(status))
-		return 0; // Process has finished/
-	else if (WIFSIGNALED(status))
-	{
-		if (WSTOPSIG(status))
-			return 1; //  Process is suspended
-		if (WTERMSIG(status))
-			return 2; // Process terminated by a signal
-	}
-	return 3; // Process is running
+    int		status;
+	pid_t	ret;
+
+    ret = waitpid(pid, &status, WNOHANG);
+	if (ret == -1 || ret == pid)
+		return (0); // exited
+	return (1); // Still active
 }
+
+// int pid_status(pid_t pid) 
+// {
+//     int		status;
+// 	pid_t	ret;
+
+//     ret = waitpid(pid, &status, WNOHANG);
+// 	if (ret == -1 || ret == pid)
+// 		return (0); // exited
+// 	return (1); // Still active
+// }

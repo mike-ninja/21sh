@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/16 18:42:19 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/17 17:52:42 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
 # include "keyboard.h"
 # include "ft_printf.h"
 # include <sys/stat.h>
+
+/* Process Status */
+# define EXITED 0
+# define RUNNING 1
+# define SUSPENDED 2
 
 /* Do not use zero */
 # define PIPE 1
@@ -48,10 +53,12 @@ typedef union u_treenode	t_treenode;
 typedef struct s_process
 {
 	pid_t				pid;
-	int					index;
-	char				**command;
 	char				job;
+	int					index;
+	int					status;
+	char				**command;
 	struct s_process	*next;
+	struct s_process	*prev;
 }	t_proc;
 
 /*					TOKEN STRUCT			*/
@@ -214,6 +221,7 @@ char			*ft_expansion_tilde(t_session *sesh, char *str);
 void			ft_quote_blash_removal(char *buff);
 
 /*					UTILITIES				*/
+void			display_process_node(t_proc *node);
 int				ft_cd_addr_check(char *file);
 char			**ft_env_get(t_session *sesh, char *key);
 int				increment_whitespace(char **line);
@@ -264,7 +272,7 @@ void			ft_env_remove(t_session *sesh, char *env_to_clean);
 int				ft_env_append(t_session *sesh, char **arg);
 int				ft_env_replace(t_session *sesh, char *envn, char **tmp_env);
 void			ft_dir_change(t_session *sesh);
-int				pid_status(int pid);
+int 			pid_status(pid_t pid);
 void 			ft_print_dbl_array(char **cmd);
 
 /*			  		 HISTORY				*/
@@ -274,7 +282,7 @@ char			*ft_history_file_get(void);
 void			ft_history_write_to_file(t_term *t);
 
 /*			  		 SIGNALS				*/
-void			sigstop_handler(int num); // NEW
+// void			sigstop_handler(int num); // NEW
 void			set_signal_fork(int num);
 void			sig_session_handler(int num);
 void			sigchild_handler(int num);
@@ -283,6 +291,7 @@ void			sigwinc_wait_handle(int num);
 /*			  		 PROCESS 				*/
 t_proc			*process_getpid(int index, char *cmd, char sign, t_proc *head);
 int				process_node_append(char **args, t_session *sesh, int pid);
-void			process_node_delete(t_proc *prev, t_proc **curr);
+// void			process_node_delete(t_proc *prev, t_proc **curr);
+void			process_node_delete(t_session *sesh, t_proc **curr);
 
 #endif
