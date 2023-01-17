@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_raw_enable.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/04 08:41:48 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/14 18:03:00 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/17 12:56:28 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ struct termios	ft_raw_enable(void)
 		exit(1);
 	}
 	raw = orig_termios;
-	raw.c_lflag &= ~(ICANON | ECHO | ISIG);
+	raw.c_lflag &= ~(ICANON | ECHO);
 	raw.c_iflag &= ~(IXON | BRKINT);
-	raw.c_cc[VMIN] = 0;
-	raw.c_cc[VTIME] = 1;
+	raw.c_cc[VMIN] = 1;
+	raw.c_cc[VTIME] = 0;
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1)
 	{
 		write(2, "error tcsetattr\n", 16);

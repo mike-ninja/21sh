@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/14 09:00:45 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/17 12:53:48 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define CTRL_L		12
 # define CTRL_W		23
 # define CTRL_U		21
-# define CTRL_Y		25
+# define CTRL_P		16
 # define D_QUO		34
 # define S_QUO		39
 # define ESCAPE     27
