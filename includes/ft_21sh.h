@@ -6,7 +6,7 @@
 /*   By: mviinika <mviinika@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/16 15:16:45 by mviinika         ###   ########.fr       */
+/*   Updated: 2023/01/17 12:10:39 by mviinika         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ void			ft_expansion(t_session *sesh, char **cmd);
 char			*ft_expansion_dollar(t_session *sesh, char *str);
 char			*ft_expansion_tilde(t_session *sesh, char *str);
 void			ft_quote_blash_removal(char *buff);
+void			param_format(t_session *sesh, char **cmd);
 
 /*					UTILITIES				*/
 int				ft_cd_addr_check(char *file);

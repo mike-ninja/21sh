@@ -6,7 +6,7 @@
 /*   By: mviinika <mviinika@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:13:13 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/16 14:58:03 by mviinika         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:04:04 by mviinika         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int find_var_key(t_session *sesh, char *cmd, int var_len)
 			ft_env_append(sesh, &sesh->intr_vars[i]);
 			delete_var(sesh, &i);
 			ret = 1;
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -67,6 +67,35 @@ static int	key_check(int ch)
 		return (1);
 }
 
+int	print_exported(t_session *sesh, char *cmd)
+{
+	char		*value;
+	char		*key;
+	int			i;
+	static int	first;
+
+	i = 0;
+	value = NULL;
+	while (sesh->env[i])
+	{
+		value = ft_strchr(sesh->env[i], '=') + 1;
+		key = ft_strndup(sesh->env[i], \
+		ft_strlen(sesh->env[i]) - ft_strlen(value));
+		if (ft_strequ(key, "_=") && !first)
+		{
+			first = 1;
+			ft_printf("export %s\"%s\"\n", key, value);
+		}
+		else if (ft_strequ(key, "_=") && first)
+			i++;
+		else
+			ft_printf("export %s\"%s\"\n", key, value);
+		i++;
+		ft_strdel(&key);
+	}
+	return (0);
+}
+
 /**
  * It checks for a valid key, then either replaces an existing key or appends 
  * a new key.
@@ -84,6 +113,11 @@ int	ft_export(t_session *sesh, char **cmd)
 	i = 0;
 	sesh->exit_stat = 0;
 	key = NULL;
+	if (!cmd[1])
+	{
+		print_exported(sesh, NULL);
+		return (0);
+	}
 	while (*(cmd + ++i))
 	{
 		key = ft_strjoin(*(cmd + i) ,"=");
@@ -97,8 +131,7 @@ int	ft_export(t_session *sesh, char **cmd)
 			else if (!ft_env_replace(sesh, *(cmd + i), NULL))
 				ft_env_append(sesh, cmd + i);
 		}
-		else if (!find_var_key(sesh, key, ft_strlen(key)))
-			;
+		find_var_key(sesh, key, ft_strlen(key));
 		ft_strdel(&key);
 	}
 	return (0);
