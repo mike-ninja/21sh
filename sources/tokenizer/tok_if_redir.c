@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:11:18 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/11 12:47:15 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/17 15:48:33 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static void	traverse_to_end(char *line, int *end)
 	while (line[*end] && ft_isspace(line[*end]))
 		++(*end);
 	while (line[*end] && !ft_isspace(line[*end]) && !is_seperator(line[*end]))
+		++(*end);
+	while (ft_isspace(line[*end]))
 		++(*end);
 }
 
