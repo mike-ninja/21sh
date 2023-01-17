@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 09:36:28 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/12 11:19:59 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/17 12:53:58 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_ctrl(t_term *t)
 		ft_cut(t);
 	else if (t->ch == CTRL_U)
 		ft_copy(t);
-	else if (t->ch == CTRL_Y)
+	else if (t->ch == CTRL_P)
 		ft_paste(t);
 	else if (t->ch == CTRL_L)
 	{
