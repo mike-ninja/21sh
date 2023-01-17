@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/16 20:12:59 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/17 10:50:07 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 		// wait(&status);
 		waitpid(pid, &status, WUNTRACED);
 
-		if (WIFEXITED(status))
 		{	
 			t_proc *ptr = sesh->process;
 			t_proc *prev;

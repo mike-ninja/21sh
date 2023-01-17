@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig_session_handler.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 09:02:29 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/16 20:14:59 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:04:43 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ void	sig_session_handler(int num)
 		ft_window_size(g_session->term);
 	if (num == SIGINT)
 		ft_restart_cycle(g_session->term);
+	// if (num == SIGTERM)
+	// {
+	// 	ft_printf("SIGTERM\n");
+	// 	ft_exit(g_session, 0);
+	// }
 }
 
 void	sigchild_handler(int num)
@@ -45,9 +50,15 @@ void	sigchild_handler(int num)
 	else if (num == SIGINT)
 		kill(g_session->process->pid, SIGINT);
 	else if (num == SIGTSTP)
+	{
+		ft_printf("SIGTSTP\n");
 		kill(g_session->process->pid, SIGSTOP);
+	}
 	else if (num == SIGSTOP)
+	{
+		ft_printf("SIGSTOP\n");
 		kill(g_session->process->pid, SIGSTOP);
+	}
 	// else if (num == SIGCONT)
 	// 	kill(g_session->process->pid, SIGCONT);
 }

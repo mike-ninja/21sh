@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init_signals.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 18:17:16 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/16 19:17:38 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:02:41 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,5 @@ void	ft_init_signals(void)
 	signal(SIGINT, sig_session_handler);
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGSTOP, SIG_IGN);
+	signal(SIGTERM, sig_session_handler);
 }
