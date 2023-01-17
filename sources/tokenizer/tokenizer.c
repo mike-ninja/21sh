@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/17 16:12:32 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/17 23:15:11 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,14 @@ static void	init_variables(int *i_args, int *cur, int *start, int *end)
 	*end = 0;
 }
 
-static int	if_error(char *c, t_token *args, char *line, int end)
+static int	if_error(char *c, t_token *args, char *line, int *end)
 {
-	if (!c || test_if_error(&line[end]))
+	if (!c || test_if_error(&line[*end]))
 	{
 		free_tokens(&args);
 		ft_strdel(&line);
+		if (c)
+			ft_strdel(&c);
 		return (1);
 	}
 	return (0);
@@ -62,6 +64,18 @@ static int	validity_check(char *line)
 	return (0);
 }
 
+void print_tokens(t_token *args)
+{
+	int i;
+
+	i = 0;
+	while(args[i].token)
+	{
+		ft_printf("VAL: %s TOK: %d\n", args[i].value, args[i].token);
+		++i;
+	}
+}
+
 t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 {
 	int		i_args;
@@ -76,7 +90,7 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 	while (line[cur])
 	{
 		c = find_argument(line, &cur, &start, &end);
-		if (if_error(c, args, line, end))
+		if (if_error(c, args, line, &end))
 			return (NULL);
 		init_token(c, &args[i_args], line, cur);
 		++i_args;
@@ -87,6 +101,7 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 		while (ft_isspace(line[cur]))
 			++cur;
 	}
+	print_tokens(args);
 	ft_strdel(&line);
 	return (args);
 }
