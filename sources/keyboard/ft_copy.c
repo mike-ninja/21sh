@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_copy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:02:11 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/15 13:14:39 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:41:23 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_copy(t_term *t)
 	ssize_t	i;
 	ssize_t	j;
 
-	if (t->bytes)
+	if (t->bytes && t->index)
 	{
 		i = t->index - 1;
 		while (i && ft_isspace(t->inp[i]))
