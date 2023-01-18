@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 22:10:49 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/17 17:13:55 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/18 11:21:57 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int process_node_append(char **args, t_session *sesh, int pid)
 	if (!sesh->process)
 	{
 		sesh->process = create_process_node(1, args, pid, prev);
+		// sesh->process->status = pid_status(pid);
 		return (sesh->process->index);
 	}
 	else
@@ -66,7 +67,8 @@ int process_node_append(char **args, t_session *sesh, int pid)
 			prev = ptr;
 			ptr = ptr->next;
 		}
-		ptr->next =	create_process_node(ptr->index + 1, args, pid, prev); 
+		ptr->next =	create_process_node(ptr->index + 1, args, pid, prev);
+		// ptr->next->status = pid_status(pid);
 		return (ptr->next->index);
 	}
 } 

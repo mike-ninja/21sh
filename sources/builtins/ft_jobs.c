@@ -17,17 +17,20 @@ int	ft_jobs(t_session *sesh)
 	int		state;
 	t_proc 	*curr;
 
+	state = 1;
 	curr = sesh->process; 
 	while (curr)
 	{
-		state = pid_status(curr->pid);
-		if (!state)
-			curr->status = EXITED;
+		if (!curr->status)
+			state = pid_status(curr->pid);
+		// if (!state)
+		// 	curr->status = EXITED;
 		display_process_node(curr);
-		if (state <= 0)
-			process_node_delete(sesh, &curr);
-		else
-			curr = curr->next;
+		ft_printf("curr->status %d state %d\n", curr->status, state);
+		// if (state <= 0)
+		// 	process_node_delete(sesh, &curr);
+		// else
+		curr = curr->next;
 	}
 	return (0);
 }

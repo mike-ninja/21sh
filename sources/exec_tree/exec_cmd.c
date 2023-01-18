@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/17 18:08:45 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/18 11:25:11 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,17 +90,18 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 	}
 	if (access && pid == 0)
 	{
-		setsid();
 		if (!cmd || execve(cmd, args, *environ_cp) < 0)
 			exe_fail(&cmd, args, environ_cp);
 		exit (0);
 	}
 	if (cmd && access && pid)
 	{
-		// if (sesh->process_control) // For process that are going to the background
-		// 	waitpid(pid, &status, WNOHANG);
-		// else
-		waitpid(pid, &status, WUNTRACED);
+		if (sesh->process_control) // For process that are going to the background
+			waitpid(pid, &status, WNOHANG);
+		else
+			waitpid(pid, &status, WUNTRACED);
+		if (pid)
+			sesh->process->status = pid_status(status);
 	}
 	if (WIFSIGNALED(status))
 		ft_putchar('\n');

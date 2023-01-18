@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/17 17:52:42 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/18 10:39:09by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,6 +291,7 @@ void			sigwinc_wait_handle(int num);
 /*			  		 PROCESS 				*/
 t_proc			*process_getpid(int index, char *cmd, char sign, t_proc *head);
 int				process_node_append(char **args, t_session *sesh, int pid);
+// int process_node_append(char **args, t_session *sesh, int pid, pid_t status);
 // void			process_node_delete(t_proc *prev, t_proc **curr);
 void			process_node_delete(t_session *sesh, t_proc **curr);
 

@@ -48,7 +48,11 @@ void	sigchild_handler(int num)
 		g_session->term->ws_row = size.ws_row;
 	}
 	else if (num == SIGINT)
+	{
 		kill(g_session->process->pid, SIGINT);
+		g_session->process->status = pid_status(g_session->process->pid);
+		ft_printf("STATUS: %d\n", g_session->process->status);
+	}
 	else if (num == SIGTSTP)
 	{
 		t_proc *ptr = g_session->process;
@@ -58,9 +62,11 @@ void	sigchild_handler(int num)
 			if (ptr->job == '+')
 			{
 				ft_putchar('\n');
-				ptr->status = SUSPENDED;	
+				// ptr->status = SUSPENDED;	
 				display_process_node(ptr);
 				kill(ptr->pid, SIGSTOP);
+				ptr->status = pid_status(ptr->pid);
+				ft_printf("STATUS: %d\n", ptr->status);
 			}
 			ptr = ptr->next;
 		}
