@@ -48,7 +48,7 @@
 
 /* For fc builtin */
 # define FC_FLAGS "srnl"
-# define FC_LEN 17
+# define FC_LEN 18
 
 typedef union u_treenode	t_treenode;
 

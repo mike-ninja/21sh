@@ -25,5 +25,7 @@ int	fc_print_error(int check)
 	}
 	else if (check == 4)
 		ft_putstr_fd("42sh: Could not open file for editing.", 2);
+	else if (check == 5)
+		ft_putstr_fd("42sh: fc: no command found", 2);
 	return (0);
 }
