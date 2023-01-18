@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/18 11:25:11 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:22:09 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,10 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 		if (sesh->process_control) // For process that are going to the background
 			waitpid(pid, &status, WNOHANG);
 		else
+		if (!sesh->process_control)
 			waitpid(pid, &status, WUNTRACED);
-		if (pid)
-			sesh->process->status = pid_status(status);
+		sesh->process->status = pid_status(status);
+		ft_printf("pid: %d, status: %d\n", pid, sesh->process->status);
 	}
 	if (WIFSIGNALED(status))
 		ft_putchar('\n');

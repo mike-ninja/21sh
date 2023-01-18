@@ -57,23 +57,7 @@ int	ft_fg(t_session *sesh, char **cmd)
 		signal(SIGSTOP, sigchild_handler);
 		kill(process->pid, SIGCONT);
 		state = waitpid(process->pid, &status, WUNTRACED);
-		if (WIFEXITED(status))
-		{
-			if (WEXITSTATUS(status) == 0)
-				status = 0; 
-			else
-				status = 1;
-		}
-		else if (WIFSIGNALED(status))
-		{
-			if (WSTOPSIG(status))
-				status = 2; 
-			else if (WTERMSIG(status))
-				status = 3;
-		}
-		else if (WIFSTOPPED(status))
-			status = 4;
-		ft_printf("fg state %d status %d\n", state, status);
+		ft_printf("fg state %d status %d\n", state, pid_status(status));
 	}
 	return (0);
 }

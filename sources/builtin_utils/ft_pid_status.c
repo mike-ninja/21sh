@@ -29,24 +29,37 @@
 // 	// return (1); // Still active
 // }
 
-int pid_status(pid_t pid) 
-{
-    int		status;
+// int pid_status(pid_t pid) 
+// {
+//     int		status;
 
-    waitpid(pid, &status, WNOHANG);
+//     waitpid(pid, &status, WNOHANG);
+// 	if (WIFEXITED(status))
+// 	{
+// 		if (WEXITSTATUS(status) == 0)
+// 			return (0);
+// 		else
+// 			return (1);
+// 	}
+// 	else if (WIFSIGNALED(status))
+// 	{
+// 		if (WSTOPSIG(status))§
+// 		else if (WTERMSIG(status))
+// 			return (2);
+// 	}
+// 	return (-1);
+// }
+
+int pid_status(int status) 
+{
 	if (WIFEXITED(status))
-	{
-		if (WEXITSTATUS(status) == 0)
-			return (0);
-		else
-			return (1);
-	}
+		return (0); // process finished
 	else if (WIFSIGNALED(status))
 	{
 		if (WSTOPSIG(status))
-			return (4);
+			return (1); // process suspended
 		else if (WTERMSIG(status))
-			return (2);
+			return (2); // process terminated
 	}
-	return (-1);
+	return (-1); // process still active?
 }

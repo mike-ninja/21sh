@@ -14,19 +14,19 @@
 
 int	ft_jobs(t_session *sesh)
 {
-	int		state;
+	// int		state;
 	t_proc 	*curr;
 
-	state = 1;
+	// state = 1;
 	curr = sesh->process; 
 	while (curr)
 	{
-		if (!curr->status)
-			state = pid_status(curr->pid);
+		// if (!curr->status)
+		// 	state = pid_status(curr->pid);
 		// if (!state)
 		// 	curr->status = EXITED;
 		display_process_node(curr);
-		ft_printf("curr->status %d state %d\n", curr->status, state);
+		// ft_printf("curr->status %d state %d\n", curr->status, state);
 		// if (state <= 0)
 		// 	process_node_delete(sesh, &curr);
 		// else

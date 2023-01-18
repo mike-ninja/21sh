@@ -272,7 +272,8 @@ void			ft_env_remove(t_session *sesh, char *env_to_clean);
 int				ft_env_append(t_session *sesh, char **arg);
 int				ft_env_replace(t_session *sesh, char *envn, char **tmp_env);
 void			ft_dir_change(t_session *sesh);
-int 			pid_status(pid_t pid);
+// int 			pid_status(pid_t pid);
+int 			pid_status(int status);
 void 			ft_print_dbl_array(char **cmd);
 
 /*			  		 HISTORY				*/
