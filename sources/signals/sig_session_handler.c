@@ -94,3 +94,19 @@ void	sigwinc_wait_handle(int num)
 		g_session->term->ws_row = size.ws_row;
 	}
 }
+
+void proc_exit(int num)
+{
+	int status;
+	pid_t pid;
+
+	if (num == SIGCHLD)
+	{
+		pid = waitpid(-1, &status, WNOHANG);
+		if (pid > 0)
+		{
+			ft_printf("PID: %d\n", pid);
+			ft_printf("STATUS: %d\n", status);
+		}
+	}
+}

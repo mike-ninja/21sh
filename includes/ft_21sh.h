@@ -288,6 +288,7 @@ void			set_signal_fork(int num);
 void			sig_session_handler(int num);
 void			sigchild_handler(int num);
 void			sigwinc_wait_handle(int num);
+void 			proc_exit(int num);
 
 /*			  		 PROCESS 				*/
 t_proc			*process_getpid(int index, char *cmd, char sign, t_proc *head);
