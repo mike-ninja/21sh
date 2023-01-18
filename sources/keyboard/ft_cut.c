@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 14:06:06 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/11 12:50:13 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:53:35 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	*cut_to_clipboard(t_term *t)
 	else
 		start = 1;
 	return (ft_strsub(&t->inp[i], (unsigned int)start, \
-	(size_t)((t->index - i) + 1)));
+	(size_t)((t->index - i))));
 }
 
 /*
@@ -49,7 +49,7 @@ void	ft_cut(t_term *t)
 {
 	int	i;
 
-	if (t->bytes)
+	if (t->bytes && t->index)
 	{
 		i = -1;
 		ft_run_capability("vi");

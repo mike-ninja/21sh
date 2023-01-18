@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/12 11:19:59 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/13 12:23:08 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,20 @@ static void	ft_insertion_char(t_term *t)
  */
 static void	ft_insertion_enter(t_term *t)
 {
+	ssize_t	delim_row;
+
 	if (ft_delim_fetch(t))
 	{
 		t->term_val[1]++;
 		return ;
 	}
 	t->bslash = ft_bslash_escape_check(t, t->bytes);
+	delim_row = t->total_row;
+	while (delim_row && !ft_is_prompt_line(t, delim_row))
+		delim_row--;
 	if (t->q_qty % 2 \
 		|| (t->heredoc \
-		&& (t->delim && ft_strcmp(t->nl_addr[t->total_row], t->delim))) \
+		&& (t->delim && ft_strcmp(t->nl_addr[delim_row], t->delim))) \
 		|| t->bslash)
 	{
 		t->history_row = -1;

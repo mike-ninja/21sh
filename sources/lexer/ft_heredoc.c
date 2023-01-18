@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 20:04:51 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/04 17:39:45 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/18 12:04:02 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	*ft_heredoc(t_term *t, char *str)
 
 	if (t->heredoc)
 	{
-		fd = open("/tmp/heredoc", O_RDWR | O_CREAT | O_TRUNC, 0644);
+		fd = open("/tmp/heredoc", O_RDWR | O_CREAT | O_TRUNC, 0755);
 		if (fd)
 			return (write_to_tmp_file(t, str, fd));
 		else

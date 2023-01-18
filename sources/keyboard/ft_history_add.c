@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_history_add.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:22:24 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/11 12:49:54 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/13 12:37:23 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,21 @@ static void	add_to_capped_history(t_term *t, char *command)
 {
 	char	**temp;
 	int		i;
+	int		j;
 
-	i = 0;
 	temp = (char **)malloc(sizeof(char *) * (MAX_HISTORY + 1));
 	if (!temp)
-		exit(1);
-	while (t->history_arr[i + 1])
 	{
-		temp[i] = ft_strdup(t->history_arr[i + 1]);
-		i++;
+		ft_putendl_fd("21sh: malloc error, add_to_capped_history()", 2);
+		exit(1);
 	}
-	temp[i] = ft_strdup(command);
-	i++;
-	temp[i] = NULL;
+	i = 511;
+	j = 0;
+	while (t->history_arr[++i])
+		temp[j++] = ft_strdup(t->history_arr[i]);
+	temp[j++] = ft_strdup(command);
+	temp[j] = NULL;
+	t->history_size = j;
 	ft_arrclean(t->history_arr);
 	t->history_arr = temp;
 }

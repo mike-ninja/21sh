@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/12 22:59:19 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/13 17:59:52 by jniemine         ###   ########.fr       */
+/*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
+/*   Updated: 2023/01/18 17:18:06 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,8 @@ int				ft_getent(void);
 void			ft_raw_disable(struct termios orig_termios);
 
 /*				  INITIALIZE				*/
+void			ft_init_signals(void);
+void			init_window_size(t_term *term);
 void			ft_env_init(t_session *sesh);
 void			ft_session_init(t_session *sesh);
 
@@ -296,4 +298,8 @@ void			ft_history_get(t_term *t);
 char			*ft_history_file_get(void);
 void			ft_history_write_to_file(t_term *t);
 
+/*			  		 SIGNALS				*/
+void			set_signal_fork(int num);
+void			sig_session_handler(int num);
+void			sigwinch_inchild_handler(int num);
 #endif

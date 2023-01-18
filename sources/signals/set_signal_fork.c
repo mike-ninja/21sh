@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_tokens.c                                      :+:      :+:    :+:   */
+/*   set_signal_fork.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 14:42:17 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/17 22:11:00 by jniemine         ###   ########.fr       */
+/*   Created: 2023/01/14 09:24:56 by mbarutel          #+#    #+#             */
+/*   Updated: 2023/01/14 09:29:18 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-void	free_tokens(t_token **tokens)
+void	set_signal_fork(int pid)
 {
-	int	i;
-
-	i = -1;
-	while (*tokens && (*tokens)[++i].token)
+	if (pid == 0)
 	{
-		ft_strdel(&(*tokens)[i].value);
-		(*tokens)[i].token = 0;
+		signal(SIGINT, SIG_DFL);
+		signal(SIGWINCH, SIG_DFL);
 	}
-	if (*tokens)
-		ft_memdel((void **)tokens);
+	else
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGWINCH, sigwinch_inchild_handler);
+	}
 }

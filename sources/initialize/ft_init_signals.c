@@ -1,37 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ctrl.c                                          :+:      :+:    :+:   */
+/*   ft_init_signals.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/09 09:36:28 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/17 12:53:58 by mbarutel         ###   ########.fr       */
+/*   Created: 2022/10/20 18:17:16 by mrantil           #+#    #+#             */
+/*   Updated: 2023/01/17 12:55:47 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "keyboard.h"
+#include "ft_21sh.h"
 
 /*
- * It handles the control keys
- *
- * @param t the term structure
+ * It initializes the signal handlers for the program
  */
-void	ft_ctrl(t_term *t)
+void	ft_init_signals(void)
 {
-	if (t->ch == CTRL_W)
-		ft_cut(t);
-	else if (t->ch == CTRL_U)
-		ft_copy(t);
-	else if (t->ch == CTRL_P)
-		ft_paste(t);
-	else if (t->ch == CTRL_L)
-	{
-		t->term_val[1] = 0;
-		ft_run_capability("vi");
-		ft_run_capability("cl");
-		ft_print_input(t, 0, 0);
-		set_new_cur_pos(t);
-		ft_run_capability("ve");
-	}
+	signal(SIGWINCH, sig_session_handler);
+	signal(SIGINT, sig_session_handler);
+	signal(SIGTSTP, SIG_IGN);
+	signal(SIGSTOP, SIG_IGN);
 }

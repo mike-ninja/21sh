@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/12 16:07:55 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/17 12:53:48 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define CTRL_L		12
 # define CTRL_W		23
 # define CTRL_U		21
-# define CTRL_Y		25
+# define CTRL_P		16
 # define D_QUO		34
 # define S_QUO		39
 # define ESCAPE     27
@@ -89,7 +89,6 @@ typedef struct s_term
 	ssize_t		term_val[2];
 }			t_term;
 
-void	sig_handler(int num);
 int		ft_keyboard(t_term *t);
 void	ft_add_nl_last_row(t_term *t, char *array, ssize_t pos);
 void	ft_add_nl_mid_row(t_term *t, ssize_t row, ssize_t pos);
@@ -116,7 +115,6 @@ void	ft_history_reset_nl(t_term *t);
 void	ft_history_trigger(t_term *t, ssize_t his);
 ssize_t	ft_history_trigger_row(t_term *t);
 void	ft_init(t_term *t);
-void	ft_init_signals(void);
 int		ft_input_cycle(t_term *t);
 void	ft_insertion(t_term *t);
 char	*ft_is_prompt_line(t_term *t, ssize_t row);

@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_tokens.c                                      :+:      :+:    :+:   */
+/*   ft_init_window_size.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 14:42:17 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/17 22:11:00 by jniemine         ###   ########.fr       */
+/*   Created: 2023/01/14 09:22:37 by mbarutel          #+#    #+#             */
+/*   Updated: 2023/01/14 09:23:04 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-void	free_tokens(t_token **tokens)
+void	init_window_size(t_term *term)
 {
-	int	i;
+	struct winsize	w;
 
-	i = -1;
-	while (*tokens && (*tokens)[++i].token)
+	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &w) < 0)
 	{
-		ft_strdel(&(*tokens)[i].value);
-		(*tokens)[i].token = 0;
+		ft_err_print(NULL, NULL, "could not get the terminal size", 2);
+		exit(1);
 	}
-	if (*tokens)
-		ft_memdel((void **)tokens);
+	term->ws_row = w.ws_row;
+	term->ws_col = w.ws_col;
 }
