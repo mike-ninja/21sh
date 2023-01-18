@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tok_find_argument.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:13:39 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/11 12:22:42 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/17 22:03:50 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	collect_digits(char *line, int *digits, int *end)
 		*end -= (*digits);
 }
 
-static int	mv_back_if_on_seperator(char *line, int *end)
+static int	test_validity(char *line, int *end)
 {
 	if (*end > 0 && is_seperator(line[*end]))
 	{
@@ -67,7 +67,7 @@ char	*find_argument(char *line, int *i, int *start, int *end)
 			tok_quote_flag(line, end, &quote);
 		if ((line[*end] == '>' || line[*end] == '<') && (*end) > 0)
 			collect_digits(line, &digits, end);
-		else if (mv_back_if_on_seperator(line, end))
+		else if (test_validity(line, end))
 			return (NULL);
 	}
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/28 19:47:27 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/17 23:48:28 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,14 @@ static void	init_variables(int *i_args, int *cur, int *start, int *end)
 	*end = 0;
 }
 
-static int	if_error(char *c, t_token *args, char *line)
+static int	if_error(char *c, t_token *args, char *line, int *end)
 {
-	if (!c)
+	if (!c || test_if_error(&line[*end]))
 	{
 		free_tokens(&args);
 		ft_strdel(&line);
+		if (c)
+			ft_strdel(&c);
 		return (1);
 	}
 	return (0);
@@ -76,7 +78,7 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 	while (line[cur])
 	{
 		c = find_argument(line, &cur, &start, &end);
-		if (if_error(c, args, line))
+		if (if_error(c, args, line, &end))
 			return (NULL);
 		init_token(c, &args[i_args], line, cur);
 		++i_args;
