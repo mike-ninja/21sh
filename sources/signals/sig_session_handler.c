@@ -26,11 +26,6 @@ void	sig_session_handler(int num)
 		ft_window_size(g_session->term);
 	if (num == SIGINT)
 		ft_restart_cycle(g_session->term);
-	// if (num == SIGTERM)
-	// {
-	// 	ft_printf("SIGTERM\n");
-	// 	ft_exit(g_session, 0);
-	// }
 }
 
 void	sigchild_handler(int num)
@@ -50,8 +45,6 @@ void	sigchild_handler(int num)
 	else if (num == SIGINT)
 	{
 		kill(g_session->process->pid, SIGINT);
-		g_session->process->status = pid_status(g_session->process->pid);
-		ft_printf("STATUS: %d\n", g_session->process->status);
 	}
 	else if (num == SIGTSTP)
 	{
@@ -62,11 +55,9 @@ void	sigchild_handler(int num)
 			if (ptr->job == '+')
 			{
 				ft_putchar('\n');
-				// ptr->status = SUSPENDED;	
-				display_process_node(ptr);
 				kill(ptr->pid, SIGSTOP);
-				ptr->status = pid_status(ptr->pid);
-				ft_printf("STATUS: %d\n", ptr->status);
+				ptr->status = 1;
+				display_process_node(ptr);
 			}
 			ptr = ptr->next;
 		}
@@ -111,14 +102,11 @@ void child_exit(int num)
 			{
 				if (ptr->pid == pid)
 				{
-					// process_node_delete(g_session, &ptr);
-					ptr->status = 0;
+					ptr->status = pid_status(status);
 					break ;
 				}
 				ptr = ptr->next;
 			}
-			// ft_printf("PID: %d\n", pid);
-			// ft_printf("STATUS: %d\n", status);
 		}
 	}
 }

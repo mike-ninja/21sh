@@ -42,7 +42,6 @@ int	ft_fg(t_session *sesh, char **cmd)
 {
 	int		status;
 	t_proc	*process;
-	pid_t	state;
 
 	process = fg_parsing(sesh->process , *(cmd + 1));
 	if (!process)
@@ -56,8 +55,7 @@ int	ft_fg(t_session *sesh, char **cmd)
 		signal(SIGTSTP, sigchild_handler);
 		signal(SIGSTOP, sigchild_handler);
 		kill(process->pid, SIGCONT);
-		state = waitpid(process->pid, &status, WUNTRACED);
-		ft_printf("fg state %d status %d\n", state, pid_status(status));
+		waitpid(process->pid, &status, WUNTRACED);
 	}
 	return (0);
 }

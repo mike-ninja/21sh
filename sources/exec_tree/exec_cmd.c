@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/18 17:24:45 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:19:03 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,6 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 		else
 		if (!sesh->process_control)
 			ret = waitpid(pid, &status, WUNTRACED);
-		sesh->process->status = 3;	
-		ft_printf("after execve = %d ret %d\n", sesh->process->status, ret);
 	}
 	if (WIFSIGNALED(status))
 		ft_putchar('\n');

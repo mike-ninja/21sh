@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 22:10:49 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/18 11:21:57 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:20:19 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static t_proc *create_process_node(int index, char **args, int pid, t_proc *prev
 	ret = (t_proc *)ft_memalloc(sizeof(t_proc));
 	ret->job = '+';
 	ret->pid = pid;
-	ret->status = RUNNING;
+	ret->status = 3; // starts the status as running
 	ret->index = index;
 	ret->next = NULL;
 	ret->prev = prev;
