@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:13:39 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/17 22:03:50 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:51:25 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*find_argument(char *line, int *i, int *start, int *end)
 		return (ret);
 	if (!is_seperator(line[*end]))
 	{
-		while ((line[*end] && !is_seperator(line[*end])) || quote)
+		while (line[*end] && (!is_seperator(line[*end] || quote)))
 			tok_quote_flag(line, end, &quote);
 		if ((line[*end] == '>' || line[*end] == '<') && (*end) > 0)
 			collect_digits(line, &digits, end);

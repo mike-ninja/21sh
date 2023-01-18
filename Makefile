@@ -6,7 +6,7 @@
 #    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/17 23:11:30 by jniemine         ###   ########.fr        #
+#    Updated: 2023/01/18 15:57:39 by jniemine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,8 +47,8 @@ CFLAGS				+=	-Wpedantic
 # CFLAGS				+=	-Wconversion
 CFLAGS				+=	-O3
 
-LEAK_CHECK			= -g
-LEAK_CHECK		+=	-fsanitize=address
+#LEAK_CHECK			= -g
+#LEAK_CHECK		+=	-fsanitize=address
 
 UNAME				= $(shell uname)
 ifeq ($(UNAME), Darwin)
@@ -223,7 +223,7 @@ ASSERT_OBJECT = && printf "$(ERASE_LINE)" && printf "$@ $(GREEN)$(BOLD) ✓$(RES
 all: libft $(NAME)
 
 $(NAME): libft/libft.a $(OBJECTS) $(O_PATHS)
-	@$(CC) $(CFLAGS) $(HEADERS) -o $@ $(O_PATHS) $(LIBS) $(TERMCAP) $(LEAK_CHECK)
+	@$(CC) $(CFLAGS) $(HEADERS) -o $@ $(O_PATHS) $(LIBS) $(TERMCAP) $(LEAK_CHECK) -fsanitize=address
 	@printf "Compiled $(BOLD)$(GREEN)$(NAME)$(RESET)!\n\n"
 	@printf "$(C_VISIBLE)"
 
