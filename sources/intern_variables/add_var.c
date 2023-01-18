@@ -6,7 +6,7 @@
 /*   By: mviinika <mviinika@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:03:07 by mviinika          #+#    #+#             */
-/*   Updated: 2023/01/16 14:44:58 by mviinika         ###   ########.fr       */
+/*   Updated: 2023/01/18 11:39:03 by mviinika         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static int	get_var_len(char *input)
 	}
 	return (var_len);
 }
+
 
 static int find_env(t_session *sesh, char *cmd, int var_len, int *ret)
 {
@@ -84,6 +85,7 @@ int add_var(t_session *sesh, char **cmd)
 
 	k = 0;
 	i = 0;
+	ft_printf("add var%s\n", cmd[0]);
 	while (cmd[k] && is_var(cmd[k]))
 	{
 		ret = 0;

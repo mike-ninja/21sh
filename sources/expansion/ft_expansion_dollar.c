@@ -6,7 +6,7 @@
 /*   By: mviinika <mviinika@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:57:25 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/17 11:33:53 by mviinika         ###   ########.fr       */
+/*   Updated: 2023/01/18 10:40:55 by mviinika         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ static void	ft_find_env(t_session *sesh, char *buff, char *arg)
 		key_len++;
 	key = ft_strsub(arg, 1, key_len - 1);
 	env = ft_env_get(sesh, key);
+	if (!env)
+		env = ft_var_get(sesh, key, 0);
 	if (env)
 		ft_strcat(buff, ft_strchr(*env, '=') + 1);
 	if (arg[key_len])

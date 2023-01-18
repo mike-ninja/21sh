@@ -6,7 +6,7 @@
 /*   By: mviinika <mviinika@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:50:01 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/17 11:42:39 by mviinika         ###   ########.fr       */
+/*   Updated: 2023/01/18 12:29:39 by mviinika         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	ft_builtins(t_session *sesh, char ***cmd)
 	if (sesh && cmd)
 	{
 		ft_expansion(sesh, *cmd);
-		param_format(sesh, *cmd);
+		if (param_format(sesh, *cmd) == -1)
+			return (0);
 		*(cmd) += ft_variables(sesh, cmd);
 		if (**cmd == NULL)
 			return (0);

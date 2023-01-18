@@ -6,7 +6,7 @@
 #    By: mviinika <mviinika@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/17 12:11:06 by mviinika         ###   ########.fr        #
+#    Updated: 2023/01/18 09:23:33 by mviinika         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,6 +79,7 @@ BUILTIN_UTILS	= 	builtin_utils/
 TERMIOS			= 	termios/
 HISTORY			= 	history/
 INTERN_VARS		=	intern_variables/
+PARAM_FORM		=	parameter_formatting/
 
 SOURCE_COUNT = $(words $(FILES))
 
@@ -182,7 +183,6 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(EXPANSION)ft_expansion_utils \
 				$(EXPANSION)ft_expansion_dollar \
 				$(EXPANSION)ft_expansion_tilde \
-				$(EXPANSION)parameter_format \
 				$(UTILITIES)ft_env_get \
 				$(UTILITIES)ft_err_print \
 				$(UTILITIES)ft_bslash_check \
@@ -211,6 +211,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(INTERN_VARS)ft_variables \
 				$(INTERN_VARS)add_var \
 				$(INTERN_VARS)ft_var_get \
+				$(PARAM_FORM)parameter_format \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 O_PATHS		=	$(addsuffix .o, $(addprefix $(OBJECTS)/,$(FILES)))
@@ -244,6 +245,7 @@ $(OBJECTS):
 	@mkdir -p $(OBJECTS)/$(TERMIOS)
 	@mkdir -p $(OBJECTS)/$(HISTORY)
 	@mkdir -p $(OBJECTS)/$(INTERN_VARS)
+	@mkdir -p $(OBJECTS)/$(PARAM_FORM)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"
 	@printf "$(NAME): $(GREEN)$(OBJECTS) directory was created.$(RESET)\n\n\n"
 
