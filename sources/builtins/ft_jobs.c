@@ -26,11 +26,15 @@ int	ft_jobs(t_session *sesh)
 		// if (!state)
 		// 	curr->status = EXITED;
 		display_process_node(curr);
+		if (curr->status == 0)
+			process_node_delete(sesh, &curr);
+		else
+			curr = curr->next;
 		// ft_printf("curr->status %d state %d\n", curr->status, state);
 		// if (state <= 0)
 		// 	process_node_delete(sesh, &curr);
 		// else
-		curr = curr->next;
+		// curr = curr->next;
 	}
 	return (0);
 }

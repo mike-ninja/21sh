@@ -53,7 +53,10 @@
 int pid_status(int status) 
 {
 	if (WIFEXITED(status))
+	{
+		ft_printf("exited?\n");
 		return (0); // process finished
+	}
 	else if (WIFSIGNALED(status))
 	{
 		if (WSTOPSIG(status))

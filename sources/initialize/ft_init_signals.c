@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 18:17:16 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/18 14:41:59 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:17:55 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@ void	ft_init_signals(void)
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGSTOP, SIG_IGN);
 	signal(SIGTERM, sig_session_handler);
-	signal(SIGCHLD, proc_exit);
+	signal(SIGCHLD, child_exit);
 }

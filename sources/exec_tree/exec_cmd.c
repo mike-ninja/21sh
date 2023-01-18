@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/18 14:22:09 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:24:45 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,17 +92,20 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 	{
 		if (!cmd || execve(cmd, args, *environ_cp) < 0)
 			exe_fail(&cmd, args, environ_cp);
-		exit (0);
+		exit (1);
 	}
 	if (cmd && access && pid)
 	{
+		pid_t ret;
+
+		ret = -1;
 		if (sesh->process_control) // For process that are going to the background
-			waitpid(pid, &status, WNOHANG);
+			ret = waitpid(pid, &status, WNOHANG);
 		else
 		if (!sesh->process_control)
-			waitpid(pid, &status, WUNTRACED);
-		sesh->process->status = pid_status(status);
-		ft_printf("pid: %d, status: %d\n", pid, sesh->process->status);
+			ret = waitpid(pid, &status, WUNTRACED);
+		sesh->process->status = 3;	
+		ft_printf("after execve = %d ret %d\n", sesh->process->status, ret);
 	}
 	if (WIFSIGNALED(status))
 		ft_putchar('\n');

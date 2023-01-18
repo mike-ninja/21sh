@@ -95,7 +95,7 @@ void	sigwinc_wait_handle(int num)
 	}
 }
 
-void proc_exit(int num)
+void child_exit(int num)
 {
 	int status;
 	pid_t pid;
@@ -105,8 +105,20 @@ void proc_exit(int num)
 		pid = waitpid(-1, &status, WNOHANG);
 		if (pid > 0)
 		{
-			ft_printf("PID: %d\n", pid);
-			ft_printf("STATUS: %d\n", status);
+			t_proc *ptr = g_session->process;
+
+			while (ptr)
+			{
+				if (ptr->pid == pid)
+				{
+					// process_node_delete(g_session, &ptr);
+					ptr->status = 0;
+					break ;
+				}
+				ptr = ptr->next;
+			}
+			// ft_printf("PID: %d\n", pid);
+			// ft_printf("STATUS: %d\n", status);
 		}
 	}
 }
