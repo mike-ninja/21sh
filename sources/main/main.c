@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:04 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/14 08:41:29 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/19 12:57:56 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	main_loop(t_session *sesh)
 		{
 			sesh->line = ft_lexer(sesh->term);
 			sesh->tokens = chop_line(sesh->line, sesh->tokens, 1);
-			sesh->head = build_tree(sesh->tokens);
+			sesh->head = build_tree(&sesh->tokens);
 			if (sesh->head && ((t_semicolon *)sesh->head)->left)
 				exec_tree(sesh->head, &sesh->env, sesh->terminal, sesh);
 			shell_end_cycle(sesh);
