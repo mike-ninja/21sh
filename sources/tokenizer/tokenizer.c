@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/19 14:33:58 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/19 15:32:46 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,6 @@ static int	if_error(char *c, t_token *args, char *line, int *end)
 	}
 	return (0);
 }
-
-/*
-static void print_tokens(t_token *tokens)
-{
-	int	i;
-
-	i = 0;
-	while(tokens[i].token)
-	{
-		ft_printf("TOK: %s VAL: %d\n", tokens[i].value, tokens[i].token);
-		++i;
-	}
-}
-*/
 
 static int	validity_check(char *line)
 {
@@ -103,7 +89,6 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 		while (ft_isspace(line[cur]))
 			++cur;
 	}
-//	print_tokens(args);
 	ft_strdel(&line);
 	return (args);
 }
