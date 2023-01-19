@@ -38,6 +38,23 @@ static t_proc	*fg_parsing(t_proc *head, char *cmd)
 	return (NULL);
 }
 
+static void	update_queue(t_session *sesh, t_proc *process)
+{
+	t_proc	*ptr;
+
+	ptr = sesh->process;
+	while (ptr)
+	{
+		if (ptr == process)
+			ptr->queue = '+';
+		else if (ptr->queue == '+')
+			ptr->queue = '-';
+		else if (ptr->queue == '-')
+			ptr->queue = ' ';
+		ptr = ptr->next;
+	}
+}
+
 int	ft_fg(t_session *sesh, char **cmd)
 {
 	int		status;
@@ -54,6 +71,7 @@ int	ft_fg(t_session *sesh, char **cmd)
 		signal(SIGWINCH, sigchild_handler);
 		signal(SIGTSTP, sigchild_handler);
 		signal(SIGSTOP, sigchild_handler);
+		update_queue(sesh, process);
 		kill(process->pid, SIGCONT);
 		waitpid(process->pid, &status, WUNTRACED);
 	}

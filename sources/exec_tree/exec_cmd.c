@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/19 13:35:01 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/19 14:55:56 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,16 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 		cmd = search_bin(args[0], *environ_cp);
 	access = check_access(cmd, args, sesh);
 	if (cmd && access)
+	{
 		pid = fork_wrap();
+		if (pid)
+		{
+			if (sesh->process_control)
+				process_node_append(args, sesh, pid, false);
+			else
+				process_node_append(args, sesh, pid, true);
+		}
+	}
 	if (access && pid == 0)
 	{
 		if (!cmd || execve(cmd, args, *environ_cp) < 0)
@@ -92,10 +101,7 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 	if (cmd && access && pid)
 	{
 		if (sesh->process_control) // For process that are going to the background
-		{
 			waitpid(pid, &status, WNOHANG);
-			process_node_append(args, sesh, pid);
-		}
 		else
 			waitpid(pid, &status, WUNTRACED);
 	}

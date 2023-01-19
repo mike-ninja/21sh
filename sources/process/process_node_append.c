@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 22:10:49 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/19 14:14:41 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/19 14:54:26 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static t_proc *create_process_node(int index, char **args, int pid, t_proc *prev
 	return (ret);
 }
 
-int	process_node_trunc(char **args, t_session *sesh, int pid)
+static int	process_node_trunc(char **args, t_session *sesh, int pid, bool ground)
 {
 	t_proc 	*ptr;
 	t_proc 	*prev;
@@ -74,18 +74,19 @@ int	process_node_trunc(char **args, t_session *sesh, int pid)
 	ptr->next =	create_process_node(ptr->index + 1, args, pid, prev);
 	if (!prio_plus)
 		ptr->next->queue = '+';
+	ptr->next->ground = ground;
 	return (ptr->next->index);
 }
 
-int process_node_append(char **args, t_session *sesh, int pid)
+int process_node_append(char **args, t_session *sesh, int pid, bool ground)
 {
-	
 	if (!sesh->process)
 	{
 		sesh->process = create_process_node(1, args, pid, NULL);
+		sesh->process->ground = ground;
 		sesh->process->queue = '+';
 		return (sesh->process->index);
 	}
 	else
-		return (process_node_trunc(args, sesh, pid));
+		return (process_node_trunc(args, sesh, pid, ground));
 } 

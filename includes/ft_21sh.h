@@ -57,6 +57,7 @@ typedef struct s_process
 	char				queue;
 	int					index;
 	int					status;
+	bool				ground;
 	int					priority;
 	char				**command;
 	struct s_process	*next;
@@ -294,7 +295,8 @@ void 			child_exit(int num);
 
 /*			  		 PROCESS 				*/
 t_proc			*process_getpid(int index, char *cmd, char sign, t_proc *head);
-int				process_node_append(char **args, t_session *sesh, int pid);
+// int				process_node_append(char **args, t_session *sesh, int pid);
+int 			process_node_append(char **args, t_session *sesh, int pid, bool ground);
 void			process_node_delete(t_session *sesh, t_proc **curr);
 
 #endif
