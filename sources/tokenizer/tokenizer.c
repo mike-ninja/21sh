@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 13:15:33 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/18 17:22:06 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/19 10:25:51 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	init_variables(int *i_args, int *cur, int *start, int *end)
 
 static int	if_error(char *c, t_token *args, char *line, int *end)
 {
-	if (!c || test_if_error(&line[*end]))
+	if (!c || control_op_error(&line[*end]))
 	{
 		free_tokens(&args);
 		ft_strdel(&line);
@@ -89,6 +89,7 @@ t_token	*chop_line(char *line, t_token *args, size_t pointer_n)
 		while (ft_isspace(line[cur]))
 			++cur;
 	}
+	print_tokens(args);
 	ft_strdel(&line);
 	return (args);
 }

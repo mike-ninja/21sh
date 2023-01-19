@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 17:04:42 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/18 17:21:29 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:29:54 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,28 @@ static int	test_if_error_split(char *line, char *str, int err_flag)
 		err_flag = ft_err_print(NULL, "syntax error near unexpected token",
 				str, 1);
 	}
+	else if (*str == ft_strnequ(str + 1, "(", 1))
+		err_flag = ft_err_print(NULL, "syntax error near unexpected token",
+			"`('", 1);
+	else if (str && ft_strnequ(str, ")", 1))
+		err_flag = ft_err_print(NULL, "syntax error near unexpected token",
+			"`)'", 1);
+	else if (*line != '&' && str && *str != ';' && *str == '\0')
+		err_flag = ft_err_print(NULL, "syntax error near unexpected token",
+			"`newline'", 1);
+	else if (!err_flag && is_seperator(*line) && str && is_seperator(*str))
+	{
+		*(str + 1) = '\0';
+		err_flag = ft_err_print(NULL, "syntax error near unexpected token",
+				str, 1);
+	}
 	else if (!err_flag)
 		return (0);
 	return (1);
 }
 
-static int	control_op_error_split(char *str)
+static int	control_op_error_split(char *line)
 {
-	if (*str == ';' && ft_strnequ(str + 1, ";", 1))
-		ft_err_print(NULL, "syntax error near unexpected token",
-			"`;'", 1);
-	else if (*str == ft_strnequ(str + 1, "(", 1))
-		ft_err_print(NULL, "syntax error near unexpected token",
-			"`('", 1);
-	else if (ft_strnequ(str + 1, ")", 1))
-		ft_err_print(NULL, "syntax error near unexpected token",
-			"`)'", 1);
-	else if (*str != '&' && *str != ';' && *(str + 1) == '\0')
-		ft_err_print(NULL, "syntax error near unexpected token",
-			"`newline'", 1);
-	else
 	char	*str;
 	int		err_flag;
 
