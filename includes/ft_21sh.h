@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/14 09:27:19 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/19 12:58:08 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ void			track_used_space(t_token **args, size_t current_pointer_n,
 int				test_if_error(char *str);
 int				redir_error(char *str);
 char			*tok_if_redir(char *line, int *i, int *start, int *end);
+int				validate_tokens(t_token *tokens);
 
 /*					TOKENIZER UTILS			*/
 void			free_tokens(t_token **tokens);
@@ -164,7 +165,7 @@ int				is_seperator(char c);
 void			tok_quote_flag(char *line, int *end, char *quote_flag);
 
 /*					BUILDTREE				*/
-t_treenode		*build_tree(t_token *tokens);
+t_treenode		*build_tree(t_token **tokens);
 char			**make_arg_array(char *cmd);
 int				foreseer_of_tokens(t_token *tokens,
 					int mark, int start, int end);

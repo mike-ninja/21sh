@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tok_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:09:10 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/18 14:52:18 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/19 14:21:13 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ static int	test_if_error_split(char *line, char *str, int err_flag)
 	if (!err_flag && (is_seperator(*line) && *line != ';') && *str == '\0')
 		err_flag = ft_err_print(NULL, "syntax error near unexpected token",
 				"`newline'", 1);
-	else if (!err_flag && is_seperator(*line) && *str && is_seperator(*str))
+	else if (!err_flag && is_seperator(*line) && (*str == '|' || *str == ';'))
 	{
+		ft_printf("LINE: %s and SEPERATOR: %s\n", line, str);
 		*(str + 1) = '\0';
 		err_flag = ft_err_print(NULL, "syntax error near unexpected token",
 				str, 1);

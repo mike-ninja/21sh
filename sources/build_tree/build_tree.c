@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 16:21:00 by jniemine          #+#    #+#             */
-/*   Updated: 2022/12/20 10:47:03 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/19 14:38:59 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_treenode	*parse_left_cmd(t_token *tokens, int i_tok)
 	int			cmd;
 
 	cmd = -1;
-	if (!tokens[i_tok].value)
+	if (!tokens[i_tok].value || !tokens[i_tok].token)
 		return (NULL);
 	if (i_tok >= 0 && tokens[i_tok].token == WORD)
 		cmd = i_tok;
@@ -73,13 +73,18 @@ t_treenode	*parse_right_cmd(t_token *tokens, int i_tok)
 	return (parse_redirections(tokens, i_tok, cmd));
 }
 
-t_treenode	*build_tree(t_token *tokens)
+t_treenode	*build_tree(t_token **tokens)
 {
 	t_treenode	*head;
 
 	head = NULL;
-	if (!tokens)
+	if (!(*tokens))
 		return (head);
-	head = create_semicolon_node(tokens, 0, calculate_tokens(tokens));
+	if (validate_tokens(*tokens))
+	{
+		free_tokens(tokens);
+		return (NULL);
+	}
+	head = create_semicolon_node(*tokens, 0, calculate_tokens(*tokens));
 	return (head);
 }
