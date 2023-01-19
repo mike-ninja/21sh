@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ctrl.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 09:36:28 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/17 12:53:58 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/19 21:36:43 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,6 @@ void	ft_ctrl(t_term *t)
 		set_new_cur_pos(t);
 		ft_run_capability("ve");
 	}
+	else if (t->ch == CTRL_R)
+		ft_search_history(t);	
 }

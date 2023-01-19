@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/17 12:53:48 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/19 21:37:34 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define CTRL_W		23
 # define CTRL_U		21
 # define CTRL_P		16
+# define CTRL_R		18
 # define D_QUO		34
 # define S_QUO		39
 # define ESCAPE     27
@@ -137,6 +138,7 @@ void	ft_reset_nl_addr(t_term *t);
 void	ft_restart_cycle(t_term *t);
 ssize_t	ft_row_lowest_line(t_term *t);
 void	ft_run_capability(char *cap);
+void	ft_search_history(t_term *t);
 void	ft_setcursor(ssize_t col, ssize_t row);
 void	ft_shift_insert(t_term *t);
 void	ft_shift_nl_addr(t_term *t, int num);
