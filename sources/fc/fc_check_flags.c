@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 10:20:17 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/17 12:44:57 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/19 18:14:00 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,28 @@ static char	*ft_strupdate(char *s1, const char *s2)
 	return (ret);
 }
 
+static void	update_history(t_session *sesh, char ***cmd)
+{
+	int		i;
+	char	*new_hist;
+
+	ft_strdel(&sesh->term->history_arr[sesh->term->history_size - 1]);
+	new_hist = ft_strnew(0);
+	i = 0;
+	while ((*cmd)[i])
+	{
+		ft_printf("%s", (*cmd)[i]);
+		if ((*cmd)[i + 1])
+			ft_printf(" ");
+		new_hist = ft_strupdate(new_hist, (*cmd)[i]);
+		if ((*cmd)[i + 1])
+			new_hist = ft_strupdate(new_hist, " ");
+		i++;
+	}
+	write(1, "\n", 1);
+	sesh->term->history_arr[sesh->term->history_size - 1] = new_hist;
+}
+
 static void fc_use_last_match(t_session *sesh, char ***cmd, int y)
 {
 	ft_freeda((void ***)cmd, calc_chptr(*cmd));
@@ -50,19 +72,7 @@ static void fc_use_last_match(t_session *sesh, char ***cmd, int y)
 	ft_strsplit(sesh->term->history_arr[y], ' ');
 	if (!*cmd)
 		fc_print_error(3);
-
-	ft_strdel(&sesh->term->history_arr[sesh->term->history_size - 1]);
-	char *new_hist;
-	new_hist = ft_strnew(0);
-	for (int i = 0; (*cmd)[i]; i++)
-	{
-		ft_printf("%s ", (*cmd)[i]);
-		new_hist = ft_strupdate(new_hist, (*cmd)[i]);
-		if ((*cmd)[i + 1])
-			new_hist = ft_strupdate(new_hist, " ");
-	}
-	write(1, "\n", 1);
-	sesh->term->history_arr[sesh->term->history_size - 1] = new_hist;
+	update_history(sesh, cmd);
 }
 
 static int	find_matching(t_session *sesh, char *str, char ***cmd)
@@ -90,73 +100,98 @@ static int	find_matching(t_session *sesh, char *str, char ***cmd)
 	return (1);
 }
 
-static int	fc_s_flag(t_session *sesh, char ***cmd)
+static int	fc_s_only(t_session *sesh, char ***cmd)
 {
-	if (*(cmd) && (*cmd)[1] && !(*cmd)[2])
-	{
-		ft_strdel(&sesh->term->history_arr[sesh->term->history_size - 1]);
-		sesh->term->history_arr[sesh->term->history_size - 1] = \
-		ft_strdup(sesh->term->history_arr[sesh->term->history_size - 2]);
-		ft_freeda((void ***)cmd, calc_chptr(*cmd));
-		ft_putendl(sesh->term->history_arr[sesh->term->history_size - 2]);
-		*cmd = \
-		ft_strsplit(sesh->term->history_arr[sesh->term->history_size - 2], ' ');
-		if (!*cmd)
-			fc_print_error(3);
-		return (1);
-	}
-	else if (ft_strchr((*cmd)[2], '=')) //make it into a while loop that takes all the '=' in every arg
-	{
-		int i;
+	ft_strdel(&sesh->term->history_arr[sesh->term->history_size - 1]);
+	sesh->term->history_arr[sesh->term->history_size - 1] = \
+	ft_strdup(sesh->term->history_arr[sesh->term->history_size - 2]);
+	ft_freeda((void ***)cmd, calc_chptr(*cmd));
+	ft_putendl(sesh->term->history_arr[sesh->term->history_size - 2]);
+	*cmd = \
+	ft_strsplit(sesh->term->history_arr[sesh->term->history_size - 2], ' ');
+	if (!*cmd)
+		fc_print_error(3);
+	return (1);
+}
 
-		char *change_to = ft_strdup(ft_strchr((*cmd)[2], '=') + 1);
-		char *needle = ft_strsub((*cmd)[2], 0, ft_strchr((*cmd)[2], '=') - (*cmd)[2]);
-		//remove fc cmd
-		ft_freeda((void ***)cmd, calc_chptr(*cmd));
-		*cmd = \
-		ft_strsplit(sesh->term->history_arr[sesh->term->history_size - 2], ' ');
-		if (!*cmd)
-			fc_print_error(3);
-		i = 0;
-		while ((*cmd)[i])
+static void	change_all_occurrences(char ***tmp_cmd, char *needle, char *change_to)
+{
+	int		i;
+	char	*begin;
+	char	*end;
+
+	i = 0;
+	while ((*tmp_cmd)[i])
+	{
+		while (ft_strstr((*tmp_cmd)[i], needle))
 		{
-			while (ft_strstr((*cmd)[i], needle))
-			{
-				char	*begin;
-				char	*end;
-
-				begin = ft_strsub((*cmd)[i], 0, ft_strstr((*cmd)[i], needle) - (*cmd)[i]);
-				end = ft_strsub((*cmd)[i], ft_strstr((*cmd)[i], needle) - (*cmd)[i] + ft_strlen(needle), ft_strlen((*cmd)[i]) - ft_strlen(needle) - ft_strlen(begin));
-				ft_strdel(&(*cmd)[i]);
-				(*cmd)[i] = ft_strjoin_three(begin, change_to, end);
-				ft_strdel(&begin);
-				ft_strdel(&end);
-			}
-			i++;
+			begin = ft_strsub((*tmp_cmd)[i], 0, ft_strstr((*tmp_cmd)[i], needle) - (*tmp_cmd)[i]);
+			end = ft_strsub((*tmp_cmd)[i], ft_strstr((*tmp_cmd)[i], needle) - (*tmp_cmd)[i] + \
+			ft_strlen(needle), ft_strlen((*tmp_cmd)[i]) - ft_strlen(needle) - ft_strlen(begin));
+			ft_strdel(&(*tmp_cmd)[i]);
+			(*tmp_cmd)[i] = ft_strjoin_three(begin, change_to, end);
+			ft_strdel(&begin);
+			ft_strdel(&end);
 		}
+		i++;
+	}
+}
+
+static void	update_cmd(char ***cmd, char ***tmp_cmd)
+{
+	size_t		i;
+
+	ft_freeda((void ***)cmd, calc_chptr(*cmd));
+	*cmd = (char **)malloc(sizeof(char *) * calc_chptr(*tmp_cmd) + sizeof(char *));
+	if (!*cmd)
+		fc_print_error(3);
+	(*cmd)[calc_chptr(*tmp_cmd)] = NULL;
+	i = 0;
+	while (i < calc_chptr(*tmp_cmd))
+	{
+		(*cmd)[i] = ft_strdup((*tmp_cmd)[i]);
+		i++;
+	}
+	ft_freeda((void ***)tmp_cmd, calc_chptr(*tmp_cmd));
+}
+
+static int	fc_s_change(t_session *sesh, char ***cmd)
+{
+	int		i;
+	char	*change_to;
+	char	*needle;
+	char 	**tmp_cmd;
+
+	tmp_cmd = NULL;
+	fc_overwrite_fc_cmd_with_prev_cmd(sesh, &tmp_cmd, 2);
+	i = 2;
+	while ((*cmd)[i] && ft_strchr((*cmd)[i], '='))
+	{
+		change_to = ft_strdup(ft_strchr((*cmd)[i], '=') + 1);
+		needle = ft_strsub((*cmd)[i], 0, ft_strchr((*cmd)[i], '=') - (*cmd)[i]);
+		change_all_occurrences(&tmp_cmd, needle, change_to);
 		ft_strdel(&needle);
 		ft_strdel(&change_to);
-		//update history
-		ft_strdel(&sesh->term->history_arr[sesh->term->history_size - 1]);
-		char *new_hist;
-		new_hist = ft_strnew(0);
-		for (int i = 0; (*cmd)[i]; i++)
-		{
-			ft_printf("%s ", (*cmd)[i]);
-			new_hist = ft_strupdate(new_hist, (*cmd)[i]);
-			if ((*cmd)[i + 1])
-				new_hist = ft_strupdate(new_hist, " ");
-		}
-		sesh->term->history_arr[sesh->term->history_size - 1] = new_hist;
+		i++;
+	}
+	update_history(sesh, &tmp_cmd);
+	update_cmd(cmd, &tmp_cmd);
+	return (1);
+}
 
-		ft_putchar('\n');
-		return (1);
-	}
-	else if (!ft_strchr((*cmd)[2], '='))
-	{
-		find_matching(sesh, (*cmd)[2], cmd);
-		return (1);
-	}
+static int	fc_s_flag(t_session *sesh, char ***cmd) // make a loop here and look for arguments after
+{
+	int i;
+
+	if (*(cmd) && (*cmd)[1] && !(*cmd)[2])
+		return (fc_s_only(sesh, cmd));
+	i = 2;
+	while ((*cmd)[i] && ft_strchr((*cmd)[i], '='))
+		i++;
+	if ((*cmd)[i])
+		return (find_matching(sesh, (*cmd)[i], cmd));
+	else if (ft_strchr((*cmd)[2], '='))
+		return (fc_s_change(sesh, cmd));
 	return (0);
 }
 
@@ -214,7 +249,7 @@ static int	get_start(t_session *sesh, char ***cmd)
 static void print_ell_only(t_session *sesh, int start)
 {
 	while (++start < (int)sesh->term->history_size - 1)
-			ft_printf("%-8d %s\n", start + 1, sesh->term->history_arr[start]);
+		ft_printf("%-8d %s\n", start + 1, sesh->term->history_arr[start]);
 }
 
 static void print_n_ell(t_session *sesh, int start)
@@ -232,7 +267,7 @@ static void print_r_ell(t_session *sesh, int start)
 static void print_nr_ell(t_session *sesh, int start)
 {
 	while (--start && start > (int)sesh->term->history_size - FC_LEN)
-			ft_printf("\t %s\n", sesh->term->history_arr[start - 1]);
+		ft_printf("\t %s\n", sesh->term->history_arr[start - 1]);
 }
 
 //add [fist] [last] option to the call

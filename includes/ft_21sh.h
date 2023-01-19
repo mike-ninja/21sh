@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/17 11:25:24 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/19 15:23:07 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,6 +266,7 @@ void			ft_history_write_to_file(t_term *t);
 /*			  		 FC						*/
 int				ft_fc(t_session *sesh, char ***cmd);
 int				fc_check_flags(t_session *sesh, char ***cmd);
+void			fc_overwrite_fc_cmd_with_prev_cmd(t_session *sesh, char ***cmd, int y);
 int				fc_print_error(int check);
 
 #endif
