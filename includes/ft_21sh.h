@@ -23,6 +23,7 @@
 # define EXITED 0
 # define RUNNING 1
 # define SUSPENDED 2
+# define TERMINATED 3
 
 /* Do not use zero */
 # define PIPE 1
@@ -53,9 +54,10 @@ typedef union u_treenode	t_treenode;
 typedef struct s_process
 {
 	pid_t				pid;
-	char				job;
+	char				queue;
 	int					index;
 	int					status;
+	int					priority;
 	char				**command;
 	struct s_process	*next;
 	struct s_process	*prev;
@@ -293,8 +295,6 @@ void 			child_exit(int num);
 /*			  		 PROCESS 				*/
 t_proc			*process_getpid(int index, char *cmd, char sign, t_proc *head);
 int				process_node_append(char **args, t_session *sesh, int pid);
-// int process_node_append(char **args, t_session *sesh, int pid, pid_t status);
-// void			process_node_delete(t_proc *prev, t_proc **curr);
 void			process_node_delete(t_session *sesh, t_proc **curr);
 
 #endif

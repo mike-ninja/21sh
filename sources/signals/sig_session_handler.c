@@ -43,16 +43,14 @@ void	sigchild_handler(int num)
 		g_session->term->ws_row = size.ws_row;
 	}
 	else if (num == SIGINT)
-	{
 		kill(g_session->process->pid, SIGINT);
-	}
-	else if (num == SIGTSTP)
+	else if (num == SIGTSTP || num == SIGSTOP)
 	{
 		t_proc *ptr = g_session->process;
 
 		while (ptr)
 		{
-			if (ptr->job == '+')
+			if (ptr->queue == '+')
 			{
 				ft_putchar('\n');
 				kill(ptr->pid, SIGSTOP);
@@ -61,28 +59,6 @@ void	sigchild_handler(int num)
 			}
 			ptr = ptr->next;
 		}
-	}
-	else if (num == SIGSTOP)
-	{
-		kill(g_session->process->pid, SIGSTOP);
-	}
-	// else if (num == SIGCONT)
-	// 	kill(g_session->process->pid, SIGCONT);
-}
-
-void	sigwinc_wait_handle(int num)
-{	
-	struct winsize	size;
-
-	if (num == SIGWINCH)
-	{
-		if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &size) < 0)
-		{
-			ft_putstr_fd("could not get the terminal size", 2);
-			exit(1);
-		}
-		g_session->term->ws_col = size.ws_col;
-		g_session->term->ws_row = size.ws_row;
 	}
 }
 

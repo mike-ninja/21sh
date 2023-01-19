@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_getpid.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 22:10:49 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/14 22:13:47 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/19 11:16:20 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static t_proc   *search_via_percent_ch(char sign, t_proc *head)
     count = 0;
     while (head)
     {
-        if (sign == head->job || (!head->next && !count))
+        if (sign == head->queue || (!head->next && !count))
             return (head);
         count++;
         head = head->next;

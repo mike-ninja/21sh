@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 22:10:49 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/18 18:20:19 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/19 14:14:41 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,13 @@ static t_proc *create_process_node(int index, char **args, int pid, t_proc *prev
 
 	i = -1;
 	ret = (t_proc *)ft_memalloc(sizeof(t_proc));
-	ret->job = '+';
+	// ret->queue = '+';
 	ret->pid = pid;
 	ret->status = 3; // starts the status as running
 	ret->index = index;
 	ret->next = NULL;
 	ret->prev = prev;
+	ret->priority = 0;
 	ret->command = (char **)ft_memalloc(sizeof(char *) * (ft_arrlen(args) + 1));
 	while (args[++i])
 		ret->command[i] = ft_strdup(args[i]);
@@ -46,29 +47,45 @@ static t_proc *create_process_node(int index, char **args, int pid, t_proc *prev
 	return (ret);
 }
 
-int process_node_append(char **args, t_session *sesh, int pid)
+int	process_node_trunc(char **args, t_session *sesh, int pid)
 {
 	t_proc 	*ptr;
 	t_proc 	*prev;
+	bool	prio_plus;
+	bool	prio_minus;
 
-	ptr = NULL;
 	prev = NULL;
+	prio_plus = false;
+	prio_minus = false;
+	ptr = sesh->process;
+	while (ptr->next)
+	{
+		if (ptr->queue == '+' && ptr->priority)
+			prio_plus = true;
+		if (ptr->queue == '-' && ptr->priority)
+			prio_minus = true;
+		if (!prio_plus && !prio_minus)
+			ptr->queue = ' ';
+		prev = ptr;
+		ptr = ptr->next;
+	}
+	if (!prio_minus)
+		ptr->queue = '-';
+	ptr->next =	create_process_node(ptr->index + 1, args, pid, prev);
+	if (!prio_plus)
+		ptr->next->queue = '+';
+	return (ptr->next->index);
+}
+
+int process_node_append(char **args, t_session *sesh, int pid)
+{
+	
 	if (!sesh->process)
 	{
-		sesh->process = create_process_node(1, args, pid, prev);
-		// sesh->process->status = pid_status(pid);
+		sesh->process = create_process_node(1, args, pid, NULL);
+		sesh->process->queue = '+';
 		return (sesh->process->index);
 	}
 	else
-	{
-		ptr = sesh->process;
-		while (ptr->next)
-		{
-			prev = ptr;
-			ptr = ptr->next;
-		}
-		ptr->next =	create_process_node(ptr->index + 1, args, pid, prev);
-		// ptr->next->status = pid_status(pid);
-		return (ptr->next->index);
-	}
+		return (process_node_trunc(args, sesh, pid));
 } 
