@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 22:10:49 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/20 13:12:57 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/20 19:24:02 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,70 +25,46 @@
   man 2 kill() -> to check if process is still running
 
 */
-static t_proc *create_process_node(int index, char **args, int pid/* , t_proc *prev */)
+static t_proc *create_process_node(t_session *sesh, int index, char **args, int pid)
 {
 	int		i;
 	t_proc	*ret;
 
-	i = -1;
 	ret = (t_proc *)ft_memalloc(sizeof(t_proc));
-	// ret->queue = '+';
 	ret->pid = pid;
 	ret->status = 3; // starts the status as running
 	ret->index = index;
+	ft_memmove(&sesh->process_queue[1], \
+	&sesh->process_queue[0], (sesh->process_count - 1) * sizeof(int));
+	sesh->process_queue[0] = index;
 	ret->next = NULL;
-	/* ret->prev = prev; */
-	ret->priority = 0;
 	ret->command = (char **)ft_memalloc(sizeof(char *) * (ft_arrlen(args) + 1));
+	i = -1;
 	while (args[++i])
 		ret->command[i] = ft_strdup(args[i]);
 	ret->command[i] = NULL;
 	return (ret);
 }
 
-static int	process_node_append(char **args, t_session *sesh, int pid, bool ground)
+static int	process_node_append(t_session *sesh, char **args, int pid)
 {
 	t_proc 	*ptr;
-	/* t_proc 	*prev; */
-	/* bool	prio_plus;
-	bool	prio_minus; */
 
-	/* prev = NULL; */
-	/* prio_plus = false;
-	prio_minus = false; */
 	ptr = sesh->process;
 	while (ptr->next)
-	{
-		/* if (ptr->queue == '+' && ptr->priority)
-			prio_plus = true;
-		if (ptr->queue == '-' && ptr->priority)
-			prio_minus = true;
-		if (!prio_plus && !prio_minus)
-			ptr->queue = ' '; */
-		/* prev = ptr; */
 		ptr = ptr->next;
-	}
-/* 	if (!prio_minus)
-		ptr->queue = '-'; */
-	ptr->next =	create_process_node(ptr->index + 1, args, pid/* , prev */);
-	/* if (!prio_plus)
-		ptr->next->queue = '+'; */
-	ptr->next->ground = ground;
+	ptr->next =	create_process_node(sesh, ptr->index + 1, args, pid);
 	return (ptr->next->index);
 }
 
-int process_node_create(char **args, t_session *sesh, int pid, bool ground)
+int process_node_create(char **args, t_session *sesh, int pid)
 {
-	// if (!sesh->process)
-	if (sesh->process->count == 0)
+	sesh->process_count++;
+	if (!sesh->process)
 	{
-		sesh->process = create_process_node(1, args, pid/* , NULL */);
-		/* sesh->process->ground = ground; */
-		/* sesh->process->queue = '+'; */
-		sesh->process->count++;
-		add_to_line(sesh);
+		sesh->process = create_process_node(sesh, 1, args, pid);
 		return (sesh->process->index);
 	}
 	else
-		return (process_node_append(args, sesh, pid, ground));
+		return (process_node_append(sesh, args, pid));
 }

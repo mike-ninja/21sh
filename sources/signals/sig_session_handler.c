@@ -95,7 +95,7 @@ void child_exit(int num) // we need an update queue here
 			{
 				if (ptr->pid == pid)
 				{
-					if (ptr->ground == true)
+					if (ptr->index == g_session->process_queue[0])
 						process_node_delete(g_session, &ptr);
 					else
 						ptr->status = pid_status(status);
@@ -109,7 +109,7 @@ void child_exit(int num) // we need an update queue here
 			while (ptr)
 			{
 				// if (ptr->queue == '+')
-				if (ptr->line == 0)
+				if (ptr->index == g_session->process_queue[0])
 				{
 					ptr->status = pid_status(status);
 					break ;

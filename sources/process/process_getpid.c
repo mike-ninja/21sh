@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_getpid.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 22:10:49 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/19 11:16:20 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/20 16:06:34 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static t_proc   *search_via_index(int index, t_proc *head)
 static t_proc   *search_via_cmd(char *cmd, t_proc *head)
 {
     t_proc  *ret;
-    
+
     ret = NULL;
     while (head)
     {
@@ -42,7 +42,7 @@ static t_proc   *search_via_cmd(char *cmd, t_proc *head)
     return (ret);
 }
 
-static t_proc   *search_via_percent_ch(char sign, t_proc *head)
+/* static t_proc   *search_via_percent_ch(char sign, t_proc *head)
 {
     int count;
 
@@ -55,15 +55,15 @@ static t_proc   *search_via_percent_ch(char sign, t_proc *head)
         head = head->next;
     }
     return (NULL);
-}
+} */
 
-t_proc *process_getpid(int index, char *cmd, char sign, t_proc *head)
+t_proc *process_getpid(int index, char *cmd, /* char sign, */ t_proc *head)
 {
     if (index)
         return (search_via_index(index, head));
     if (cmd)
         return (search_via_cmd(cmd, head));
-    if (sign)
-        return (search_via_percent_ch(sign, head));
+    /* if (sign)
+        return (search_via_percent_ch(sign, head)); */
     return (NULL);
 }

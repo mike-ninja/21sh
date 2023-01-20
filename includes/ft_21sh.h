@@ -54,16 +54,12 @@ typedef union u_treenode	t_treenode;
 typedef struct s_process
 {
 	pid_t				pid;
-	char				queue; //+ first, - second, all else is " "
 	int					index;
 	int					status;
-	int					line[256];
-	int					count;
-	bool				ground;
-	int					priority;
+	/* int					count; */
 	char				**command;
 	struct s_process	*next;
-	struct s_process	*prev;
+	struct s_process	*prev; //do we need prev??
 }	t_proc;
 
 /*					TOKEN STRUCT			*/
@@ -142,6 +138,8 @@ typedef struct session
 	int					process_control;
 	struct sigaction	sig_action;
 	t_proc				*process;
+	int					process_queue[256];
+	int					process_count;
 	char				*line;
 	t_treenode			*head;
 	t_term				term[1];
@@ -296,9 +294,9 @@ void			sigwinc_wait_handle(int num);
 void 			child_exit(int num);
 
 /*			  		 PROCESS 				*/
-t_proc			*process_getpid(int index, char *cmd, char sign, t_proc *head);
+t_proc			*process_getpid(int index, char *cmd, /* char sign, */ t_proc *head);
 // int				process_node_create(char **args, t_session *sesh, int pid);
-int 			process_node_create(char **args, t_session *sesh, int pid, bool ground);
+int 			process_node_create(char **args, t_session *sesh, int pid);
 void			process_node_delete(t_session *sesh, t_proc **curr);
 
 #endif

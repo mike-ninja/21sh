@@ -26,32 +26,36 @@
 static t_proc	*fg_parsing(t_proc *head, char *cmd)
 {
 	if (!cmd || !ft_strcmp("%%", cmd) || !ft_strcmp("%+", cmd))
-		return (process_getpid(0, NULL, '+', head));
+		return (process_getpid(0, NULL, /* '+', */ head));
 	if (!ft_strcmp("%-", cmd))
-		return (process_getpid(0, NULL, '-', head));
+		return (process_getpid(0, NULL, /* '-', */ head));
 	if (*cmd == '%')
 		cmd++;
 	if (ft_isdigit(*cmd))
-		return (process_getpid(ft_atoi(cmd), NULL, 0, head));
+		return (process_getpid(ft_atoi(cmd), /* NULL, */ 0, head));
 	else
-		return (process_getpid(0, cmd, 0, head));
+		return (process_getpid(0, cmd, /* 0, */ head));
 	return (NULL);
 }
 
 static void	update_queue(t_session *sesh, t_proc *process)
 {
-	t_proc	*ptr;
+	int tmp;
+	int i;
 
-	ptr = sesh->process;
-	while (ptr)
+	i = 0;
+	while (i < sesh->process_count)
 	{
-		if (ptr == process)
-			ptr->queue = '+';
-		else if (ptr->queue == '+')
-			ptr->queue = '-';
-		else if (ptr->queue == '-')
-			ptr->queue = ' ';
-		ptr = ptr->next;
+		if (process->index == sesh->process_queue[0])
+			break ;
+		else if (process->index == sesh->process_queue[i])
+		{
+			tmp = sesh->process_queue[i];
+			ft_memmove(&sesh->process_queue[1], &sesh->process_queue[0], i * sizeof(int));
+			sesh->process_queue[0] = tmp;
+			break ;
+		}
+		i++;
 	}
 }
 

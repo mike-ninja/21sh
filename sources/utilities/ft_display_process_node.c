@@ -6,11 +6,13 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 17:52:01 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/20 12:44:28 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/20 19:01:36 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
+
+extern t_session	*g_session;
 
 static void	display_state(int status)
 {
@@ -26,15 +28,17 @@ static void	display_state(int status)
 
 void	display_process_node(t_proc *node)
 {
-	ft_printf("[%d]", node->index);
-	/* if (node->line = 0)
-		ft_putchar('+');
-	else if (node->line = 1)
-		ft_putchar('-');
-	else
-		ft_putchar(' '); */
-	ft_printf("%c", node->queue);
-	display_state(node->status);
-	ft_print_dbl_array(node->command);
-	ft_printf("\n");
+	if (node)
+	{
+		ft_printf("[%d]", node->index);
+		if (g_session->process_queue[0] == node->index)
+			ft_putchar('+');
+		else if (g_session->process_queue[1] == node->index)
+			ft_putchar('-');
+		else
+			ft_putchar(' ');
+		display_state(node->status);
+		ft_print_dbl_array(node->command);
+		ft_printf("\n");
+	}
 }

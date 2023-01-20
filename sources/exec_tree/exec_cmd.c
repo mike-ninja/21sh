@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/20 13:09:09 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/20 16:01:48 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,7 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 	{
 		pid = fork_wrap();
 		if (pid)
-		{
-			if (sesh->process_control)
-				process_node_create(args, sesh, pid, false);
-			else
-				process_node_create(args, sesh, pid, true);
-		}
+			process_node_create(args, sesh, pid);
 	}
 	if (access && pid == 0)
 	{
