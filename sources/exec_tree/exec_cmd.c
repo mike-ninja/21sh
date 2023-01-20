@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/19 14:55:56 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/20 13:09:09 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 		if (pid)
 		{
 			if (sesh->process_control)
-				process_node_append(args, sesh, pid, false);
+				process_node_create(args, sesh, pid, false);
 			else
-				process_node_append(args, sesh, pid, true);
+				process_node_create(args, sesh, pid, true);
 		}
 	}
 	if (access && pid == 0)

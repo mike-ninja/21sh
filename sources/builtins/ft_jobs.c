@@ -17,7 +17,7 @@ int	ft_jobs(t_session *sesh)
 
 	t_proc 	*curr;
 
-	curr = sesh->process; 
+	curr = sesh->process;
 	while (curr)
 	{
 		display_process_node(curr);

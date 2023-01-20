@@ -21,7 +21,7 @@ extern t_session	*g_session;
  * @param num The signal number.
  */
 void	sig_session_handler(int num)
-{	
+{
 	if (num == SIGWINCH)
 		ft_window_size(g_session->term);
 	if (num == SIGINT)
@@ -29,7 +29,7 @@ void	sig_session_handler(int num)
 }
 
 void	sigchild_handler(int num)
-{	
+{
 	struct winsize	size;
 
 	if (num == SIGWINCH)
@@ -89,7 +89,7 @@ void child_exit(int num) // we need an update queue here
 	if (num == SIGCHLD)
 	{
 		pid = waitpid(-1, &status, WNOHANG);
-		if (pid > 0)
+		if (pid > 0) // this means that the process is exited, via cmpletion or termination
 		{
 			while (ptr)
 			{
@@ -108,7 +108,8 @@ void child_exit(int num) // we need an update queue here
 		{
 			while (ptr)
 			{
-				if (ptr->queue == '+')
+				// if (ptr->queue == '+')
+				if (ptr->line == 0)
 				{
 					ptr->status = pid_status(status);
 					break ;

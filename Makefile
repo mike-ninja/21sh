@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+         #
+#    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/17 17:53:14 by mbarutel         ###   ########.fr        #
+#    Updated: 2023/01/20 13:09:09 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -148,7 +148,7 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(MAIN)shell_end_cycle \
 				$(MAIN)reset_fd \
 				$(PROCESS)process_getpid \
-				$(PROCESS)process_node_append \
+				$(PROCESS)process_node_create \
 				$(PROCESS)process_node_delete \
 				$(SIGNALS)sig_session_handler \
 				$(SIGNALS)set_signal_fork \

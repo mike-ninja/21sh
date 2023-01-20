@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_display_process_node.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 17:52:01 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/19 11:15:51 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/20 12:44:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ static void	display_state(int status)
 void	display_process_node(t_proc *node)
 {
 	ft_printf("[%d]", node->index);
+	/* if (node->line = 0)
+		ft_putchar('+');
+	else if (node->line = 1)
+		ft_putchar('-');
+	else
+		ft_putchar(' '); */
 	ft_printf("%c", node->queue);
 	display_state(node->status);
 	ft_print_dbl_array(node->command);

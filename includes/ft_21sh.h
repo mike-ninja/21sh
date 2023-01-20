@@ -54,9 +54,11 @@ typedef union u_treenode	t_treenode;
 typedef struct s_process
 {
 	pid_t				pid;
-	char				queue;
+	char				queue; //+ first, - second, all else is " "
 	int					index;
 	int					status;
+	int					line[256];
+	int					count;
 	bool				ground;
 	int					priority;
 	char				**command;
@@ -295,8 +297,8 @@ void 			child_exit(int num);
 
 /*			  		 PROCESS 				*/
 t_proc			*process_getpid(int index, char *cmd, char sign, t_proc *head);
-// int				process_node_append(char **args, t_session *sesh, int pid);
-int 			process_node_append(char **args, t_session *sesh, int pid, bool ground);
+// int				process_node_create(char **args, t_session *sesh, int pid);
+int 			process_node_create(char **args, t_session *sesh, int pid, bool ground);
 void			process_node_delete(t_session *sesh, t_proc **curr);
 
 #endif
