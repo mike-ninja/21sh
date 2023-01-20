@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_search_history.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 21:36:20 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/19 21:48:03 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/20 14:27:22 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-static void	history_options(t_term *t, int row, int display_row, size_t history_index)
+static size_t	history_options(t_term *t, int row, int display_row, size_t history_index) // This should return the amount of lines printed
 {
-	// ssize_t history;
+	int row_cpy;
 
-	// history = t->history_size - 1;
+	row_cpy = row;
 	while (row && history_index && t->history_arr[history_index])
 	{
-		if (ft_strstr(t->history_arr[history_index], t->inp))
+		if (ft_strstr(t->history_arr[history_index], t->nl_addr[t->c_row])) // This logic needs to be improved
 		{
 			ft_setcursor(0, display_row);
 			ft_run_capability("ce");
@@ -30,51 +30,58 @@ static void	history_options(t_term *t, int row, int display_row, size_t history_
 		}
 		history_index--;
 	}
+	return ((row_cpy - row) - 1);
 }
 
-// static size_t	start_row(t_term *t, int num)
-// {
-// 	size_t	row_req;
-// 	size_t	row;
-
-// 	row_req = 10; // This can be assigned via env variable;
-// 	row_req += num;
-// 	if (t->history_size > row_req)
-// 		row = (t->history_size - row_req);
-// 	else
-// 		row = 0;
-// 	return (row);
-// }
-
-static void print_prompt(void)
+static void print_prompt(char *color)
 {	
-	ft_printf("{RED}>{RESET}");
+	if (!ft_strcmp("RED", color))
+		ft_printf("{RED}>{RESET}");
+	if (!ft_strcmp("BLUE", color))
+		ft_printf("{BLUE}>{RESET}");
+}
+
+static int	init_interface(t_term *t, int history_rows, ssize_t start_cur_row)
+{
+	ft_run_capability("cb");
+	ft_run_capability("cd");
+	ft_setcursor(0, start_cur_row + (history_rows - 1) + 2);
+	print_prompt("BLUE");
+	ft_run_capability("nd");
+	ft_putstr(t->nl_addr[t->c_row]);
+	// ft_setcursor(0, start_cur_row + (history_rows - 1));
+	// history_options(t, history_rows, start_cur_row + (history_rows - 1), history_index);
+	// ft_setcursor(0, start_cur_row + (history_rows - 1));
+	// print_prompt("RED");
+	
+	// setup the 2 other lines
+	return (start_cur_row + (history_rows - 1));
 }
 
 void	ft_search_history(t_term *t)
 {
-	ssize_t	cur_row;
-	int	row_req;
-	int	history_row_cur;
-	char	inp;
-	ssize_t	index;
-	ssize_t row;
+	int			history_index;
+	int			history_rows;
+	ssize_t		start_cur_row;
+	ssize_t		index_limit;
+	ssize_t		index;
+	ssize_t		row;
+	char		inp;
 
-	row_req = 10;
-	cur_row = t->term_val[1] + t->c_row;
-	// ft_run_capability("cb");
-	// ft_run_capability("ce");
-	history_row_cur = t->history_size - 1;
-	// ft_run_capability("cb");
-	ft_run_capability("cd");
-	ft_setcursor(0, cur_row + (row_req - 1));
-	history_options(t, 10, cur_row + (row_req - 1), history_row_cur); // print the options
-	ft_setcursor(0, cur_row + (row_req - 1));
-	// row = row_req;
-	row = cur_row + (row_req - 1);
+
 	ft_run_capability("vi");
-	print_prompt();
-	index = row_req - 1;
+	history_rows = 10;
+	history_index = t->history_size - 1;
+	start_cur_row = t->term_val[1] + t->c_row;
+	row = init_interface(t, history_rows, start_cur_row);
+
+	/* Trial here */
+	ft_setcursor(0, start_cur_row + (history_rows - 1));
+	index_limit = history_options(t, history_rows, start_cur_row + (history_rows - 1), history_index);
+	ft_setcursor(0, start_cur_row + (history_rows - 1));
+	print_prompt("RED");
+	/* Trial here */
+	index = index_limit;
 	while (true) // while loop for the selector
 	{
 		inp = ft_get_input();
@@ -85,39 +92,40 @@ void	ft_search_history(t_term *t)
 			inp = ft_get_input();
 			if (inp == 65) // up
 			{
-				if (row > cur_row)
+				if (index)
 				{
 					ft_run_capability("cb");
 					--row;
 					--index;
 				}
-				else
+				else if ((size_t)history_index - history_rows && index_limit == (history_rows - 1))
 				{
-					history_options(t, 10, cur_row + (row_req - 1), --history_row_cur);
+					--history_index;
+					index_limit = history_options(t, 10, start_cur_row + (history_rows - 1), history_index);
 				}
 				ft_setcursor(0, row);
-				print_prompt();
+				print_prompt("RED");
 					
 			}
 			if (inp == 66) // do
 			{
-				if (row < (cur_row + (row_req - 1)))
+				if (index < index_limit)
 				{
 					ft_run_capability("cb");
 					++row;
 					++index;
 				}
-				else if ((size_t)history_row_cur < t->history_size)
+				else if ((size_t)history_index < (t->history_size - 1))
 				{
-					history_options(t, 10, cur_row + (row_req - 1), ++history_row_cur);	
+					++history_index;
+					index_limit = history_options(t, 10, start_cur_row + (history_rows - 1), history_index);	
 				}
 				ft_setcursor(0, row);
-				print_prompt();
+				print_prompt("RED");
 			}
 		}
 		if (inp == '\n')
 			break;
-		// ft_printf("%d\n", inp); // up 91:65 do 91:66
 	}
 	ft_run_capability("ve");
 }
