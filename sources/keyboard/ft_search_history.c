@@ -6,38 +6,11 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 21:36:20 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/20 19:44:38 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/21 15:00:50 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
-
-static size_t	history_options(t_term *t, int row, int display_row, size_t history_index, int *ptr, int to_show, int match) // This should return the amount of lines printed
-{
-	int row_cpy;
-	int	to_show_cpy;
-	int	i;
-
-	i = -1;
-	to_show_cpy = to_show + row;
-	row_cpy = row;
-	while (row && history_index && t->history_arr[history_index] && to_show_cpy && i < match)
-	{
-		if (ft_strstr(t->history_arr[history_index], t->nl_addr[t->total_row])) // This logic needs to be improved
-		{
-			ft_setcursor(0, display_row);
-			ft_run_capability("ce");
-			ft_printf("%2s%d%5s%s", "", history_index, "", t->history_arr[history_index]);
-			ft_run_capability("up");
-			display_row--;
-			row--;
-			ptr[++i] = history_index;
-			to_show_cpy--;
-		}
-		history_index--;
-	}
-	return ((row_cpy - row) - 1);
-}
 
 static void print_prompt(char *color)
 {	
@@ -45,38 +18,6 @@ static void print_prompt(char *color)
 		ft_printf("{RED}>{RESET}");
 	if (!ft_strcmp("BLUE", color))
 		ft_printf("{BLUE}>{RESET}");
-}
-
-static int	init_interface(t_term *t, int history_rows, ssize_t start_cur_row, int *match, int max_to_show)
-{
-	ft_run_capability("cb");
-	ft_run_capability("cd");
-	ft_setcursor(0, start_cur_row + (history_rows - 1) + 2);
-	print_prompt("BLUE");
-	ft_run_capability("nd");
-	ft_putstr(t->nl_addr[t->total_row]);
-	ft_setcursor(0, start_cur_row + (history_rows - 1) + 1);
-	ft_printf("");
-	ft_printf("{CYAN}%2s%d/%d %cS{RESET}", "", *match, max_to_show, '+');
-	// ft_setcursor(0, start_cur_row + (history_rows - 1));
-	// history_options(t, history_rows, start_cur_row + (history_rows - 1), history_index);
-	// ft_setcursor(0, start_cur_row + (history_rows - 1));
-	// print_prompt("RED");
-	
-	// setup the 2 other lines
-	return (start_cur_row + (history_rows - 1));
-}
-
-static void	init_index_ptr(int **ptr, int history_rows)
-{
-	int i;
-	
-	i = -1;
-	if (*ptr)
-		ft_memdel((void **)&(*ptr));
-	*ptr = (int *)ft_memalloc(sizeof(int) * (history_rows));
-	while (++i < history_rows)
-		(*ptr)[i] = -1;
 }
 
 static int	count_matches(t_term *t, int max_to_show)
@@ -97,210 +38,148 @@ static int	count_matches(t_term *t, int max_to_show)
 	return (count);
 }
 
+void	init_index_ptr(t_search_history *config)
+{
+	int i;
+	
+	i = -1;
+	// if (config->ptr)
+	// 	ft_memdel((void **)&config->ptr);
+	config->ptr = (int *)ft_memalloc(sizeof(int) * (config->history_rows));
+	while (++i < config->history_rows)
+		config->ptr[i] = -1;
+}
+
+static void	init_search_history_config(t_term *t, t_search_history *config)
+{
+	config->match = 0;
+	config->history_rows = 10;
+	init_index_ptr(config);
+	config->max_to_show = 30;
+	config->to_show = config->max_to_show - 1;
+	config->history_index = t->history_size - 1;
+	config->start_cur_row = t->term_val[1] + t->c_row;
+	config->match = count_matches(t, config->max_to_show);
+	config->row = config->start_cur_row + (config->history_rows - 1);
+}
+
+
+
+void	init_interface(t_term *t, t_search_history *config)
+{
+	ft_run_capability("cb");
+	ft_run_capability("cd");
+	ft_setcursor(0, config->row + 2);
+	print_prompt("BLUE");
+	ft_run_capability("nd");
+	ft_putstr(t->nl_addr[t->total_row]);
+	ft_setcursor(0, config->row + 1);
+	ft_printf("");
+	ft_printf("{CYAN}%2s%d/%d %cS{RESET}", "", config->match, config->max_to_show, '+');
+}
+
+void	history_options(t_term *t, t_search_history *config) // This should return the amount of lines printed
+{
+	int	index;
+	int	row_cpy;
+	int	to_show_cpy;
+	int	display_row_cpy;
+	int	history_index_cpy;
+
+	index = 0;
+	row_cpy = config->history_rows;
+	history_index_cpy = config->history_index;
+	to_show_cpy = config->to_show + config->history_rows;
+	display_row_cpy =  config->start_cur_row + (config->history_rows - 1);
+	while (row_cpy && history_index_cpy && t->history_arr[history_index_cpy] && to_show_cpy && index < config->match)
+	{
+		if (ft_strstr(t->history_arr[history_index_cpy], t->nl_addr[t->total_row])) // This logic needs to be improved
+		{
+			ft_setcursor(0, display_row_cpy);
+			ft_run_capability("ce");
+			ft_printf("%2s%d%5s%s", "", history_index_cpy, "", t->history_arr[history_index_cpy]);
+			ft_run_capability("up");
+			display_row_cpy--;
+			row_cpy--;
+			config->ptr[index++] = history_index_cpy;
+			to_show_cpy--;
+		}
+		history_index_cpy--;
+	}
+	config->index = (config->history_rows - row_cpy) - 1;
+}
+
 void	ft_search_history(t_term *t)
 {
-	int			history_index;
-	int			history_rows;
-	int			max_to_show;
-	ssize_t		start_cur_row;
-	ssize_t		index_limit;
-	ssize_t		index;
-	ssize_t		row;
-	char		inp;
-	int			*ptr;
-	int			match;
-	int			to_show;
+	int					row_cpy;
+	int					index_cpy;
+	t_search_history	config;
 	
-
-	ptr = NULL;
-	match = 0;
+	
 	ft_run_capability("vi");
-	history_rows = 10;
-	max_to_show = 30;
-	to_show = max_to_show - 1;
-	history_index = t->history_size - 1;
-	start_cur_row = t->term_val[1] + t->c_row;
-	match = count_matches(t, max_to_show);
-	row = init_interface(t, history_rows, start_cur_row, &match, max_to_show);
-	
-	/* Trial here */
-	ft_setcursor(0, start_cur_row + (history_rows - 1));
-	init_index_ptr(&ptr, history_rows);
-	index_limit = history_options(t, history_rows, start_cur_row + (history_rows - 1), history_index, ptr, to_show, match);
-	ft_setcursor(0, start_cur_row + (history_rows - 1));
+	init_search_history_config(t, &config);
+	init_interface(t, &config);
+	ft_setcursor(0, config.row);
+	history_options(t, &config);
+	ft_setcursor(0, config.row);
 	print_prompt("RED");
-	/* Trial here */
-	index = index_limit;
-	ft_run_capability("sc");
-	ft_setcursor(0, t->ws_row - 1);
-	ft_run_capability("ce");
-	ft_printf("index -> %d", index);
-	ft_run_capability("rc");
-	if (index == -1)
+	row_cpy = config.row;
+	index_cpy = config.index;
+	if (config.index == -1) // When there is no matches found?
 		return ;
 	while (true) // while loop for the selector
 	{
-		inp = ft_get_input();
-		if (inp == 'q')
+		config.inp = ft_get_input();
+		if (config.inp == 'q')
 			break;
-		if (inp == 91)
+		if (config.inp == 91)
 		{
-			// to_show--;
-			inp = ft_get_input();
-			if (inp == 65 && to_show) // up
+			config.inp = ft_get_input();
+			if (config.inp == 65 && config.to_show) // up
 			{
-				if (index)
+				if (index_cpy)
 				{
-					to_show--;
+					--row_cpy;
+					--index_cpy;
+					--config.to_show;
 					ft_run_capability("cb");
-					--row;
-					--index;
 				}
-				// else if ((size_t)history_index - history_rows && index_limit == (history_rows - 1))
-				else if (index_limit == (history_rows - 1) && ptr[index_limit - index] > 1)
+				else if (config.index == (config.history_rows - 1) && config.ptr[config.index - index_cpy] > 1)
 				{
-					to_show--;
-					ft_run_capability("sc");
-					ft_setcursor(0, t->ws_row - 1);
-					ft_run_capability("ce");
-					ft_printf("ptr -> %d", index_limit);
-					ft_run_capability("rc");
-					--history_index;
-					init_index_ptr(&ptr, history_rows);
-					index_limit = history_options(t, 10, start_cur_row + (history_rows - 1), history_index, ptr, to_show, match);
+					--config.to_show;
+					--config.history_index;
+					history_options(t, &config);
 				}
-				ft_setcursor(0, row);
+				ft_setcursor(0, row_cpy);
 				print_prompt("RED");
 					
 			}
-			if (inp == 66 && to_show < max_to_show) // do
+			if (config.inp == 66 && config.to_show < config.max_to_show) // do
 			{
-				if (index < index_limit)
+				if (index_cpy < config.index)
 				{
-					to_show++;
+					++row_cpy;
+					++index_cpy;
+					++config.to_show;
 					ft_run_capability("cb");
-					++row;
-					++index;
 				}
-				else if ((size_t)history_index < (t->history_size - 1))
+				else if ((size_t)config.history_index < (t->history_size - 1))
 				{
-					to_show++;
-					++history_index;
-					index_limit = history_options(t, 10, start_cur_row + (history_rows - 1), history_index, ptr, to_show, match);
-					init_index_ptr(&ptr, history_rows);
-					index_limit = history_options(t, 10, start_cur_row + (history_rows - 1), history_index, ptr, to_show, match);	
+					++config.to_show;
+					++config.history_index;
+					history_options(t, &config);
 				}
-				ft_setcursor(0, row);
+				ft_setcursor(0, row_cpy);
 				print_prompt("RED");
 			}
 		}
-		if (inp == '\n')
+		if (config.inp == '\n')
 		{
 			ft_run_capability("cl");
-			ft_printf("|%s|", t->history_arr[ptr[index_limit - index]]);
-			ft_memdel((void **)&ptr);
+			ft_printf("|%s|", t->history_arr[config.ptr[config.index - index_cpy]]);
+			ft_memdel((void **)&config.ptr);
 			break;
 		}
 	}
 	ft_run_capability("ve");
 }
-
-// void	ft_search_history(t_term *t)
-// {
-// 	int			history_index;
-// 	int			history_rows;
-// 	ssize_t		start_cur_row;
-// 	ssize_t		index_limit;
-// 	ssize_t		index;
-// 	ssize_t		row;
-// 	char		inp;
-// 	int			*ptr;	
-	
-
-// 	ptr = NULL;
-// 	ft_run_capability("vi");
-// 	history_rows = 10;
-// 	history_index = t->history_size - 1;
-// 	start_cur_row = t->term_val[1] + t->c_row;
-// 	row = init_interface(t, history_rows, start_cur_row);
-
-// 	/* Trial here */
-// 	ft_setcursor(0, start_cur_row + (history_rows - 1));
-// 	/* Init int ptr */
-// 	ptr = (int *)ft_memalloc(sizeof(int) * (history_rows));
-	
-// 	int i;
-
-// 	i = -1;
-// 	while (++i < history_rows)
-// 		ptr[i] = 0;
-// 	/* Init int ptr */
-// 	index_limit = history_options(t, history_rows, start_cur_row + (history_rows - 1), history_index, ptr);
-// 	ft_setcursor(0, start_cur_row + (history_rows - 1));
-// 	print_prompt("RED");
-// 	/* Trial here */
-// 	index = index_limit;
-// 	while (true) // while loop for the selector
-// 	{
-// 		inp = ft_get_input();
-// 		if (inp == 'q')
-// 			break;
-// 		if (inp == 91)
-// 		{
-// 			inp = ft_get_input();
-// 			if (inp == 65) // up
-// 			{
-// 				if (index)
-// 				{
-// 					ft_run_capability("cb");
-// 					--row;
-// 					--index;
-// 				}
-// 				else if ((size_t)history_index - history_rows && index_limit == (history_rows - 1))
-// 				{
-// 					--history_index;
-// 					ft_memdel((void **)&ptr);
-// 					ptr = (int *)ft_memalloc(sizeof(int) * (history_rows));
-
-// 					i = -1;
-// 					while (++i < history_rows)
-// 						ptr[i] = 0;
-// 					index_limit = history_options(t, 10, start_cur_row + (history_rows - 1), history_index, ptr);
-// 				}
-// 				ft_setcursor(0, row);
-// 				print_prompt("RED");
-					
-// 			}
-// 			if (inp == 66) // do
-// 			{
-// 				if (index < index_limit)
-// 				{
-// 					ft_run_capability("cb");
-// 					++row;
-// 					++index;
-// 				}
-// 				else if ((size_t)history_index < (t->history_size - 1))
-// 				{
-// 					++history_index;
-// 					ft_memdel((void **)&ptr);
-// 					ptr = (int *)ft_memalloc(sizeof(int) * (history_rows));
-
-// 					i = -1;
-// 					while (++i < history_rows)
-// 						ptr[i] = 0;
-// 					index_limit = history_options(t, 10, start_cur_row + (history_rows - 1), history_index, ptr);	
-// 				}
-// 				ft_setcursor(0, row);
-// 				print_prompt("RED");
-// 			}
-// 		}
-// 		if (inp == '\n')
-// 		{
-// 			ft_run_capability("cl");
-// 			ft_printf("|%s|", t->history_arr[ptr[index_limit - index]]);
-// 			ft_memdel((void **)&ptr);
-// 			break;
-// 		}
-// 	}
-// 	ft_run_capability("ve");
-// }

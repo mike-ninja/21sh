@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/19 12:58:08 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/21 14:18:28 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,22 @@
 # define RE_OUT_TWO 5
 
 typedef union u_treenode	t_treenode;
+
+/*	       CTRL+R HISTORY SEARCH STRUCT		*/
+typedef struct s_search_history
+{
+	int			history_index;
+	int			history_rows;
+	int			max_to_show;
+	int			to_show;
+	int			match;
+	int			*ptr;
+	char		inp;
+	ssize_t		row;
+	ssize_t		index;
+	// ssize_t		index_limit;
+	ssize_t		start_cur_row;
+}	t_search_history;
 
 /*					TOKEN STRUCT			*/
 typedef struct s_token
