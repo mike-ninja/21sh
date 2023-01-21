@@ -22,9 +22,14 @@ int	ft_jobs(t_session *sesh)
 	{
 		display_process_node(curr);
 		if (curr->status == 0 || curr->status == 2)
+		{
 			process_node_delete(sesh, &curr);
+
+		}
 		else
+		{
 			curr = curr->next;
+		}
 	}
 	return (0);
 }

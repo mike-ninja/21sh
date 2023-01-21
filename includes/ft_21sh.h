@@ -19,6 +19,11 @@
 # include "ft_printf.h"
 # include <sys/stat.h>
 
+# if __linux__
+#  include <sys/types.h>
+#  include <sys/wait.h>
+# endif
+
 /* Process Status */
 # define EXITED 0
 # define RUNNING 1
@@ -56,10 +61,9 @@ typedef struct s_process
 	pid_t				pid;
 	int					index;
 	int					status;
-	/* int					count; */
 	char				**command;
 	struct s_process	*next;
-	struct s_process	*prev; //do we need prev??
+	struct s_process	*prev;
 }	t_proc;
 
 /*					TOKEN STRUCT			*/

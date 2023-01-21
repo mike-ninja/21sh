@@ -25,7 +25,7 @@
   man 2 kill() -> to check if process is still running
 
 */
-static t_proc *create_process_node(t_session *sesh, int index, char **args, int pid)
+static t_proc *create_node(t_session *sesh, int index, char **args, int pid, t_proc *prev)
 {
 	int		i;
 	t_proc	*ret;
@@ -38,6 +38,7 @@ static t_proc *create_process_node(t_session *sesh, int index, char **args, int 
 	&sesh->process_queue[0], (sesh->process_count - 1) * sizeof(int));
 	sesh->process_queue[0] = index;
 	ret->next = NULL;
+	ret->prev = prev;
 	ret->command = (char **)ft_memalloc(sizeof(char *) * (ft_arrlen(args) + 1));
 	i = -1;
 	while (args[++i])
@@ -49,11 +50,16 @@ static t_proc *create_process_node(t_session *sesh, int index, char **args, int 
 static int	process_node_append(t_session *sesh, char **args, int pid)
 {
 	t_proc 	*ptr;
+	t_proc 	*prev;
 
 	ptr = sesh->process;
+	prev = ptr;
 	while (ptr->next)
+	{
+		prev = ptr;
 		ptr = ptr->next;
-	ptr->next =	create_process_node(sesh, ptr->index + 1, args, pid);
+	}
+	ptr->next =	create_node(sesh, ptr->index + 1, args, pid, prev);
 	return (ptr->next->index);
 }
 
@@ -62,7 +68,7 @@ int process_node_create(char **args, t_session *sesh, int pid)
 	sesh->process_count++;
 	if (!sesh->process)
 	{
-		sesh->process = create_process_node(sesh, 1, args, pid);
+		sesh->process = create_node(sesh, 1, args, pid, NULL);
 		return (sesh->process->index);
 	}
 	else

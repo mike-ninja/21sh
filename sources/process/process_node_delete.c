@@ -45,7 +45,7 @@ static void	delete_from_queue(t_session *sesh, t_proc *process)
 		if (process->index == sesh->process_queue[i])
 		{
 			ft_memmove(&sesh->process_queue[i], &sesh->process_queue[i + 1], \
-			(sesh->process_count - i) * sizeof(int)); //do we need to have -1 before i here?
+			(sesh->process_count - 1 - i) * sizeof(int));
 			sesh->process_count--;
 			break ;
 		}
@@ -53,18 +53,36 @@ static void	delete_from_queue(t_session *sesh, t_proc *process)
 	}
 }
 
-void	process_node_delete(t_session *sesh, t_proc **curr)
+void	remove_node(t_proc **curr)
 {
 	int		i;
-	t_proc	*next;
 
-	next = (*curr)->next;
-	delete_from_queue(sesh, *curr);
+	(*curr)->pid = -1;
+	(*curr)->index = -1;
+	(*curr)->status = -1;
 	i = -1;
+	// ft_freeda((void ***)&(*curr)->command, ft_arrlen((void **)(*curr)->command));
 	while ((*curr)->command[++i])
 		ft_strdel(&(*curr)->command[i]);
 	ft_memdel((void **)&(*curr)->command);
+	// (*curr)->next = NULL;
 	ft_memdel((void **)&(*curr));
-	(*curr) = next;
+}
 
+void	process_node_delete(t_session *sesh, t_proc **curr)
+{
+	t_proc	*next;
+	t_proc	*prev;
+
+	prev = (*curr)->prev;
+	next = (*curr)->next;
+	delete_from_queue(sesh, *curr);
+	remove_node(curr);
+	if (prev)
+		prev->next = next;
+	else
+		sesh->process = next;
+	if (next)
+		next->prev = prev;
+	(*curr) = next;
 }

@@ -19,6 +19,13 @@
 # include <fcntl.h>
 # include <sys/ioctl.h>
 
+# if __linux__
+#  include <curses.h>
+#  include <signal.h>
+#  include <limits.h>
+#  include <ctype.h>
+# endif
+
 # define ENTER      10
 # define CTRL_C		3
 # define CTRL_D		4
