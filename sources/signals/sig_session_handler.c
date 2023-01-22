@@ -25,7 +25,10 @@ void	sig_session_handler(int num)
 	if (num == SIGWINCH)
 		ft_window_size(g_session->term);
 	if (num == SIGINT)
+	{
+		ft_printf("hello sigint\n");
 		ft_restart_cycle(g_session->term);
+	}
 }
 
 void	sigchild_handler(int num)
@@ -62,24 +65,7 @@ void	sigchild_handler(int num)
 	// }
 }
 
-// static void	update_queue_back(t_session *sesh, t_proc *process)
-// {
-// 	t_proc	*ptr;
-
-// 	ptr = sesh->process;
-// 	while (ptr)
-// 	{
-// 		if (ptr == process)
-// 			ptr->queue = '+';
-// 		else if (ptr->queue == '+')
-// 			ptr->queue = '-';
-// 		else if (ptr->queue == '-')
-// 			ptr->queue = ' ';
-// 		ptr = ptr->next;
-// 	}
-// }
-
-void child_exit(int num) // we need an update queue here
+void child_exit(int num)
 {
 	int		status;
 	t_proc	*ptr;
@@ -89,14 +75,23 @@ void child_exit(int num) // we need an update queue here
 	if (num == SIGCHLD)
 	{
 		pid = waitpid(-1, &status, WNOHANG);
-		if (pid > 0) // this means that the process is exited, via cmpletion or termination
+		if (pid > 0) // this means that the process is exited, via completion or termination
 		{
 			while (ptr)
 			{
 				if (ptr->pid == pid)
 				{
-					process_node_delete(g_session, &ptr);
-					break ;
+					/* if (ptr->index == g_session->process_queue[0])
+					{ */
+						ft_printf("hello child_exit\n");
+						ft_printf("pid: %d\n", pid);
+						ft_printf("index: %d\n", ptr->index);
+						process_node_delete(g_session, &ptr);
+						break ;
+					/* }
+					else
+						ptr->status = pid_status(status); */
+
 				}
 				ptr = ptr->next;
 			}
@@ -105,7 +100,6 @@ void child_exit(int num) // we need an update queue here
 		{
 			while (ptr)
 			{
-				// if (ptr->queue == '+')
 				if (ptr->index == g_session->process_queue[0])
 				{
 					ptr->status = pid_status(status);
