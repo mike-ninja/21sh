@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 21:36:20 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/22 21:48:52 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/22 22:12:57 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	init_search_history_config(t_term *t, t_search_history *config)
 	config->max_to_show = 30;
 	config->to_show = config->max_to_show - 1;
 	config->history_index = t->history_size - 1;
-	config->start_cur_row = t->term_val[1] + t->c_row;
+	config->start_cur_row = t->term_val[1] + t->total_row;
 	config->match = count_matches(t, config->max_to_show);
 	config->row = config->start_cur_row + (config->history_rows - 1);
 }
@@ -87,8 +87,7 @@ void	init_interface(t_term *t, t_search_history *config)
 	if (diff >= 0)
 	{
 		ft_run_capability("sc");
-		ft_setcursor(t->ws_col - 10, t->ws_row - 5);
-		ft_printf("%d|%d|%d", t->ws_row, config->row + 2, diff);
+		config->start_cur_row -= diff + 1;
 		while (diff-- >= 0)
 		{
 			ft_setcursor(0, t->ws_row);
@@ -200,8 +199,26 @@ void	ft_search_history(t_term *t)
 		}
 		if (config.inp == '\n')
 		{
-			ft_run_capability("cl");
-			ft_printf("|%s|", t->history_arr[config.ptr[config.index - index_cpy]]);
+			t->c_col = ft_strlen(t->history_arr[config.ptr[config.index - index_cpy]]);
+			t->bytes -= ft_strlen(t->nl_addr[t->total_row]);
+			ft_memcpy(t->nl_addr[t->total_row], t->history_arr[config.ptr[config.index - index_cpy]], t->c_col);
+			t->term_val[1] = config.start_cur_row;
+			t->bytes += t->c_col;
+			t->index = t->bytes;
+			ft_setcursor(0, config.start_cur_row);
+			ft_run_capability("cd");
+			if (!t->total_row)
+			{
+				ft_printf("{GREEN}%s{RESET}", PROMPT);
+				t->c_col += t->prompt_len;
+			}
+			else
+			{
+				ft_printf("{GREEN}%s{RESET}", MINI_PROMPT);
+				t->c_col += t->m_prompt_len;
+			}
+			ft_putstr(t->nl_addr[t->total_row]);
+			
 			ft_memdel((void **)&config.ptr);
 			break;
 		}
