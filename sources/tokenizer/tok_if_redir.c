@@ -6,29 +6,46 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:11:18 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/19 15:32:12 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:46:23 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
+/*
+static int	does_redir_have_dest(char *line, int *end)
+{
+	int i;
+
+	i = 0;
+	ft_printf("LINE: %s\n", &line[*end]);
+	while (line[*end + i] && !is_seperator(line[*end + i]))
+		++i;
+	if (i > 0)
+		return (1);
+	if (is_seperator(line[*end]))
+	{
+		ft_printf("WHY\n");
+		*(line + (*end + 1)) = '\0';
+		ft_err_print(NULL, "syntax error near unexpected token",
+			line + *end, 2);
+		ft_printf("NOT\n");
+	}
+	else
+	{
+		ft_err_print(NULL, "syntax error near unexpected token",
+			"`newline'", 2);
+	}
+	return (0);
+}
+*/
+
 static int	traverse_to_end(char *line, int *end)
 {
 	while (line[*end] && ft_isspace(line[*end]))
 		++(*end);
-	if (is_seperator(line[*end]) || line[*end] == '\0')
+	if (redir_error(&line[*end]))
 	{
-		if (is_seperator(line[*end]))
-		{
-			*(line + (*end + 1)) = '\0';
-			ft_err_print(NULL, "syntax error near unexpected token",
-				line + *end, 2);
-		}
-		else
-		{
-			ft_err_print(NULL, "syntax error near unexpected token",
-				"`newline'", 2);
-		}
 		*end = -1;
 		return (1);
 	}
