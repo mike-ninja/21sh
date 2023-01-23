@@ -34,11 +34,26 @@ int	count_matches(t_term *t, t_search_history *config)
 	while (i && to_show < config->max_to_show)
 	{
 		if (ft_strstr(t->history_arr[i], t->nl_addr[t->total_row]))
+		{
 			count++;
-		to_show++;
+			to_show++;
+		}
 		i--;
 	}
 	return (count);
+}
+
+static void	get_next_index(t_term *t, t_search_history *config)
+{
+	if ((size_t)config->history_index < (t->history_size - 1))
+	{
+		config->history_index++;
+		if (*t->nl_addr[t->total_row])
+		{
+			while ((size_t)config->history_index < (t->history_size - 1) && !ft_strstr(t->history_arr[config->history_index], t->nl_addr[t->total_row]))
+				config->history_index++;
+		}
+	}	
 }
 
 void	ft_selector_do(int *index_cpy, int *row_cpy, t_term *t, t_search_history *config)
@@ -54,12 +69,14 @@ void	ft_selector_do(int *index_cpy, int *row_cpy, t_term *t, t_search_history *c
 	else if ((size_t)config->history_index < (t->history_size - 1))
 	{
 		++config->to_show;
-		++config->history_index;
-		history_options(t, config);
+		// ++config->history_index;
 		config->history_index = config->ptr[0];
+		get_next_index(t, config);
+		history_options(t, config);
 	}
 	ft_setcursor(0, *row_cpy);
 	print_selector("RED");
+	ft_setcursor(config->input_cur_col, config->input_term_row);
 }
 
 void	ft_selector_up(int *index_cpy, int *row_cpy, t_term *t, t_search_history *config)
@@ -75,12 +92,13 @@ void	ft_selector_up(int *index_cpy, int *row_cpy, t_term *t, t_search_history *c
 	else if (config->index == (config->history_rows - 1) && config->ptr[config->index - (*index_cpy)] > 1)
 	{
 		--config->to_show;
-		--config->history_index;
+		// --config->history_index;
+		config->history_index = config->ptr[1];
 		history_options(t, config);
-		config->history_index = config->ptr[0];
 	}
 	ft_setcursor(0, *row_cpy);
 	print_selector("RED");
+	ft_setcursor(config->input_cur_col, config->input_term_row);
 }
 
 void	ft_select_history(t_term *t, t_search_history *config, int index_cpy)

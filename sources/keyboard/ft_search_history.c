@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_search_history.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 21:36:20 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/23 15:33:55 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/23 20:03:10 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	ft_search_history(t_term *t)
 	int					row_cpy;
 	int					index_cpy;
 	t_search_history	config;
-	
 
 	// Need to setup signals for sigwinch, sigint		
 	ft_run_capability("vi");
@@ -96,10 +95,10 @@ void	ft_search_history(t_term *t)
 	print_selector("RED");
 	row_cpy = config.row;
 	index_cpy = config.index;
+	ft_setcursor(config.input_cur_col, config.input_term_row);
 	ft_run_capability("ve");
 	while (true) // while loop for the selector
 	{
-		ft_setcursor(config.input_cur_col, config.input_term_row);
 		config.inp = ft_get_input();
 		if (config.inp == 91)
 		{
@@ -107,7 +106,8 @@ void	ft_search_history(t_term *t)
 			config.inp = ft_get_input();
 			if (config.inp == 65 && config.to_show) // up
 				ft_selector_up(&index_cpy, &row_cpy, t, &config);
-			if (config.inp == 66 && config.to_show < config.max_to_show) // do
+			// else if (config.inp == 66 && config.to_show < config.max_to_show) // do
+			else if (config.inp == 66 && config.to_show < config.max_to_show) // do
 				ft_selector_do(&index_cpy, &row_cpy, t, &config);
 			ft_run_capability("ve");
 		}
@@ -118,20 +118,51 @@ void	ft_search_history(t_term *t)
 		}
 		else if (ft_isprint(config.inp))
 		{
+			ft_setcursor(1, config.row);
+			ft_run_capability("cb");
 			t->inp[t->index++] = config.inp;
 			t->bytes++;
 			config.input_cur_col++;
-			history_options(t, &config);
-			// ft_printf("THIS HAPPENS");
+			config.row = config.start_cur_row + (config.history_rows - 1);
 			config.history_index = config.ptr[0];
+			index_cpy = config.index;
 			config.match = count_matches(t, &config);
+			config.to_show = config.match - 1; // new
+			history_options(t, &config);
 			ft_display_to_show(&config);
 			ft_display_input(t, &config);	
-			if (index_cpy > config.index)
-				index_cpy = config.index;
-			ft_setcursor(0, config.row - (config.index - index_cpy));
-			print_selector("RED");
+			if (config.to_show)
+			{
+				ft_setcursor(0, config.row);
+				print_selector("RED");
+			}
 			ft_setcursor(config.input_cur_col, config.input_term_row);
 		}
+		else if (config.inp == BACKSPACE)
+		{
+			if (&t->inp[t->index] > t->nl_addr[t->total_row])
+			{
+				ft_setcursor(1, config.row);
+				ft_run_capability("cb");
+				ft_deletion_shift(t, --t->index);
+				config.row = config.start_cur_row + (config.history_rows - 1);
+				config.history_index = config.ptr[0];
+				index_cpy = config.index;
+				config.match = count_matches(t, &config);
+				config.to_show = config.match - 1;
+				history_options(t, &config);
+				config.input_cur_col--;
+				ft_display_to_show(&config);
+				ft_display_input(t, &config);	
+				if (config.to_show)
+				{
+					ft_setcursor(0, config.row);
+					print_selector("RED");
+				}
+				ft_setcursor(config.input_cur_col, config.input_term_row);
+				ft_run_capability("ce");
+			}
+		}
+		// ft_setcursor(config.input_cur_col, config.input_term_row);
 	}
 }

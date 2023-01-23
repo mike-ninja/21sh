@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_history_options.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:45:11 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/23 15:49:36 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/23 19:51:28 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	history_options(t_term *t, t_search_history *config)
 	int	display_row_cpy;
 	int	history_index_cpy;
 
+	ft_run_capability("vi");
 	index = 0;
 	display_row_cpy =  config->row;
 	row_cpy = config->history_rows;
@@ -59,4 +60,5 @@ void	history_options(t_term *t, t_search_history *config)
 		ft_setcursor(0, display_row_cpy--);
 		ft_run_capability("ce");
 	}
+	ft_run_capability("ve");
 }
