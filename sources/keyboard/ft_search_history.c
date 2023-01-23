@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 21:36:20 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/23 21:18:48 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/23 21:47:51 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	init_interface(t_term *t, t_search_history *config)
 	{
 		ft_run_capability("sc");
 		config->start_cur_row -= diff + 1;
+		t->term_val[1] -= diff + 1;
 		while (diff-- >= 0)
 		{
 			ft_setcursor(0, t->ws_row);
@@ -78,6 +79,47 @@ void	init_interface(t_term *t, t_search_history *config)
 		config->input_term_row = config->row + 2;
 		ft_run_capability("rc");
 	}
+}
+
+static void	edit_input(int *i_cpy, int *r_cpy, t_term *t, t_search_history *config)
+{
+	bool bs;
+
+	bs = false;
+	if (config->inp == BACKSPACE && &t->inp[t->index] > t->nl_addr[t->total_row])
+		bs = true;
+	if (!ft_isprint(config->inp) && !bs)
+		return ;
+	config->row = config->start_cur_row + (config->history_rows - 1);
+	*r_cpy = config->row;
+	ft_setcursor(1, config->row);
+	ft_run_capability("cb");
+	if (bs)
+	{
+		ft_deletion_shift(t, --t->index);
+		--config->input_cur_col;
+	}
+	else
+	{
+		t->inp[t->index++] = config->inp;
+		++t->bytes;
+		++config->input_cur_col;
+	}
+	config->history_index = t->history_size - 1;
+	config->match = count_matches(t, config);
+	config->to_show = config->match - 1;
+	history_options(t, config);
+	*i_cpy = config->index;
+	ft_display_to_show(config);
+	ft_display_input(t, config);
+	if (config->to_show)
+	{
+		ft_setcursor(0, config->row);
+		print_selector("RED");
+	}
+	ft_setcursor(config->input_cur_col, config->input_term_row);
+	if (bs)
+		ft_run_capability("ce");
 }
 
 void	ft_search_history(t_term *t)
@@ -117,54 +159,8 @@ void	ft_search_history(t_term *t)
 			ft_select_history(t, &config, index_cpy);
 			break ;
 		}
-		else if (ft_isprint(config.inp))
-		{
-			config.row = config.start_cur_row + (config.history_rows - 1);
-			row_cpy = config.row;
-			ft_setcursor(1, config.row);
-			ft_run_capability("cb");
-			t->inp[t->index++] = config.inp;
-			t->bytes++;
-			config.input_cur_col++;
-			config.history_index = t->history_size - 1;
-			config.match = count_matches(t, &config);
-			config.to_show = config.match - 1;
-			history_options(t, &config);
-			index_cpy = config.index;
-			ft_display_to_show(&config);
-			ft_display_input(t, &config);
-			if (config.to_show)
-			{
-				ft_setcursor(0, config.row);
-				print_selector("RED");
-			}
-			ft_setcursor(config.input_cur_col, config.input_term_row);
-		}
-		else if (config.inp == BACKSPACE)
-		{
-			if (&t->inp[t->index] > t->nl_addr[t->total_row])
-			{
-				config.row = config.start_cur_row + (config.history_rows - 1);
-				row_cpy = config.row;
-				ft_setcursor(1, config.row);
-				ft_run_capability("cb");
-				ft_deletion_shift(t, --t->index);
-				config.history_index = t->history_size - 1;
-				config.match = count_matches(t, &config);
-				config.to_show = config.match - 1;
-				history_options(t, &config);
-				index_cpy = config.index;
-				config.input_cur_col--;
-				ft_display_to_show(&config);
-				ft_display_input(t, &config);
-				if (config.to_show)
-				{
-					ft_setcursor(0, config.row);
-					print_selector("RED");
-				}
-				ft_setcursor(config.input_cur_col, config.input_term_row);
-				ft_run_capability("ce");
-			}
-		}
+		else if (ft_isprint(config.inp) || config.inp == BACKSPACE)
+			edit_input(&index_cpy, &row_cpy, t, &config);
 	}
 }
+

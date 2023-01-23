@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 09:36:28 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/23 21:09:33 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/23 21:43:32 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ void	ft_ctrl(t_term *t)
 		set_new_cur_pos(t);
 		ft_run_capability("ve");
 	}
-	else if (t->ch == CTRL_R)
+	else if (t->ch == CTRL_R && t->c_row == t->total_row)
 		ft_search_history(t);
 }

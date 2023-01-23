@@ -121,5 +121,6 @@ void	ft_select_history(t_term *t, t_search_history *config, int index_cpy)
 	ft_history_reset_nl(t);
 	ft_quote_flag_reset(t);
 	ft_print_input(t, t->c_row, 0);
+	t->c_row = t->total_row;
 	ft_memdel((void **)&config->ptr);
 }
