@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 10:20:17 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/19 18:14:00 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/23 09:21:46 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,9 +319,12 @@ int	fc_check_flags(t_session *sesh, char ***cmd)
 		i = 1;
 		while ((*cmd)[1][i])
 		{
-			if ((*cmd)[1][i] != 's' && (*cmd)[1][i] != 'l' && (*cmd)[1][i] != 'n' && (*cmd)[1][i] != 'r')
+			if ((*cmd)[1][i] != 's' && (*cmd)[1][i] != 'l' \
+				&& (*cmd)[1][i] != 'n' && (*cmd)[1][i] != 'r')
 			{
-				ft_putendl_fd("42sh: fc: invalid option\nfc: usage: fc [-e ename] [-lnr] [first] [last] or fc -s [pat=rep] [command]", 2);
+				ft_putstr_fd("42sh: fc: invalid option", 2);
+				ft_putstr_fd("fc: usage: fc [-e ename] [-lnr] ", 2);
+				ft_putendl_fd("[first] [last] or fc -s [pat=rep] [command]", 2);
 				return (0);
 			}
 			i++;
