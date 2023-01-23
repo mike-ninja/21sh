@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 21:36:20 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/23 11:55:23 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/23 13:12:25 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	history_options(t_term *t, t_search_history *config)
 			ft_setcursor(0, display_row_cpy);
 			ft_run_capability("ce");
 			ft_printf("%2s%d%5s%s", "", history_index_cpy, "", t->history_arr[history_index_cpy]);
-			ft_run_capability("up");
+			// ft_run_capability("up");
 			display_row_cpy--;
 			row_cpy--;
 			config->ptr[index++] = history_index_cpy;
@@ -133,13 +133,12 @@ void	history_options(t_term *t, t_search_history *config)
 		}
 		history_index_cpy--;
 	}
-	while (display_row_cpy)
-	{
-		ft_setcursor(0, display_row_cpy);	
-		ft_run_capability("ce");
-		display_row_cpy--;
-	}
 	config->index = (config->history_rows - row_cpy) - 1;
+	while (row_cpy-- > 0)
+	{
+		ft_setcursor(0, display_row_cpy--);
+		ft_run_capability("ce");
+	}
 }
 
 static void	ft_selector_do(int *index_cpy, int *row_cpy, t_term *t, t_search_history *config)
@@ -257,6 +256,11 @@ void	ft_search_history(t_term *t)
 			config.input_cur_col++;
 			ft_display_input(t, &config);	
 			history_options(t, &config);
+			if (index_cpy > config.index)
+				index_cpy = config.index;
+			ft_setcursor(0, config.row - (config.index - index_cpy));
+			print_prompt("RED");
+			ft_setcursor(config.input_cur_col, config.input_term_row);
 		}
 		// ft_run_capability("ve");
 	}
