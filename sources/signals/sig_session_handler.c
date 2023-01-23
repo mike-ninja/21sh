@@ -45,24 +45,6 @@ void	sigchild_handler(int num)
 		g_session->term->ws_col = size.ws_col;
 		g_session->term->ws_row = size.ws_row;
 	}
-	// else if (num == SIGINT)
-	// 	kill(g_session->process->pid, SIGINT);
-	// else if (num == SIGTSTP || num == SIGSTOP)
-	// {
-	// 	t_proc *ptr = g_session->process;
-
-	// 	while (ptr)
-	// 	{
-	// 		if (ptr->queue == '+')
-	// 		{
-	// 			ft_putchar('\n');
-	// 			kill(ptr->pid, SIGSTOP);
-	// 			ptr->status = 1;
-	// 			display_process_node(ptr);
-	// 		}
-	// 		ptr = ptr->next;
-	// 	}
-	// }
 }
 
 void child_exit(int num)
@@ -72,6 +54,7 @@ void child_exit(int num)
 	pid_t	pid;
 
 	ptr = g_session->process;
+	ft_printf("hello child_exit\n");
 	if (num == SIGCHLD)
 	{
 		pid = waitpid(-1, &status, WNOHANG);
@@ -83,7 +66,6 @@ void child_exit(int num)
 				{
 					/* if (ptr->index == g_session->process_queue[0])
 					{ */
-						ft_printf("hello child_exit\n");
 						ft_printf("pid: %d\n", pid);
 						ft_printf("index: %d\n", ptr->index);
 						process_node_delete(g_session, &ptr);
