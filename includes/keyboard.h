@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/23 15:34:11 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/23 21:12:25 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,10 @@ typedef struct s_search_history
 	char		inp;
 	ssize_t		row;
 	ssize_t		index;
-	// ssize_t		index_limit;
 	ssize_t		start_cur_row;
 	ssize_t		input_cur_col;
 	ssize_t		input_term_row; 
 	ssize_t		match_term_row;
-	// ssize_t		options_term_row; // the same as row
 }	t_search_history;
 
 typedef struct clipboard
