@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 22:10:49 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/22 13:22:06 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/23 13:09:07 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	delete_from_queue(t_session *sesh, t_proc *process)
 	}
 }
 
-void	remove_node(t_proc **curr)
+static void	remove_node(t_proc **curr)
 {
 	int		i;
 

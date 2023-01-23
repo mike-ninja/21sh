@@ -58,6 +58,8 @@ void child_exit(int num)
 	if (num == SIGCHLD)
 	{
 		pid = waitpid(-1, &status, WNOHANG);
+		ft_printf("pid: %d\n", pid);
+		ft_printf("1index: %d\n", ptr->index);
 		if (pid > 0) // this means that the process is exited, via completion or termination
 		{
 			while (ptr)
@@ -66,8 +68,7 @@ void child_exit(int num)
 				{
 					/* if (ptr->index == g_session->process_queue[0])
 					{ */
-						ft_printf("pid: %d\n", pid);
-						ft_printf("index: %d\n", ptr->index);
+						ft_printf("2index: %d\n", ptr->index);
 						process_node_delete(g_session, &ptr);
 						break ;
 					/* }

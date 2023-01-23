@@ -53,6 +53,9 @@
 # define RE_OUT_ONE 4
 # define RE_OUT_TWO 5
 
+/* 			Job control 		*/
+# define JOB_MAX 256
+
 typedef union u_treenode	t_treenode;
 
 /*					PROCESS ID				*/

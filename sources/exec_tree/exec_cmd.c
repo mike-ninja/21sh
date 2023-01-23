@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/20 16:01:48 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/23 15:08:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,13 @@ void	execute_bin(char **args, char ***environ_cp, t_session *sesh)
 		pid = fork_wrap();
 		if (pid)
 			process_node_create(args, sesh, pid);
-		if (access && pid == 0)
+		if (/* access &&  */pid == 0)
 		{
 			if (!cmd || execve(cmd, args, *environ_cp) < 0)
 				exe_fail(&cmd, args, environ_cp);
 			exit (1);
 		}
-		if (cmd && access && pid)
+		if (/* cmd && access &&  */pid)
 		{
 			if (sesh->process_control) // For process that are going to the background
 				waitpid(pid, &status, WNOHANG);

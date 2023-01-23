@@ -76,8 +76,10 @@ int	ft_fg(t_session *sesh, char **cmd)
 		signal(SIGTSTP, sigchild_handler);
 		signal(SIGSTOP, sigchild_handler);
 		update_queue(sesh, process);
-		kill(process->pid, SIGCONT);
+		// kill(process->pid, SIGCONT);
+		ft_printf("fg %d\n", process->pid);
 		waitpid(process->pid, &status, WUNTRACED);
+		ft_printf("fg %d\n", process->pid);
 	}
 	return (0);
 }
