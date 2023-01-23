@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 22:59:19 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/23 11:22:37 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/23 13:45:14 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,14 +288,33 @@ int				ft_test(t_session *sesh, char **cmd);
 int				is_binary(char *str);
 int				is_unary(char *str);
 
-/*			    BUILTIN UTILITIES			*/
+/*				BUILTIN TEST				*/
+int				ft_test_z(char **arg);
+int				ft_test_x(char **arg);
+int				ft_test_w(char **arg);
+int				ft_test_u(char **arg);
+int				ft_test_s(char **arg);
+int				ft_test_capital_s(char **arg);
+int				ft_test_r(char **arg);
+int				ft_test_p(char **arg);
+int				ft_test_l(char **arg);
+int				ft_test_capital_l(char **arg);
+int				ft_test_g(char **arg);
+int				ft_test_f(char **arg);
+int				ft_test_e(char **arg);
+int				ft_test_d(char **arg);
+int				ft_test_c(char **arg);
+int				is_unary(char *str);
+int				is_binary(char *str);
+
+/*				BUILTIN UTILITIES			*/
 int				ft_env_temp(t_session *sesh, char **cmd, int i);
 void			ft_env_remove(t_session *sesh, char *env_to_clean);
 int				ft_env_append(t_session *sesh, char **arg);
 int				ft_env_replace(t_session *sesh, char *envn, char **tmp_env);
 void			ft_dir_change(t_session *sesh);
 
-/*			  		 HISTORY				*/
+/*				HISTORY				*/
 int				ft_history(t_term *t);
 void			ft_history_get(t_term *t);
 char			*ft_history_file_get(void);

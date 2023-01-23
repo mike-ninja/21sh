@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_test_is_unary.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 18:30:29 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/23 12:06:24 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/23 14:01:58 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,33 +28,36 @@ static int not_return_last(int not)
 
 static char *get_file_path(char **arg, int not) // Do we need to have a check for '.' and '..'?
 {
-	char		filepath[PATH_MAX];
+	char		*filepath;
+	int			argc;
 
+	argc = ft_arrlen(arg);
+	filepath = NULL;
 	if (not)
 	{
-		if (arg[3][0] != '/')
+		if (argc > 3 && arg[3][0] != '/')
 		{
 			getcwd(filepath, sizeof(filepath));
 			filepath = ft_strjoin(filepath, arg[3]);
 		}
-		else
+		else if (argc > 3)
 			filepath = ft_strdup(arg[3]);
 	}
 	else
 	{
-		if (arg[2][0] != '/')
+		if (argc > 2 && arg[2][0] != '/')
 		{
 			getcwd(filepath, sizeof(filepath));
 			filepath = ft_strjoin(filepath, arg[2]);
 		}
-		else
+		else if (argc > 2)
 			filepath = ft_strdup(arg[2]);
 	}
 	return (filepath);
 }
 
 // True if the length of string is zero.
-static int ft_test_z(char **arg)
+int ft_test_z(char **arg)
 {
 	int		not;
 
@@ -69,7 +72,7 @@ static int ft_test_z(char **arg)
 //	True if file exists and is executable.  True indicates only
 //	that the execute flag is on.  If file is a directory, true
 //	indicates that file can be searched.
-static int ft_test_x(char **arg)
+int ft_test_x(char **arg)
 {
 	int		not;
 
@@ -84,7 +87,7 @@ static int ft_test_x(char **arg)
 //	True if file exists and is writable.  True indicates only
 //	that the write flag is on.  The file is not writable on a
 //	read-only file system even if this test indicates true.
-static int ft_test_w(char **arg)
+int ft_test_w(char **arg)
 {
 	int		not;
 
@@ -97,7 +100,7 @@ static int ft_test_w(char **arg)
 }
 
 //	True if file exists and its set user ID flag is set.
-static int ft_test_u(char **arg)
+int ft_test_u(char **arg)
 {
     struct stat file_info;
 	char		*filepath;
@@ -124,7 +127,7 @@ static int ft_test_u(char **arg)
 }
 
 // True if file exists and has a size greater than zero.
-static int ft_test_s(char **arg)
+int ft_test_s(char **arg)
 {
     struct stat file_info;
 	char		*filepath;
@@ -149,7 +152,7 @@ static int ft_test_s(char **arg)
 }
 
 // True if file exists and is a socket.
-static int ft_test_capital_s(char **arg)
+int ft_test_capital_s(char **arg)
 {
 	struct stat file_info;
 	char		*filepath;
@@ -174,7 +177,7 @@ static int ft_test_capital_s(char **arg)
 }
 
 //True if file exists and is readable.
-static int	ft_test_r(char **arg)
+int	ft_test_r(char **arg)
 {
 	int		not;
 
@@ -188,7 +191,7 @@ static int	ft_test_r(char **arg)
 
 
 //	True if file exists and is a named pipe (FIFO).
-static int ft_test_p(char **arg)
+int ft_test_p(char **arg)
 {
 	struct stat file_info;
 	char		*filepath;
@@ -213,7 +216,7 @@ static int ft_test_p(char **arg)
 }
 
 // True if file exists and is a symbolic link.
-static int ft_test_capital_l(char **arg)
+int ft_test_capital_l(char **arg)
 {
 	struct stat file_info;
 	char		*filepath;
@@ -238,7 +241,7 @@ static int ft_test_capital_l(char **arg)
 }
 
 // True if file exists and its set group ID flag is set.
-static int ft_test_g(char **arg)
+int ft_test_g(char **arg)
 {
 	struct stat file_info;
 	char		*filepath;
@@ -263,7 +266,7 @@ static int ft_test_g(char **arg)
 }
 
 // True if file exists and is a regular file.
-static int ft_test_f(char **arg)
+int ft_test_f(char **arg)
 {
 	struct stat file_info;
 	char		*filepath;
@@ -288,7 +291,7 @@ static int ft_test_f(char **arg)
 }
 
 // True if file exists (regardless of type).
-static int ft_test_e(char **arg)
+int ft_test_e(char **arg)
 {
 	struct stat file_info;
 	char		*filepath;
@@ -309,7 +312,7 @@ static int ft_test_e(char **arg)
 }
 
 // True if file exists and is a directory.
-static int ft_test_d(char **arg)
+int ft_test_d(char **arg)
 {
 	struct stat file_info;
 	char		*filepath;
@@ -334,7 +337,7 @@ static int ft_test_d(char **arg)
 }
 
 // True if file exists and is a character special file.
-static int ft_test_c(char **arg)
+int ft_test_c(char **arg)
 {
 	struct stat file_info;
 	char		*filepath;
@@ -370,6 +373,5 @@ int is_unary(char *str)
 			|| ft_strequ(str, "-p") || ft_strequ(str, "-r")
 			|| ft_strequ(str, "-S") || ft_strequ(str, "-s")
 			|| ft_strequ(str, "-u") || ft_strequ(str, "-w")
-			|| ft_strequ(str, "-x") || ft_strequ(str, "-z")
-			|| ft_strequ(str, "!"));
+			|| ft_strequ(str, "-x") || ft_strequ(str, "-z"));
 }
