@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:11:18 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/19 15:32:12 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:55:37 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,8 @@ static int	traverse_to_end(char *line, int *end)
 {
 	while (line[*end] && ft_isspace(line[*end]))
 		++(*end);
-	if (is_seperator(line[*end]) || line[*end] == '\0')
+	if (redir_error(&line[*end]))
 	{
-		if (is_seperator(line[*end]))
-		{
-			*(line + (*end + 1)) = '\0';
-			ft_err_print(NULL, "syntax error near unexpected token",
-				line + *end, 2);
-		}
-		else
-		{
-			ft_err_print(NULL, "syntax error near unexpected token",
-				"`newline'", 2);
-		}
 		*end = -1;
 		return (1);
 	}
