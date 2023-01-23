@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 21:36:20 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/23 10:57:01 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/23 11:27:15 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,12 @@ void	history_options(t_term *t, t_search_history *config)
 		}
 		history_index_cpy--;
 	}
+	while (display_row_cpy)
+	{
+		ft_setcursor(0, display_row_cpy);	
+		ft_run_capability("ce");
+		display_row_cpy--;
+	}
 	config->index = (config->history_rows - row_cpy) - 1;
 }
 
@@ -150,7 +156,7 @@ static void	ft_selector_do(int *index_cpy, int *row_cpy, t_term *t, t_search_his
 
 static void	ft_selector_up(int *index_cpy, int *row_cpy, t_term *t, t_search_history *config)
 {
-	if (*index_cpy)
+	if (*index_cpy > 0)
 	{
 		--(*row_cpy);
 		--(*index_cpy);
@@ -169,12 +175,16 @@ static void	ft_selector_up(int *index_cpy, int *row_cpy, t_term *t, t_search_his
 
 static void	ft_select_history(t_term *t, t_search_history *config, int index_cpy)
 {
-	t->c_col = ft_strlen(t->history_arr[config->ptr[config->index - index_cpy]]);
-	t->bytes -= ft_strlen(t->nl_addr[t->total_row]);
-	ft_memcpy(t->nl_addr[t->total_row], t->history_arr[config->ptr[config->index - index_cpy]], t->c_col);
-	t->term_val[1] = config->start_cur_row;
-	t->bytes += t->c_col;
-	t->index = t->bytes;
+	if (config->index >= 0 && index_cpy >= 0)
+	{
+		// ft_printf("%d . %d", config->index, index_cpy);
+		t->c_col = ft_strlen(t->history_arr[config->ptr[config->index - index_cpy]]);
+		t->bytes -= ft_strlen(t->nl_addr[t->total_row]);
+		ft_memcpy(t->nl_addr[t->total_row], t->history_arr[config->ptr[config->index - index_cpy]], t->c_col);
+		t->term_val[1] = config->start_cur_row;
+		t->bytes += t->c_col;
+		t->index = t->bytes;
+	}
 	ft_setcursor(0, config->start_cur_row);
 	ft_run_capability("cd");
 	if (!t->total_row)
@@ -208,13 +218,11 @@ void	ft_search_history(t_term *t)
 	print_prompt("RED");
 	row_cpy = config.row;
 	index_cpy = config.index;
-	if (config.index == -1) // When there is no matches found?
-		return ;
+	// if (config.index == -1) // When there is no matches found?
+	// 	return ;
 	while (true) // while loop for the selector
 	{
 		config.inp = ft_get_input();
-		if (config.inp == 'q')
-			break;
 		if (config.inp == 91)
 		{
 			config.inp = ft_get_input();
@@ -223,10 +231,17 @@ void	ft_search_history(t_term *t)
 			if (config.inp == 66 && config.to_show < config.max_to_show) // do
 				ft_selector_do(&index_cpy, &row_cpy, t, &config);
 		}
-		if (config.inp == '\n')
+		else if (config.inp == '\n')
 		{
 			ft_select_history(t, &config, index_cpy);
 			break;
+		}
+		else if (ft_isprint(config.inp))
+		{
+			t->inp[t->index++] = config.inp;
+			t->bytes++;
+			ft_display_input(t, &config);	
+			history_options(t, &config);
 		}
 	}
 	ft_run_capability("ve");
