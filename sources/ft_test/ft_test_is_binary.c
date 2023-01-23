@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 18:31:13 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/23 11:42:58 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/23 15:45:54 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int not_return_last(int not)
 }
 
 // True if the strings s1 and s2 are identical.
-static int	ft_test_equal(char **arg)
+int	ft_test_equal(char **arg)
 {
 	int		not;
 
@@ -41,7 +41,7 @@ static int	ft_test_equal(char **arg)
 
 //	True if the integer n1 is algebraically less than or equal
 //	to the integer n2.
-static int	ft_test_le(char **arg)
+int	ft_test_le(char **arg)
 {
 	int		not;
 
@@ -55,7 +55,7 @@ static int	ft_test_le(char **arg)
 
 //	True if the integer n1 is algebraically less than the
 //	integer n2.
-static int	ft_test_lt(char **arg)
+int	ft_test_lt(char **arg)
 {
 	int		not;
 
@@ -69,7 +69,7 @@ static int	ft_test_lt(char **arg)
 
 //	True if the integer n1 is algebraically greater than or equal
 //	to the integer n2.
-static int	ft_test_ge(char **arg)
+int	ft_test_ge(char **arg)
 {
 	int		not;
 
@@ -82,7 +82,7 @@ static int	ft_test_ge(char **arg)
 }
 
 //	True if the integers n1 and n2 are not algebraically equal.
-static int	ft_test_ne(char **arg)
+int	ft_test_ne(char **arg)
 {
 	int		not;
 
@@ -95,7 +95,7 @@ static int	ft_test_ne(char **arg)
 }
 
 //	True if the integer n1 is algebraically equal to the integer n2.
-static int	ft_test_eq(char **arg)
+int	ft_test_eq(char **arg)
 {
 	int		not;
 
@@ -108,7 +108,7 @@ static int	ft_test_eq(char **arg)
 }
 
 // True if the strings s1 and s2 are not identical.
-static int	ft_test_not_equal(char **arg)
+int	ft_test_not_equal(char **arg)
 {
 	int		not;
 
