@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 18:31:13 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/23 09:56:10 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/23 11:42:58 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@
 static int	is_not(char **arg)
 {
 	return (ft_strequ(arg[1], "!"));
+}
+
+// Make own file
+static int not_return_last(int not)
+{
+	if (not)
+    	return 0;
+	return 1;
 }
 
 // True if the strings s1 and s2 are identical.
@@ -28,7 +36,7 @@ static int	ft_test_equal(char **arg)
 		return (1);
 	else if (ft_strequ(arg[1], arg[3]))
 		return (0);
-	return (1);
+	return (not_return_last(not));
 }
 
 //	True if the integer n1 is algebraically less than or equal
@@ -42,7 +50,7 @@ static int	ft_test_le(char **arg)
 		return (1);
 	else if (ft_atoi(arg[1]) <= ft_atoi(arg[3]))
 		return (0);
-	return (1);
+	return (not_return_last(not));
 }
 
 //	True if the integer n1 is algebraically less than the
@@ -56,7 +64,7 @@ static int	ft_test_lt(char **arg)
 		return (1);
 	else if (ft_atoi(arg[1]) < ft_atoi(arg[3]))
 		return (0);
-	return (1);
+	return (not_return_last(not));
 }
 
 //	True if the integer n1 is algebraically greater than or equal
@@ -70,7 +78,7 @@ static int	ft_test_ge(char **arg)
 		return (1);
 	else if (ft_atoi(arg[1]) >= ft_atoi(arg[3]))
 		return (0);
-	return (1);
+	return (not_return_last(not));
 }
 
 //	True if the integers n1 and n2 are not algebraically equal.
@@ -83,7 +91,7 @@ static int	ft_test_ne(char **arg)
 		return (1);
 	else if (ft_atoi(arg[1]) != ft_atoi(arg[3]))
 		return (0);
-	return (1);
+	return (not_return_last(not));
 }
 
 //	True if the integer n1 is algebraically equal to the integer n2.
@@ -96,7 +104,7 @@ static int	ft_test_eq(char **arg)
 		return (1);
 	else if (ft_atoi(arg[1]) == ft_atoi(arg[3]))
 		return (0);
-	return (1);
+	return (not_return_last(not));
 }
 
 // True if the strings s1 and s2 are not identical.
@@ -109,7 +117,7 @@ static int	ft_test_not_equal(char **arg)
 		return (1);
 	else if (!ft_strequ(arg[1], arg[3]))
 		return (0);
-	return (1);
+	return (not_return_last(not));
 }
 
 /*
