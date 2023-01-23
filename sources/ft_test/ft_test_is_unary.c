@@ -3,14 +3,101 @@
 /*                                                        :::      ::::::::   */
 /*   ft_test_is_unary.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 18:30:29 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/16 18:39:59 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/23 10:09:51 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "ft_21sh.h"
+
+static int	is_not(char **arg)
+{
+	return (ft_strequ(arg[1], "!"));
+}
+
+// True if the length of string is zero.
+static int ft_test_z(char **arg)
+{
+	int		not;
+
+	not = is_not(arg);
+	if (not && ft_strlen(arg[3]) == 0)
+		return (1);
+	else if (ft_strlen(arg[2]) == 0)
+		return (0);
+	return (1);
+}
+
+//	True if file exists and is executable.  True indicates only
+//	that the execute flag is on.  If file is a directory, true
+//	indicates that file can be searched.
+static int ft_test_x(char **arg)
+{
+	int		not;
+
+	not = is_not(arg);
+	if (not && access(arg[3], X_OK) == 0)
+		return (1);
+	else if (access(arg[2], X_OK) == 0)
+		return (0);
+	return (1);
+}
+
+//	True if file exists and is writable.  True indicates only
+//	that the write flag is on.  The file is not writable on a
+//	read-only file system even if this test indicates true.
+static int ft_test_w(char **arg)
+{
+	int		not;
+
+	not = is_not(arg);
+	if (not && access(arg[3], W_OK) == 0)
+		return (1);
+	else if (access(arg[2], W_OK) == 0)
+		return (0);
+	return (1);
+}
+
+//	True if file exists and its set user ID flag is set.
+static int ft_test_u(char **arg) //need more work
+{
+	int		not;
+
+	not = is_not(arg);
+	if (not && access(arg[3], U_OK) == 0)
+		return (1);
+	else if (access(arg[2], U_OK) == 0)
+		return (0);
+	return (1);
+}
+
+// True if file exists and has a size greater than zero.
+static int ft_test_s(char **arg)  //need more work
+{
+	int		not;
+
+	not = is_not(arg);
+	if (not && access(arg[3], S_OK) == 0)
+		return (1);
+	else if (access(arg[2], S_OK) == 0)
+		return (0);
+	return (1);
+}
+
+// True if file exists and is a socket.
+static int ft_test_capital_s(char **arg) //need more work
+{
+	int		not;
+
+	not = is_not(arg);
+	if (not && access(arg[3], S_OK) == 0)
+		return (1);
+	else if (access(arg[2], S_OK) == 0)
+		return (0);
+	return (1);
+}
 
 /*
 	These are mandatory:
