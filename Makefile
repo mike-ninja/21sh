@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
+#    By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 06:01:22 by mbarutel          #+#    #+#              #
-#    Updated: 2023/01/19 21:38:01 by mbarutel         ###   ########.fr        #
+#    Updated: 2023/01/23 15:48:13 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -130,6 +130,8 @@ FILES			= $(KEYBOARD)ft_add_nl_last_row \
 				$(KEYBOARD)ft_row_lowest_line \
 				$(KEYBOARD)ft_run_capability \
 				$(KEYBOARD)ft_search_history \
+				$(KEYBOARD)ft_history_options \
+				$(KEYBOARD)ft_search_history_utils \
 				$(KEYBOARD)ft_shift_nl_addr \
 				$(KEYBOARD)ft_window_size \
 				$(KEYBOARD)ft_word_mv \

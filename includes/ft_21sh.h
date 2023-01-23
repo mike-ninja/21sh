@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/23 11:40:13 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/23 15:29:35 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,6 @@
 # define RE_OUT_TWO 5
 
 typedef union u_treenode	t_treenode;
-
-/*	       CTRL+R HISTORY SEARCH STRUCT		*/
-typedef struct s_search_history
-{
-	int			history_index;
-	int			history_rows;
-	int			max_to_show;
-	int			to_show;
-	int			match;
-	int			*ptr;
-	char		inp;
-	ssize_t		row;
-	ssize_t		index;
-	// ssize_t		index_limit;
-	ssize_t		start_cur_row;
-	ssize_t		input_cur_col;
-	ssize_t		input_term_row; 
-	ssize_t		match_term_row;
-	// ssize_t		options_term_row; // the same as row
-}	t_search_history;
 
 /*					TOKEN STRUCT			*/
 typedef struct s_token

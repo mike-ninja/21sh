@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/19 21:37:34 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/23 15:34:11 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,26 @@
 # define PROMPT			"$> "
 # define MINI_PROMPT	"> "
 # define MAX_HISTORY	1024
+
+/*	       CTRL+R HISTORY SEARCH STRUCT		*/
+typedef struct s_search_history
+{
+	int			history_index;
+	int			history_rows;
+	int			max_to_show;
+	int			to_show;
+	int			match;
+	int			*ptr;
+	char		inp;
+	ssize_t		row;
+	ssize_t		index;
+	// ssize_t		index_limit;
+	ssize_t		start_cur_row;
+	ssize_t		input_cur_col;
+	ssize_t		input_term_row; 
+	ssize_t		match_term_row;
+	// ssize_t		options_term_row; // the same as row
+}	t_search_history;
 
 typedef struct clipboard
 {
@@ -146,5 +166,12 @@ void	ft_trigger_nl(t_term *t);
 void	ft_window_size(t_term *t);
 void	ft_word_mv(t_term *t);
 void	ft_history_add_command(t_term *t, char *command);
+
+void	ft_select_history(t_term *t, t_search_history *config, int index_cpy);
+void	ft_selector_up(int *index_cpy, int *row_cpy, t_term *t, t_search_history *config);
+void	ft_selector_do(int *index_cpy, int *row_cpy, t_term *t, t_search_history *config);
+void	history_options(t_term *t, t_search_history *config);
+int		count_matches(t_term *t, t_search_history *config);
+void	print_selector(char *color);
 
 #endif
