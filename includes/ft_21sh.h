@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/24 11:11:29 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/24 11:15:40 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@
 # include <sys/stat.h>
 
 //DELETE START
+#ifdef __linux__
 #include <signal.h> //FOR LINUX
 #include <wait.h> //FOR LINUX
+#endif
 //DELETE END
 
 /* For print_tree */
