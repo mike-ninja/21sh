@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/18 17:18:06 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/22 22:12:27 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 # include "keyboard.h"
 # include "ft_printf.h"
 # include <sys/stat.h>
+
+//DELETE START
+#include <signal.h> //FOR LINUX
+#include <wait.h> //FOR LINUX
+//DELETE END
 
 /* For print_tree */
 # define COUNT 10

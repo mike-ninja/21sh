@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+         #
+#    By: jakken <jakken@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2023/01/18 17:18:49 by jniemine         ###   ########.fr        #
+#    Updated: 2023/01/22 22:25:50 by jakken           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ CFLAGS				+=	-Wpedantic
 # CFLAGS				+=	-Wconversion
 CFLAGS				+=	-O3
 
-#LEAK_CHECK			= -g
+LEAK_CHECK			= -g
 #LEAK_CHECK		+=	-fsanitize=address
 
 UNAME				= $(shell uname)
@@ -235,7 +235,7 @@ ASSERT_OBJECT = && printf "$(ERASE_LINE)" && printf "$@ $(GREEN)$(BOLD) ✓$(RES
 all: libft $(NAME)
 
 $(NAME): libft/libft.a $(OBJECTS) $(O_PATHS)
-	@$(CC) $(CFLAGS) $(HEADERS) -o $@ $(O_PATHS) $(LIBS) $(TERMCAP) $(LEAK_CHECK) -fsanitize=address
+	@$(CC) $(CFLAGS) $(HEADERS) -o $@ $(O_PATHS) $(LIBS) $(TERMCAP) $(LEAK_CHECK)
 	@printf "Compiled $(BOLD)$(GREEN)$(NAME)$(RESET)!\n\n"
 	@printf "$(C_VISIBLE)"
 

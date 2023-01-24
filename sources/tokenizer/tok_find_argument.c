@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tok_find_argument.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:13:39 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/18 17:17:44 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/22 22:25:23 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*find_argument(char *line, int *i, int *start, int *end)
 		return (ret);
 	if (!is_seperator(line[*end]))
 	{
-		while (line[*end] && (!is_seperator(line[*end] || quote)))
+		while (line[*end] && (!is_seperator(line[*end]) || quote))
 			tok_quote_flag(line, end, &quote);
 	}
 	else

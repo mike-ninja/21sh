@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tok_if_logical.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jakken <jakken@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 17:21:17 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/12 13:17:58 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/22 22:19:08 by jakken           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 char	*tok_if_logical(char *line, int *i, int *start, int *end)
 {
+	ft_printf("LINE: |%s|\n", &line[*i]);
 	if ((line[*i] == '|' && line[*i + 1] == '|')
 		|| (line[*i] == '&' && line[*i + 1] == '&'))
 	{
@@ -28,6 +29,7 @@ char	*tok_if_logical(char *line, int *i, int *start, int *end)
 	}
 	else if (line[*i] == '&')
 	{
+		ft_printf("ARE WE HERE\n");
 		*start = *i;
 		*end = *start + 1;
 		if (control_op_error(&line[*end - 1]))
