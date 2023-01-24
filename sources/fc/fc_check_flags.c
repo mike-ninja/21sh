@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 10:20:17 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/23 09:21:46 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/24 12:00:15 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,7 +307,7 @@ static int	loop_flags(t_session *sesh, char ***cmd)
 		else
 			return (fc_list_flag(sesh, cmd));
 	}
-	return (1);
+	return (0);
 }
 
 int	fc_check_flags(t_session *sesh, char ***cmd)
