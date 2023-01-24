@@ -6,7 +6,7 @@
 /*   By: mviinika <mviinika@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 11:40:05 by mviinika          #+#    #+#             */
-/*   Updated: 2023/01/18 12:57:43 by mviinika         ###   ########.fr       */
+/*   Updated: 2023/01/24 15:59:35 by mviinika         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,20 @@ static int	check_syntax(char *cmd)
 
 	i = 0;
 	valid = -1;
-	if (ft_strnequ(cmd, "${", 2))
+	ft_printf("kljsadhfgklj %c\n", cmd[ft_strlen(cmd) -1]);
+	if (ft_strnequ(cmd, "${", 2) && cmd[ft_strlen(cmd) -1] == '}')
 	{
 		i += 2;
 		valid = 0;
-		if (cmd[i] && ft_isalpha(cmd[i]))
+		if (cmd[i] == '#')
+			valid += 1;
+		while (cmd[i])
 		{
-			while (cmd[i])
-			{
-				if (cmd[i] == ':')
-					valid += 1;
-				else if (cmd[i] == '}')
-					valid += 1;
-				i++;
-			}
-				
+			if (cmd[i] == ':')
+				valid += 1;
+			else if (cmd[i] == '}')
+				valid += 1;
+			i++;
 		}
 		if (valid == 2)
 			return (1);
@@ -108,6 +107,7 @@ char	*subst_param(t_session *sesh, char *var, char *subst, int format)
 	expanded = NULL;
 	temp = (char **)ft_memalloc(sizeof(char *) * 2);
 	temp[0] = ft_expansion_dollar(sesh, var);
+	ft_printf("temp [%s]\n", temp[0]);
 	temp[1] = NULL;
 	if (format == 0)
 	{
@@ -148,9 +148,10 @@ char	*subst_param(t_session *sesh, char *var, char *subst, int format)
 	else if (format == 3)
 	{
 		ft_printf("plus sign[%s] %s\n", var, subst);
-		if (temp[0])
+		if (temp[0][0])
 			expanded = ft_strdup(subst + 1);
-		ft_printf("expanded[%s]", expanded);
+		else
+			expanded = ft_strnew(1);
 	}
 	return (expanded);
 }
@@ -174,6 +175,36 @@ int	format_mode(char *var)
 	return (format);
 }
 
+char *count_letters(t_session *sesh, char *cmd)
+{
+	int		i;
+	int		k;
+	char	*expanded;
+	char	*var;
+
+	i = 0;
+	k = 0;
+	expanded = NULL;
+	var = ft_strnew(ft_strlen(cmd));
+	while (cmd[i])
+	{
+		if (cmd[i] == '#')
+			i++;
+		var[k++] = cmd[i++];
+	}
+	i = 1;
+	ft_printf("%s\n", var);
+	// while(var[i])
+	// {
+	// 	if (!ft_isalpha(cmd[i]) && cmd[i] != '_' && cmd[i] != '!')
+	// 		return (NULL);
+	// 	i++;
+	// }
+	expanded = ft_expansion_dollar(sesh, var);
+	ft_strdel(&var);
+	return (ft_itoa(ft_strlen(expanded)));
+}
+
 int	param_format(t_session *sesh, char **cmd)
 {
 	int		i;
@@ -186,14 +217,20 @@ int	param_format(t_session *sesh, char **cmd)
 	i = -1;
 	subs = NULL;
 	expanded = NULL;
+	format = -1;
 	while (cmd[++i])
 	{
 		if (check_syntax(cmd[i]))
 		{
 			strip = remove_braces(cmd[i]);
-			subs = ft_strdup(ft_strchr(strip, ':') + 1);
-			var = ft_strndup(strip, ft_strlen(strip) - ft_strlen(subs) - 1);
-			format = format_mode(subs);
+			if (ft_strnequ(cmd[i], "${#", 3))
+				expanded = count_letters(sesh, strip);
+			else
+			{
+				subs = ft_strdup(ft_strchr(strip, ':') + 1);
+				var = ft_strndup(strip, ft_strlen(strip) - ft_strlen(subs) - 1);
+				format = format_mode(subs);
+			}
 			ft_printf("stripped %s variable %s format %d\n", strip, subs, format);
 			if (format != -1)
 				expanded = subst_param(sesh, var, subs, format);
