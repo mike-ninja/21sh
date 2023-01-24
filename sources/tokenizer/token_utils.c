@@ -6,11 +6,16 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 20:34:50 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/18 17:21:58 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/24 10:47:23 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
+
+int is_semi_or_amp(char c)
+{
+	return (c == ';' || c == '&');
+}
 
 int	is_seperator(char c)
 {

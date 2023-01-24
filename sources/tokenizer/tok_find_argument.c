@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:13:39 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/24 10:37:42 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/24 10:42:19 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	test_operator_error(char *line, int *end)
 {
 	if (*end > 0 && is_seperator(line[*end]))
 	{
-		if (control_op_error(&line[*end]))
+		if (test_if_error(&line[*end]))
 		{
 			*end = -1;
 			return (1);
