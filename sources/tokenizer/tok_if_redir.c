@@ -6,20 +6,26 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:11:18 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/18 17:21:48 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/24 10:37:47 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-static void	traverse_to_end(char *line, int *end)
+static int	traverse_to_end(char *line, int *end)
 {
 	while (line[*end] && ft_isspace(line[*end]))
 		++(*end);
+	if (redir_error(&line[*end]))
+	{
+		*end = -1;
+		return (1);
+	}
 	while (line[*end] && !ft_isspace(line[*end]) && !is_seperator(line[*end]))
 		++(*end);
 	while (ft_isspace(line[*end]))
 		++(*end);
+	return (0);
 }
 
 char	*tok_if_redir(char *line, int *i, int *start, int *end)
@@ -43,7 +49,8 @@ char	*tok_if_redir(char *line, int *i, int *start, int *end)
 			*end = -1;
 			return (NULL);
 		}
-		traverse_to_end(line, end);
+		if (traverse_to_end(line, end))
+			return (NULL);
 		return (ft_strsub(line, *start, *end - *start));
 	}
 	return (NULL);
