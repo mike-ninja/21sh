@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/24 11:02:45 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/24 11:11:29 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 # include "keyboard.h"
 # include "ft_printf.h"
 # include <sys/stat.h>
+
+//DELETE START
+#include <signal.h> //FOR LINUX
+#include <wait.h> //FOR LINUX
+//DELETE END
 
 /* For print_tree */
 # define COUNT 10
