@@ -3,17 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_history_options.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:45:11 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/23 19:51:28 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/24 11:16:04 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-static void history_option_display(char *str)
+static void history_option_display(t_term *t, char *str)
 {
+	int	col;
+
+	col = 10;
     while (*str)
     {
         if (*str != '\n')
@@ -21,7 +24,13 @@ static void history_option_display(char *str)
         else
             ft_putstr("\\n");
         str++;
-    }
+		col++;
+		if (col == t->ws_col - 3)
+		{
+			ft_putstr("..");
+			break ;
+		}
+	}
 }
 
 void	history_options(t_term *t, t_search_history *config)
@@ -44,9 +53,8 @@ void	history_options(t_term *t, t_search_history *config)
 		{
 			ft_setcursor(0, display_row_cpy);
 			ft_run_capability("ce");
-			// ft_printf("%2s%-5d%2s%s", "", history_index_cpy, "", t->history_arr[history_index_cpy]);
 			ft_printf("%2s%-5d%2s", "", history_index_cpy, "");
-            history_option_display(t->history_arr[history_index_cpy]);
+            history_option_display(t, t->history_arr[history_index_cpy]);
 			display_row_cpy--;
 			row_cpy--;
 			config->ptr[index++] = history_index_cpy;

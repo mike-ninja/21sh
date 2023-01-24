@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_search_history.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 21:36:20 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/23 21:47:51 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/24 11:32:00 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ static void	edit_input(int *i_cpy, int *r_cpy, t_term *t, t_search_history *conf
 		bs = true;
 	if (!ft_isprint(config->inp) && !bs)
 		return ;
+	if (ft_isprint(config->inp) && config->input_cur_col == (t->ws_col - 1))
+		return ;
 	config->row = config->start_cur_row + (config->history_rows - 1);
 	*r_cpy = config->row;
 	ft_setcursor(1, config->row);
@@ -161,6 +163,19 @@ void	ft_search_history(t_term *t)
 		}
 		else if (ft_isprint(config.inp) || config.inp == BACKSPACE)
 			edit_input(&index_cpy, &row_cpy, t, &config);
+		else if (config.inp == 18)
+		{
+			if (!t->total_row)
+				t->c_col = t->prompt_len;
+			else
+				t->c_col = t->m_prompt_len;
+			t->c_col += ft_strlen(t->nl_addr[t->total_row]);
+			ft_setcursor(0, config.start_cur_row);
+			ft_run_capability("cd");
+			ft_print_input(t, t->c_row, 0);
+			ft_memdel((void **)&config.ptr);
+			break ;
+		}
 	}
 }
 
