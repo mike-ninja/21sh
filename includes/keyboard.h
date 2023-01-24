@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/23 21:12:25 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/24 12:42:18 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_search_history
 	int			history_rows;
 	int			max_to_show;
 	int			to_show;
+	int			status;
 	int			match;
 	int			*ptr;
 	char		inp;
@@ -106,6 +107,7 @@ typedef struct s_term
 	char		quote;
 	t_clipboard	clipboard;
 	ssize_t		term_val[2];
+	t_search_history *config;
 }			t_term;
 
 int		ft_keyboard(t_term *t);
@@ -171,5 +173,6 @@ void	ft_selector_do(int *index_cpy, int *row_cpy, t_term *t, t_search_history *c
 void	history_options(t_term *t, t_search_history *config);
 int		count_matches(t_term *t, t_search_history *config);
 void	print_selector(char *color);
+bool	ft_is_match(char *haystack, char *needle);
 
 #endif

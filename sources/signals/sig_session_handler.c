@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig_session_handler.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 09:02:29 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/14 09:31:26 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/24 15:13:30 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,29 @@ void	sigwinch_inchild_handler(int num)
 		}
 		g_session->term->ws_col = size.ws_col;
 		g_session->term->ws_row = size.ws_row;
+	}
+}
+
+void	search_history_sigs(int num)
+{	
+	struct winsize	size;
+
+	if (num == SIGWINCH)
+	{
+		if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &size) < 0)
+		{
+			ft_putstr_fd("could not get the terminal size", 2);
+			exit(1);
+		}
+		g_session->term->ws_col = size.ws_col;
+		g_session->term->ws_row = size.ws_row;
+	}
+	if (num == SIGINT)
+	{
+		ft_setcursor(0, (g_session->term->term_val[1]-- + g_session->term->total_row));
+		ft_run_capability("cd");
+		ft_restart_cycle(g_session->term);
+		g_session->term->config->status = 0;
+		ft_memdel((void **)&g_session->term->config->ptr);
 	}
 }

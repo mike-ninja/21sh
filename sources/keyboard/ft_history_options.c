@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:45:11 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/24 11:16:04 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/24 12:25:59 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ static void history_option_display(t_term *t, char *str)
         if (*str != '\n')
             ft_putchar(*str);
         else
+		{
             ft_putstr("\\n");
+			col++;
+		}
         str++;
 		col++;
 		if (col == t->ws_col - 3)
@@ -31,6 +34,25 @@ static void history_option_display(t_term *t, char *str)
 			break ;
 		}
 	}
+}
+
+bool	ft_is_match(char *haystack, char *needle)
+{
+	int	x;
+	int	len;
+
+	x = 0;
+	len = ft_strlen(needle);
+	while (*haystack && needle[x])
+	{
+		if (*haystack == needle[x])
+			++x;
+		haystack++;
+	}
+	if (x == len)
+		return (1);
+	else
+		return (0);
 }
 
 void	history_options(t_term *t, t_search_history *config)
@@ -49,7 +71,8 @@ void	history_options(t_term *t, t_search_history *config)
 	to_show_cpy = config->to_show + config->history_rows;
 	while (row_cpy && history_index_cpy && t->history_arr[history_index_cpy] && to_show_cpy && index < config->match)
 	{
-		if (ft_strstr(t->history_arr[history_index_cpy], t->nl_addr[t->total_row])) // This logic needs to be improved
+		// if (ft_strstr(t->history_arr[history_index_cpy], t->nl_addr[t->total_row])) // This logic needs to be improved
+		if (ft_is_match(t->history_arr[history_index_cpy], t->nl_addr[t->total_row])) // This logic needs to be improved
 		{
 			ft_setcursor(0, display_row_cpy);
 			ft_run_capability("ce");

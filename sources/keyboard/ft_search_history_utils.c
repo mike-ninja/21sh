@@ -33,7 +33,7 @@ int	count_matches(t_term *t, t_search_history *config)
 		return (config->max_to_show);
 	while (i && to_show < config->max_to_show)
 	{
-		if (ft_strstr(t->history_arr[i], t->nl_addr[t->total_row]))
+		if (ft_is_match(t->history_arr[i], t->nl_addr[t->total_row]))
 		{
 			count++;
 			to_show++;
@@ -116,11 +116,15 @@ void	ft_select_history(t_term *t, t_search_history *config, int index_cpy)
 		t->bytes += t->c_col;
 		t->index = t->bytes;
 	}
+	if (!t->total_row)
+		t->c_col += t->prompt_len;
+	else
+		t->c_col += t->m_prompt_len;
 	ft_setcursor(0, config->start_cur_row);
 	ft_run_capability("cd");
 	ft_history_reset_nl(t);
 	ft_quote_flag_reset(t);
 	ft_print_input(t, t->c_row, 0);
 	t->c_row = t->total_row;
-	ft_memdel((void **)&config->ptr);
+	// ft_memdel((void **)&config->ptr);
 }

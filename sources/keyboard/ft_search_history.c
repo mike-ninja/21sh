@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 21:36:20 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/24 11:32:00 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/24 15:12:34 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	init_index_ptr(t_search_history *config)
 
 static void	init_search_history_config(t_term *t, t_search_history *config)
 {
+	config->status = 1;
 	config->match = 0;
 	config->history_rows = 10;
 	init_index_ptr(config);
@@ -90,7 +91,7 @@ static void	edit_input(int *i_cpy, int *r_cpy, t_term *t, t_search_history *conf
 		bs = true;
 	if (!ft_isprint(config->inp) && !bs)
 		return ;
-	if (ft_isprint(config->inp) && config->input_cur_col == (t->ws_col - 1))
+	if (ft_isprint(config->inp) && config->input_cur_col == (t->ws_col - 2))
 		return ;
 	config->row = config->start_cur_row + (config->history_rows - 1);
 	*r_cpy = config->row;
@@ -131,6 +132,9 @@ void	ft_search_history(t_term *t)
 	t_search_history	config;
 
 	// Need to setup signals for sigwinch, sigint
+	t->config = &config;
+	signal(SIGINT, search_history_sigs);
+	signal(SIGWINCH, search_history_sigs);
 	ft_run_capability("vi");
 	init_search_history_config(t, &config);
 	init_interface(t, &config);
@@ -143,7 +147,7 @@ void	ft_search_history(t_term *t)
 	index_cpy = config.index;
 	ft_setcursor(config.input_cur_col, config.input_term_row);
 	ft_run_capability("ve");
-	while (true)
+	while (config.status)
 	{
 		config.inp = ft_get_input();
 		if (config.inp == 91)
@@ -161,7 +165,7 @@ void	ft_search_history(t_term *t)
 			ft_select_history(t, &config, index_cpy);
 			break ;
 		}
-		else if (ft_isprint(config.inp) || config.inp == BACKSPACE)
+		else if ((ft_isprint(config.inp) || config.inp == BACKSPACE))
 			edit_input(&index_cpy, &row_cpy, t, &config);
 		else if (config.inp == 18)
 		{
@@ -171,11 +175,17 @@ void	ft_search_history(t_term *t)
 				t->c_col = t->m_prompt_len;
 			t->c_col += ft_strlen(t->nl_addr[t->total_row]);
 			ft_setcursor(0, config.start_cur_row);
+			ft_history_reset_nl(t);
+			ft_quote_flag_reset(t);
 			ft_run_capability("cd");
 			ft_print_input(t, t->c_row, 0);
-			ft_memdel((void **)&config.ptr);
+			// ft_memdel((void **)&config.ptr);
 			break ;
 		}
 	}
+	ft_memdel((void **)&config.ptr);
+	t->config = NULL;
+	signal(SIGINT, sig_session_handler);
+	signal(SIGWINCH, sig_session_handler);
 }
 

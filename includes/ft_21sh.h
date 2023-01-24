@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/23 15:29:35 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/24 12:38:41 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,4 +260,5 @@ void			ft_history_write_to_file(t_term *t);
 void			set_signal_fork(int num);
 void			sig_session_handler(int num);
 void			sigwinch_inchild_handler(int num);
+void			search_history_sigs(int num);
 #endif
