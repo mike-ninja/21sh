@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:09:10 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/23 16:49:23 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/24 10:23:55 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,15 @@ static int	redir_error_split(char *str, int err_flag)
 	if (!err_flag && ft_strnequ(str, "&", 1))
 		err_flag = ft_err_print(NULL, "syntax error near unexpected token",
 				"`&'", 1);
+	else if (!err_flag && (*str && *str == '|'))
+		err_flag = ft_err_print(NULL, "syntax error near unexpected token",
+				"`|'", 1);
+	else if (!err_flag && *str && ft_strnequ(str, ";;", 2))
+		err_flag = ft_err_print(NULL, "syntax error near unexpected token",
+				"`;;'", 2);
+	else if (!err_flag && *str && ft_strnequ(str, ";", 1))
+		err_flag = ft_err_print(NULL, "syntax error near unexpected token",
+				"`;'", 1);
 	else if (!err_flag && *str != ';' && is_seperator(*str))
 	{
 		*(str + 1) = '\0';
