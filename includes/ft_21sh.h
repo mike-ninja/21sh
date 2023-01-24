@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_21sh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 22:59:19 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/23 13:45:14 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/23 15:34:26 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,6 +304,13 @@ int				ft_test_f(char **arg);
 int				ft_test_e(char **arg);
 int				ft_test_d(char **arg);
 int				ft_test_c(char **arg);
+int				ft_test_equal(char **arg);
+int				ft_test_le(char **arg);
+int				ft_test_lt(char **arg);
+int				ft_test_ge(char **arg);
+int				ft_test_ne(char **arg);
+int				ft_test_eq(char **arg);
+int				ft_test_not_equal(char **arg);
 int				is_unary(char *str);
 int				is_binary(char *str);
 

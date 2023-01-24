@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_test.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 17:50:32 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/23 13:55:14 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/23 15:48:03 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,14 @@
 			msg: 21sh: <first param>: unary operator expected
 		Only one operator is allowed, so for example in: test -fe, -fe is treated as operand.
 */
-static int validate_input(t_session *sesh, char **cmd)
+static int validate_input(t_session *sesh, char **cmd, int punctuation)
 {
 	int		argc;
-	int		punctuation;
 
-	punctuation = 0;
-	if (ft_strequ(cmd[1], "!"))
-		punctuation = 1;
 	argc = ft_arrlen(cmd);
 	if (argc > (4 + punctuation))
 		ft_err_print(NULL, "test", "too many arguments", 2);
-	else if (argc == (4 + punctuation) && !is_binary(cmd[3 + punctuation]))
+	else if (argc == (4 + punctuation) && !is_binary(cmd[2 + punctuation]))
 		ft_err_print("test", cmd[3 + punctuation], "binary operator expected", 2);
 	else if (argc == (3 + punctuation) && !is_unary(cmd[1 + punctuation]))
 		ft_err_print("test", cmd[1 + punctuation], "unary operator expected", 2);
@@ -43,44 +39,63 @@ static int validate_input(t_session *sesh, char **cmd)
 }
 
 //	-c, -d, -e, -f, -g, -L, -p, -r, -S, -s, -u, -w, -x, -z, !
-static int operator_dispatcher(char **cmd)
+static int operator_dispatcher(char **cmd, int punctuation)
 {
-	if (ft_strequ(cmd[1], "-c"))
-		return(ft_test_c(cmd));
-	else if (ft_strequ(cmd[1], "-d"))
-		return(ft_test_d(cmd));
-	else if (ft_strequ(cmd[1], "-e"))
-		return(ft_test_e(cmd));
-	else if (ft_strequ(cmd[1], "-f"))
-		return(ft_test_f(cmd));
-	else if (ft_strequ(cmd[1], "-g"))
-		return(ft_test_g(cmd));
-	else if (ft_strequ(cmd[1], "-L"))
-		return(ft_test_capital_l(cmd));
-	else if (ft_strequ(cmd[1], "-p"))
-		return(ft_test_p(cmd));
-	else if (ft_strequ(cmd[1], "-r"))
-		return(ft_test_r(cmd));
-	else if (ft_strequ(cmd[1], "-S"))
-		return(ft_test_capital_s(cmd));
-	else if (ft_strequ(cmd[1], "-s"))
-		return(ft_test_s(cmd));
-	else if (ft_strequ(cmd[1], "-u"))
-		return(ft_test_u(cmd));
-	else if (ft_strequ(cmd[1], "-w"))
-		return(ft_test_w(cmd));
-	else if (ft_strequ(cmd[1], "-x"))
-		return(ft_test_x(cmd));
-	else if (ft_strequ(cmd[1], "-z"))
-		return(ft_test_z(cmd));
+	if (ft_strequ(cmd[1 + punctuation], "-c"))
+		return (ft_test_c(cmd));
+	else if (ft_strequ(cmd[1 + punctuation], "-d"))
+		return (ft_test_d(cmd));
+	else if (ft_strequ(cmd[1 + punctuation], "-e"))
+		return (ft_test_e(cmd));
+	else if (ft_strequ(cmd[1 + punctuation], "-f"))
+		return (ft_test_f(cmd));
+	else if (ft_strequ(cmd[1 + punctuation], "-g"))
+		return (ft_test_g(cmd));
+	else if (ft_strequ(cmd[1 + punctuation], "-L"))
+		return (ft_test_capital_l(cmd));
+	else if (ft_strequ(cmd[1 + punctuation], "-p"))
+		return (ft_test_p(cmd));
+	else if (ft_strequ(cmd[1 + punctuation], "-r"))
+		return (ft_test_r(cmd));
+	else if (ft_strequ(cmd[1 + punctuation], "-S"))
+		return (ft_test_capital_s(cmd));
+	else if (ft_strequ(cmd[1 + punctuation], "-s"))
+		return (ft_test_s(cmd));
+	else if (ft_strequ(cmd[1 + punctuation], "-u"))
+		return (ft_test_u(cmd));
+	else if (ft_strequ(cmd[1 + punctuation], "-w"))
+		return (ft_test_w(cmd));
+	else if (ft_strequ(cmd[1 + punctuation], "-x"))
+		return (ft_test_x(cmd));
+	else if (ft_strequ(cmd[1 + punctuation], "-z"))
+		return (ft_test_z(cmd));
+	else if (ft_strequ(cmd[2 + punctuation], "!="))
+		return (ft_test_not_equal(cmd));
+	else if (ft_strequ(cmd[2 + punctuation], "-eq"))
+		return (ft_test_eq(cmd));
+	else if (ft_strequ(cmd[2 + punctuation], "-ne"))
+		return (ft_test_ne(cmd));
+	else if (ft_strequ(cmd[2 + punctuation], "-ge"))
+		return (ft_test_ge(cmd));
+	else if (ft_strequ(cmd[2 + punctuation], "-lt"))
+		return (ft_test_lt(cmd));
+	else if (ft_strequ(cmd[2 + punctuation], "-le"))
+		return (ft_test_le(cmd));
+	else if (ft_strequ(cmd[2 + punctuation], "="))
+		return (ft_test_equal(cmd));
 	return (1);
 }
 
 int ft_test(t_session *sesh, char **cmd)
 {
+	int		punctuation;
+
+	punctuation = 0;
+	if (ft_strequ(cmd[1], "!"))
+		punctuation = 1;
 	sesh->exit_stat = 1;
-	if (validate_input(sesh, cmd))
+	if (validate_input(sesh, cmd, punctuation))
 		return (0);
-	sesh->exit_stat = operator_dispatcher(cmd);
+	sesh->exit_stat = operator_dispatcher(cmd, punctuation);
 	return (0);
 }
