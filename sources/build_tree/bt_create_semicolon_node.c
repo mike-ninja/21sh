@@ -6,7 +6,7 @@
 /*   By: jniemine <jniemine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:43:28 by jniemine          #+#    #+#             */
-/*   Updated: 2023/01/13 20:00:57 by jniemine         ###   ########.fr       */
+/*   Updated: 2023/01/24 11:18:11 by jniemine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,7 @@ static int init_values(int next_semi_or_amp,
 	if (type == AMPERSAND)
 		*semi_or_amp = init_ampersand_node();
 	else
-	{
-		ft_printf("SEMIINIT\n");
 		*semi_or_amp = init_semicolon();
-	}
 	return (type);
 }
 
@@ -70,11 +67,9 @@ t_treenode	*create_semicolon_node(t_token *tokens, int i_tok, int end)
 	int			type;
 	int			delim;
 
-	ft_printf("ITOK: %d\n", i_tok);
 	if (!tokens[i_tok].token)
 		return (NULL);
 	next_semi_or_amp = next_semicolon_or_ampersand(tokens, i_tok, end);
-	ft_printf("NEXTSEMI: %d\n", next_semi_or_amp);
 	type = init_values(next_semi_or_amp, tokens, i_tok, &semi_or_amp);
 	if (next_semi_or_amp >= 0)
 		delim = next_semi_or_amp;
@@ -82,22 +77,17 @@ t_treenode	*create_semicolon_node(t_token *tokens, int i_tok, int end)
 		delim = end;
 	if (type == AMPERSAND)
 	{
-		ft_printf("ITOK THE SECOND: %d\n", i_tok);
 		(((t_ampersand *)semi_or_amp)->left) = create_logical_op_tree(tokens,
 				i_tok, delim);
-		print_tree(semi_or_amp);
 	}
 	else
 	{
-		ft_printf("DELIM: %d\n", delim);
 		(((t_semicolon *)semi_or_amp)->left) = create_logical_op_tree(tokens,
 				i_tok, delim);
 	}
 	//next_semi_or_amp = next_semicolon_or_ampersand(tokens, next_semi_or_amp + 1, end);
-	ft_printf("NEXTSEMI 2: %d\n", next_semi_or_amp);
 	if (next_semi_or_amp >= 0)
 	{
-		ft_printf("NOT HERE\n");
 		if (type == AMPERSAND)
 			(((t_ampersand *)semi_or_amp)->right) = create_semicolon_node(
 					tokens, next_semi_or_amp + 1, end);
