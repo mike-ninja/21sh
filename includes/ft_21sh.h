@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:30:27 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/19 15:23:07 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/24 14:39:39 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,16 @@
 # define FC_LEN 18
 
 typedef union u_treenode	t_treenode;
+
+/*					FC STRUCT			*/
+typedef struct s_fc
+{
+	char	**filename;
+	char	*ret_cmd;
+	int		start;
+	int		end;
+	int		e;
+}	t_fc;
 
 /*					TOKEN STRUCT			*/
 typedef struct s_token

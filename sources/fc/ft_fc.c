@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 09:41:05 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/24 13:26:53 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/24 16:24:12 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,42 +55,7 @@ static void	init_filename(char ***filename, char *editor)
 	(*filename)[2] = NULL;
 }
 
-
-//in other file
-static int	null_check_first(t_session *sesh, char *cmd)
-{
-	int start;
-
-	if (ft_atoi(cmd) == 0)
-	{
-		start = sesh->term->history_size - 3;
-		sesh->term->history_size -= 1;
-	}
-	else
-		start = ft_atoi(cmd) - 2;
-	if (start < -1)
-	{
-		start = sesh->term->history_size + start;
-		if (start < 0)
-			start = -1;
-	}
-	return (start);
-}
-
-static int	null_check_last(t_session *sesh, char *cmd)
-{
-	int last;
-
-	if (ft_atoi(cmd) == 0)
-		last = sesh->term->history_size;
-	else
-		last = ft_atoi(cmd) + 1;
-	if (last <= 0)
-		last = sesh->term->history_size;
-	return (last);
-}
-
-static int	get_start(t_session *sesh, char ***cmd, int e)
+/* static int	get_start(t_session *sesh, char ***cmd, int e)
 {
 	int start;
 
@@ -106,49 +71,112 @@ static int	get_start(t_session *sesh, char ***cmd, int e)
 	else
 		start = -1;
 	return (start);
+} */
+
+
+//implement for too low number and too high number
+//also implement for -e flag
+static int	get_start_and_end(t_session *sesh, t_fc *fc, char ***cmd)
+{
+	if (!(*cmd)[1])
+	{
+		fc->start = (int)sesh->term->history_size - 3;
+		fc->end = (int)sesh->term->history_size - 1;
+	}
+	else if ((*cmd)[1] && !(*cmd)[2])
+	{
+		if ((*cmd)[1][0] == '-')
+		{
+			fc->start = (int)sesh->term->history_size + ft_atoi((*cmd)[1]) - 2;
+			fc->end = fc->start + 2;
+		}
+		else
+		{
+			fc->start = ft_atoi((*cmd)[1]) - 2;
+			fc->end = ft_atoi((*cmd)[1]);
+		}
+	}
+	else if ((*cmd)[1] && (*cmd)[2])
+	{
+		if ((*cmd)[1][0] == '-')
+		{
+			fc->start = (int)sesh->term->history_size + ft_atoi((*cmd)[1]);
+		}
+		else
+		{
+			fc->start = ft_atoi((*cmd)[1]) - 2;
+		}
+		if ((*cmd)[2][0] == '-')
+		{
+			if ((*cmd)[1][0] == '-')
+				fc->end = (int)sesh->term->history_size + ft_atoi((*cmd)[2]) - 2;
+			else
+				fc->end = (int)sesh->term->history_size + ft_atoi((*cmd)[2]) - 1;
+		}
+		else
+		{
+			if ((*cmd)[1][0] == '-')
+				fc->end = ft_atoi((*cmd)[2]) - 2;
+			else
+				fc->end = ft_atoi((*cmd)[2]);
+		}
+	}
+	else
+		return (0);
+	return (1);
 }
 
-
-
-
-
-
-static char	**open_editor(char *editor, t_session *sesh, char ***cmd, int e)
+static void	print_to_file(t_session *sesh, t_fc *fc, char ***cmd, int fd)
 {
-	int		fd;
-	char	**filename;
-
-	init_filename(&filename, editor);
-	fd = open(filename[1], O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (fd == -1)
+	if (!get_start_and_end(sesh, fc, cmd))
+		return ;
+	if (fc->start <= fc->end) // is equal sign good here?
 	{
-		fc_print_error(2);
-		return (NULL);
+		while (++fc->start < fc->end)
+			ft_putendl_fd(sesh->term->history_arr[fc->start], fd);
 	}
-	// ft_putstr_fd(sesh->term->history_arr[sesh->term->history_size - 2], fd);
-	int start = get_start(sesh, cmd, e);
-	while (++start < (int)sesh->term->history_size - 1)
+	else
+	{
+		while (--fc->start > fc->end)
+			ft_putendl_fd(sesh->term->history_arr[fc->start], fd);
+	}
+}
+// ft_putstr_fd(sesh->term->history_arr[sesh->term->history_size - 2], fd);
+	// int start = get_start(sesh, cmd, e);
+/* while (++start < (int)sesh->term->history_size - 1)
 	{
 		ft_putstr_fd(sesh->term->history_arr[start], fd);
 		write(fd, "\n", 1);
+	} */
+
+
+static void	open_editor(char *editor, t_session *sesh, t_fc *fc, char ***cmd)
+{
+	int		fd;
+
+	init_filename(&fc->filename, editor);
+	fd = open(fc->filename[1], O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+	{
+		fc_print_error(2);
+		return ;
 	}
+	print_to_file(sesh, fc, cmd, fd);
 	if (fork_wrap() == 0)
 	{
-		execve(editor, filename, sesh->env);
+		execve(editor, fc->filename, sesh->env);
 		exit(1);
 	}
 	wait(0);
 	close(fd);
-	return (filename);
 }
 
-static int	read_file(char ***cmd, char **filename, char **ret_cmd)
+static int	read_file(t_fc *fc, char **ret_cmd)
 {
 	int		fd;
 	char	*new_cmd;
 
-	(void)cmd;
-	fd = open(filename[1], O_RDONLY);
+	fd = open(fc->filename[1], O_RDONLY);
 	if (fd == -1)
 		return (fc_print_error(2));
 	while (get_next_line(fd, &new_cmd) > 0)
@@ -163,11 +191,7 @@ static int	read_file(char ***cmd, char **filename, char **ret_cmd)
 		ft_strdel(&new_cmd);
 	}
 	ft_strdel(&new_cmd);
-	ft_freeda((void ***)cmd, calc_chptr(*cmd));
 	ft_putendl(*ret_cmd);
-	/* *cmd = ft_strsplit(*ret_cmd, ' ');
-	if (!*cmd)
-		fc_print_error(3); */
 	close(fd);
 	return (1);
 }
@@ -178,11 +202,9 @@ static void	overwrite_history(t_session *sesh, char *ret_cmd)
 	sesh->term->history_arr[sesh->term->history_size - 1] = ft_strdup(ret_cmd);
 }
 
-static int	no_flag_or_e_flag(t_session *sesh, char ***cmd, int e)
+static int	no_flag_or_e_flag(t_session *sesh, t_fc *fc, char ***cmd)
 {
 	char	*editor;
-	char	**filename;
-	char	*ret_cmd;
 
 	if ((*cmd && ft_strnequ((*cmd)[1], "-e", 2) && (*cmd)[2]))
 		editor = search_bin((*cmd)[2], sesh->env);
@@ -190,66 +212,45 @@ static int	no_flag_or_e_flag(t_session *sesh, char ***cmd, int e)
 		editor = get_editor(sesh->env);
 	if (!editor)
 		return (fc_print_error(1));
-	filename = open_editor(editor, sesh, cmd, e);
-	if (!filename)
+	open_editor(editor, sesh, fc, cmd);
+	if (!fc->filename)
 		return (0);
-	ret_cmd = NULL;
-	if (!read_file(cmd, filename, &ret_cmd))
+	fc->ret_cmd = NULL;
+	if (!read_file(fc, &fc->ret_cmd))
 		return (0);
+	ft_freeda((void ***)cmd, calc_chptr(*cmd));
+	overwrite_history(sesh, fc->ret_cmd);
 
-	overwrite_history(sesh, ret_cmd);
-
-	char	*new;
-	t_treenode *head;
-	t_token *tokens;
+	char		*new;
+	t_treenode	*head;
+	t_token 	*tokens;
 
 	tokens = NULL;
-	new = ft_strtrim(ret_cmd);
-	ft_freeda((void ***)&filename, calc_chptr(filename));
+	new = ft_strtrim(fc->ret_cmd); //do we need to implement heredoc aswell here?
+	ft_freeda((void ***)&fc->filename, calc_chptr(fc->filename));
 	tokens = chop_line(new, tokens, 1);
 	head = build_tree(tokens);
 	if (head && ((t_semicolon *)head)->left)
 		exec_tree(head, &sesh->env, sesh->terminal, sesh);
 	free_node(head);
 	free_tokens(&tokens);
-	ft_strdel(&ret_cmd);
+	ft_strdel(&fc->ret_cmd);
 	return (0);
 }
 
-/* static int	error_check(char ***cmd, int *start, int *last)
-{
-	if (!(*cmd)[1])
-	{
-		*start = -1;
-		*last = -1;
-	}
-	else if ((*cmd)[1] && !(*cmd)[2])
-	{
-		*start = ft_atoi((*cmd)[1]) - 2;
-		*last = ft_atoi((*cmd)[1]) + 1;
-	}
-	else if ((*cmd)[1] && (*cmd)[2] && !(*cmd)[3])
-	{
-		*start = ft_atoi((*cmd)[1]) - 2;
-		*last = ft_atoi((*cmd)[2]) + 1;
-	}
-	else
-		return (0);
-	return (1);
-} */
-
 int	ft_fc(t_session *sesh, char ***cmd)
 {
+	t_fc 	fc;
 	int		ret;
-	int		e;
 
-	e = 0;
+	fc.e = 0;
 	if (ft_strnequ((*cmd)[1], "-e", 2))
-		e = 2;
+		fc.e = 2;
 	if ((*cmd && !(*cmd)[1]) \
 		|| (*cmd && (*cmd)[1] && (*cmd)[1] && (*cmd)[1][0] == '-' && ft_isdigit((*cmd)[1][1])) \
-		|| (*cmd && e ))
-		ret = no_flag_or_e_flag(sesh, cmd, e);
+		|| (*cmd && (*cmd)[1] && (*cmd)[1] && ft_isdigit((*cmd)[1][0])) \
+		|| (*cmd && fc.e ))
+		ret = no_flag_or_e_flag(sesh, &fc, cmd);
 	else
 		ret = fc_check_flags(sesh, cmd);
 	return (ret);
