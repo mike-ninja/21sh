@@ -1,0 +1,34 @@
+step 1
+create an array with possible pid's in our sesh_Struct
+build base for creating groups.
+
+
+step 2
+When executing a command, check for group, if it not exists, create group.
+if it exists, put pid into group
+If it is a background command, dont put into any group.
+
+
+step 3
+implement shifting from bg to fg and fg to bg.
+
+
+
+
+pid_t    process_group_set(pid_t pid, pid_t job_first_pid, bool foreground)
+{
+    pid_t    target;
+
+    if (job_first_pid > 0)
+        target = job_first_pid;
+    else
+        target = pid;
+    if (setpgid(pid, target) == -1)
+        return (-1);
+    if (foreground)
+    {
+        if (ioctl(STDIN_FILENO, TIOCSPGRP, &target) == -1)
+            return (-1);
+    }
+    return (target);
+}

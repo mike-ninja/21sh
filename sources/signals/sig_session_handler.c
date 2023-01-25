@@ -54,7 +54,6 @@ void child_exit(int num)
 	pid_t	pid;
 
 	ptr = g_session->process;
-	ft_printf("hello child_exit\n");
 	if (num == SIGCHLD)
 	{
 		pid = waitpid(-1, &status, WNOHANG);
