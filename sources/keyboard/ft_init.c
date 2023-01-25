@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/10 15:48:39 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/25 10:17:16 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,5 @@ void	ft_init(t_term *t)
 	t->m_prompt_len = (ssize_t)ft_strlen(MINI_PROMPT);
 	t->c_col = t->prompt_len;
 	t->input_cpy = NULL;
+	t->fc_flag = false;
 }

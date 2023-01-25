@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 18:12:53 by jakken            #+#    #+#             */
-/*   Updated: 2023/01/16 13:53:23 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/25 10:21:48 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,21 @@ int	check_access(char *cmd, char **args, t_session *sesh)
 	return (1);
 }
 
+static void	print_args(char **args)
+{
+	int		i;
+
+	i = 0;
+	while (args[i])
+	{
+		ft_putstr(args[i]);
+		if (args[i + 1])
+			ft_putchar(' ');
+		i++;
+	}
+	ft_putchar('\n');
+}
+
 void	execute_bin(char ***args, char ***environ_cp, t_session *sesh)
 {
 	char	*cmd;
@@ -75,6 +90,8 @@ void	execute_bin(char ***args, char ***environ_cp, t_session *sesh)
 	status = 0;
 	if (!(*args)[0])
 		return ;
+	if (sesh->term->fc_flag == true)
+		print_args(*args);
 	if (!ft_builtins(sesh, &(*args)))
 		return ;
 	if (!check_if_user_exe((*args)[0], &cmd))

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 09:41:05 by mrantil           #+#    #+#             */
-/*   Updated: 2023/01/24 16:24:12 by mrantil          ###   ########.fr       */
+/*   Updated: 2023/01/25 12:57:14 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,70 +55,46 @@ static void	init_filename(char ***filename, char *editor)
 	(*filename)[2] = NULL;
 }
 
-/* static int	get_start(t_session *sesh, char ***cmd, int e)
-{
-	int start;
-
-	if ((*cmd)[0 + e] && (*cmd)[1 + e] && !(*cmd)[2 + e])
-		start = null_check_first(sesh, (*cmd)[1 + e]);
-	else if ((*cmd)[0 + e] && (*cmd)[1 + e] && (*cmd)[2 + e])
-	{
-		start = null_check_first(sesh, (*cmd)[1 + e]);
-		sesh->term->history_size = null_check_last(sesh, (*cmd)[2 + e]);
-	}
-	else if (sesh->term->history_size > FC_LEN)
-		start = sesh->term->history_size - FC_LEN;
-	else
-		start = -1;
-	return (start);
-} */
-
-
 //implement for too low number and too high number
-//also implement for -e flag
 static int	get_start_and_end(t_session *sesh, t_fc *fc, char ***cmd)
 {
-	if (!(*cmd)[1])
+	if (!(*cmd)[1 + fc->e])
 	{
 		fc->start = (int)sesh->term->history_size - 3;
 		fc->end = (int)sesh->term->history_size - 1;
 	}
-	else if ((*cmd)[1] && !(*cmd)[2])
+	else if ((*cmd)[1 + fc->e] && !(*cmd)[2 + fc->e])
 	{
-		if ((*cmd)[1][0] == '-')
+		if ((*cmd)[1 + fc->e][0] == '-')
 		{
-			fc->start = (int)sesh->term->history_size + ft_atoi((*cmd)[1]) - 2;
+			fc->start = (int)sesh->term->history_size + ft_atoi((*cmd)[1 + fc->e]) - 2;
 			fc->end = fc->start + 2;
 		}
 		else
 		{
-			fc->start = ft_atoi((*cmd)[1]) - 2;
-			fc->end = ft_atoi((*cmd)[1]);
+			fc->start = ft_atoi((*cmd)[1 + fc->e]) - 2;
+			fc->end = ft_atoi((*cmd)[1 + fc->e]);
 		}
 	}
-	else if ((*cmd)[1] && (*cmd)[2])
+	else if ((*cmd)[1 + fc->e] && (*cmd)[2 + fc->e])
 	{
-		if ((*cmd)[1][0] == '-')
+		if ((*cmd)[1 + fc->e][0] == '-')
+			fc->start = (int)sesh->term->history_size + ft_atoi((*cmd)[1 + fc->e]);
+		else
+			fc->start = ft_atoi((*cmd)[1 + fc->e]) - 2;
+		if ((*cmd)[2 + fc->e][0] == '-')
 		{
-			fc->start = (int)sesh->term->history_size + ft_atoi((*cmd)[1]);
+			if ((*cmd)[1 + fc->e][0] == '-')
+				fc->end = (int)sesh->term->history_size + ft_atoi((*cmd)[2 + fc->e]) - 2;
+			else
+				fc->end = (int)sesh->term->history_size + ft_atoi((*cmd)[2 + fc->e]) - 1;
 		}
 		else
 		{
-			fc->start = ft_atoi((*cmd)[1]) - 2;
-		}
-		if ((*cmd)[2][0] == '-')
-		{
-			if ((*cmd)[1][0] == '-')
-				fc->end = (int)sesh->term->history_size + ft_atoi((*cmd)[2]) - 2;
+			if ((*cmd)[1 + fc->e][0] == '-')
+				fc->end = ft_atoi((*cmd)[2 + fc->e]) - 2;
 			else
-				fc->end = (int)sesh->term->history_size + ft_atoi((*cmd)[2]) - 1;
-		}
-		else
-		{
-			if ((*cmd)[1][0] == '-')
-				fc->end = ft_atoi((*cmd)[2]) - 2;
-			else
-				fc->end = ft_atoi((*cmd)[2]);
+				fc->end = ft_atoi((*cmd)[2 + fc->e]);
 		}
 	}
 	else
@@ -141,14 +117,6 @@ static void	print_to_file(t_session *sesh, t_fc *fc, char ***cmd, int fd)
 			ft_putendl_fd(sesh->term->history_arr[fc->start], fd);
 	}
 }
-// ft_putstr_fd(sesh->term->history_arr[sesh->term->history_size - 2], fd);
-	// int start = get_start(sesh, cmd, e);
-/* while (++start < (int)sesh->term->history_size - 1)
-	{
-		ft_putstr_fd(sesh->term->history_arr[start], fd);
-		write(fd, "\n", 1);
-	} */
-
 
 static void	open_editor(char *editor, t_session *sesh, t_fc *fc, char ***cmd)
 {
@@ -191,15 +159,22 @@ static int	read_file(t_fc *fc, char **ret_cmd)
 		ft_strdel(&new_cmd);
 	}
 	ft_strdel(&new_cmd);
-	ft_putendl(*ret_cmd);
 	close(fd);
 	return (1);
 }
 
 static void	overwrite_history(t_session *sesh, char *ret_cmd)
-{ //take away the semi colon of ret_cmd
+{
+	char	**args;
+	int		i;
+
 	ft_strdel(&sesh->term->history_arr[sesh->term->history_size - 1]);
-	sesh->term->history_arr[sesh->term->history_size - 1] = ft_strdup(ret_cmd);
+	sesh->term->history_size--;
+	args = ft_strsplit(ret_cmd, ';');
+	i = 0;
+	while (args[i])
+		ft_history_add_command(sesh->term, args[i++]);
+	ft_freeda((void ***)&args, calc_chptr(args));
 }
 
 static int	no_flag_or_e_flag(t_session *sesh, t_fc *fc, char ***cmd)
@@ -225,6 +200,7 @@ static int	no_flag_or_e_flag(t_session *sesh, t_fc *fc, char ***cmd)
 	t_treenode	*head;
 	t_token 	*tokens;
 
+	sesh->term->fc_flag = true;
 	tokens = NULL;
 	new = ft_strtrim(fc->ret_cmd); //do we need to implement heredoc aswell here?
 	ft_freeda((void ***)&fc->filename, calc_chptr(fc->filename));
@@ -246,11 +222,34 @@ int	ft_fc(t_session *sesh, char ***cmd)
 	fc.e = 0;
 	if (ft_strnequ((*cmd)[1], "-e", 2))
 		fc.e = 2;
-	if ((*cmd && !(*cmd)[1]) \
-		|| (*cmd && (*cmd)[1] && (*cmd)[1] && (*cmd)[1][0] == '-' && ft_isdigit((*cmd)[1][1])) \
-		|| (*cmd && (*cmd)[1] && (*cmd)[1] && ft_isdigit((*cmd)[1][0])) \
+	if ((*cmd && !(*cmd)[1 + fc.e]) \
+		|| (*cmd && (*cmd)[1 + fc.e] && (*cmd)[1 + fc.e] && (*cmd)[1 + fc.e][0] == '-' && ft_isdigit((*cmd)[1 + fc.e][1])) \
+		|| (*cmd && (*cmd)[1 + fc.e] && (*cmd)[1 + fc.e] && ft_isdigit((*cmd)[1 + fc.e][0])) \
 		|| (*cmd && fc.e ))
+	{
+		if ((*cmd)[1 + fc.e] && !(*cmd)[2 + fc.e])
+		{
+			if (ft_atoi((*cmd)[1 + fc.e]) > (int)sesh->term->history_size
+				|| (ft_atoi((*cmd)[1 + fc.e]) * -1) > (int)sesh->term->history_size)
+			{
+				ft_putendl_fd("42sh: fc: event not found", 2);
+				return (0);
+			}
+		}
+		else if ((*cmd)[1 + fc.e] && (*cmd)[2 + fc.e])
+		{
+			if (ft_atoi((*cmd)[1 + fc.e]) > (int)sesh->term->history_size
+				|| (ft_atoi((*cmd)[1 + fc.e]) * -1) > (int)sesh->term->history_size
+				|| ft_atoi((*cmd)[2 + fc.e]) > (int)sesh->term->history_size
+				|| (ft_atoi((*cmd)[2 + fc.e]) * -1) > (int)sesh->term->history_size)
+			{
+				ft_putendl_fd("42sh: fc: event not found", 2);
+				return (0);
+			}
+		}
+		ft_printf("hello\n");
 		ret = no_flag_or_e_flag(sesh, &fc, cmd);
+	}
 	else
 		ret = fc_check_flags(sesh, cmd);
 	return (ret);
