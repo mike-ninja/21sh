@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 09:36:28 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/24 11:32:21 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/25 13:19:34 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ft_ctrl(t_term *t)
 		set_new_cur_pos(t);
 		ft_run_capability("ve");
 	}
-	else if (t->ch == CTRL_R && t->c_row == t->total_row && ft_is_prompt_line(t, t->total_row))
+	else if (t->ch == CTRL_R && t->c_row == t->total_row \
+	&& ft_is_prompt_line(t, t->total_row))
 		ft_search_history(t);
 }

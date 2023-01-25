@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2023/01/24 12:42:18 by mbarutel         ###   ########.fr       */
+/*   Updated: 2023/01/25 13:25:13 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,16 @@ typedef struct s_search_history
 	int			max_to_show;
 	int			to_show;
 	int			status;
+	int			cursor;
+	int			index;
 	int			match;
 	int			*ptr;
 	char		inp;
 	ssize_t		row;
-	ssize_t		index;
+	ssize_t		index_max;
 	ssize_t		start_cur_row;
 	ssize_t		input_cur_col;
-	ssize_t		input_term_row; 
+	ssize_t		input_term_row;
 	ssize_t		match_term_row;
 }	t_search_history;
 
@@ -80,34 +82,34 @@ typedef struct clipboard
 
 typedef struct s_term
 {
-	char		inp[BUFF_SIZE];
-	char		history_buff[BUFF_SIZE];
-	char		**history_arr;
-	size_t		history_size;
-	char		**nl_addr;
-	char		*history_file;
-	char		*input_cpy;
-	char		*delim;
-	ssize_t		ws_col;
-	ssize_t		ws_row;
-	ssize_t		index;
-	ssize_t		bytes;
-	ssize_t		c_col;
-	ssize_t		c_row;
-	ssize_t		total_row;
-	ssize_t		total_row_cpy;
-	ssize_t		prompt_len;
-	ssize_t		m_prompt_len;
-	ssize_t		history_row;
-	ssize_t		q_qty;
-	ssize_t		bslash;
-	ssize_t		heredoc;
-	ssize_t		his;
-	int			ch;
-	char		quote;
-	t_clipboard	clipboard;
-	ssize_t		term_val[2];
-	t_search_history *config;
+	char				inp[BUFF_SIZE];
+	char				history_buff[BUFF_SIZE];
+	char				**history_arr;
+	size_t				history_size;
+	char				**nl_addr;
+	char				*history_file;
+	char				*input_cpy;
+	char				*delim;
+	ssize_t				ws_col;
+	ssize_t				ws_row;
+	ssize_t				index;
+	ssize_t				bytes;
+	ssize_t				c_col;
+	ssize_t				c_row;
+	ssize_t				total_row;
+	ssize_t				total_row_cpy;
+	ssize_t				prompt_len;
+	ssize_t				m_prompt_len;
+	ssize_t				history_row;
+	ssize_t				q_qty;
+	ssize_t				bslash;
+	ssize_t				heredoc;
+	ssize_t				his;
+	int					ch;
+	char				quote;
+	t_clipboard			clipboard;
+	ssize_t				term_val[2];
+	t_search_history	*config;
 }			t_term;
 
 int		ft_keyboard(t_term *t);
@@ -167,12 +169,18 @@ void	ft_window_size(t_term *t);
 void	ft_word_mv(t_term *t);
 void	ft_history_add_command(t_term *t, char *command);
 
-void	ft_select_history(t_term *t, t_search_history *config, int index_cpy);
-void	ft_selector_up(int *index_cpy, int *row_cpy, t_term *t, t_search_history *config);
-void	ft_selector_do(int *index_cpy, int *row_cpy, t_term *t, t_search_history *config);
+void	ft_select_history(t_term *t, t_search_history *config);
+void	ft_selector_up(t_term *t, t_search_history *config);
+void	ft_selector_do( t_term *t, t_search_history *config);
 void	history_options(t_term *t, t_search_history *config);
 int		count_matches(t_term *t, t_search_history *config);
 void	print_selector(char *color);
 bool	ft_is_match(char *haystack, char *needle);
+void	init_search_history_config(t_term *t, t_search_history *config);
+void	ft_display_input(t_term *t, t_search_history *config);
+void	ft_display_to_show(t_search_history *config);
+void	init_interface(t_term *t, t_search_history *config);
+void	ft_search_history_reset(t_term *t);
+void	edit_input(t_term *t, t_search_history *config);
 
 #endif
